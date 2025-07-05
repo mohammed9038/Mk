@@ -28,7 +28,7 @@
     h2 {
       margin: 10px 0;
     }
-    select, input[type="number"] {
+    select, input[type="number"], input[type="text"] {
       width: 100%;
       padding: 10px;
       margin-top: 5px;
@@ -40,18 +40,28 @@
       background-color: #28a745;
       color: white;
       cursor: pointer;
-      padding: 10px;
-      margin-top: 10px;
+      padding: 10px 15px;
+      margin: 20px 0 5px 0;
       border: none;
       text-align: left;
       outline: none;
       font-size: 16px;
       border-radius: 4px;
       width: 100%;
+      position: relative;
+    }
+    .collapsible::after {
+      content: '\25BC';
+      position: absolute;
+      right: 20px;
+      transition: transform 0.3s ease;
+    }
+    .collapsible.active::after {
+      transform: rotate(180deg);
     }
     .content {
       display: none;
-      padding: 10px;
+      padding: 10px 0;
       background-color: #f9f9f9;
       margin-bottom: 10px;
       border-radius: 4px;
@@ -60,26 +70,34 @@
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
       gap: 10px;
+      padding: 10px;
     }
     .product {
       display: flex;
       flex-direction: column;
       align-items: center;
-      background: #fff;
-      border: 1px solid #ccc;
-      border-radius: 8px;
+      background: #e3f5e8;
+      border: 1px solid #b2d8c6;
+      border-radius: 10px;
       padding: 10px;
+      transition: background 0.3s, transform 0.2s;
+    }
+    .product:hover {
+      background: #d0f0de;
+      transform: translateY(-2px);
     }
     .product img {
       width: 80px;
       height: 80px;
       object-fit: cover;
       margin-bottom: 8px;
+      border-radius: 4px;
     }
     .product span {
       font-size: 14px;
       text-align: center;
       margin-bottom: 6px;
+      font-weight: bold;
     }
     .product input[type="number"] {
       width: 100%;
@@ -95,6 +113,9 @@
       font-size: 16px;
       margin-top: 20px;
     }
+    .search-box {
+      margin: 10px 0 20px;
+    }
   </style>
 </head>
 <body>
@@ -106,6 +127,7 @@
 
     <label for="week">Select Week:</label>
     <select id="week">
+      <option value="">-- Select Week --</option>
       <option value="1">Week 1</option>
       <option value="2">Week 2</option>
       <option value="3">Week 3</option>
@@ -113,15 +135,20 @@
     </select>
 
     <label for="channel">Select Channel:</label>
-    <select id="channel"></select>
+    <select id="channel">
+      <option value="">-- Select Channel --</option>
+    </select>
 
     <label for="salesman">Select Salesman:</label>
-    <select id="salesman"></select>
+    <select id="salesman">
+      <option value="">-- Select Salesman --</option>
+    </select>
 
     <label for="customer">Select Customer:</label>
-    <select id="customer"></select>
+    <select id="customer">
+      <option value="">-- Select Customer --</option>
+    </select>
 
-    <!-- Collapsible Product Groups -->
     <div id="products"></div>
 
     <div class="center">
@@ -153,8 +180,8 @@
         });
 
         channelSelect.onchange = () => {
-          salesmanSelect.innerHTML = "";
-          customerSelect.innerHTML = "";
+          salesmanSelect.innerHTML = '<option value="">-- Select Salesman --</option>';
+          customerSelect.innerHTML = '<option value="">-- Select Customer --</option>';
           const filteredSalesmen = data.filter(d => d.channel === channelSelect.value);
           const uniqueSalesmen = [...new Set(filteredSalesmen.map(d => d.salesman))];
           uniqueSalesmen.forEach(s => {
@@ -165,7 +192,7 @@
         };
 
         salesmanSelect.onchange = () => {
-          customerSelect.innerHTML = "";
+          customerSelect.innerHTML = '<option value="">-- Select Customer --</option>';
           const filteredCustomers = data.filter(d => d.salesman === salesmanSelect.value);
           const uniqueCustomers = [...new Set(filteredCustomers.map(d => d.customer))];
           uniqueCustomers.forEach(c => {
@@ -176,37 +203,76 @@
         };
       });
 
-    const products = {
-      "Henkel": ["Fa Roll On 50ml", "Fa Spray 200ml", "Pert Cond 360ml", "Pert Men SHP 360ml", "Pert Shampoo 400ml", "Pert Shampoo 600ml", "Pert Shampoo1000ml", "Taft Spray 250ml"],
-      "HTM": ["HTM"],
-      "Dabur": ["Dabur Red 150", "Dabur 150 GM", "Dabur 100 GM", "Dabur Alpha range 150", "Dabur Red 200", "Miswak 190 GM", "Miswak gold 170 gm", "Miswak 150 gm", "Dabur Clove Gel 150gm"],
-      "Hobby": ["Hobby 2in1 Men", "Hobby Brilliantine - Hair Cream", "Hobby Conditioner", "Hobby Crazy Gel", "Hobby Hair Cream", "Hobby Hand Wash", "Hobby Lotion", "Hobby Shampoo", "Hobby Shower Gel", "Hobby Body Cream"],
-      "Aiico": ["Bleach", "Dishwashing Liquid", "Gel  Freshener", "General freshener", "Glass Cleaner", "Multi-Purpose Cleaner", "Laundry Liquid", "Liquid Soap"]
-    };
+    let products = {};
 
-    const productsDiv = document.getElementById("products");
-    Object.entries(products).forEach(([group, items]) => {
-      const btn = document.createElement("button");
-      btn.className = "collapsible";
-      btn.textContent = group;
+    fetch('https://docs.google.com/spreadsheets/d/e/2PACX-1vREXfVVJ4zYuYx40MkvrBI8aH2OYr81ZlF2b_owlbT1o_RhXC44_egEmLCOiLrD5iVPo-CAuYRrVqIC/pub?gid=1032512900&single=true&output=csv')
+      .then(response => response.text())
+      .then(csv => {
+        const lines = csv.split("\n").filter(line => line.trim() !== '');
+        const headers = lines[0].split(',').map(h => h.trim().toLowerCase());
+        const groupIndex = headers.indexOf('supplier');
+const nameIndex = headers.indexOf('category');
+const imageIndex = headers.indexOf('image');
 
-      const contentDiv = document.createElement("div");
-      contentDiv.className = "content product-grid";
+        products = lines.slice(1).reduce((acc, line) => {
+          const values = line.split(',');
+          const group = values[groupIndex]?.trim();
+          const name = values[nameIndex]?.trim();
+          const image = values[imageIndex]?.trim();
+          if (group && name) {
+            if (!acc[group]) acc[group] = [];
+            acc[group].push({ name, image });
+          }
+          return acc;
+        }, {});
 
-      items.forEach(item => {
-        const div = document.createElement("div");
-        div.className = "product";
-        div.innerHTML = `<img src="placeholder.jpg" alt="${item}"><span>${item}</span><input type="number" min="0" placeholder="Qty">`;
-        contentDiv.appendChild(div);
+        const productsDiv = document.getElementById("products");
+        productsDiv.innerHTML = '';
+
+        Object.entries(products).forEach(([group, items]) => {
+          const btn = document.createElement("button");
+          btn.className = "collapsible";
+          btn.textContent = group;
+
+          const searchInput = document.createElement("input");
+          searchInput.className = "search-box";
+          searchInput.type = "text";
+          searchInput.placeholder = `Search ${group}...`;
+
+          const contentDiv = document.createElement("div");
+          contentDiv.classList.add("content");
+          const grid = document.createElement("div");
+          grid.className = "product-grid";
+
+          const productMap = [];
+
+          items.forEach(({ name, image }) => {
+            const div = document.createElement("div");
+            div.className = "product";
+            div.innerHTML = `<img src="${image || 'placeholder.jpg'}" alt="${name}"><span>${name}</span><input type="number" min="0" placeholder="Qty">`;
+            grid.appendChild(div);
+            productMap.push({ name, element: div });
+          });
+
+          searchInput.addEventListener("input", () => {
+            const term = searchInput.value.toLowerCase();
+            productMap.forEach(({ name, element }) => {
+              element.style.display = name.toLowerCase().includes(term) ? "flex" : "none";
+            });
+          });
+
+          btn.addEventListener("click", function () {
+            this.classList.toggle("active");
+            contentDiv.style.display = contentDiv.style.display === "block" ? "none" : "block";
+          });
+
+          contentDiv.appendChild(searchInput);
+          contentDiv.appendChild(grid);
+          contentDiv.style.display = "none";
+          productsDiv.appendChild(btn);
+          productsDiv.appendChild(contentDiv);
+        });
       });
-
-      btn.onclick = () => {
-        contentDiv.style.display = contentDiv.style.display === "block" ? "none" : "block";
-      };
-
-      productsDiv.appendChild(btn);
-      productsDiv.appendChild(contentDiv);
-    });
   </script>
 </body>
 </html>
