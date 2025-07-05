@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <title>Stock In Trade</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -157,16 +158,11 @@
   </div>
 
   <script>
-    let data = [];
-
     fetch('https://docs.google.com/spreadsheets/d/e/2PACX-1vREXfVVJ4zYuYx40MkvrBI8aH2OYr81ZlF2b_owlbT1o_RhXC44_egEmLCOiLrD5iVPo-CAuYRrVqIC/pub?gid=1284241246&single=true&output=csv')
-      .then(response => response.text())
+      .then(res => res.text())
       .then(csv => {
-        const lines = csv.split("\n").filter(line => line.trim() !== '');
-        data = lines.slice(1).map(line => {
-          const [channel, salesman, customer] = line.split(',');
-          return { channel: channel?.trim(), salesman: salesman?.trim(), customer: customer?.trim() };
-        });
+        const parsed = Papa.parse(csv, { header: true });
+        const data = parsed.data.filter(d => d.channel && d.salesman && d.customer);
 
         const channelSelect = document.getElementById("channel");
         const salesmanSelect = document.getElementById("salesman");
@@ -203,22 +199,14 @@
         };
       });
 
-    let products = {};
-
     fetch('https://docs.google.com/spreadsheets/d/e/2PACX-1vREXfVVJ4zYuYx40MkvrBI8aH2OYr81ZlF2b_owlbT1o_RhXC44_egEmLCOiLrD5iVPo-CAuYRrVqIC/pub?gid=1032512900&single=true&output=csv')
-      .then(response => response.text())
+      .then(res => res.text())
       .then(csv => {
-        const lines = csv.split("\n").filter(line => line.trim() !== '');
-        const headers = lines[0].split(',').map(h => h.trim().toLowerCase());
-        const groupIndex = headers.indexOf('supplier');
-const nameIndex = headers.indexOf('category');
-const imageIndex = headers.indexOf('image');
-
-        products = lines.slice(1).reduce((acc, line) => {
-          const values = line.split(',');
-          const group = values[groupIndex]?.trim();
-          const name = values[nameIndex]?.trim();
-          const image = values[imageIndex]?.trim();
+        const parsed = Papa.parse(csv, { header: true });
+        const products = parsed.data.reduce((acc, row) => {
+          const group = row["Supplier"]?.trim();
+          const name = row["Category"]?.trim();
+          const image = row.image?.trim();
           if (group && name) {
             if (!acc[group]) acc[group] = [];
             acc[group].push({ name, image });
@@ -249,7 +237,7 @@ const imageIndex = headers.indexOf('image');
           items.forEach(({ name, image }) => {
             const div = document.createElement("div");
             div.className = "product";
-            div.innerHTML = `<img src="${image || 'placeholder.jpg'}" alt="${name}"><span>${name}</span><input type="number" min="0" placeholder="Qty">`;
+            div.innerHTML = `<img src="${image || 'placeholder.jpg'}" alt="${name}" onerror="this.onerror=null; this.src='https://via.placeholder.com/80?text=No+Image'; this.style.border='2px solid red'; console.warn('Image failed:', this.src)"><span>${name}</span><input type="number" min="0" placeholder="Qty">`;
             grid.appendChild(div);
             productMap.push({ name, element: div });
           });
