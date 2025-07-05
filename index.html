@@ -3,753 +3,209 @@
 <head>
   <meta charset="UTF-8">
   <title>Stock In Trade</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
     body {
       font-family: Arial, sans-serif;
-      background-color: #e9f8f1;
-      color: #417505;
+      background: #f4f7f8;
+      margin: 0;
       padding: 20px;
-      max-width: 720px;
-      margin: auto;
     }
-    label {
-      display: block;
-      margin-top: 20px;
-      font-weight: bold;
+    .form-container {
+      max-width: 900px;
+      margin: auto;
+      background: #fff;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    .center {
+      text-align: center;
+    }
+    .logo {
+      width: 150px;
+    }
+    h2 {
+      margin: 10px 0;
     }
     select, input[type="number"] {
       width: 100%;
       padding: 10px;
       margin-top: 5px;
-      border: 1px solid #cce0cc;
-      border-radius: 5px;
-      font-size: 16px;
+      margin-bottom: 15px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
     }
-    button {
-      margin-top: 30px;
-      padding: 12px;
-      background-color: #417505;
+    .collapsible {
+      background-color: #28a745;
       color: white;
-      border: none;
-      font-size: 16px;
       cursor: pointer;
-      border-radius: 6px;
+      padding: 10px;
+      margin-top: 10px;
+      border: none;
+      text-align: left;
+      outline: none;
+      font-size: 16px;
+      border-radius: 4px;
+      width: 100%;
     }
-    button:hover {
-      background-color: #2d5003;
+    .content {
+      display: none;
+      padding: 10px;
+      background-color: #f9f9f9;
+      margin-bottom: 10px;
+      border-radius: 4px;
+    }
+    .product-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+      gap: 10px;
+    }
+    .product {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      background: #fff;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      padding: 10px;
+    }
+    .product img {
+      width: 80px;
+      height: 80px;
+      object-fit: cover;
+      margin-bottom: 8px;
+    }
+    .product span {
+      font-size: 14px;
+      text-align: center;
+      margin-bottom: 6px;
+    }
+    .product input[type="number"] {
+      width: 100%;
+      padding: 5px;
+    }
+    button[type="submit"] {
+      background-color: #28a745;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 16px;
+      margin-top: 20px;
     }
   </style>
 </head>
 <body>
-  <h1>Stock In Trade Form</h1>
-  <form id="stockForm">
-    <label for="week">Week</label>
-    <select id="week" name="week" required>
-      <option value="">Select Week</option>
-      <option value="1">1</option>
-      <option value="2">2</option>
-      <option value="3">3</option>
-      <option value="4">4</option>
+  <div class="form-container">
+    <div class="center">
+      <img src="logo_transparent (1).png" alt="Logo" class="logo">
+      <h2>Stock In Trade</h2>
+    </div>
+
+    <label for="week">Select Week:</label>
+    <select id="week">
+      <option value="1">Week 1</option>
+      <option value="2">Week 2</option>
+      <option value="3">Week 3</option>
+      <option value="4">Week 4</option>
     </select>
 
-    <label for="channel">Channel</label>
-    <select id="channel" onchange="updateSalesmen()" required>
-      <option value="">Select Channel</option>
-    </select>
+    <label for="channel">Select Channel:</label>
+    <select id="channel"></select>
 
-    <label for="salesman">Salesman</label>
-    <select id="salesman" onchange="updateCustomers()" required>
-      <option value="">Select Salesman</option>
-    </select>
+    <label for="salesman">Select Salesman:</label>
+    <select id="salesman"></select>
 
-    <label for="customer">Customer</label>
-    <select id="customer" required>
-      <option value="">Select Customer</option>
-    </select>
+    <label for="customer">Select Customer:</label>
+    <select id="customer"></select>
 
-    <label for="quantity">Stock Quantity</label>
-    <input type="number" id="quantity" name="quantity" required min="0">
+    <!-- Collapsible Product Groups -->
+    <div id="products"></div>
 
-    <button type="submit">Submit</button>
-  </form>
+    <div class="center">
+      <button type="submit">Submit</button>
+    </div>
+  </div>
 
   <script>
-    const dropdownData = {
-  "Key Account": {
-    "ABDULLAH IYAD AL-OBEIDI": [
-      "300030 - Carrefoure",
-      "305384 - MM Bazar Market",
-      "305651 - Lalav Bazar",
-      "306010 - Levano market"
-    ],
-    "AMJAD NAZIM HUSSEIN": [
-      "130003 - abu tallal market",
-      "130004 - abu tallal 2 market",
-      "130005 - abu tallal Cosmetic",
-      "130006 - Jordan market",
-      "130018 - al-rayan market",
-      "130019 - al-rayan market",
-      "130022 - Iraqi Free Company",
-      "130028 - Al-Lera market",
-      "130036 - Al-Waha Center market",
-      "130038 - super market al-yusir",
-      "130046 - Totters App",
-      "130047 - humis market",
-      "130050 - Rosa mall",
-      "130067 - Alsaa Mall",
-      "130070 - AlMiraj Market 2",
-      "130071 - Amazon market",
-      "130075 - Salla Market",
-      "130083 - Nabeel market",
-      "130087 - Miswag Hyper market",
-      "130088 - happy home",
-      "130408 - Hazaar market",
-      "130597 - Hypermarket Al-Taa'awon",
-      "130597 - Hypermarket Al-Taa'awon  / Al-bayae 1",
-      "130649 - Market Wajd",
-      "131177 - market zeitoun 3",
-      "196840 - Talabat app"
-    ],
-    "AMMAR TAYSEER HASSAN": [
-      "130002 - Abu talib market",
-      "130004 - abu tallal 2 market",
-      "130007 - Ofuq Al Kawthar",
-      "130019 - al-rayan market",
-      "130030 - Bait AL-Tamween-Adhamiya",
-      "130031 - Bait AL-Tamween-Salaikh",
-      "130034 - Al-muatamen",
-      "130035 - Alnahrain market",
-      "130037 - Al-Waffi Center",
-      "130048 - Haider market",
-      "130052 - 7 days",
-      "130069 - Bait AL-Tamween-Fallujah",
-      "130077 - Mass Mall",
-      "130084 - Nour al-huda",
-      "130086 - Hyper  market Al-Warda",
-      "130090 - Waffer Al Jadreya",
-      "130091 - Waffer Alshaab",
-      "130092 - Waffer Karadaa",
-      "130581 - UGUR COMPANY",
-      "130588 - Red Toot Market",
-      "130594 - Carrefour",
-      "130624 - Waffer-Adhamiya",
-      "131032 - Al Nidaa Supermarket"
-    ],
-    "ASAAD FAYEK MAHMOUD": [
-      "200037 - \u0633\u0627\u0631\u0629 \u0644\u0644\u062a\u062c\u0645\u064a\u0644",
-      "200039 - \u0645\u0639\u062a\u0632 \u0628\u0635\u0631\u0629",
-      "200220 - \u0627\u0633\u0648\u0627\u0642 \u0627\u0644\u0632\u0627\u0626\u0631",
-      "200268 - \u0627\u0644\u0642\u0645\u0631 \u0627\u0644\u0645\u0646\u064a\u0631 \u0633\u0646\u062a\u0631",
-      "200277 - \u0627\u0633\u0648\u0627\u0642 \u0627\u0644\u062f\u0648\u063a\u062c\u064a",
-      "200304 - \u0635\u0627\u0644\u062d \u0633\u0646\u062a\u0631",
-      "200304 - \u0635\u0627\u0644\u062d \u0633\u0646\u062a\u0631 \u0627\u0644\u0648\u0641\u0648\u062f",
-      "200315 - \u0627\u0628\u0648 \u0627\u0644\u0647\u064a\u0644 \u0633\u0646\u062a\u0631",
-      "200315 - \u0633\u0646\u062a\u0631 \u0627\u0628\u0648 \u0627\u0644\u0647\u064a\u0644",
-      "200396 - \u0633\u0646\u062a\u0631 \u0645\u0627\u0632\u0646",
-      "200423 - \u0645\u0634\u0645\u0634\u0629",
-      "200425 - Raoan Center",
-      "200493 - \u0627\u0644\u0632\u0628\u064a\u0631 \u0633\u0646\u062a\u0631",
-      "200703 - \u0633\u0646\u062a\u0631 \u0627\u0644\u0628\u0631\u0627\u0636\u0639\u064a\u0647",
-      "200705 - \u0646\u0648\u0631 \u0627\u0644\u0632\u0647\u0631\u0627\u0621 \u0633\u0646\u062a\u0631",
-      "200722 - \u0628\u0635\u0631\u0647 \u0633\u0646\u062a\u0631",
-      "200723 - \u0633\u0646\u062a\u0631 \u0628\u0627\u0628\u0627 \u0627\u0634\u062a\u0631\u064a\u0644\u064a",
-      "200750 - \u0633\u0646\u062a\u0631 \u0627\u0644\u062e\u064a\u0631\u0627\u062a",
-      "200911 - \u0627\u064a\u0644\u064a\u0627 \u0633\u0646\u062a\u0631",
-      "200984 - \u0627\u0644\u063a\u064a\u0627\u062b \u0633\u0646\u062a\u0631",
-      "201034 - \u0627\u0644\u0631\u064a\u0627\u0646 \u0633\u0646\u062a\u0631",
-      "201080 - \u0627\u0644\u062e\u0644\u062c \u0633\u0646\u062a\u0631",
-      "201080 - \u0627\u0644\u062e\u0644\u064a\u062c \u0633\u0646\u062a\u0631",
-      "201081 - \u0627\u0644\u0641\u0636\u0644 \u0633\u0646\u062a\u0631",
-      "201096 - \u0643\u0645\u0627\u0644\u064a\u0627\u062a \u0645\u0639\u062a\u0632",
-      "201352 - \u0627\u0644\u0634\u0627\u0645 \u0645\u0627\u0631\u0643\u062a",
-      "201465 - \u0628\u0635\u0631\u0629 \u0633\u0646\u062a\u0631 3",
-      "202629 - \u0643\u0645\u0627\u0644\u064a\u0627\u062a \u0632\u064a\u0648\u0646\u064a",
-      "202780 - \u0645\u064a\u0644\u0627\u0646\u0648 \u0633\u0646\u062a\u0631",
-      "202848 - \u0645\u0643\u062a\u0628 \u0635\u062f\u0649 \u0627\u0644\u064a\u0642\u064a\u0646",
-      "202898 - \u0631\u0648\u0632 \u0633\u0646\u062a\u0631 \u0627\u0644\u0645\u0637\u064a\u062d\u0629",
-      "202903 - \u0633\u0646\u062a\u0631 \u062f\u0631 \u0627\u0644\u062c\u0646\u0648\u0628",
-      "202917 - Big Mart  \u0628\u0643 \u0645\u0627\u0631\u062a",
-      "202917 - Big Mart \u0628\u0643 \u0645\u0627\u0631\u062a",
-      "202975 - \u0631\u064a\u062a\u0627\u062c \u0633\u0646\u062a\u0631",
-      "202986 - \u0633\u0646\u062a\u0631 \u0627\u0644\u0633\u0627\u0639\u0629",
-      "203002 - \u0643\u0631\u0627\u0646\u062f \u0645\u0627\u0631\u0643\u062a",
-      "203036 - \u0627\u0644\u0647\u0644\u0627\u0644\u064a \u0633\u0646\u062a\u0631",
-      "203036 - \u0627\u0644\u0647\u0644\u0627\u0644\u064a \u0645\u0627\u0631\u0643\u062a",
-      "203182 - \u0633\u0646\u062a\u0631 \u0645\u062f\u064a\u0646\u0629 \u0627\u0644\u0646\u0631\u062c\u0633",
-      "203469 - \u062a\u0648\u0628 \u0645\u0627\u0631\u0643\u062a",
-      "203491 - \u062a\u0637\u0628\u064a\u0642 \u062a\u0648\u062a\u0631\u0632",
-      "203501 - \u0647\u0627\u064a\u0628\u0631 \u0645\u0627\u0631\u0643\u062a \u0627\u0644\u0628\u0631\u0643\u0629",
-      "203547 - Flower Garden"
-    ],
-    "BALEEN OMER RASOL": [
-      "300031 - Majidi Mall HM",
-      "302913 - Minera Zeren",
-      "305472 - Lazya Market Rasti Adala",
-      "305473 - lazya market Farmanbaran",
-      "305539 - Dahati Nwe",
-      "305664 - Market Amas",
-      "305677 - Darwazai Shorsh Market",
-      "305685 - Bestway supermarket",
-      "305860 - Darwaza Shoresh 2",
-      "305900 - soran bazar1",
-      "306010 - Levano market",
-      "306161 - Hafta bazar34",
-      "306195 - Rami Hyper market 1",
-      "306196 - New Azadi Market",
-      "306207 - star market",
-      "399901 - Italian City 2 Supermarket",
-      "399902 - Rami Hyper market 2",
-      "399903 - Rami Hyper market 3",
-      "399904 - Rami Hyper market 4"
-    ],
-    "MURTADA KHALID KAMIL ABBAS": [
-      "112626 - Al Madina Almonawra Supermarket / Altheqa",
-      "130005 - abu tallal Cosmetic",
-      "130011 - super market green apple",
-      "130021 - al-zaitone mall",
-      "130022 - Iraqi Free Company",
-      "130027 - Al-Qala market",
-      "130028 - Al-Lera market",
-      "130031 - Bait AL-Tamween-Salaikh",
-      "130032 - Bait AL-Tamween-Yarmouk",
-      "130033 - Al Madeena Al Monawara",
-      "130062 - Ageba market",
-      "130064 - Louloua market",
-      "130068 - al-ghaith market",
-      "130087 - Miswag Hyper market",
-      "130088 - happy home",
-      "131212 - Zaytouna Market",
-      "131213 - Kaf Market"
-    ],
-    "MUSTAFA MAHDI JASSEM": [
-      "102751 - babelon market",
-      "102751 - Babylon market",
-      "111496 - \u062d\u064a\u062f\u0631 \u0645\u0627\u0631\u0643\u062a",
-      "112626 - Al Madina Almonawra Supermarket / Altheqa",
-      "130008 - Akram market",
-      "130009 - al-ameer market",
-      "130012 - Al-toot market",
-      "130013 - Al-hamid mall",
-      "130014 - Al-hassan market",
-      "130016 - al-rabea' center",
-      "130022 - Iraqi Free Company",
-      "130025 - al-omeda",
-      "130029 - Al-mass center market",
-      "130033 - Al Madeena Al Monawara",
-      "130039 - A one  market",
-      "130042 - Tabarak Market",
-      "130059 - AL-Qemam company",
-      "130063 - Kishmesha market",
-      "130066 - Al-jawhara market",
-      "130076 - Shanit market",
-      "130329 - Alwaza Market",
-      "130413 - Al naenae market",
-      "130584 - Tammra Market",
-      "130625 - al-tawn-Bab Al Sharqi",
-      "130658 - Al Taawun Hypermarket - Sadr City",
-      "131114 - Shant App",
-      "196085 - \u0627\u0644\u0645\u062f\u0644\u0644"
-    ],
-    "OMER ABD ALWAHAB": [
-      "100271 - al-nour whole seller \\ abu ali",
-      "100338 - al-akhawain whole seller",
-      "100357 - al-walid \\ khalid whole seller",
-      "101160 - wosufi",
-      "105546 - \u0639\u0644\u0627\u0621 / \u0627\u0644\u0634\u0631\u0642 \u0627\u0644\u0627\u0648\u0633\u0637",
-      "105590 - \u0645\u062c\u0645\u0639 \u0627\u0644\u0627\u0646\u0648\u0627\u0631",
-      "105761 - \u0645\u0643\u062a\u0628 \u0627\u0644\u0645\u0648\u0632\u0639",
-      "106089 - \u0645\u0643\u062a\u0628 \u0627\u0644\u0639\u0637\u064a\u0641\u064a\u0647",
-      "106184 - \u0639\u0644\u0627\u0621 \u062a\u0636\u0627\u0645\u0646",
-      "106365 - \u0627\u0644\u0645\u062c\u0645\u0639 \u0627\u0644\u062a\u0631\u0643\u064a",
-      "107817 - \u0639\u0645\u0631 \u0627\u0644\u0645\u0634\u0647\u062f\u0627\u0646\u064a",
-      "109809 - \u062a\u062d\u0633\u064a\u0646 \u0627\u0644\u0645\u0646\u062f\u0644\u0627\u0648\u064a",
-      "110135 - \u0645\u0643\u062a\u0628 \u0627\u0644\u062d\u064a\u0627\u0644\u064a",
-      "130041 - Baity market",
-      "130056 - Siham Alobaidi",
-      "130057 - Said al-haleb",
-      "130058 - Saveway market",
-      "130073 - al-rasool market",
-      "130078 - Metro Kent Market",
-      "130080 - Al-resaafa market 2",
-      "130085 - Noor Alyasameen",
-      "130397 - Rose Paris",
-      "130398 - Al aietidal",
-      "130425 - Ammar Wali",
-      "130450 - Abu Ali Al-Tai's office",
-      "130451 - Albyaa Office",
-      "130452 - Al-Hussam office",
-      "130554 - luzin market",
-      "130598 - Hypermarket Al-Taa'awon  / Al-Hurriya",
-      "130616 - Hypermarket Al-Taa'awon-Salhiya",
-      "131000 - Raad Al-Mandlawi Office",
-      "131027 - Karim Al-Taie office",
-      "131034 - Abu Fouad Office",
-      "131035 - aliaetidal\u00a0- ali Office",
-      "131066 - Al-Nargis office",
-      "131137 - Haider Al-Bayati Office",
-      "131138 - Ali Al-Mandlay Office - Karam Al-Ataa Aleata",
-      "131148 - Hussein Al-Abidi's office",
-      "195796 - \u0627\u0644\u0637\u064a\u0628 \u0634\u0648\u0631\u062c\u0629",
-      "195799 - \u0645\u0643\u062a\u0628 \u0627\u0644\u062c\u0645\u0627\u0644",
-      "196351 - \u0639\u0627\u0644\u0645 \u0627\u0644\u0645\u0643\u064a\u0627\u062c",
-      "196352 - \u0647\u064a\u062b\u0645 \u0627\u0644\u0646\u0635\u0631\u0627\u0648\u064a",
-      "196353 - \u0635\u062f\u064a\u0642 \u0627\u0644\u0623\u0633\u0639\u0627\u0631",
-      "196354 - \u0645\u0643\u062a\u0628 \u0627\u0644\u0645\u062f\u0627\u0631",
-      "196355 - \u0645\u0643\u062a\u0628 \u0627\u0644\u0645\u0630\u0627\u0642",
-      "196366 - \u062c\u0645\u0644\u0629 \u0627\u0644\u0639\u0644\u0627",
-      "196377 - \u0645\u0643\u062a\u0628 \u0627\u0644\u0648\u0627\u0646",
-      "196379 - \u0645\u0643\u062a\u0628 \u0628\u0631\u0643\u0629 \u0627\u0644\u0627\u0645\u064a\u0631",
-      "196406 - \u0639\u0644\u064a \u062d\u0645\u0627\u062f\u064a",
-      "196407 - \u0642\u0627\u0633\u0645 \u0627\u0644\u062e\u0627\u0644\u062f\u064a",
-      "196408 - \u062c\u0645\u0644\u0629 \u0639\u0635\u0627\u0645",
-      "196411 - \u0628\u0631\u0643\u0627\u062a \u0627\u0644\u0646\u0648\u0631",
-      "196425 - \u062c\u0645\u0644\u0629 \u0639\u0645\u0627\u0631 \u0627\u0644\u0627\u0633\u062f\u064a",
-      "196426 - \u0645\u0643\u062a\u0628 \u0645\u0631\u064a\u0645",
-      "196436 - \u0645\u0643\u062a\u0628 \u0627\u0644\u0641\u0647\u062f",
-      "196487 - \u0645\u0631\u0643\u0632 \u0627\u0646\u062c\u064a",
-      "196493 - \u0627\u0644\u0645\u062f\u064a\u0646\u0629 \u0627\u0644\u0645\u0646\u0648\u0631\u0629 \u2013 \u0627\u0644\u062f\u0648\u0631\u0629",
-      "196520 - \u0645\u0643\u062a\u0628 \u0632\u0645\u0632\u0645",
-      "196521 - \u0645\u0643\u062a\u0628 \u0627\u0644\u0647\u062f\u0649 \u2013 \u0627\u0644\u0643\u0627\u0638\u0645\u064a\u0629",
-      "196541 - \u062c\u0645\u0644\u0629 \u0639\u0645\u0627\u062f \u0627\u0644\u0631\u0627\u0648\u064a",
-      "196560 - \u0645\u0643\u062a\u0628 \u0627\u0644\u062d\u0633\u0646\u064a\u0646 \u2013 \u0627\u0644\u0639\u0627\u0645\u0631\u064a\u0629",
-      "196563 - \u0633\u064a\u062f \u062d\u064a\u062f\u0631 \u2013 \u0627\u0644\u0634\u0648\u0631\u062c\u0629",
-      "196612 - \u0645\u0643\u062a\u0628 \u0627\u0644\u0642\u0631\u0644\u0648\u0633\u064a",
-      "196655 - \u0645\u0631\u0643\u0632 \u0645\u0628\u064a\u0639\u0627\u062a \u0646\u0628\u0639 \u0627\u0644\u0641\u0631\u0627\u062a",
-      "196739 - \u0645\u062d\u0644\u0627\u062a \u0627\u0644\u0639\u0628\u064a\u062f\u064a",
-      "196797 - \u0645\u0643\u062a\u0628 \u0627\u0644\u0628\u0631\u0643\u0627\u062a \u2013 \u0633\u0627\u062d\u0629 \u0639\u062f\u0646",
-      "196808 - \u0645\u062c\u0645\u0639 \u0627\u0644\u0648\u0633\u0627\u0645"
-    ],
-    "OMER ALI MOHAMMED": [
-      "106890 - \u062d\u064a\u0641\u0627 \u0645\u0648\u0644",
-      "130011 - super market green apple",
-      "130017 - Al-rabeaa market",
-      "130021 - al-zaitone mall",
-      "130032 - Bait AL-Tamween-Yarmouk",
-      "130041 - Baity market",
-      "130049 - Haifa mall",
-      "130056 - Siham Alobaidi",
-      "130057 - Said al-haleb",
-      "130058 - Saveway market",
-      "130064 - Louloua market",
-      "130067 - Alsaa Mall",
-      "130068 - al-ghaith market",
-      "130073 - al-rasool market",
-      "130075 - Salla Market",
-      "130078 - Metro Kent Market",
-      "130079 - al-resaafa market",
-      "130080 - Al-resaafa market 2",
-      "130085 - Noor Alyasameen",
-      "130088 - happy home",
-      "130345 - Al Joud Home Shopping",
-      "130386 - Al-Ta'ma Center",
-      "130415 - Abu Hamza Equipment",
-      "130554 - luzin market",
-      "130580 - Al Mustafa Group",
-      "130598 - Hypermarket Al-Taa'awon  / Al-Hurriya",
-      "130616 - Hypermarket Al-Taa'awon-Salhiya",
-      "196268 - \u0645\u0627\u0631\u0643\u062a \u0627\u0644\u0628\u0631\u0643\u0629",
-      "196841 - Express Market"
-    ],
-    "SALAH MAHDI SALEH": [
-      "112626 - Al Madina Almonawra Supermarket / Altheqa",
-      "130005 - abu tallal Cosmetic",
-      "130011 - super market green apple",
-      "130027 - Al-Qala market",
-      "130030 - Bait AL-Tamween-Adhamiya",
-      "130031 - Bait AL-Tamween-Salaikh",
-      "130032 - Bait AL-Tamween-Yarmouk",
-      "130043 - Al-wardaa whole seller",
-      "130062 - Ageba market",
-      "130069 - Bait AL-Tamween-Fallujah",
-      "130079 - al-resaafa market",
-      "130087 - Miswag Hyper market",
-      "130088 - happy home"
-    ],
-    "WOROOD WALEED ABDULKAREEM MOHAMMED": [
-      "112626 - Al Madina Almonawra Supermarket / Altheqa",
-      "130011 - super market green apple",
-      "130027 - Al-Qala market",
-      "130033 - Al Madeena Al Monawara",
-      "130062 - Ageba market",
-      "130079 - al-resaafa market",
-      "130088 - happy home"
-    ]
-  },
-  "SubD-C": {
-    "ISAM ABDULWAHID": [
-      "105830 - \u0627\u0628\u0648 \u0627\u0633\u064a\u0644",
-      "107572 - \u0634\u0631\u0643\u0629 \u0627\u0644\u0645\u0622\u062b\u0631 - \u0627\u062d\u0645\u062f \u062c\u0627\u0633\u0645 \u0639\u0628\u062f / \u0627\u0644\u0646\u062c\u0641",
-      "108384 - \u0639\u0644\u064a \u0634\u0648\u0631\u062c\u0629",
-      "108407 - \u0628\u0631\u0643\u0627\u062a \u0627\u0644\u0643\u0631\u0627\u0631",
-      "110643 - \u0634\u0631\u0643\u0629 \u0627\u0644\u0645\u0622\u062b\u0631 - \u0627\u062d\u0645\u062f \u062c\u0627\u0633\u0645 \u0639\u0628\u062f / \u0627\u0644\u062d\u0644\u0629",
-      "112122 - Ma'ather Al A'lia Karbalaa",
-      "130583 - Al Mustafa Office",
-      "131178 - Saif Al Qutby",
-      "196063 - \u062c\u0628\u0644 \u0639\u0644\u064a - \u0643\u0631\u0643\u0648\u0643",
-      "196210 - \u0627\u0643\u0631\u0645 \u0627\u0644\u062f\u0631\u064a\u0639\u064a",
-      "196260 - \u0645\u0643\u062a\u0628 \u0627\u0644\u0637\u064a\u0628\u0627\u062a",
-      "196348 - \u0645\u0643\u062a\u0628 \u0627\u0644\u062d\u0627\u0631\u062b",
-      "196405 - \u0645\u0643\u062a\u0628 \u0627\u0644\u0627\u0641\u0646\u0627\u0646 / \u0627\u0644\u0643\u0648\u062a",
-      "305720 - \u0645\u0634\u064a\u0631 \u0645\u062d\u0645\u062f",
-      "305987 - KDA Company  Duhok",
-      "306114 - Borj Al khalij",
-      "306154 - Ras al-Khaimah",
-      "306166 - Maktab Meer",
-      "306194 - Najm Alshamal",
-      "306212 - Unicosma"
-    ],
-    "SHAHER AHMED MUTLAK": [
-      "107572 - \u0634\u0631\u0643\u0629 \u0627\u0644\u0645\u0622\u062b\u0631 - \u0627\u062d\u0645\u062f \u062c\u0627\u0633\u0645 \u0639\u0628\u062f / \u0627\u0644\u0646\u062c\u0641",
-      "110643 - \u0634\u0631\u0643\u0629 \u0627\u0644\u0645\u0622\u062b\u0631 - \u0627\u062d\u0645\u062f \u062c\u0627\u0633\u0645 \u0639\u0628\u062f / \u0627\u0644\u062d\u0644\u0629",
-      "112122 - Ma'ather Al A'lia Karbalaa",
-      "130583 - Al Mustafa Office",
-      "196260 - \u0645\u0643\u062a\u0628 \u0627\u0644\u0637\u064a\u0628\u0627\u062a",
-      "196405 - \u0645\u0643\u062a\u0628 \u0627\u0644\u0627\u0641\u0646\u0627\u0646 / \u0627\u0644\u0643\u0648\u062a"
-    ]
-  },
-  "WholeSale": {
-    "ABDULLAH TAHSEEN BAJELAN": [
-      "196036 - \u0628\u0631\u0647\u0627\u0646",
-      "301406 - \u0643\u0645\u0627\u0644\u064a\u0627\u062a \u0645\u062d\u0645\u062f \u0634\u0648\u0627\u0646",
-      "303500 - Botan Company",
-      "303562 - \u0643\u0627\u062f\u0648\u0633",
-      "304173 - \u0634\u0645\u0627\u0644 \u0634\u064a\u062e \u0627\u0644\u0644\u0647",
-      "305720 - \u0645\u0634\u064a\u0631 \u0645\u062d\u0645\u062f",
-      "305781 - \u0634\u0648\u064a\u0646\u064a \u0634\u0648\u0627\u0646",
-      "305801 - D L beauty",
-      "305932 - \u0645\u062d\u0645\u062f \u0631\u0634\u064a\u062f \u062c\u0645\u0644\u0629",
-      "306158 - Shamal sheikh alla\\haji jamal",
-      "306200 - New Face",
-      "306201 - New Look Center",
-      "306205 - \u0645\u062e\u0632\u0646 \u0633\u0631\u0648\u0627\u0646"
-    ],
-    "AHMED HERZ MAHMOUD": [
-      "200009 - \u0633\u0639\u062f\u064a \u0639\u0634\u0627\u0631",
-      "200010 - \u0645\u062d\u0644\u0627\u062a \u0627\u0644\u0639\u0631\u0627\u0642\u064a",
-      "200125 - \u0639\u0644\u0648\u0629 \u0627\u0644\u062a\u0633\u0627\u0647\u0644",
-      "200125 - \u0639\u0644\u0648\u0629 \u0627\u0644\u062a\u0633\u0627\u0647\u0644 \u062e\u0627\u0631\u062c\u064a\u0629",
-      "200128 - \u0639\u0644\u0648\u0629 \u0627\u0644\u0633\u0644\u0627\u0645",
-      "200130 - \u0639\u0644\u0648\u0629 \u0627\u0644\u0639\u0645\u0631\u0627\u0646",
-      "200186 - \u0627\u0628\u0648 \u0639\u0628\u062f\u0627\u0644\u0644\u0647 \u0627\u0644\u0632\u0647\u064a\u0628\u0627\u0646",
-      "200186 - \u0639\u0644\u0648\u0629 \u0627\u0644\u0632\u0647\u064a\u0628\u0627\u0646 \u0627\u0628\u0648 \u0639\u0628\u062f \u0627\u0644\u0644\u0647",
-      "200196 - \u0639\u0644\u0648\u0629 \u0645\u062d\u0645\u062f \u0627\u0644\u0628\u0632\u0648\u0646\u064a",
-      "201109 - \u0627\u0644\u0628\u0627\u0646 \u0639\u0645\u0627\u0631",
-      "201112 - \u062d\u064a\u062f\u0631 \u0635\u0627\u062d\u0628",
-      "201113 - \u0635\u0628\u0627\u062d \u0627\u0644\u0633\u0627\u0639\u062f\u064a",
-      "201114 - \u0635\u0644\u0627\u062d \u0627\u0644\u0645\u0638\u0641\u0631",
-      "201115 - \u0639\u0644\u0648\u0629 \u0627\u0628\u0648 \u0636\u064a\u0627\u0621",
-      "201119 - \u0631\u062d\u064a\u0645 \u0627\u0644\u0632\u064a\u062f\u064a",
-      "201120 - \u0628\u0627\u0642\u0631 \u0627\u0644\u0645\u0638\u0641\u0631",
-      "201123 - \u0639\u0628\u062f \u0627\u0644\u0644\u0647 \u0639\u0628\u0627\u062f\u064a",
-      "201124 - \u062d\u064a\u062f\u0631 \u062e\u0644\u0641 \u0627\u0644\u0628\u0627\u0646",
-      "201126 - \u062d\u0633\u0646 \u062c\u0627\u0633\u0645",
-      "201127 - \u0645\u062d\u0644\u0627\u062a \u0639\u062f\u064a",
-      "201130 - \u0627\u0643\u0631\u0645 \u0627\u0644\u0639\u0632\u0627\u0648\u064a",
-      "201178 - \u0627\u0628\u0648 \u0639\u0644\u064a \u0642\u0631\u0646\u0629",
-      "201398 - \u0639\u0644\u0648\u0629 \u0627\u0644\u062d\u0633\u064a\u0646\u064a",
-      "201420 - \u0639\u0644\u0648\u0629 \u0631\u0632\u0627\u0642",
-      "201926 - \u0639\u0644\u0648\u0629 \u0628\u0631\u0643\u0627\u062a \u0627\u0644\u0631\u0636\u0627",
-      "202692 - \u062d\u0633\u0646 \u0627\u0644\u0645\u0637\u0648\u0631\u064a",
-      "202868 - \u0639\u0644\u0648\u0629 \u0627\u0644\u0639\u0645\u064a\u062f \u0631\u0639\u062f",
-      "203019 - \u062c\u0639\u0641\u0631 \u0646\u0627\u062c\u064a",
-      "203020 - \u0627\u0628\u0648 \u0627\u062d\u0645\u062f",
-      "203043 - \u0645\u0643\u062a\u0628 \u0631\u0648\u0632",
-      "203044 - \u0645\u0643\u062a\u0628 \u0627\u0628\u0648 \u0643\u0631\u0627\u0631",
-      "203047 - \u0645\u0643\u062a\u0628 \u062f\u0628\u064a",
-      "203053 - \u0645\u0643\u062a\u0628 \u0627\u0644\u0631\u062d\u0627\u0628",
-      "203173 - \u0645\u0643\u062a\u0628 \u062d\u0633\u0627\u0645",
-      "203174 - \u0639\u0644\u064a \u0635\u0627\u062d\u0628",
-      "203359 - \u0645\u0639\u0631\u0636 \u0646\u0648\u0631 \u0627\u0644\u0634\u0645\u0633",
-      "203360 - \u0639\u0644\u0648\u0629 \u0645\u0647\u0631\u0627\u062c\u0627",
-      "203391 - \u0645\u062c\u0645\u0639 \u0627\u0644\u063a\u062f\u064a\u0631",
-      "203392 - \u0645\u062d\u0644\u0627\u062a \u0639\u0644\u064a \u0645\u0648\u0633\u0649",
-      "203449 - \u0634\u0631\u0643\u0629 \u0627\u0644\u062d\u0633\u0646",
-      "203466 - \u0639\u0644\u0648\u0647 \u0627\u0644\u0633\u0645\u0627\u062d",
-      "203486 - \u0645\u0643\u062a\u0628 \u0645\u064a\u062b\u0627\u0642",
-      "203488 - \u0643\u0627\u0638\u0645 \u0633\u0627\u062f\u0647",
-      "203490 - \u0627\u0628\u0648 \u0631\u0636\u0627 \u0646\u0648\u0631 \u0627\u0644\u0634\u0645\u0633",
-      "203525 - Basrah Office"
-    ],
-    "ALI ADEL ABDELRAHMAN": [
-      "200096 - \u0633\u064a\u062f \u0633\u0639\u062f",
-      "201177 - \u0639\u0628\u062f \u0627\u0644\u0644\u0647 \u064a\u0648\u0633\u0641 \u0642\u0631\u0646\u0647",
-      "201183 - \u0633\u0639\u062f \u0645\u062c\u064a\u062f",
-      "201821 - \u0634\u0631\u0643\u0629 \u062e\u064a\u0631\u0627\u062a \u0627\u0644\u0632\u0628\u064a\u0631",
-      "203435 - \u0639\u0644\u064a \u0646\u0627\u0635\u0631 \u0646\u0627\u0635\u0631\u064a\u0629",
-      "203485 - \u0643\u0631\u064a\u0645 \u062c\u0648\u0627\u062f \u0639\u0645\u0627\u0631\u0629",
-      "203499 - \u0645\u0643\u062a\u0628 \u0627\u0644\u0646\u0648\u0631\u064a\u0646",
-      "203546 - \u0645\u0643\u062a\u0628 \u0627\u0644\u0642\u0628\u0633"
-    ],
-    "ALI TAHA KHALAF": [
-      "107792 - Mudhakhir tariq alyusr",
-      "112607 - Tareeq al salam drug stores",
-      "112608 - sanaya drug stores",
-      "130280 - Ozoon drug stores",
-      "130415 - Abu Hamza Equipment",
-      "130429 - Ahmedi office",
-      "130430 - Abu Talib office",
-      "130490 - Mudhakhir Mazaya Baghdad",
-      "130527 - Alnaaqus durg store",
-      "130577 - Mudhakhir adwyh masdar aldawa",
-      "130637 - Nawar office",
-      "131028 - Alhilal office",
-      "131065 - Baby canter-al Bayaa",
-      "131069 - Tajihisat alannaya",
-      "131094 - alshaghaf drug store",
-      "131106 - Bet.AL.tefal hay Alamel",
-      "131107 - lana canter hay ALamel",
-      "131124 - taghezat Alsaafa AL dahabya",
-      "131125 - sama Albaraka drug store",
-      "131139 - tajhazat sama Algadeer",
-      "131149 - Dwaa Alkindy Drug store",
-      "131150 - platin drug store",
-      "131188 - sumer milk center Al- muhmodia",
-      "131189 - mamame online app",
-      "131210 - AL.gaeth baby canter hay aljameaa",
-      "131211 - Taghezat AL hasaneen"
-    ],
-    "AYMAN SARDAR": [
-      "196036 - \u0628\u0631\u0647\u0627\u0646",
-      "196060 - Shwan",
-      "196063 - \u062c\u0628\u0644 \u0639\u0644\u064a - \u0643\u0631\u0643\u0648\u0643",
-      "300532 - baleen",
-      "302913 - Minera Zeren",
-      "305472 - Lazya Market Rasti Adala",
-      "305987 - KDA Company  Duhok",
-      "305987 - KDA Company -Duhok",
-      "306114 - Borj Al khalij"
-    ],
-    "EHAB QAHTAN MOHAMED": [
-      "106154 - \u0639\u0627\u0645\u0631 \u0646\u0639\u0645\u0647",
-      "106155 - \u0645\u0647\u062f\u064a \u0628\u0647\u062c\u062a",
-      "106156 - \u0639\u0645\u0627\u0631 \u0627\u0644\u0633\u0627\u062d\u0644",
-      "106166 - \u0627\u0644\u0647\u062c\u064a\u0646",
-      "106184 - \u0639\u0644\u0627\u0621 \u062a\u0636\u0627\u0645\u0646",
-      "106193 - \u0639\u0645\u0627\u0631 \u062c\u0648\u0627\u0646\u0629",
-      "106196 - \u0645\u062d\u0644\u0627\u062a \u0627\u0644\u0631\u0633\u0644",
-      "106222 - \u0646\u0634\u0623\u062a \u0627\u0644\u062f\u0627\u0648\u062f\u064a",
-      "106228 - \u064a\u0634\u0627\u0631 \u062d\u0627\u062c\u064a",
-      "106233 - \u0645\u0643\u062a\u0628 \u0627\u0644\u0631\u0636\u0627",
-      "106239 - \u0639\u064a\u0633\u0649 \u0627\u0644\u0639\u0643\u064a\u0644\u064a",
-      "106491 - \u0645\u062d\u0645\u062f \u0627\u0644\u062e\u0627\u0635\u0643\u064a",
-      "106755 - \u0645\u0643\u062a\u0628 \u0627\u0644\u0641\u0631\u0627\u062a",
-      "107225 - \u0645\u0643\u062a\u0628 \u0627\u0644\u0627\u062e\u0648\u064a\u0646",
-      "111154 - \u0645\u0643\u062a\u0628 \u0627\u0644\u0627\u0648\u0644",
-      "130398 - Al aietidal",
-      "130424 - Ammar Wali",
-      "130441 - Al-Fardous Al-Akbar Company",
-      "130486 - Abu Noor Office",
-      "130487 - Al Baraka Office",
-      "131034 - Abu Fouad Office",
-      "131035 - aliaetidal\u00a0- ali Office",
-      "131066 - Al-Nargis office",
-      "131137 - Haider Al-Bayati Office",
-      "131138 - Ali Al-Mandlay Office - Karam Al-Ataa Aleata",
-      "131148 - Hussein Al-Abidi's office",
-      "131180 - Al-Eahd Office",
-      "131181 - Sirwan Office",
-      "131187 - Al-Ahmad Stores - Hajj Mahmoud Al-Hilli",
-      "195796 - \u0627\u0644\u0637\u064a\u0628 \u0634\u0648\u0631\u062c\u0629",
-      "196216 - \u0645\u0643\u062a\u0628 \u0627\u0644\u0627\u062d\u0631\u0627\u0631",
-      "196219 - \u0645\u0627\u0644\u0643 - \u062c\u0645\u064a\u0644\u0629",
-      "196220 - \u0627\u0644\u0647\u062f\u064a\u0631 - \u062c\u0645\u064a\u0644\u0629",
-      "196242 - \u062f\u064a\u0627\u0631 \u0632\u0645\u0632\u0645",
-      "196357 - \u0631\u0628\u0648\u0639 \u0627\u0644\u062e\u0644\u064a\u062c",
-      "196365 - \u0645\u0643\u062a\u0628 \u0627\u0644\u0628\u0627\u0633\u0637",
-      "196406 - \u0639\u0644\u064a \u062d\u0645\u0627\u062f\u064a",
-      "196487 - \u0645\u0631\u0643\u0632 \u0627\u0646\u062c\u064a",
-      "196526 - \u0645\u0643\u062a\u0628 \u0627\u0631\u0627\u0632- \u0627\u0644\u0634\u0648\u0631\u062c\u0629",
-      "196593 - \u0643\u0627\u0645\u0644 \u0627\u0644\u0645\u0646\u062f\u0644\u0627\u0648\u064a",
-      "196612 - \u0645\u0643\u062a\u0628 \u0627\u0644\u0642\u0631\u0644\u0648\u0633\u064a",
-      "196648 - \u0645\u0643\u062a\u0628 \u0627\u0628\u0648 \u0631\u0642\u064a\u0629",
-      "196688 - \u0645\u0643\u062a\u0628 \u0627\u0644\u0645\u0645\u064a\u0632",
-      "196692 - \u0645\u0643\u062a\u0628 \u0627\u0644\u0639\u0627\u0626\u0644\u0629",
-      "196790 - \u0634\u0631\u0643\u0629 \u0645\u062f\u0649 \u0627\u0644\u0628\u0644\u0627\u062f (\u0627\u0644\u0639\u0643\u064a\u0644\u064a)",
-      "196805 - \u0645\u0643\u062a\u0628 \u0628\u0631\u0643\u0627\u062a \u0627\u0644\u0645\u0635\u0637\u0641\u0649"
-    ],
-    "LUAY ADEL RADHI NAHI": [
-      "112466 - Milk Center Al Azel",
-      "130429 - Ahmedi office",
-      "130430 - Abu Talib office",
-      "130432 - Al  Shahad Office",
-      "130564 - Anwar Al Ghadeer Office",
-      "130637 - Nawar office",
-      "131090 - alzahraa",
-      "131091 - anwar -almshajar",
-      "131123 - Ardh Al-Banafsaj Draug Store"
-    ],
-    "MAAN FAUAZ": [
-      "196036 - \u0628\u0631\u0647\u0627\u0646",
-      "305670 - Bakhtiar Duhok"
-    ],
-    "MOHAMMED KHUDAIER DALEF": [
-      "100271 - al-nour whole seller \\ abu ali",
-      "105546 - \u0639\u0644\u0627\u0621 / \u0627\u0644\u0634\u0631\u0642 \u0627\u0644\u0627\u0648\u0633\u0637",
-      "105590 - \u0645\u062c\u0645\u0639 \u0627\u0644\u0627\u0646\u0648\u0627\u0631",
-      "106014 - \u0637\u064a\u0628\u0629 / \u0641\u0644\u0648\u062c\u0629",
-      "107582 - \u062f\u062c\u0644\u0629",
-      "107817 - \u0639\u0645\u0631 \u0627\u0644\u0645\u0634\u0647\u062f\u0627\u0646\u064a",
-      "107834 - \u0627\u0633\u0648\u0627\u0642 \u0627\u0644\u0648\u0641\u0627\u0621",
-      "107834 - \u0627\u0644\u0648\u0641\u0627\u0621",
-      "108667 - \u0627\u0644\u0645\u0628\u0627\u0631\u0643",
-      "110304 - \u0627\u0644\u0631\u062d\u0645\u0629",
-      "110848 - \u0627\u064a\u0627\u062f \u0627\u0644\u062f\u0647\u0644\u0643\u064a",
-      "110955 - \u0643\u0648\u0632\u0645\u062a\u0643 \u0645\u062d\u0645\u062f \u0627\u0644\u0642\u0631\u064a\u0634\u064a",
-      "112639 - Jeddo Sweet Company",
-      "130353 - Nono Center",
-      "130423 - Narcissus office",
-      "130429 - Ahmedi office",
-      "130430 - Abu Talib office",
-      "130432 - Al  Shahad Office",
-      "130449 - Dubai Centre",
-      "130475 - Zahrat Al Khaleej Centre",
-      "130478 - Al Sultan Market",
-      "130481 - Nizar Al Kubaisi Office",
-      "130498 - Abdali Office",
-      "130514 - Office sirr el-gammal - abd allah al-fahl",
-      "130564 - Anwar Al Ghadeer Office",
-      "130565 - Abu Hussein Office",
-      "130582 - Amer Al-Jumaili office",
-      "130637 - Nawar office",
-      "131007 - Um Ammar Market",
-      "131008 - Bassem office",
-      "131028 - Alhilal office",
-      "131029 - Al Ghazal Market",
-      "131030 - Al-Tamayuz office",
-      "131121 - Al-Asil and Al-Amir Complex",
-      "131122 - Alostura Office",
-      "131157 - Al Ghazal Market 2 - Hit",
-      "131167 - UM Al-Qura Complex",
-      "131179 - Al Noor Office",
-      "131191 - Mohammed Al-Maadidi's Office",
-      "131192 - Al-Tasahul Office",
-      "131203 - Mohammed Al-Maadidi's Office",
-      "196349 - \u0645\u0643\u062a\u0628 \u0627\u0644\u0647\u0644\u0627\u0644",
-      "196351 - \u0639\u0627\u0644\u0645 \u0627\u0644\u0645\u0643\u064a\u0627\u062c",
-      "196353 - \u0635\u062f\u064a\u0642 \u0627\u0644\u0623\u0633\u0639\u0627\u0631",
-      "196354 - \u0645\u0643\u062a\u0628 \u0627\u0644\u0645\u062f\u0627\u0631",
-      "196366 - \u062c\u0645\u0644\u0629 \u0627\u0644\u0639\u0644\u0627",
-      "196377 - \u0645\u0643\u062a\u0628 \u0627\u0644\u0648\u0627\u0646",
-      "196379 - \u0645\u0643\u062a\u0628 \u0628\u0631\u0643\u0629 \u0627\u0644\u0627\u0645\u064a\u0631",
-      "196427 - \u0645\u0643\u062a\u0628 \u0631\u064a\u0645\u0627\u0633",
-      "196428 - \u0645\u0643\u062a\u0628 \u0627\u0644\u0647\u062f\u0641",
-      "196444 - \u0633\u064a\u062f \u062b\u0627\u0626\u0631",
-      "196456 - \u0645\u0643\u062a\u0628 \u0627\u0641\u0627\u0642 \u0627\u0644\u0635\u0627\u062f\u0642",
-      "196560 - \u0645\u0643\u062a\u0628 \u0627\u0644\u062d\u0633\u0646\u064a\u0646 \u2013 \u0627\u0644\u0639\u0627\u0645\u0631\u064a\u0629",
-      "196637 - \u0645\u0643\u062a\u0628 \u0639\u0628\u062f \u0627\u0644\u0644\u0647",
-      "196776 - \u0634\u0631\u0643\u0629 \u0627\u0644\u0634\u064a\u0645\u0627\u0621 \u2013 \u0627\u0644\u0641\u0644\u0648\u062c\u0629",
-      "196783 - \u0639\u0627\u0631\u0641 \u0627\u0644\u0643\u0628\u064a\u0633\u064a \u2013 \u0627\u0644\u0631\u0645\u0627\u062f\u064a",
-      "196811 - \u0645\u0643\u062a\u0628 \u0627\u0628\u0648 \u0643\u064a\u0644\u0627\u0646",
-      "196824 - \u0645\u0643\u062a\u0628 \u0643\u0646\u0632 \u0627\u0644\u062a\u062c\u0627\u0631\u0629",
-      "196825 - Al-sarheed Market",
-      "196838 - \u0645\u0631\u0643\u0632 \u0631\u0627\u0645\u064a\u062a\u0627",
-      "196839 - \u0627\u0631\u0636 \u0627\u0644\u0645\u0631\u0627\u0639\u064a \u0627\u0644\u062e\u0636\u0631\u0627\u0621",
-      "196843 - \u0627\u0644\u0645\u062f\u064a\u0646\u0629 \u0645\u0648\u0644",
-      "196844 - \u0645\u0631\u0643\u0632 \u062d\u0648\u0627\u0621",
-      "196847 - \u0645\u062d\u0645\u062f \u0639\u062f\u0646\u0627\u0646 \u0644\u0644\u0639\u0637\u0648\u0631",
-      "196857 - Mohammad Nader"
-    ],
-    "NAYAZI SARBAZ MUHIALDIN": [
-      "195932 - \u0634\u0648\u064a\u0646\u064a \u063a\u0632\u0648\u0627\u0646 \u0634\u064a\u062e \u0627\u0644\u0644\u0647",
-      "196036 - \u0628\u0631\u0647\u0627\u0646",
-      "196037 - \u0633\u0631\u0628\u0627\u0632",
-      "304173 - \u0634\u0645\u0627\u0644 \u0634\u064a\u062e \u0627\u0644\u0644\u0647",
-      "305781 - \u0634\u0648\u064a\u0646\u064a \u0634\u0648\u0627\u0646",
-      "306021 - Idress shikhalla",
-      "306142 - baleen Kamaliat",
-      "306147 - Shweeny Sardar",
-      "306149 - 7 bazar kogai"
-    ],
-    "OMER ABD ALWAHAB": [
-      "100271 - al-nour whole seller \\ abu ali",
-      "100338 - al-akhawain whole seller",
-      "105546 - \u0639\u0644\u0627\u0621 / \u0627\u0644\u0634\u0631\u0642 \u0627\u0644\u0627\u0648\u0633\u0637",
-      "105590 - \u0645\u062c\u0645\u0639 \u0627\u0644\u0627\u0646\u0648\u0627\u0631",
-      "106184 - \u0639\u0644\u0627\u0621 \u062a\u0636\u0627\u0645\u0646",
-      "107817 - \u0639\u0645\u0631 \u0627\u0644\u0645\u0634\u0647\u062f\u0627\u0646\u064a",
-      "130398 - Al aietidal",
-      "130425 - Ammar Wali",
-      "130452 - Al-Hussam office",
-      "131000 - Raad Al-Mandlawi Office",
-      "195796 - \u0627\u0644\u0637\u064a\u0628 \u0634\u0648\u0631\u062c\u0629",
-      "195799 - \u0645\u0643\u062a\u0628 \u0627\u0644\u062c\u0645\u0627\u0644",
-      "196354 - \u0645\u0643\u062a\u0628 \u0627\u0644\u0645\u062f\u0627\u0631",
-      "196355 - \u0645\u0643\u062a\u0628 \u0627\u0644\u0645\u0630\u0627\u0642",
-      "196366 - \u062c\u0645\u0644\u0629 \u0627\u0644\u0639\u0644\u0627",
-      "196377 - \u0645\u0643\u062a\u0628 \u0627\u0644\u0648\u0627\u0646",
-      "196406 - \u0639\u0644\u064a \u062d\u0645\u0627\u062f\u064a",
-      "196408 - \u062c\u0645\u0644\u0629 \u0639\u0635\u0627\u0645",
-      "196411 - \u0628\u0631\u0643\u0627\u062a \u0627\u0644\u0646\u0648\u0631",
-      "196425 - \u062c\u0645\u0644\u0629 \u0639\u0645\u0627\u0631 \u0627\u0644\u0627\u0633\u062f\u064a",
-      "196520 - \u0645\u0643\u062a\u0628 \u0632\u0645\u0632\u0645",
-      "196560 - \u0645\u0643\u062a\u0628 \u0627\u0644\u062d\u0633\u0646\u064a\u0646 \u2013 \u0627\u0644\u0639\u0627\u0645\u0631\u064a\u0629",
-      "196612 - \u0645\u0643\u062a\u0628 \u0627\u0644\u0642\u0631\u0644\u0648\u0633\u064a",
-      "196797 - \u0645\u0643\u062a\u0628 \u0627\u0644\u0628\u0631\u0643\u0627\u062a \u2013 \u0633\u0627\u062d\u0629 \u0639\u062f\u0646",
-      "196808 - \u0645\u062c\u0645\u0639 \u0627\u0644\u0648\u0633\u0627\u0645"
-    ]
-  }
-};
+    let data = [];
 
-    // Populate Channel dropdown
-    window.onload = function () {
-      const channelSelect = document.getElementById("channel");
-      Object.keys(dropdownData).forEach(channel => {
-        channelSelect.add(new Option(channel, channel));
+    fetch('https://docs.google.com/spreadsheets/d/e/2PACX-1vREXfVVJ4zYuYx40MkvrBI8aH2OYr81ZlF2b_owlbT1o_RhXC44_egEmLCOiLrD5iVPo-CAuYRrVqIC/pub?gid=1284241246&single=true&output=csv')
+      .then(response => response.text())
+      .then(csv => {
+        const lines = csv.split("\n").filter(line => line.trim() !== '');
+        data = lines.slice(1).map(line => {
+          const [channel, salesman, customer] = line.split(',');
+          return { channel: channel?.trim(), salesman: salesman?.trim(), customer: customer?.trim() };
+        });
+
+        const channelSelect = document.getElementById("channel");
+        const salesmanSelect = document.getElementById("salesman");
+        const customerSelect = document.getElementById("customer");
+
+        const uniqueChannels = [...new Set(data.map(d => d.channel))];
+        uniqueChannels.forEach(channel => {
+          const opt = document.createElement("option");
+          opt.value = opt.text = channel;
+          channelSelect.add(opt);
+        });
+
+        channelSelect.onchange = () => {
+          salesmanSelect.innerHTML = "";
+          customerSelect.innerHTML = "";
+          const filteredSalesmen = data.filter(d => d.channel === channelSelect.value);
+          const uniqueSalesmen = [...new Set(filteredSalesmen.map(d => d.salesman))];
+          uniqueSalesmen.forEach(s => {
+            const opt = document.createElement("option");
+            opt.value = opt.text = s;
+            salesmanSelect.add(opt);
+          });
+        };
+
+        salesmanSelect.onchange = () => {
+          customerSelect.innerHTML = "";
+          const filteredCustomers = data.filter(d => d.salesman === salesmanSelect.value);
+          const uniqueCustomers = [...new Set(filteredCustomers.map(d => d.customer))];
+          uniqueCustomers.forEach(c => {
+            const opt = document.createElement("option");
+            opt.value = opt.text = c;
+            customerSelect.add(opt);
+          });
+        };
       });
+
+    const products = {
+      "Henkel": ["Fa Roll On 50ml", "Fa Spray 200ml", "Pert Cond 360ml", "Pert Men SHP 360ml", "Pert Shampoo 400ml", "Pert Shampoo 600ml", "Pert Shampoo1000ml", "Taft Spray 250ml"],
+      "HTM": ["HTM"],
+      "Dabur": ["Dabur Red 150", "Dabur 150 GM", "Dabur 100 GM", "Dabur Alpha range 150", "Dabur Red 200", "Miswak 190 GM", "Miswak gold 170 gm", "Miswak 150 gm", "Dabur Clove Gel 150gm"],
+      "Hobby": ["Hobby 2in1 Men", "Hobby Brilliantine - Hair Cream", "Hobby Conditioner", "Hobby Crazy Gel", "Hobby Hair Cream", "Hobby Hand Wash", "Hobby Lotion", "Hobby Shampoo", "Hobby Shower Gel", "Hobby Body Cream"],
+      "Aiico": ["Bleach", "Dishwashing Liquid", "Gel  Freshener", "General freshener", "Glass Cleaner", "Multi-Purpose Cleaner", "Laundry Liquid", "Liquid Soap"]
     };
 
-    function updateSalesmen() {
-      const channel = document.getElementById("channel").value;
-      const salesmanSelect = document.getElementById("salesman");
-      const customerSelect = document.getElementById("customer");
-      salesmanSelect.innerHTML = '<option value="">Select Salesman</option>';
-      customerSelect.innerHTML = '<option value="">Select Customer</option>';
-      if (channel && dropdownData[channel]) {
-        Object.keys(dropdownData[channel]).forEach(salesman => {
-          salesmanSelect.add(new Option(salesman, salesman));
-        });
-      }
-    }
+    const productsDiv = document.getElementById("products");
+    Object.entries(products).forEach(([group, items]) => {
+      const btn = document.createElement("button");
+      btn.className = "collapsible";
+      btn.textContent = group;
 
-    function updateCustomers() {
-      const channel = document.getElementById("channel").value;
-      const salesman = document.getElementById("salesman").value;
-      const customerSelect = document.getElementById("customer");
-      customerSelect.innerHTML = '<option value="">Select Customer</option>';
-      if (channel && salesman && dropdownData[channel][salesman]) {
-        dropdownData[channel][salesman].forEach(customer => {
-          customerSelect.add(new Option(customer, customer));
-        });
-      }
-    }
+      const contentDiv = document.createElement("div");
+      contentDiv.className = "content product-grid";
 
-    document.getElementById("stockForm").addEventListener("submit", function(e) {
-      e.preventDefault();
+      items.forEach(item => {
+        const div = document.createElement("div");
+        div.className = "product";
+        div.innerHTML = `<img src="placeholder.jpg" alt="${item}"><span>${item}</span><input type="number" min="0" placeholder="Qty">`;
+        contentDiv.appendChild(div);
+      });
 
-      const data = {
-        week: document.getElementById("week").value,
-        channel: document.getElementById("channel").value,
-        salesman: document.getElementById("salesman").value,
-        customer: document.getElementById("customer").value,
-        quantity: document.getElementById("quantity").value
+      btn.onclick = () => {
+        contentDiv.style.display = contentDiv.style.display === "block" ? "none" : "block";
       };
 
-      fetch("https://script.google.com/macros/s/AKfycbyziL0qnSuXUfEjDE0uZGAXEuffW6Kd0kBWerCkuV2ZxaEvxFh4o5piJs7sWs7fag/exec", {
-        method: "POST",
-        body: JSON.stringify(data),
-        headers: {
-          "Content-Type": "application/json"
-        }
-      })
-      .then(response => response.text())
-      .then(result => {
-        alert("Submitted successfully!");
-        document.getElementById("stockForm").reset();
-      })
-      .catch(error => {
-        alert("Error submitting form: " + error);
-      });
+      productsDiv.appendChild(btn);
+      productsDiv.appendChild(contentDiv);
     });
   </script>
 </body>
