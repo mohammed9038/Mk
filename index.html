@@ -1,1052 +1,757 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<html lang="en"  class="supernova isGreen"><head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<link rel="alternate" type="application/json+oembed" href="https://www.jotform.com/oembed/?format=json&amp;url=https%3A%2F%2Fform.jotform.com%2F251742941895468" title="oEmbed Form">
-<link rel="alternate" type="text/xml+oembed" href="https://www.jotform.com/oembed/?format=xml&amp;url=https%3A%2F%2Fform.jotform.com%2F251742941895468" title="oEmbed Form">
-<meta property="og:title" content="Data Collection" >
-<meta property="og:url" content="https://form.jotform.com/251742941895468" >
-<meta property="og:description" content="Please click the link to complete this form." >
-<meta name="slack-app-id" content="AHNMASS8M">
-<meta name="format-detection" content="telephone=no">
-<meta property="og:image" content="https://www.jotform.com/uploads/m7amed.9038/form_files/logo_transparent%20(1).68625c1ea46ee5.44749725.png" />
-<link rel="shortcut icon" href="https://cdn.jotfor.ms/assets/img/favicons/favicon-2021-light%402x.png">
-<link rel="apple-touch-icon" href="https://cdn.jotfor.ms/assets/img/favicons/favicon-2021-light%402x.png">
-<link rel="canonical" href="https://form.jotform.com/251742941895468" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=2.0, user-scalable=1" />
-<meta name="HandheldFriendly" content="true" />
-<title>Data Collection</title>
-<link type="text/css" rel="stylesheet" href="https://cdn.jotfor.ms/stylebuilder/static/form-common.css?v=87bd99f
-"/>
-<style type="text/css">@media print{*{-webkit-print-color-adjust: exact !important;color-adjust: exact !important;}.form-section{display:inline!important}.form-pagebreak{display:none!important}.form-section-closed{height:auto!important}.page-section{position:initial!important}}</style>
-<link type="text/css" rel="stylesheet" href="https://cdn.jotfor.ms/themes/CSS/5e6b428acc8c4e222d1beb91.css?v=3.3.63881&themeRevisionID=65660e4b326633110492e01a"/>
-<link type="text/css" rel="stylesheet" href="https://cdn.jotfor.ms/css/styles/payment/payment_styles.css?3.3.63881" />
-<link type="text/css" rel="stylesheet" href="https://cdn.jotfor.ms/css/styles/payment/payment_feature.css?3.3.63881" />
-<style type="text/css" id="form-designer-style">
-    /* Injected CSS Code */
-/*PREFERENCES STYLE*/
-    .form-all {
-      font-family: Inter, sans-serif;
-    }
-  
-    .form-label.form-label-auto {
-      
-    display: inline-block;
-    float: left;
-    text-align: left;
-  
-    }
-  
-    .form-line {
-      margin-top: 12px;
-      margin-bottom: 12px;
-    }
-  
-    .form-all {
-      max-width: 752px;
-      width: 100%;
-    }
-  
-    .form-label.form-label-left,
-    .form-label.form-label-right,
-    .form-label.form-label-left.form-label-auto,
-    .form-label.form-label-right.form-label-auto {
-      width: 230px;
-    }
-  
-    .form-all {
-      font-size: 16px
-    }
-  
-    .supernova .form-all, .form-all {
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Stock In Trade</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
       background-color: #e9f8f1;
-    }
-  
-    .form-all {
       color: #417505;
+      padding: 20px;
+      max-width: 720px;
+      margin: auto;
     }
-    .form-header-group .form-header {
-      color: #417505;
+    label {
+      display: block;
+      margin-top: 20px;
+      font-weight: bold;
     }
-    .form-header-group .form-subHeader {
-      color: #417505;
+    select, input[type="number"] {
+      width: 100%;
+      padding: 10px;
+      margin-top: 5px;
+      border: 1px solid #cce0cc;
+      border-radius: 5px;
+      font-size: 16px;
     }
-    .form-label-top,
-    .form-label-left,
-    .form-label-right,
-    .form-html,
-    .form-checkbox-item label,
-    .form-radio-item label,
-    span.FITB .qb-checkbox-label,
-    span.FITB .qb-radiobox-label,
-    span.FITB .form-radio label,
-    span.FITB .form-checkbox label,
-    [data-blotid][data-type=checkbox] [data-labelid],
-    [data-blotid][data-type=radiobox] [data-labelid],
-    span.FITB-inptCont[data-type=checkbox] label,
-    span.FITB-inptCont[data-type=radiobox] label {
-      color: #417505;
+    button {
+      margin-top: 30px;
+      padding: 12px;
+      background-color: #417505;
+      color: white;
+      border: none;
+      font-size: 16px;
+      cursor: pointer;
+      border-radius: 6px;
     }
-    .form-sub-label {
-      color: #5b8f1f;
+    button:hover {
+      background-color: #2d5003;
     }
-  
-  .supernova {
-    background-color: #e9f8f1;
-  }
-  .supernova body {
-    background: transparent;
-  }
-  
-    .form-textbox,
-    .form-textarea,
-    .form-dropdown,
-    .form-radio-other-input,
-    .form-checkbox-other-input,
-    .form-captcha input,
-    .form-spinner input {
-      background-color: #ffffff;
-    }
-  
-      
-    .supernova {
-      background-repeat: no-repeat;
-      background-size:cover;
-      background-attachment: fixed;
-      background-position: center top;
-    }
-
-      .supernova, #stage {
-        background-image: none;
-      }
-    
-      .form-all {
-        background-image: none;
-      }
-    /*PREFERENCES STYLE*//*__INSPECT_SEPERATOR__*/.form-label.form-label-auto {
-        
-        display: inline-block;
-        float: left;
-        text-align: left;
-      
-      }
-    /* Injected CSS Code */
-</style>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+  </style>
 </head>
 <body>
-<form action="" method="POST">
-  <div id="formCoverLogo" style="margin-bottom:32px" class="form-cover-wrapper form-has-cover form-page-cover-image-align-center">
-    <div class="form-page-cover-image-wrapper" style="max-width:752px"><img src="https://www.jotform.com/uploads/m7amed.9038/form_files/logo_transparent%20(1).68625c1ea46ee5.44749725.png" class="form-page-cover-image" width="250" height="195" alt="Data Collection Logo" style="aspect-ratio:250/195" /></div>
-  </div>
-  <div role="main" class="form-all">
-    <link type="text/css" rel="stylesheet" media="all" href="https://cdn.jotfor.ms/wizards/languageWizard/custom-dropdown/css/lang-dd.css?3.3.63881" />
-    <div class="cont"><input type="text" id="input_language" name="input_language" style="display:none" />
-      <div class="language-dd" id="langDd" style="display:none">
-        <div class="dd-placeholder lang-emp">Language</div>
-        <ul class="lang-list dn" id="langList">
-          <li data-lang="en" class="en">English (US)</li>
-          <li data-lang="ar" class="ar">Arabic‬‎</li>
-        </ul>
-      </div>
-    </div>
-    <ul class="form-section page-section" role="presentation">
-      <li id="cid_1" class="form-input-wide" data-type="control_head">
-        <div class="form-header-group  header-large">
-          <div class="header-text httal htvam">
-            <h1 id="header_1" class="form-header" data-component="header">Stock In Trade</h1>
-            <div id="subHeader_1" class="form-subHeader">Fill out the form in cases by customer and supplier</div>
-          </div>
-        </div>
-      </li>
-      <li class="form-line jf-required" data-type="control_dropdown" id="id_58"><label class="form-label form-label-left form-label-auto" id="label_58" for="input_58" aria-hidden="false"> Week<span class="form-required">*</span> </label>
-        <div id="cid_58" class="form-input jf-required" data-layout="half"> <span class="form-sub-label-container" style="vertical-align:top"><select class="form-dropdown validate[required]" id="input_58" name="q58_week" style="width:310px" data-component="dropdown" required="" aria-label="Week">
-              <option value="">Please Select</option>
-              <option value="1">1</option>
-              <option value="2">2</option>
-              <option value="3">3</option>
-              <option value="4">4</option>
-            </select><label class="form-sub-label" for="input_58" id="sublabel_input_58" style="min-height:13px">اختر الاسبوع</label></span> </div>
-      </li>
-      <li class="form-line jf-required" data-type="control_widget" id="id_61"><label class="form-label form-label-left" id="label_61" for="input_61" aria-hidden="false"> Please Select<span class="form-required">*</span> </label>
-        <div id="cid_61" class="form-input jf-required" data-layout="full">
-          <div data-widget-name="Dynamic Dropdowns" style="width:100%;text-align:Right;overflow-x:auto" data-component="widget-field">
-            <div class="widget-inputs-wrapper"></div>
-            
-          </div>
-        </div>
-      </li>
-      <li class="form-line card-3col jf-required" data-type="control_payment" id="id_53" data-payment="true"><label class="form-label form-label-top search-enabled product-sorting-enabled category-enabled p-filter-three-column" id="label_53" for="input_53" aria-hidden="false"> Please Specify the Quantity of Stock available:<span class="form-required">*</span> </label>
-        <div id="cid_53" class="form-input-wide jf-required" data-layout="full">
-          <div data-wrapper-react="true">
-            <div data-wrapper-react="true" class="product-container-wrapper">
-              <div class="filter-container">
-                <div class="multi-select-dropdown category-title-enabled hasSelectAll" id="payment-category-dropdown">
-                  <div class="dropdown-container">
-                    <div class="select-area" tabindex="0" role="button" aria-expanded="false"><span class="dropdown-hint">Categories:</span><span class="selected-values">All</span><i class="icon"></i></div>
-                    <div class="select-content">
-                      <div class="options">
-                        <div aria-label="Categories:" class="option selected"><input type="checkbox" readonly="" checked="" value="All" /><span>All</span></div>
-                        <div aria-label="Categories:" class="option "><input type="checkbox" readonly="" value="2001" /><span>Henkel</span></div>
-                        <div aria-label="Categories:" class="option "><input type="checkbox" readonly="" value="2002" /><span>HTM</span></div>
-                        <div aria-label="Categories:" class="option "><input type="checkbox" readonly="" value="2003" /><span>Dabur</span></div>
-                        <div aria-label="Categories:" class="option "><input type="checkbox" readonly="" value="2004" /><span>Hobby</span></div>
-                        <div aria-label="Categories:" class="option "><input type="checkbox" readonly="" value="2005" /><span>Aiico</span></div>
-                      </div>
-                    </div>
-                  </div>
-                </div><input name="productSearch-input" class="form-textbox" id="productSearch-input" type="text" size="15" placeholder="Search" autoComplete="off" />
-                <div class="payment-dropdown " id="payment-sorting-products-dropdown">
-                  <div class="dropdown-container">
-                    <div class="select-area" tabindex="0" role="button" aria-expanded="false"><span class="dropdown-hint">Sort By </span><span class="selected-value"></span><i class="icon"></i></div>
-                    <div class="select-content">
-                      <div class="options">
-                        <div aria-label="Sort By " class="option " data-value="name_az">Name: A to Z</div>
-                        <div aria-label="Sort By " class="option " data-value="name_za">Name: Z to A</div>
-                        <div aria-label="Sort By " class="option " data-value="price_lowest">Price: Low to High</div>
-                        <div aria-label="Sort By " class="option " data-value="price_highest">Price: High to Low</div>
-                        <div class="option clear-option" data-value="clear">Clear Sort</div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div id="image-overlay" class="overlay-content" style="display:none"><img id="current-image" /><span class="lb-prev-button">prev</span><span class="lb-next-button">next</span><span class="lb-close-button">( X )</span><span class="image-overlay-product-container">
-                  <ul class="form-overlay-item" hasicon="false" hasimages="false"></ul>
-                  <ul class="form-overlay-item" pid="1007" hasicon="false" hasimages="true" iconvalue="">
-                    <li class="image-overlay-image"><img loading="lazy" src="https://www.jotform.com/uploads/m7amed.9038/form_files/51vwszb6hel_e476beeeb26190381f6a853c2e3f4f41.jpg" /></li>
-                  </ul>
-                  <ul class="form-overlay-item" pid="1008" hasicon="false" hasimages="true" iconvalue="">
-                    <li class="image-overlay-image"><img loading="lazy" src="https://www.jotform.com/uploads/m7amed.9038/form_files/images_1_430x430_6ee095dea2fac96563918d2fbb45590e.jpg" /></li>
-                  </ul>
-                  <ul class="form-overlay-item" pid="1005" hasicon="false" hasimages="true" iconvalue="">
-                    <li class="image-overlay-image"><img loading="lazy" src="https://www.jotform.com/uploads/m7amed.9038/form_files/images_8_c2f23f8a67c95ef4071a5ca6f3f20769.jpg" /></li>
-                  </ul>
-                  <ul class="form-overlay-item" pid="1006" hasicon="false" hasimages="true" iconvalue="">
-                    <li class="image-overlay-image"><img loading="lazy" src="https://www.jotform.com/uploads/m7amed.9038/form_files/2213429_main_60205ed408822f82eb78474188466b03.avif" /></li>
-                  </ul>
-                  <ul class="form-overlay-item" pid="1003" hasicon="false" hasimages="true" iconvalue="">
-                    <li class="image-overlay-image"><img loading="lazy" src="https://www.jotform.com/uploads/m7amed.9038/form_files/51hls14gkwl_uf1000_1000_ql80_ad505f7ddd333b3bc25856582dec780d.jpg" /></li>
-                  </ul>
-                  <ul class="form-overlay-item" pid="1002" hasicon="false" hasimages="true" iconvalue="">
-                    <li class="image-overlay-image"><img loading="lazy" src="https://www.jotform.com/uploads/m7amed.9038/form_files/16f1461d_eb6e_4e05_9834_20621419c0fc_270be3472287a52cbc3790f1b8e6fe44.jpg" /></li>
-                  </ul>
-                  <ul class="form-overlay-item" pid="1004" hasicon="false" hasimages="true" iconvalue="">
-                    <li class="image-overlay-image"><img loading="lazy" src="https://www.jotform.com/uploads/m7amed.9038/form_files/51tgdlubqrl_fe8142024507658fcfa515b6649ec3b3.jpg" /></li>
-                  </ul>
-                  <ul class="form-overlay-item" pid="1009" hasicon="false" hasimages="true" iconvalue="">
-                    <li class="image-overlay-image"><img loading="lazy" src="https://www.jotform.com/uploads/m7amed.9038/form_files/dffc0916_6c3d_4a2e_9a1a_cb6d4800be7a_a2106ce7e211b366ddcc31edb68f986e.jpg" /></li>
-                  </ul>
-                  <ul class="form-overlay-item" hasicon="false" hasimages="false"></ul>
-                  <ul class="form-overlay-item" pid="1036" hasicon="false" hasimages="true" iconvalue="">
-                    <li class="image-overlay-image"><img loading="lazy" src="https://www.jotform.com/uploads/m7amed.9038/form_files/images_70bce38b1a90bec04dc89ec21108ef73.png" /></li>
-                  </ul>
-                  <ul class="form-overlay-item" hasicon="false" hasimages="false"></ul>
-                  <ul class="form-overlay-item" pid="1037" hasicon="false" hasimages="true" iconvalue="">
-                    <li class="image-overlay-image"><img loading="lazy" src="https://www.jotform.com/uploads/m7amed.9038/form_files/61tiec_c_ql_uf1000_1000_ql80_ff5aa3cace1782b9d80c1f92c7d557e1.jpg" /></li>
-                  </ul>
-                  <ul class="form-overlay-item" pid="1038" hasicon="false" hasimages="true" iconvalue="">
-                    <li class="image-overlay-image"><img loading="lazy" src="https://www.jotform.com/uploads/m7amed.9038/form_files/280622_main_258afe804180726875d4195ef097041e.avif" /></li>
-                  </ul>
-                  <ul class="form-overlay-item" pid="1039" hasicon="false" hasimages="true" iconvalue="">
-                    <li class="image-overlay-image"><img loading="lazy" src="https://www.jotform.com/uploads/m7amed.9038/form_files/1_4a46e623_1530_46db_be4a_c5700c7772b6_dbd89b46d2c87025864ca8b9be7fb498.webp" /></li>
-                  </ul>
-                  <ul class="form-overlay-item" pid="1040" hasicon="false" hasimages="true" iconvalue="">
-                    <li class="image-overlay-image"><img loading="lazy" src="https://www.jotform.com/uploads/m7amed.9038/form_files/815n2vmbexl_uf1000_1000_ql80_8bea706f9dd131b69dacdb752338dfc5.jpg" /></li>
-                  </ul>
-                  <ul class="form-overlay-item" pid="1041" hasicon="false" hasimages="true" iconvalue="">
-                    <li class="image-overlay-image"><img loading="lazy" src="https://www.jotform.com/uploads/m7amed.9038/form_files/71zbithc_pl_uf1000_1000_ql80_e73137b529e5dd8bc6cce3ea1ca38fb7.jpg" /></li>
-                  </ul>
-                  <ul class="form-overlay-item" pid="1042" hasicon="false" hasimages="true" iconvalue="">
-                    <li class="image-overlay-image"><img loading="lazy" src="https://www.jotform.com/uploads/m7amed.9038/form_files/dabur_miswak_herbal_toothpaste_free_toothbrush_included_150g_0c728aacb17bfacfcdf351863cfbc805.webp" /></li>
-                  </ul>
-                  <ul class="form-overlay-item" pid="1043" hasicon="false" hasimages="true" iconvalue="">
-                    <li class="image-overlay-image"><img loading="lazy" src="https://www.jotform.com/uploads/m7amed.9038/form_files/asta_db902_dabur_miswak_gold_with_brush_170_gm_1627997215_872c6069c8bd453b1796ecdbee8182b4.jpg" /></li>
-                  </ul>
-                  <ul class="form-overlay-item" pid="1044" hasicon="false" hasimages="true" iconvalue="">
-                    <li class="image-overlay-image"><img loading="lazy" src="https://www.jotform.com/uploads/m7amed.9038/form_files/images_7_dc3b4241f304d55726d8ae6baa768f4a.jpg" /></li>
-                  </ul>
-                  <ul class="form-overlay-item" pid="1045" hasicon="false" hasimages="true" iconvalue="">
-                    <li class="image-overlay-image"><img loading="lazy" src="https://www.jotform.com/uploads/m7amed.9038/form_files/71w3k8bkjal_1_cdeef34869e1b0ff93a4cbab645ee658.jpg" /></li>
-                  </ul>
-                  <ul class="form-overlay-item" hasicon="false" hasimages="false"></ul>
-                  <ul class="form-overlay-item" pid="1010" hasicon="false" hasimages="true" iconvalue="">
-                    <li class="image-overlay-image"><img loading="lazy" src="https://www.jotform.com/uploads/m7amed.9038/form_files/images_1_e768e99b8314afc516da1fc75871b1ba.jpg" /></li>
-                  </ul>
-                  <ul class="form-overlay-item" pid="1012" hasicon="false" hasimages="true" iconvalue="">
-                    <li class="image-overlay-image"><img loading="lazy" src="https://www.jotform.com/uploads/m7amed.9038/form_files/61wfnhsjykl_uf1000_1000_ql80_fee70457244b7e22dee2f39862c7d47d.jpg" /></li>
-                  </ul>
-                  <ul class="form-overlay-item" pid="1013" hasicon="false" hasimages="true" iconvalue="">
-                    <li class="image-overlay-image"><img loading="lazy" src="https://www.jotform.com/uploads/m7amed.9038/form_files/n26679360a_1_a013ac746bc7c16c4c183c8619419132.avif" /></li>
-                  </ul>
-                  <ul class="form-overlay-item" pid="1014" hasicon="false" hasimages="true" iconvalue="">
-                    <li class="image-overlay-image"><img loading="lazy" src="https://www.jotform.com/uploads/m7amed.9038/form_files/3_eca469d5d415b4b6b7680239c66a0bff.jpg" /></li>
-                  </ul>
-                  <ul class="form-overlay-item" pid="1015" hasicon="false" hasimages="true" iconvalue="">
-                    <li class="image-overlay-image"><img loading="lazy" src="https://www.jotform.com/uploads/m7amed.9038/form_files/6c22d664_3a48_4548_9018_639c18294b5c_fe2401eefa1f50f1d21fe2bde4e7566d.avif" /></li>
-                  </ul>
-                  <ul class="form-overlay-item" pid="1016" hasicon="false" hasimages="true" iconvalue="">
-                    <li class="image-overlay-image"><img loading="lazy" src="https://www.jotform.com/uploads/m7amed.9038/form_files/hobby21_42d7af80997fbcc5e867deea95d52cc6.jpg" /></li>
-                  </ul>
-                  <ul class="form-overlay-item" pid="1017" hasicon="false" hasimages="true" iconvalue="">
-                    <li class="image-overlay-image"><img loading="lazy" src="https://www.jotform.com/uploads/m7amed.9038/form_files/61ulqkmkdal_dfbe25292d7cf4dc56374cc1914171a7.jpg" /></li>
-                  </ul>
-                  <ul class="form-overlay-item" pid="1018" hasicon="false" hasimages="true" iconvalue="">
-                    <li class="image-overlay-image"><img loading="lazy" src="https://www.jotform.com/uploads/m7amed.9038/form_files/hobby_protein_samp_sarimsak_ing_3d_optimized_0421d36077b51a87703baf8ce8e507ab.jpg" /></li>
-                  </ul>
-                  <ul class="form-overlay-item" pid="1019" hasicon="false" hasimages="true" iconvalue="">
-                    <li class="image-overlay-image"><img loading="lazy" src="https://www.jotform.com/uploads/m7amed.9038/form_files/hobby_fresh_care_orchid_8286eb564b4d29a4ff2e080d72c898bc.jpg" /></li>
-                  </ul>
-                  <ul class="form-overlay-item" pid="1020" hasicon="false" hasimages="true" iconvalue="">
-                    <li class="image-overlay-image"><img loading="lazy" src="https://www.jotform.com/uploads/m7amed.9038/form_files/71q2tekwu4l_uf1000_1000_ql80_87bf9bbf15a38db927b4b721eedad038.jpg" /></li>
-                  </ul>
-                  <ul class="form-overlay-item" hasicon="false" hasimages="false"></ul>
-                  <ul class="form-overlay-item" pid="1026" hasicon="false" hasimages="true" iconvalue="">
-                    <li class="image-overlay-image"><img loading="lazy" src="https://www.jotform.com/uploads/m7amed.9038/form_files/24141297_93b5_4963_8168_39d4ed7947ca_345_e0020d9ab3ea76a7de7634a3d2bdf7fc.webp" /></li>
-                  </ul>
-                  <ul class="form-overlay-item" pid="1028" hasicon="false" hasimages="true" iconvalue="">
-                    <li class="image-overlay-image"><img loading="lazy" src="https://www.jotform.com/uploads/m7amed.9038/form_files/zodk015_mr_stong_dishwashing_b6d4aa4f5af0862cf764c8df472df6d2.jpg" /></li>
-                  </ul>
-                  <ul class="form-overlay-item" pid="1030" hasicon="false" hasimages="true" iconvalue="">
-                    <li class="image-overlay-image"><img loading="lazy" src="https://www.jotform.com/uploads/m7amed.9038/form_files/zodk009op_2_1_e35bc146b9f9f58f0a798b476d86039c.jpg" /></li>
-                  </ul>
-                  <ul class="form-overlay-item" pid="1029" hasicon="false" hasimages="true" iconvalue="">
-                    <li class="image-overlay-image"><img loading="lazy" src="https://www.jotform.com/uploads/m7amed.9038/form_files/54b3491e4ff30ac3ce9c5f5a6138aa27_400x300_77768fda4a7391a756afc136d7a66174.jpeg" /></li>
-                  </ul>
-                  <ul class="form-overlay-item" pid="1032" hasicon="false" hasimages="true" iconvalue="">
-                    <li class="image-overlay-image"><img loading="lazy" src="https://www.jotform.com/uploads/m7amed.9038/form_files/zodk008_en_806b1c92b59edc7941326fdaf1ed68b1.jpg" /></li>
-                  </ul>
-                  <ul class="form-overlay-item" pid="1027" hasicon="false" hasimages="true" iconvalue="">
-                    <li class="image-overlay-image"><img loading="lazy" src="https://www.jotform.com/uploads/m7amed.9038/form_files/zodk004_en_1_3994ab6aacdb21835f606d6681f7610f.jpg" /></li>
-                  </ul>
-                  <ul class="form-overlay-item" pid="1034" hasicon="false" hasimages="true" iconvalue="">
-                    <li class="image-overlay-image"><img loading="lazy" src="https://www.jotform.com/uploads/m7amed.9038/form_files/odk019_1_8a951c9664c2caf513fa0bfa32f38544.jpg" /></li>
-                  </ul>
-                  <ul class="form-overlay-item" pid="1035" hasicon="false" hasimages="true" iconvalue="">
-                    <li class="image-overlay-image"><img loading="lazy" src="https://www.jotform.com/uploads/m7amed.9038/form_files/zodk023_1_180b3e26a59b5af7795b2addffa02693.jpg" /></li>
-                  </ul>
-                </span></div>
-              <div data-wrapper-react="true"><span class="form-product-category-item title_collapsed " category="2001"><b>Henkel</b><span class="selected-items-icon"></span></span><span class="form-product-item hover-product-item on_col1 not-category-found show_image show_option full_img new_ui" categories="2001" active-category="2001" pid="1007" aria-labelledby="label_53">
-                  <div data-wrapper-react="true" class="form-product-item-detail new_ui">
-                    <div class="p_col">
-                      <div class="p_checkbox"><input class="form-checkbox validate[required]  form-product-input" type="checkbox" id="input_53_1007" name="q53_pleaseSpecify[][id]" data-inputname="q53_pleaseSpecify[][id]" readonly="" aria-label="Select Product: Fa Roll On 50ml" data-is-default-required="false" data-is-default-selected="false" value="1007" />
-                        <div class="checked"></div>
-                        <div class="select_border"></div>
-                      </div>
-                    </div>
-                    <div class="p_image">
-                      <div class="image_area form-product-image-with-options">
-                        <div style="position:absolute;width:100%;height:100%"><img loading="lazy" role="img" aria-label="Fa Roll On 50ml" alt="Fa Roll On 50ml Product Image" style="width:100%;height:100%;object-fit:contain" src="https://www.jotform.com/uploads/m7amed.9038/form_files/51vwszb6hel_e476beeeb26190381f6a853c2e3f4f41.jpg" /></div>
-                      </div>
-                    </div>
-                    <div for="input_53_1007" class="form-product-container"><span data-wrapper-react="true">
-                        <div class="title_description"><span class="form-product-name" id="product-name-input_53_1007">Fa Roll On 50ml</span><span class="form-product-description" id="product-name-description-input_53_1007"></span></div><span class="form-product-details"><b><span data-wrapper-react="true"><span class="freeCurr" style="display:none">$</span><span id="input_53_1007_price"> Free</span><span class="freeCurr" style="display:none"></span></span></b></span>
-                      </span><span class="form-sub-label-container" style="vertical-align:top"><label class="form-sub-label" for="input_53_quantity_1007_0" style="min-height:13px">Quantity Case</label><input type="text" size="3" class="form-textbox validate[required] form-product-custom_quantity" name="q53_pleaseSpecify[special_1007][item_0]" id="input_53_quantity_1007_0" value="1" /></span></div>
-                    <div class="focus_action_button_container"><a class="btn-inline-product-delete" tabindex="0" role="button" aria-label="Delete Product"> </a><a class="btn-inline-product-settings" tabindex="0" role="button" aria-label="Product Settings"> </a></div>
-                  </div>
-                </span>
-                <div class="p_item_separator "></div><span class="form-product-item hover-product-item on_col2 not-category-found show_image show_option full_img new_ui" categories="2001" active-category="2001" pid="1008" aria-labelledby="label_53">
-                  <div data-wrapper-react="true" class="form-product-item-detail new_ui">
-                    <div class="p_col">
-                      <div class="p_checkbox"><input class="form-checkbox validate[required]  form-product-input" type="checkbox" id="input_53_1008" name="q53_pleaseSpecify[][id]" data-inputname="q53_pleaseSpecify[][id]" readonly="" aria-label="Select Product: Fa Spray 200ml" data-is-default-required="false" data-is-default-selected="false" value="1008" />
-                        <div class="checked"></div>
-                        <div class="select_border"></div>
-                      </div>
-                    </div>
-                    <div class="p_image">
-                      <div class="image_area form-product-image-with-options">
-                        <div style="position:absolute;width:100%;height:100%"><img loading="lazy" role="img" aria-label="Fa Spray 200ml" alt="Fa Spray 200ml Product Image" style="width:100%;height:100%;object-fit:contain" src="https://www.jotform.com/uploads/m7amed.9038/form_files/images_1_430x430_6ee095dea2fac96563918d2fbb45590e.jpg" /></div>
-                      </div>
-                    </div>
-                    <div for="input_53_1008" class="form-product-container"><span data-wrapper-react="true">
-                        <div class="title_description"><span class="form-product-name" id="product-name-input_53_1008">Fa Spray 200ml</span><span class="form-product-description" id="product-name-description-input_53_1008"></span></div><span class="form-product-details"><b><span data-wrapper-react="true"><span class="freeCurr" style="display:none">$</span><span id="input_53_1008_price"> Free</span><span class="freeCurr" style="display:none"></span></span></b></span>
-                      </span><span class="form-sub-label-container" style="vertical-align:top"><label class="form-sub-label" for="input_53_quantity_1008_0" style="min-height:13px">Quantity Case</label><input type="text" size="3" class="form-textbox validate[required] form-product-custom_quantity" name="q53_pleaseSpecify[special_1008][item_0]" id="input_53_quantity_1008_0" value="1" /></span></div>
-                    <div class="focus_action_button_container"><a class="btn-inline-product-delete" tabindex="0" role="button" aria-label="Delete Product"> </a><a class="btn-inline-product-settings" tabindex="0" role="button" aria-label="Product Settings"> </a></div>
-                  </div>
-                </span>
-                <div class="p_item_separator "></div><span class="form-product-item hover-product-item on_col3 not-category-found show_image show_option full_img new_ui" categories="2001" active-category="2001" pid="1005" aria-labelledby="label_53">
-                  <div data-wrapper-react="true" class="form-product-item-detail new_ui">
-                    <div class="p_col">
-                      <div class="p_checkbox"><input class="form-checkbox validate[required]  form-product-input" type="checkbox" id="input_53_1005" name="q53_pleaseSpecify[][id]" data-inputname="q53_pleaseSpecify[][id]" readonly="" aria-label="Select Product: Pert Cond 360ml" data-is-default-required="false" data-is-default-selected="false" value="1005" />
-                        <div class="checked"></div>
-                        <div class="select_border"></div>
-                      </div>
-                    </div>
-                    <div class="p_image">
-                      <div class="image_area form-product-image-with-options">
-                        <div style="position:absolute;width:100%;height:100%"><img loading="lazy" role="img" aria-label="Pert Cond 360ml" alt="Pert Cond 360ml Product Image" style="width:100%;height:100%;object-fit:contain" src="https://www.jotform.com/uploads/m7amed.9038/form_files/images_8_c2f23f8a67c95ef4071a5ca6f3f20769.jpg" /></div>
-                      </div>
-                    </div>
-                    <div for="input_53_1005" class="form-product-container"><span data-wrapper-react="true">
-                        <div class="title_description"><span class="form-product-name" id="product-name-input_53_1005">Pert Cond 360ml</span><span class="form-product-description" id="product-name-description-input_53_1005"></span></div><span class="form-product-details"><b><span data-wrapper-react="true"><span class="freeCurr" style="display:none">$</span><span id="input_53_1005_price"> Free</span><span class="freeCurr" style="display:none"></span></span></b></span>
-                      </span><span class="form-sub-label-container" style="vertical-align:top"><label class="form-sub-label" for="input_53_quantity_1005_0" style="min-height:13px">Quantity Case</label><input type="text" size="3" class="form-textbox validate[required] form-product-custom_quantity" name="q53_pleaseSpecify[special_1005][item_0]" id="input_53_quantity_1005_0" value="1" /></span></div>
-                    <div class="focus_action_button_container"><a class="btn-inline-product-delete" tabindex="0" role="button" aria-label="Delete Product"> </a><a class="btn-inline-product-settings" tabindex="0" role="button" aria-label="Product Settings"> </a></div>
-                  </div>
-                </span>
-                <div class="p_item_separator "></div><span class="form-product-item hover-product-item on_col1 not-category-found show_image show_option full_img new_ui" categories="2001" active-category="2001" pid="1006" aria-labelledby="label_53">
-                  <div data-wrapper-react="true" class="form-product-item-detail new_ui">
-                    <div class="p_col">
-                      <div class="p_checkbox"><input class="form-checkbox validate[required]  form-product-input" type="checkbox" id="input_53_1006" name="q53_pleaseSpecify[][id]" data-inputname="q53_pleaseSpecify[][id]" readonly="" aria-label="Select Product: Pert Men SHP 360ml" data-is-default-required="false" data-is-default-selected="false" value="1006" />
-                        <div class="checked"></div>
-                        <div class="select_border"></div>
-                      </div>
-                    </div>
-                    <div class="p_image">
-                      <div class="image_area form-product-image-with-options">
-                        <div style="position:absolute;width:100%;height:100%"><img loading="lazy" role="img" aria-label="Pert Men SHP 360ml" alt="Pert Men SHP 360ml Product Image" style="width:100%;height:100%;object-fit:contain" src="https://www.jotform.com/uploads/m7amed.9038/form_files/2213429_main_60205ed408822f82eb78474188466b03.avif" /></div>
-                      </div>
-                    </div>
-                    <div for="input_53_1006" class="form-product-container"><span data-wrapper-react="true">
-                        <div class="title_description"><span class="form-product-name" id="product-name-input_53_1006">Pert Men SHP 360ml</span><span class="form-product-description" id="product-name-description-input_53_1006"></span></div><span class="form-product-details"><b><span data-wrapper-react="true"><span class="freeCurr" style="display:none">$</span><span id="input_53_1006_price"> Free</span><span class="freeCurr" style="display:none"></span></span></b></span>
-                      </span><span class="form-sub-label-container" style="vertical-align:top"><label class="form-sub-label" for="input_53_quantity_1006_0" style="min-height:13px">Quantity Case</label><input type="text" size="3" class="form-textbox validate[required] form-product-custom_quantity" name="q53_pleaseSpecify[special_1006][item_0]" id="input_53_quantity_1006_0" value="1" /></span></div>
-                    <div class="focus_action_button_container"><a class="btn-inline-product-delete" tabindex="0" role="button" aria-label="Delete Product"> </a><a class="btn-inline-product-settings" tabindex="0" role="button" aria-label="Product Settings"> </a></div>
-                  </div>
-                </span>
-                <div class="p_item_separator "></div><span class="form-product-item hover-product-item on_col2 not-category-found show_image show_option full_img new_ui" categories="2001" active-category="2001" pid="1003" aria-labelledby="label_53">
-                  <div data-wrapper-react="true" class="form-product-item-detail new_ui">
-                    <div class="p_col">
-                      <div class="p_checkbox"><input class="form-checkbox validate[required]  form-product-input" type="checkbox" id="input_53_1003" name="q53_pleaseSpecify[][id]" data-inputname="q53_pleaseSpecify[][id]" readonly="" aria-label="Select Product: Pert Shampoo 400ml" data-is-default-required="false" data-is-default-selected="false" value="1003" />
-                        <div class="checked"></div>
-                        <div class="select_border"></div>
-                      </div>
-                    </div>
-                    <div class="p_image">
-                      <div class="image_area form-product-image-with-options">
-                        <div style="position:absolute;width:100%;height:100%"><img loading="lazy" role="img" aria-label="Pert Shampoo 400ml" alt="Pert Shampoo 400ml Product Image" style="width:100%;height:100%;object-fit:contain" src="https://www.jotform.com/uploads/m7amed.9038/form_files/51hls14gkwl_uf1000_1000_ql80_ad505f7ddd333b3bc25856582dec780d.jpg" /></div>
-                      </div>
-                    </div>
-                    <div for="input_53_1003" class="form-product-container"><span data-wrapper-react="true">
-                        <div class="title_description"><span class="form-product-name" id="product-name-input_53_1003">Pert Shampoo 400ml</span><span class="form-product-description" id="product-name-description-input_53_1003"></span></div><span class="form-product-details"><b><span data-wrapper-react="true"><span class="freeCurr" style="display:none">$</span><span id="input_53_1003_price"> Free</span><span class="freeCurr" style="display:none"></span></span></b></span>
-                      </span><span class="form-sub-label-container" style="vertical-align:top"><label class="form-sub-label" for="input_53_quantity_1003_0" style="min-height:13px">Quantity Case</label><input type="text" size="3" class="form-textbox validate[required] form-product-custom_quantity" name="q53_pleaseSpecify[special_1003][item_0]" id="input_53_quantity_1003_0" value="1" /></span></div>
-                    <div class="focus_action_button_container"><a class="btn-inline-product-delete" tabindex="0" role="button" aria-label="Delete Product"> </a><a class="btn-inline-product-settings" tabindex="0" role="button" aria-label="Product Settings"> </a></div>
-                  </div>
-                </span>
-                <div class="p_item_separator "></div><span class="form-product-item hover-product-item on_col3 not-category-found show_image show_option full_img new_ui" categories="2001" active-category="2001" pid="1002" aria-labelledby="label_53">
-                  <div data-wrapper-react="true" class="form-product-item-detail new_ui">
-                    <div class="p_col">
-                      <div class="p_checkbox"><input class="form-checkbox validate[required]  form-product-input" type="checkbox" id="input_53_1002" name="q53_pleaseSpecify[][id]" data-inputname="q53_pleaseSpecify[][id]" readonly="" aria-label="Select Product: Pert Shampoo 600ml" data-is-default-required="false" data-is-default-selected="false" value="1002" />
-                        <div class="checked"></div>
-                        <div class="select_border"></div>
-                      </div>
-                    </div>
-                    <div class="p_image">
-                      <div class="image_area form-product-image-with-options">
-                        <div style="position:absolute;width:100%;height:100%"><img loading="lazy" role="img" aria-label="Pert Shampoo 600ml" alt="Pert Shampoo 600ml Product Image" style="width:100%;height:100%;object-fit:contain" src="https://www.jotform.com/uploads/m7amed.9038/form_files/16f1461d_eb6e_4e05_9834_20621419c0fc_270be3472287a52cbc3790f1b8e6fe44.jpg" /></div>
-                      </div>
-                    </div>
-                    <div for="input_53_1002" class="form-product-container"><span data-wrapper-react="true">
-                        <div class="title_description"><span class="form-product-name" id="product-name-input_53_1002">Pert Shampoo 600ml</span><span class="form-product-description" id="product-name-description-input_53_1002"></span></div><span class="form-product-details"><b><span data-wrapper-react="true"><span class="freeCurr" style="display:none">$</span><span id="input_53_1002_price"> Free</span><span class="freeCurr" style="display:none"></span></span></b></span>
-                      </span><span class="form-sub-label-container" style="vertical-align:top"><label class="form-sub-label" for="input_53_quantity_1002_0" style="min-height:13px">Quantity Case</label><input type="text" size="3" class="form-textbox validate[required] form-product-custom_quantity" name="q53_pleaseSpecify[special_1002][item_0]" id="input_53_quantity_1002_0" value="1" /></span></div>
-                    <div class="focus_action_button_container"><a class="btn-inline-product-delete" tabindex="0" role="button" aria-label="Delete Product"> </a><a class="btn-inline-product-settings" tabindex="0" role="button" aria-label="Product Settings"> </a></div>
-                  </div>
-                </span>
-                <div class="p_item_separator "></div><span class="form-product-item hover-product-item on_col1 not-category-found show_image show_option full_img new_ui" categories="2001" active-category="2001" pid="1004" aria-labelledby="label_53">
-                  <div data-wrapper-react="true" class="form-product-item-detail new_ui">
-                    <div class="p_col">
-                      <div class="p_checkbox"><input class="form-checkbox validate[required]  form-product-input" type="checkbox" id="input_53_1004" name="q53_pleaseSpecify[][id]" data-inputname="q53_pleaseSpecify[][id]" readonly="" aria-label="Select Product: Pert Shampoo1000ml" data-is-default-required="false" data-is-default-selected="false" value="1004" />
-                        <div class="checked"></div>
-                        <div class="select_border"></div>
-                      </div>
-                    </div>
-                    <div class="p_image">
-                      <div class="image_area form-product-image-with-options">
-                        <div style="position:absolute;width:100%;height:100%"><img loading="lazy" role="img" aria-label="Pert Shampoo1000ml" alt="Pert Shampoo1000ml Product Image" style="width:100%;height:100%;object-fit:contain" src="https://www.jotform.com/uploads/m7amed.9038/form_files/51tgdlubqrl_fe8142024507658fcfa515b6649ec3b3.jpg" /></div>
-                      </div>
-                    </div>
-                    <div for="input_53_1004" class="form-product-container"><span data-wrapper-react="true">
-                        <div class="title_description"><span class="form-product-name" id="product-name-input_53_1004">Pert Shampoo1000ml</span><span class="form-product-description" id="product-name-description-input_53_1004"></span></div><span class="form-product-details"><b><span data-wrapper-react="true"><span class="freeCurr" style="display:none">$</span><span id="input_53_1004_price"> Free</span><span class="freeCurr" style="display:none"></span></span></b></span>
-                      </span><span class="form-sub-label-container" style="vertical-align:top"><label class="form-sub-label" for="input_53_quantity_1004_0" style="min-height:13px">Quantity Case</label><input type="text" size="3" class="form-textbox validate[required] form-product-custom_quantity" name="q53_pleaseSpecify[special_1004][item_0]" id="input_53_quantity_1004_0" value="1" /></span></div>
-                    <div class="focus_action_button_container"><a class="btn-inline-product-delete" tabindex="0" role="button" aria-label="Delete Product"> </a><a class="btn-inline-product-settings" tabindex="0" role="button" aria-label="Product Settings"> </a></div>
-                  </div>
-                </span>
-                <div class="p_item_separator "></div><span class="form-product-item hover-product-item on_col2 not-category-found show_image show_option full_img new_ui" categories="2001" active-category="2001" pid="1009" aria-labelledby="label_53">
-                  <div data-wrapper-react="true" class="form-product-item-detail new_ui">
-                    <div class="p_col">
-                      <div class="p_checkbox"><input class="form-checkbox validate[required]  form-product-input" type="checkbox" id="input_53_1009" name="q53_pleaseSpecify[][id]" data-inputname="q53_pleaseSpecify[][id]" readonly="" aria-label="Select Product: Taft Spray 250ml" data-is-default-required="false" data-is-default-selected="false" value="1009" />
-                        <div class="checked"></div>
-                        <div class="select_border"></div>
-                      </div>
-                    </div>
-                    <div class="p_image">
-                      <div class="image_area form-product-image-with-options">
-                        <div style="position:absolute;width:100%;height:100%"><img loading="lazy" role="img" aria-label="Taft Spray 250ml" alt="Taft Spray 250ml Product Image" style="width:100%;height:100%;object-fit:contain" src="https://www.jotform.com/uploads/m7amed.9038/form_files/dffc0916_6c3d_4a2e_9a1a_cb6d4800be7a_a2106ce7e211b366ddcc31edb68f986e.jpg" /></div>
-                      </div>
-                    </div>
-                    <div for="input_53_1009" class="form-product-container"><span data-wrapper-react="true">
-                        <div class="title_description"><span class="form-product-name" id="product-name-input_53_1009">Taft Spray 250ml</span><span class="form-product-description" id="product-name-description-input_53_1009"></span></div><span class="form-product-details"><b><span data-wrapper-react="true"><span class="freeCurr" style="display:none">$</span><span id="input_53_1009_price"> Free</span><span class="freeCurr" style="display:none"></span></span></b></span>
-                      </span><span class="form-sub-label-container" style="vertical-align:top"><label class="form-sub-label" for="input_53_quantity_1009_0" style="min-height:13px">Quantity Case</label><input type="text" size="3" class="form-textbox validate[required] form-product-custom_quantity" name="q53_pleaseSpecify[special_1009][item_0]" id="input_53_quantity_1009_0" value="1" /></span></div>
-                    <div class="focus_action_button_container"><a class="btn-inline-product-delete" tabindex="0" role="button" aria-label="Delete Product"> </a><a class="btn-inline-product-settings" tabindex="0" role="button" aria-label="Product Settings"> </a></div>
-                  </div>
-                </span>
-                <div class="p_item_separator last_p_seperator"></div><span class="form-product-category-item title_collapsed " category="2002"><b>HTM</b><span class="selected-items-icon"></span></span><span class="form-product-item hover-product-item on_col1 not-category-found show_image show_option full_img new_ui" categories="2002" active-category="2002" pid="1036" aria-labelledby="label_53">
-                  <div data-wrapper-react="true" class="form-product-item-detail new_ui">
-                    <div class="p_col">
-                      <div class="p_checkbox"><input class="form-checkbox validate[required]  form-product-input" type="checkbox" id="input_53_1036" name="q53_pleaseSpecify[][id]" data-inputname="q53_pleaseSpecify[][id]" readonly="" aria-label="Select Product: HTM" data-is-default-required="false" data-is-default-selected="false" value="1036" />
-                        <div class="checked"></div>
-                        <div class="select_border"></div>
-                      </div>
-                    </div>
-                    <div class="p_image">
-                      <div class="image_area form-product-image-with-options">
-                        <div style="position:absolute;width:100%;height:100%"><img loading="lazy" role="img" aria-label="HTM" alt="HTM Product Image" style="width:100%;height:100%;object-fit:contain" src="https://www.jotform.com/uploads/m7amed.9038/form_files/images_70bce38b1a90bec04dc89ec21108ef73.png" /></div>
-                      </div>
-                    </div>
-                    <div for="input_53_1036" class="form-product-container"><span data-wrapper-react="true">
-                        <div class="title_description"><span class="form-product-name" id="product-name-input_53_1036">HTM</span><span class="form-product-description" id="product-name-description-input_53_1036"></span></div><span class="form-product-details"><b><span data-wrapper-react="true"><span class="freeCurr" style="display:none">$</span><span id="input_53_1036_price"> Free</span><span class="freeCurr" style="display:none"></span></span></b></span>
-                      </span><span class="form-sub-label-container" style="vertical-align:top"><label class="form-sub-label" for="input_53_quantity_1036_0" style="min-height:13px">Quantity Case</label><input type="text" size="3" class="form-textbox validate[required] form-product-custom_quantity" name="q53_pleaseSpecify[special_1036][item_0]" id="input_53_quantity_1036_0" value="1" /></span></div>
-                    <div class="focus_action_button_container"><a class="btn-inline-product-delete" tabindex="0" role="button" aria-label="Delete Product"> </a><a class="btn-inline-product-settings" tabindex="0" role="button" aria-label="Product Settings"> </a></div>
-                  </div>
-                </span>
-                <div class="p_item_separator last_p_seperator"></div><span class="form-product-category-item title_collapsed " category="2003"><b>Dabur</b><span class="selected-items-icon"></span></span><span class="form-product-item hover-product-item on_col1 not-category-found show_image show_option full_img new_ui" categories="2003" active-category="2003" pid="1037" aria-labelledby="label_53">
-                  <div data-wrapper-react="true" class="form-product-item-detail new_ui">
-                    <div class="p_col">
-                      <div class="p_checkbox"><input class="form-checkbox validate[required]  form-product-input" type="checkbox" id="input_53_1037" name="q53_pleaseSpecify[][id]" data-inputname="q53_pleaseSpecify[][id]" readonly="" aria-label="Select Product: Dabur Red 150" data-is-default-required="false" data-is-default-selected="false" value="1037" />
-                        <div class="checked"></div>
-                        <div class="select_border"></div>
-                      </div>
-                    </div>
-                    <div class="p_image">
-                      <div class="image_area form-product-image-with-options">
-                        <div style="position:absolute;width:100%;height:100%"><img loading="lazy" role="img" aria-label="Dabur Red 150" alt="Dabur Red 150 Product Image" style="width:100%;height:100%;object-fit:contain" src="https://www.jotform.com/uploads/m7amed.9038/form_files/61tiec_c_ql_uf1000_1000_ql80_ff5aa3cace1782b9d80c1f92c7d557e1.jpg" /></div>
-                      </div>
-                    </div>
-                    <div for="input_53_1037" class="form-product-container"><span data-wrapper-react="true">
-                        <div class="title_description"><span class="form-product-name" id="product-name-input_53_1037">Dabur Red 150</span><span class="form-product-description" id="product-name-description-input_53_1037"></span></div><span class="form-product-details"><b><span data-wrapper-react="true"><span class="freeCurr" style="display:none">$</span><span id="input_53_1037_price"> Free</span><span class="freeCurr" style="display:none"></span></span></b></span>
-                      </span><span class="form-sub-label-container" style="vertical-align:top"><label class="form-sub-label" for="input_53_quantity_1037_0" style="min-height:13px">Quantity Case</label><input type="text" size="3" class="form-textbox validate[required] form-product-custom_quantity" name="q53_pleaseSpecify[special_1037][item_0]" id="input_53_quantity_1037_0" value="1" /></span></div>
-                    <div class="focus_action_button_container"><a class="btn-inline-product-delete" tabindex="0" role="button" aria-label="Delete Product"> </a><a class="btn-inline-product-settings" tabindex="0" role="button" aria-label="Product Settings"> </a></div>
-                  </div>
-                </span>
-                <div class="p_item_separator "></div><span class="form-product-item hover-product-item on_col2 not-category-found show_image show_option full_img new_ui" categories="2003" active-category="2003" pid="1038" aria-labelledby="label_53">
-                  <div data-wrapper-react="true" class="form-product-item-detail new_ui">
-                    <div class="p_col">
-                      <div class="p_checkbox"><input class="form-checkbox validate[required]  form-product-input" type="checkbox" id="input_53_1038" name="q53_pleaseSpecify[][id]" data-inputname="q53_pleaseSpecify[][id]" readonly="" aria-label="Select Product: Dabur 150 GM" data-is-default-required="false" data-is-default-selected="false" value="1038" />
-                        <div class="checked"></div>
-                        <div class="select_border"></div>
-                      </div>
-                    </div>
-                    <div class="p_image">
-                      <div class="image_area form-product-image-with-options">
-                        <div style="position:absolute;width:100%;height:100%"><img loading="lazy" role="img" aria-label="Dabur 150 GM" alt="Dabur 150 GM Product Image" style="width:100%;height:100%;object-fit:contain" src="https://www.jotform.com/uploads/m7amed.9038/form_files/280622_main_258afe804180726875d4195ef097041e.avif" /></div>
-                      </div>
-                    </div>
-                    <div for="input_53_1038" class="form-product-container"><span data-wrapper-react="true">
-                        <div class="title_description"><span class="form-product-name" id="product-name-input_53_1038">Dabur 150 GM</span><span class="form-product-description" id="product-name-description-input_53_1038"></span></div><span class="form-product-details"><b><span data-wrapper-react="true"><span class="freeCurr" style="display:none">$</span><span id="input_53_1038_price"> Free</span><span class="freeCurr" style="display:none"></span></span></b></span>
-                      </span><span class="form-sub-label-container" style="vertical-align:top"><label class="form-sub-label" for="input_53_quantity_1038_0" style="min-height:13px">Quantity Case</label><input type="text" size="3" class="form-textbox validate[required] form-product-custom_quantity" name="q53_pleaseSpecify[special_1038][item_0]" id="input_53_quantity_1038_0" value="1" /></span></div>
-                    <div class="focus_action_button_container"><a class="btn-inline-product-delete" tabindex="0" role="button" aria-label="Delete Product"> </a><a class="btn-inline-product-settings" tabindex="0" role="button" aria-label="Product Settings"> </a></div>
-                  </div>
-                </span>
-                <div class="p_item_separator "></div><span class="form-product-item hover-product-item on_col3 not-category-found show_image show_option full_img new_ui" categories="2003" active-category="2003" pid="1039" aria-labelledby="label_53">
-                  <div data-wrapper-react="true" class="form-product-item-detail new_ui">
-                    <div class="p_col">
-                      <div class="p_checkbox"><input class="form-checkbox validate[required]  form-product-input" type="checkbox" id="input_53_1039" name="q53_pleaseSpecify[][id]" data-inputname="q53_pleaseSpecify[][id]" readonly="" aria-label="Select Product: Dabur 100 GM" data-is-default-required="false" data-is-default-selected="false" value="1039" />
-                        <div class="checked"></div>
-                        <div class="select_border"></div>
-                      </div>
-                    </div>
-                    <div class="p_image">
-                      <div class="image_area form-product-image-with-options">
-                        <div style="position:absolute;width:100%;height:100%"><img loading="lazy" role="img" aria-label="Dabur 100 GM" alt="Dabur 100 GM Product Image" style="width:100%;height:100%;object-fit:contain" src="https://www.jotform.com/uploads/m7amed.9038/form_files/1_4a46e623_1530_46db_be4a_c5700c7772b6_dbd89b46d2c87025864ca8b9be7fb498.webp" /></div>
-                      </div>
-                    </div>
-                    <div for="input_53_1039" class="form-product-container"><span data-wrapper-react="true">
-                        <div class="title_description"><span class="form-product-name" id="product-name-input_53_1039">Dabur 100 GM</span><span class="form-product-description" id="product-name-description-input_53_1039"></span></div><span class="form-product-details"><b><span data-wrapper-react="true"><span class="freeCurr" style="display:none">$</span><span id="input_53_1039_price"> Free</span><span class="freeCurr" style="display:none"></span></span></b></span>
-                      </span><span class="form-sub-label-container" style="vertical-align:top"><label class="form-sub-label" for="input_53_quantity_1039_0" style="min-height:13px">Quantity Case</label><input type="text" size="3" class="form-textbox validate[required] form-product-custom_quantity" name="q53_pleaseSpecify[special_1039][item_0]" id="input_53_quantity_1039_0" value="1" /></span></div>
-                    <div class="focus_action_button_container"><a class="btn-inline-product-delete" tabindex="0" role="button" aria-label="Delete Product"> </a><a class="btn-inline-product-settings" tabindex="0" role="button" aria-label="Product Settings"> </a></div>
-                  </div>
-                </span>
-                <div class="p_item_separator "></div><span class="form-product-item hover-product-item on_col1 not-category-found show_image show_option full_img new_ui" categories="2003" active-category="2003" pid="1040" aria-labelledby="label_53">
-                  <div data-wrapper-react="true" class="form-product-item-detail new_ui">
-                    <div class="p_col">
-                      <div class="p_checkbox"><input class="form-checkbox validate[required]  form-product-input" type="checkbox" id="input_53_1040" name="q53_pleaseSpecify[][id]" data-inputname="q53_pleaseSpecify[][id]" readonly="" aria-label="Select Product: Dabur Alpha range 150" data-is-default-required="false" data-is-default-selected="false" value="1040" />
-                        <div class="checked"></div>
-                        <div class="select_border"></div>
-                      </div>
-                    </div>
-                    <div class="p_image">
-                      <div class="image_area form-product-image-with-options">
-                        <div style="position:absolute;width:100%;height:100%"><img loading="lazy" role="img" aria-label="Dabur Alpha range 150" alt="Dabur Alpha range 150 Product Image" style="width:100%;height:100%;object-fit:contain" src="https://www.jotform.com/uploads/m7amed.9038/form_files/815n2vmbexl_uf1000_1000_ql80_8bea706f9dd131b69dacdb752338dfc5.jpg" /></div>
-                      </div>
-                    </div>
-                    <div for="input_53_1040" class="form-product-container"><span data-wrapper-react="true">
-                        <div class="title_description"><span class="form-product-name" id="product-name-input_53_1040">Dabur Alpha range 150</span><span class="form-product-description" id="product-name-description-input_53_1040"></span></div><span class="form-product-details"><b><span data-wrapper-react="true"><span class="freeCurr" style="display:none">$</span><span id="input_53_1040_price"> Free</span><span class="freeCurr" style="display:none"></span></span></b></span>
-                      </span><span class="form-sub-label-container" style="vertical-align:top"><label class="form-sub-label" for="input_53_quantity_1040_0" style="min-height:13px">Quantity Case</label><input type="text" size="3" class="form-textbox validate[required] form-product-custom_quantity" name="q53_pleaseSpecify[special_1040][item_0]" id="input_53_quantity_1040_0" value="1" /></span></div>
-                    <div class="focus_action_button_container"><a class="btn-inline-product-delete" tabindex="0" role="button" aria-label="Delete Product"> </a><a class="btn-inline-product-settings" tabindex="0" role="button" aria-label="Product Settings"> </a></div>
-                  </div>
-                </span>
-                <div class="p_item_separator "></div><span class="form-product-item hover-product-item on_col2 not-category-found show_image show_option full_img new_ui" categories="2003" active-category="2003" pid="1041" aria-labelledby="label_53">
-                  <div data-wrapper-react="true" class="form-product-item-detail new_ui">
-                    <div class="p_col">
-                      <div class="p_checkbox"><input class="form-checkbox validate[required]  form-product-input" type="checkbox" id="input_53_1041" name="q53_pleaseSpecify[][id]" data-inputname="q53_pleaseSpecify[][id]" readonly="" aria-label="Select Product: Dabur Red 200" data-is-default-required="false" data-is-default-selected="false" value="1041" />
-                        <div class="checked"></div>
-                        <div class="select_border"></div>
-                      </div>
-                    </div>
-                    <div class="p_image">
-                      <div class="image_area form-product-image-with-options">
-                        <div style="position:absolute;width:100%;height:100%"><img loading="lazy" role="img" aria-label="Dabur Red 200" alt="Dabur Red 200 Product Image" style="width:100%;height:100%;object-fit:contain" src="https://www.jotform.com/uploads/m7amed.9038/form_files/71zbithc_pl_uf1000_1000_ql80_e73137b529e5dd8bc6cce3ea1ca38fb7.jpg" /></div>
-                      </div>
-                    </div>
-                    <div for="input_53_1041" class="form-product-container"><span data-wrapper-react="true">
-                        <div class="title_description"><span class="form-product-name" id="product-name-input_53_1041">Dabur Red 200</span><span class="form-product-description" id="product-name-description-input_53_1041"></span></div><span class="form-product-details"><b><span data-wrapper-react="true"><span class="freeCurr" style="display:none">$</span><span id="input_53_1041_price"> Free</span><span class="freeCurr" style="display:none"></span></span></b></span>
-                      </span><span class="form-sub-label-container" style="vertical-align:top"><label class="form-sub-label" for="input_53_quantity_1041_0" style="min-height:13px">Quantity Case</label><input type="text" size="3" class="form-textbox validate[required] form-product-custom_quantity" name="q53_pleaseSpecify[special_1041][item_0]" id="input_53_quantity_1041_0" value="1" /></span></div>
-                    <div class="focus_action_button_container"><a class="btn-inline-product-delete" tabindex="0" role="button" aria-label="Delete Product"> </a><a class="btn-inline-product-settings" tabindex="0" role="button" aria-label="Product Settings"> </a></div>
-                  </div>
-                </span>
-                <div class="p_item_separator "></div><span class="form-product-item hover-product-item on_col3 not-category-found show_image show_option full_img new_ui" categories="2003" active-category="2003" pid="1042" aria-labelledby="label_53">
-                  <div data-wrapper-react="true" class="form-product-item-detail new_ui">
-                    <div class="p_col">
-                      <div class="p_checkbox"><input class="form-checkbox validate[required]  form-product-input" type="checkbox" id="input_53_1042" name="q53_pleaseSpecify[][id]" data-inputname="q53_pleaseSpecify[][id]" readonly="" aria-label="Select Product: Miswak 190 GM" data-is-default-required="false" data-is-default-selected="false" value="1042" />
-                        <div class="checked"></div>
-                        <div class="select_border"></div>
-                      </div>
-                    </div>
-                    <div class="p_image">
-                      <div class="image_area form-product-image-with-options">
-                        <div style="position:absolute;width:100%;height:100%"><img loading="lazy" role="img" aria-label="Miswak 190 GM" alt="Miswak 190 GM Product Image" style="width:100%;height:100%;object-fit:contain" src="https://www.jotform.com/uploads/m7amed.9038/form_files/dabur_miswak_herbal_toothpaste_free_toothbrush_included_150g_0c728aacb17bfacfcdf351863cfbc805.webp" /></div>
-                      </div>
-                    </div>
-                    <div for="input_53_1042" class="form-product-container"><span data-wrapper-react="true">
-                        <div class="title_description"><span class="form-product-name" id="product-name-input_53_1042">Miswak 190 GM</span><span class="form-product-description" id="product-name-description-input_53_1042"></span></div><span class="form-product-details"><b><span data-wrapper-react="true"><span class="freeCurr" style="display:none">$</span><span id="input_53_1042_price"> Free</span><span class="freeCurr" style="display:none"></span></span></b></span>
-                      </span><span class="form-sub-label-container" style="vertical-align:top"><label class="form-sub-label" for="input_53_quantity_1042_0" style="min-height:13px">Quantity Case</label><input type="text" size="3" class="form-textbox validate[required] form-product-custom_quantity" name="q53_pleaseSpecify[special_1042][item_0]" id="input_53_quantity_1042_0" value="1" /></span></div>
-                    <div class="focus_action_button_container"><a class="btn-inline-product-delete" tabindex="0" role="button" aria-label="Delete Product"> </a><a class="btn-inline-product-settings" tabindex="0" role="button" aria-label="Product Settings"> </a></div>
-                  </div>
-                </span>
-                <div class="p_item_separator "></div><span class="form-product-item hover-product-item on_col1 not-category-found show_image show_option full_img new_ui" categories="2003" active-category="2003" pid="1043" aria-labelledby="label_53">
-                  <div data-wrapper-react="true" class="form-product-item-detail new_ui">
-                    <div class="p_col">
-                      <div class="p_checkbox"><input class="form-checkbox validate[required]  form-product-input" type="checkbox" id="input_53_1043" name="q53_pleaseSpecify[][id]" data-inputname="q53_pleaseSpecify[][id]" readonly="" aria-label="Select Product: Miswak gold 170 gm" data-is-default-required="false" data-is-default-selected="false" value="1043" />
-                        <div class="checked"></div>
-                        <div class="select_border"></div>
-                      </div>
-                    </div>
-                    <div class="p_image">
-                      <div class="image_area form-product-image-with-options">
-                        <div style="position:absolute;width:100%;height:100%"><img loading="lazy" role="img" aria-label="Miswak gold 170 gm" alt="Miswak gold 170 gm Product Image" style="width:100%;height:100%;object-fit:contain" src="https://www.jotform.com/uploads/m7amed.9038/form_files/asta_db902_dabur_miswak_gold_with_brush_170_gm_1627997215_872c6069c8bd453b1796ecdbee8182b4.jpg" /></div>
-                      </div>
-                    </div>
-                    <div for="input_53_1043" class="form-product-container"><span data-wrapper-react="true">
-                        <div class="title_description"><span class="form-product-name" id="product-name-input_53_1043">Miswak gold 170 gm</span><span class="form-product-description" id="product-name-description-input_53_1043"></span></div><span class="form-product-details"><b><span data-wrapper-react="true"><span class="freeCurr" style="display:none">$</span><span id="input_53_1043_price"> Free</span><span class="freeCurr" style="display:none"></span></span></b></span>
-                      </span><span class="form-sub-label-container" style="vertical-align:top"><label class="form-sub-label" for="input_53_quantity_1043_0" style="min-height:13px">Quantity Case</label><input type="text" size="3" class="form-textbox validate[required] form-product-custom_quantity" name="q53_pleaseSpecify[special_1043][item_0]" id="input_53_quantity_1043_0" value="1" /></span></div>
-                    <div class="focus_action_button_container"><a class="btn-inline-product-delete" tabindex="0" role="button" aria-label="Delete Product"> </a><a class="btn-inline-product-settings" tabindex="0" role="button" aria-label="Product Settings"> </a></div>
-                  </div>
-                </span>
-                <div class="p_item_separator "></div><span class="form-product-item hover-product-item on_col2 not-category-found show_image show_option full_img new_ui" categories="2003" active-category="2003" pid="1044" aria-labelledby="label_53">
-                  <div data-wrapper-react="true" class="form-product-item-detail new_ui">
-                    <div class="p_col">
-                      <div class="p_checkbox"><input class="form-checkbox validate[required]  form-product-input" type="checkbox" id="input_53_1044" name="q53_pleaseSpecify[][id]" data-inputname="q53_pleaseSpecify[][id]" readonly="" aria-label="Select Product: Miswak 150 gm" data-is-default-required="false" data-is-default-selected="false" value="1044" />
-                        <div class="checked"></div>
-                        <div class="select_border"></div>
-                      </div>
-                    </div>
-                    <div class="p_image">
-                      <div class="image_area form-product-image-with-options">
-                        <div style="position:absolute;width:100%;height:100%"><img loading="lazy" role="img" aria-label="Miswak 150 gm" alt="Miswak 150 gm Product Image" style="width:100%;height:100%;object-fit:contain" src="https://www.jotform.com/uploads/m7amed.9038/form_files/images_7_dc3b4241f304d55726d8ae6baa768f4a.jpg" /></div>
-                      </div>
-                    </div>
-                    <div for="input_53_1044" class="form-product-container"><span data-wrapper-react="true">
-                        <div class="title_description"><span class="form-product-name" id="product-name-input_53_1044">Miswak 150 gm</span><span class="form-product-description" id="product-name-description-input_53_1044"></span></div><span class="form-product-details"><b><span data-wrapper-react="true"><span class="freeCurr" style="display:none">$</span><span id="input_53_1044_price"> Free</span><span class="freeCurr" style="display:none"></span></span></b></span>
-                      </span><span class="form-sub-label-container" style="vertical-align:top"><label class="form-sub-label" for="input_53_quantity_1044_0" style="min-height:13px">Quantity Case</label><input type="text" size="3" class="form-textbox validate[required] form-product-custom_quantity" name="q53_pleaseSpecify[special_1044][item_0]" id="input_53_quantity_1044_0" value="1" /></span></div>
-                    <div class="focus_action_button_container"><a class="btn-inline-product-delete" tabindex="0" role="button" aria-label="Delete Product"> </a><a class="btn-inline-product-settings" tabindex="0" role="button" aria-label="Product Settings"> </a></div>
-                  </div>
-                </span>
-                <div class="p_item_separator "></div><span class="form-product-item hover-product-item on_col3 not-category-found show_image show_option full_img new_ui" categories="2003" active-category="2003" pid="1045" aria-labelledby="label_53">
-                  <div data-wrapper-react="true" class="form-product-item-detail new_ui">
-                    <div class="p_col">
-                      <div class="p_checkbox"><input class="form-checkbox validate[required]  form-product-input" type="checkbox" id="input_53_1045" name="q53_pleaseSpecify[][id]" data-inputname="q53_pleaseSpecify[][id]" readonly="" aria-label="Select Product: Dabur Clove Gel 150gm" data-is-default-required="false" data-is-default-selected="false" value="1045" />
-                        <div class="checked"></div>
-                        <div class="select_border"></div>
-                      </div>
-                    </div>
-                    <div class="p_image">
-                      <div class="image_area form-product-image-with-options">
-                        <div style="position:absolute;width:100%;height:100%"><img loading="lazy" role="img" aria-label="Dabur Clove Gel 150gm" alt="Dabur Clove Gel 150gm Product Image" style="width:100%;height:100%;object-fit:contain" src="https://www.jotform.com/uploads/m7amed.9038/form_files/71w3k8bkjal_1_cdeef34869e1b0ff93a4cbab645ee658.jpg" /></div>
-                      </div>
-                    </div>
-                    <div for="input_53_1045" class="form-product-container"><span data-wrapper-react="true">
-                        <div class="title_description"><span class="form-product-name" id="product-name-input_53_1045">Dabur Clove Gel 150gm</span><span class="form-product-description" id="product-name-description-input_53_1045"></span></div><span class="form-product-details"><b><span data-wrapper-react="true"><span class="freeCurr" style="display:none">$</span><span id="input_53_1045_price"> Free</span><span class="freeCurr" style="display:none"></span></span></b></span>
-                      </span><span class="form-sub-label-container" style="vertical-align:top"><label class="form-sub-label" for="input_53_quantity_1045_0" style="min-height:13px">Quantity Case</label><input type="text" size="3" class="form-textbox validate[required] form-product-custom_quantity" name="q53_pleaseSpecify[special_1045][item_0]" id="input_53_quantity_1045_0" value="1" /></span></div>
-                    <div class="focus_action_button_container"><a class="btn-inline-product-delete" tabindex="0" role="button" aria-label="Delete Product"> </a><a class="btn-inline-product-settings" tabindex="0" role="button" aria-label="Product Settings"> </a></div>
-                  </div>
-                </span>
-                <div class="p_item_separator last_p_seperator"></div><span class="form-product-category-item title_collapsed " category="2004"><b>Hobby</b><span class="selected-items-icon"></span></span><span class="form-product-item hover-product-item on_col1 not-category-found show_image show_option full_img new_ui" categories="2004" active-category="2004" pid="1010" aria-labelledby="label_53">
-                  <div data-wrapper-react="true" class="form-product-item-detail new_ui">
-                    <div class="p_col">
-                      <div class="p_checkbox"><input class="form-checkbox validate[required]  form-product-input" type="checkbox" id="input_53_1010" name="q53_pleaseSpecify[][id]" data-inputname="q53_pleaseSpecify[][id]" readonly="" aria-label="Select Product: Hobby 2in1 Men" data-is-default-required="false" data-is-default-selected="false" value="1010" />
-                        <div class="checked"></div>
-                        <div class="select_border"></div>
-                      </div>
-                    </div>
-                    <div class="p_image">
-                      <div class="image_area form-product-image-with-options">
-                        <div style="position:absolute;width:100%;height:100%"><img loading="lazy" role="img" aria-label="Hobby 2in1 Men" alt="Hobby 2in1 Men Product Image" style="width:100%;height:100%;object-fit:contain" src="https://www.jotform.com/uploads/m7amed.9038/form_files/images_1_e768e99b8314afc516da1fc75871b1ba.jpg" /></div>
-                      </div>
-                    </div>
-                    <div for="input_53_1010" class="form-product-container"><span data-wrapper-react="true">
-                        <div class="title_description"><span class="form-product-name" id="product-name-input_53_1010">Hobby 2in1 Men</span><span class="form-product-description" id="product-name-description-input_53_1010"></span></div><span class="form-product-details"><b><span data-wrapper-react="true"><span class="freeCurr" style="display:none">$</span><span id="input_53_1010_price"> Free</span><span class="freeCurr" style="display:none"></span></span></b></span>
-                      </span><span class="form-sub-label-container" style="vertical-align:top"><label class="form-sub-label" for="input_53_quantity_1010_0" style="min-height:13px">Quantity Case</label><input type="text" size="3" class="form-textbox validate[required] form-product-custom_quantity" name="q53_pleaseSpecify[special_1010][item_0]" id="input_53_quantity_1010_0" value="1" /></span></div>
-                    <div class="focus_action_button_container"><a class="btn-inline-product-delete" tabindex="0" role="button" aria-label="Delete Product"> </a><a class="btn-inline-product-settings" tabindex="0" role="button" aria-label="Product Settings"> </a></div>
-                  </div>
-                </span>
-                <div class="p_item_separator "></div><span class="form-product-item hover-product-item on_col2 not-category-found show_image show_option full_img new_ui" categories="2004" active-category="2004" pid="1012" aria-labelledby="label_53">
-                  <div data-wrapper-react="true" class="form-product-item-detail new_ui">
-                    <div class="p_col">
-                      <div class="p_checkbox"><input class="form-checkbox validate[required]  form-product-input" type="checkbox" id="input_53_1012" name="q53_pleaseSpecify[][id]" data-inputname="q53_pleaseSpecify[][id]" readonly="" aria-label="Select Product: Hobby Brilliantine - Hair Cream" data-is-default-required="false" data-is-default-selected="false" value="1012" />
-                        <div class="checked"></div>
-                        <div class="select_border"></div>
-                      </div>
-                    </div>
-                    <div class="p_image">
-                      <div class="image_area form-product-image-with-options">
-                        <div style="position:absolute;width:100%;height:100%"><img loading="lazy" role="img" aria-label="Hobby Brilliantine - Hair Cream" alt="Hobby Brilliantine - Hair Cream Product Image" style="width:100%;height:100%;object-fit:contain" src="https://www.jotform.com/uploads/m7amed.9038/form_files/61wfnhsjykl_uf1000_1000_ql80_fee70457244b7e22dee2f39862c7d47d.jpg" /></div>
-                      </div>
-                    </div>
-                    <div for="input_53_1012" class="form-product-container"><span data-wrapper-react="true">
-                        <div class="title_description"><span class="form-product-name" id="product-name-input_53_1012">Hobby Brilliantine - Hair Cream</span><span class="form-product-description" id="product-name-description-input_53_1012"></span></div><span class="form-product-details"><b><span data-wrapper-react="true"><span class="freeCurr" style="display:none">$</span><span id="input_53_1012_price"> Free</span><span class="freeCurr" style="display:none"></span></span></b></span>
-                      </span><span class="form-sub-label-container" style="vertical-align:top"><label class="form-sub-label" for="input_53_quantity_1012_0" style="min-height:13px">Quantity Case</label><input type="text" size="3" class="form-textbox validate[required] form-product-custom_quantity" name="q53_pleaseSpecify[special_1012][item_0]" id="input_53_quantity_1012_0" value="1" /></span></div>
-                    <div class="focus_action_button_container"><a class="btn-inline-product-delete" tabindex="0" role="button" aria-label="Delete Product"> </a><a class="btn-inline-product-settings" tabindex="0" role="button" aria-label="Product Settings"> </a></div>
-                  </div>
-                </span>
-                <div class="p_item_separator "></div><span class="form-product-item hover-product-item on_col3 not-category-found show_image show_option full_img new_ui" categories="2004" active-category="2004" pid="1013" aria-labelledby="label_53">
-                  <div data-wrapper-react="true" class="form-product-item-detail new_ui">
-                    <div class="p_col">
-                      <div class="p_checkbox"><input class="form-checkbox validate[required]  form-product-input" type="checkbox" id="input_53_1013" name="q53_pleaseSpecify[][id]" data-inputname="q53_pleaseSpecify[][id]" readonly="" aria-label="Select Product: Hobby Conditioner" data-is-default-required="false" data-is-default-selected="false" value="1013" />
-                        <div class="checked"></div>
-                        <div class="select_border"></div>
-                      </div>
-                    </div>
-                    <div class="p_image">
-                      <div class="image_area form-product-image-with-options">
-                        <div style="position:absolute;width:100%;height:100%"><img loading="lazy" role="img" aria-label="Hobby Conditioner" alt="Hobby Conditioner Product Image" style="width:100%;height:100%;object-fit:contain" src="https://www.jotform.com/uploads/m7amed.9038/form_files/n26679360a_1_a013ac746bc7c16c4c183c8619419132.avif" /></div>
-                      </div>
-                    </div>
-                    <div for="input_53_1013" class="form-product-container"><span data-wrapper-react="true">
-                        <div class="title_description"><span class="form-product-name" id="product-name-input_53_1013">Hobby Conditioner</span><span class="form-product-description" id="product-name-description-input_53_1013"></span></div><span class="form-product-details"><b><span data-wrapper-react="true"><span class="freeCurr" style="display:none">$</span><span id="input_53_1013_price"> Free</span><span class="freeCurr" style="display:none"></span></span></b></span>
-                      </span><span class="form-sub-label-container" style="vertical-align:top"><label class="form-sub-label" for="input_53_quantity_1013_0" style="min-height:13px">Quantity Case</label><input type="text" size="3" class="form-textbox validate[required] form-product-custom_quantity" name="q53_pleaseSpecify[special_1013][item_0]" id="input_53_quantity_1013_0" value="1" /></span></div>
-                    <div class="focus_action_button_container"><a class="btn-inline-product-delete" tabindex="0" role="button" aria-label="Delete Product"> </a><a class="btn-inline-product-settings" tabindex="0" role="button" aria-label="Product Settings"> </a></div>
-                  </div>
-                </span>
-                <div class="p_item_separator "></div><span class="form-product-item hover-product-item on_col1 not-category-found show_image show_option full_img new_ui" categories="2004" active-category="2004" pid="1014" aria-labelledby="label_53">
-                  <div data-wrapper-react="true" class="form-product-item-detail new_ui">
-                    <div class="p_col">
-                      <div class="p_checkbox"><input class="form-checkbox validate[required]  form-product-input" type="checkbox" id="input_53_1014" name="q53_pleaseSpecify[][id]" data-inputname="q53_pleaseSpecify[][id]" readonly="" aria-label="Select Product: Hobby Crazy Gel" data-is-default-required="false" data-is-default-selected="false" value="1014" />
-                        <div class="checked"></div>
-                        <div class="select_border"></div>
-                      </div>
-                    </div>
-                    <div class="p_image">
-                      <div class="image_area form-product-image-with-options">
-                        <div style="position:absolute;width:100%;height:100%"><img loading="lazy" role="img" aria-label="Hobby Crazy Gel" alt="Hobby Crazy Gel Product Image" style="width:100%;height:100%;object-fit:contain" src="https://www.jotform.com/uploads/m7amed.9038/form_files/3_eca469d5d415b4b6b7680239c66a0bff.jpg" /></div>
-                      </div>
-                    </div>
-                    <div for="input_53_1014" class="form-product-container"><span data-wrapper-react="true">
-                        <div class="title_description"><span class="form-product-name" id="product-name-input_53_1014">Hobby Crazy Gel</span><span class="form-product-description" id="product-name-description-input_53_1014"></span></div><span class="form-product-details"><b><span data-wrapper-react="true"><span class="freeCurr" style="display:none">$</span><span id="input_53_1014_price"> Free</span><span class="freeCurr" style="display:none"></span></span></b></span>
-                      </span><span class="form-sub-label-container" style="vertical-align:top"><label class="form-sub-label" for="input_53_quantity_1014_0" style="min-height:13px">Quantity Case</label><input type="text" size="3" class="form-textbox validate[required] form-product-custom_quantity" name="q53_pleaseSpecify[special_1014][item_0]" id="input_53_quantity_1014_0" value="1" /></span></div>
-                    <div class="focus_action_button_container"><a class="btn-inline-product-delete" tabindex="0" role="button" aria-label="Delete Product"> </a><a class="btn-inline-product-settings" tabindex="0" role="button" aria-label="Product Settings"> </a></div>
-                  </div>
-                </span>
-                <div class="p_item_separator "></div><span class="form-product-item hover-product-item on_col2 not-category-found show_image show_option full_img new_ui" categories="2004" active-category="2004" pid="1015" aria-labelledby="label_53">
-                  <div data-wrapper-react="true" class="form-product-item-detail new_ui">
-                    <div class="p_col">
-                      <div class="p_checkbox"><input class="form-checkbox validate[required]  form-product-input" type="checkbox" id="input_53_1015" name="q53_pleaseSpecify[][id]" data-inputname="q53_pleaseSpecify[][id]" readonly="" aria-label="Select Product: Hobby Hair Cream" data-is-default-required="false" data-is-default-selected="false" value="1015" />
-                        <div class="checked"></div>
-                        <div class="select_border"></div>
-                      </div>
-                    </div>
-                    <div class="p_image">
-                      <div class="image_area form-product-image-with-options">
-                        <div style="position:absolute;width:100%;height:100%"><img loading="lazy" role="img" aria-label="Hobby Hair Cream" alt="Hobby Hair Cream Product Image" style="width:100%;height:100%;object-fit:contain" src="https://www.jotform.com/uploads/m7amed.9038/form_files/6c22d664_3a48_4548_9018_639c18294b5c_fe2401eefa1f50f1d21fe2bde4e7566d.avif" /></div>
-                      </div>
-                    </div>
-                    <div for="input_53_1015" class="form-product-container"><span data-wrapper-react="true">
-                        <div class="title_description"><span class="form-product-name" id="product-name-input_53_1015">Hobby Hair Cream</span><span class="form-product-description" id="product-name-description-input_53_1015"></span></div><span class="form-product-details"><b><span data-wrapper-react="true"><span class="freeCurr" style="display:none">$</span><span id="input_53_1015_price"> Free</span><span class="freeCurr" style="display:none"></span></span></b></span>
-                      </span><span class="form-sub-label-container" style="vertical-align:top"><label class="form-sub-label" for="input_53_quantity_1015_0" style="min-height:13px">Quantity Case</label><input type="text" size="3" class="form-textbox validate[required] form-product-custom_quantity" name="q53_pleaseSpecify[special_1015][item_0]" id="input_53_quantity_1015_0" value="1" /></span></div>
-                    <div class="focus_action_button_container"><a class="btn-inline-product-delete" tabindex="0" role="button" aria-label="Delete Product"> </a><a class="btn-inline-product-settings" tabindex="0" role="button" aria-label="Product Settings"> </a></div>
-                  </div>
-                </span>
-                <div class="p_item_separator "></div><span class="form-product-item hover-product-item on_col3 not-category-found show_image show_option full_img new_ui" categories="2004" active-category="2004" pid="1016" aria-labelledby="label_53">
-                  <div data-wrapper-react="true" class="form-product-item-detail new_ui">
-                    <div class="p_col">
-                      <div class="p_checkbox"><input class="form-checkbox validate[required]  form-product-input" type="checkbox" id="input_53_1016" name="q53_pleaseSpecify[][id]" data-inputname="q53_pleaseSpecify[][id]" readonly="" aria-label="Select Product: Hobby Hand Wash" data-is-default-required="false" data-is-default-selected="false" value="1016" />
-                        <div class="checked"></div>
-                        <div class="select_border"></div>
-                      </div>
-                    </div>
-                    <div class="p_image">
-                      <div class="image_area form-product-image-with-options">
-                        <div style="position:absolute;width:100%;height:100%"><img loading="lazy" role="img" aria-label="Hobby Hand Wash" alt="Hobby Hand Wash Product Image" style="width:100%;height:100%;object-fit:contain" src="https://www.jotform.com/uploads/m7amed.9038/form_files/hobby21_42d7af80997fbcc5e867deea95d52cc6.jpg" /></div>
-                      </div>
-                    </div>
-                    <div for="input_53_1016" class="form-product-container"><span data-wrapper-react="true">
-                        <div class="title_description"><span class="form-product-name" id="product-name-input_53_1016">Hobby Hand Wash</span><span class="form-product-description" id="product-name-description-input_53_1016"></span></div><span class="form-product-details"><b><span data-wrapper-react="true"><span class="freeCurr" style="display:none">$</span><span id="input_53_1016_price"> Free</span><span class="freeCurr" style="display:none"></span></span></b></span>
-                      </span><span class="form-sub-label-container" style="vertical-align:top"><label class="form-sub-label" for="input_53_quantity_1016_0" style="min-height:13px">Quantity Case</label><input type="text" size="3" class="form-textbox validate[required] form-product-custom_quantity" name="q53_pleaseSpecify[special_1016][item_0]" id="input_53_quantity_1016_0" value="1" /></span></div>
-                    <div class="focus_action_button_container"><a class="btn-inline-product-delete" tabindex="0" role="button" aria-label="Delete Product"> </a><a class="btn-inline-product-settings" tabindex="0" role="button" aria-label="Product Settings"> </a></div>
-                  </div>
-                </span>
-                <div class="p_item_separator "></div><span class="form-product-item hover-product-item on_col1 not-category-found show_image show_option full_img new_ui" categories="2004" active-category="2004" pid="1017" aria-labelledby="label_53">
-                  <div data-wrapper-react="true" class="form-product-item-detail new_ui">
-                    <div class="p_col">
-                      <div class="p_checkbox"><input class="form-checkbox validate[required]  form-product-input" type="checkbox" id="input_53_1017" name="q53_pleaseSpecify[][id]" data-inputname="q53_pleaseSpecify[][id]" readonly="" aria-label="Select Product: Hobby Lotion" data-is-default-required="false" data-is-default-selected="false" value="1017" />
-                        <div class="checked"></div>
-                        <div class="select_border"></div>
-                      </div>
-                    </div>
-                    <div class="p_image">
-                      <div class="image_area form-product-image-with-options">
-                        <div style="position:absolute;width:100%;height:100%"><img loading="lazy" role="img" aria-label="Hobby Lotion" alt="Hobby Lotion Product Image" style="width:100%;height:100%;object-fit:contain" src="https://www.jotform.com/uploads/m7amed.9038/form_files/61ulqkmkdal_dfbe25292d7cf4dc56374cc1914171a7.jpg" /></div>
-                      </div>
-                    </div>
-                    <div for="input_53_1017" class="form-product-container"><span data-wrapper-react="true">
-                        <div class="title_description"><span class="form-product-name" id="product-name-input_53_1017">Hobby Lotion</span><span class="form-product-description" id="product-name-description-input_53_1017"></span></div><span class="form-product-details"><b><span data-wrapper-react="true"><span class="freeCurr" style="display:none">$</span><span id="input_53_1017_price"> Free</span><span class="freeCurr" style="display:none"></span></span></b></span>
-                      </span><span class="form-sub-label-container" style="vertical-align:top"><label class="form-sub-label" for="input_53_quantity_1017_0" style="min-height:13px">Quantity Case</label><input type="text" size="3" class="form-textbox validate[required] form-product-custom_quantity" name="q53_pleaseSpecify[special_1017][item_0]" id="input_53_quantity_1017_0" value="1" /></span></div>
-                    <div class="focus_action_button_container"><a class="btn-inline-product-delete" tabindex="0" role="button" aria-label="Delete Product"> </a><a class="btn-inline-product-settings" tabindex="0" role="button" aria-label="Product Settings"> </a></div>
-                  </div>
-                </span>
-                <div class="p_item_separator "></div><span class="form-product-item hover-product-item on_col2 not-category-found show_image show_option full_img new_ui" categories="2004" active-category="2004" pid="1018" aria-labelledby="label_53">
-                  <div data-wrapper-react="true" class="form-product-item-detail new_ui">
-                    <div class="p_col">
-                      <div class="p_checkbox"><input class="form-checkbox validate[required]  form-product-input" type="checkbox" id="input_53_1018" name="q53_pleaseSpecify[][id]" data-inputname="q53_pleaseSpecify[][id]" readonly="" aria-label="Select Product: Hobby Shampoo" data-is-default-required="false" data-is-default-selected="false" value="1018" />
-                        <div class="checked"></div>
-                        <div class="select_border"></div>
-                      </div>
-                    </div>
-                    <div class="p_image">
-                      <div class="image_area form-product-image-with-options">
-                        <div style="position:absolute;width:100%;height:100%"><img loading="lazy" role="img" aria-label="Hobby Shampoo" alt="Hobby Shampoo Product Image" style="width:100%;height:100%;object-fit:contain" src="https://www.jotform.com/uploads/m7amed.9038/form_files/hobby_protein_samp_sarimsak_ing_3d_optimized_0421d36077b51a87703baf8ce8e507ab.jpg" /></div>
-                      </div>
-                    </div>
-                    <div for="input_53_1018" class="form-product-container"><span data-wrapper-react="true">
-                        <div class="title_description"><span class="form-product-name" id="product-name-input_53_1018">Hobby Shampoo</span><span class="form-product-description" id="product-name-description-input_53_1018"></span></div><span class="form-product-details"><b><span data-wrapper-react="true"><span class="freeCurr" style="display:none">$</span><span id="input_53_1018_price"> Free</span><span class="freeCurr" style="display:none"></span></span></b></span>
-                      </span><span class="form-sub-label-container" style="vertical-align:top"><label class="form-sub-label" for="input_53_quantity_1018_0" style="min-height:13px">Quantity Case</label><input type="text" size="3" class="form-textbox validate[required] form-product-custom_quantity" name="q53_pleaseSpecify[special_1018][item_0]" id="input_53_quantity_1018_0" value="1" /></span></div>
-                    <div class="focus_action_button_container"><a class="btn-inline-product-delete" tabindex="0" role="button" aria-label="Delete Product"> </a><a class="btn-inline-product-settings" tabindex="0" role="button" aria-label="Product Settings"> </a></div>
-                  </div>
-                </span>
-                <div class="p_item_separator "></div><span class="form-product-item hover-product-item on_col3 not-category-found show_image show_option full_img new_ui" categories="2004" active-category="2004" pid="1019" aria-labelledby="label_53">
-                  <div data-wrapper-react="true" class="form-product-item-detail new_ui">
-                    <div class="p_col">
-                      <div class="p_checkbox"><input class="form-checkbox validate[required]  form-product-input" type="checkbox" id="input_53_1019" name="q53_pleaseSpecify[][id]" data-inputname="q53_pleaseSpecify[][id]" readonly="" aria-label="Select Product: Hobby Shower Gel" data-is-default-required="false" data-is-default-selected="false" value="1019" />
-                        <div class="checked"></div>
-                        <div class="select_border"></div>
-                      </div>
-                    </div>
-                    <div class="p_image">
-                      <div class="image_area form-product-image-with-options">
-                        <div style="position:absolute;width:100%;height:100%"><img loading="lazy" role="img" aria-label="Hobby Shower Gel" alt="Hobby Shower Gel Product Image" style="width:100%;height:100%;object-fit:contain" src="https://www.jotform.com/uploads/m7amed.9038/form_files/hobby_fresh_care_orchid_8286eb564b4d29a4ff2e080d72c898bc.jpg" /></div>
-                      </div>
-                    </div>
-                    <div for="input_53_1019" class="form-product-container"><span data-wrapper-react="true">
-                        <div class="title_description"><span class="form-product-name" id="product-name-input_53_1019">Hobby Shower Gel</span><span class="form-product-description" id="product-name-description-input_53_1019"></span></div><span class="form-product-details"><b><span data-wrapper-react="true"><span class="freeCurr" style="display:none">$</span><span id="input_53_1019_price"> Free</span><span class="freeCurr" style="display:none"></span></span></b></span>
-                      </span><span class="form-sub-label-container" style="vertical-align:top"><label class="form-sub-label" for="input_53_quantity_1019_0" style="min-height:13px">Quantity Case</label><input type="text" size="3" class="form-textbox validate[required] form-product-custom_quantity" name="q53_pleaseSpecify[special_1019][item_0]" id="input_53_quantity_1019_0" value="1" /></span></div>
-                    <div class="focus_action_button_container"><a class="btn-inline-product-delete" tabindex="0" role="button" aria-label="Delete Product"> </a><a class="btn-inline-product-settings" tabindex="0" role="button" aria-label="Product Settings"> </a></div>
-                  </div>
-                </span>
-                <div class="p_item_separator "></div><span class="form-product-item hover-product-item on_col1 not-category-found show_image show_option full_img new_ui" categories="2004" active-category="2004" pid="1020" aria-labelledby="label_53">
-                  <div data-wrapper-react="true" class="form-product-item-detail new_ui">
-                    <div class="p_col">
-                      <div class="p_checkbox"><input class="form-checkbox validate[required]  form-product-input" type="checkbox" id="input_53_1020" name="q53_pleaseSpecify[][id]" data-inputname="q53_pleaseSpecify[][id]" readonly="" aria-label="Select Product: Hobby Body Cream" data-is-default-required="false" data-is-default-selected="false" value="1020" />
-                        <div class="checked"></div>
-                        <div class="select_border"></div>
-                      </div>
-                    </div>
-                    <div class="p_image">
-                      <div class="image_area form-product-image-with-options">
-                        <div style="position:absolute;width:100%;height:100%"><img loading="lazy" role="img" aria-label="Hobby Body Cream" alt="Hobby Body Cream Product Image" style="width:100%;height:100%;object-fit:contain" src="https://www.jotform.com/uploads/m7amed.9038/form_files/71q2tekwu4l_uf1000_1000_ql80_87bf9bbf15a38db927b4b721eedad038.jpg" /></div>
-                      </div>
-                    </div>
-                    <div for="input_53_1020" class="form-product-container"><span data-wrapper-react="true">
-                        <div class="title_description"><span class="form-product-name" id="product-name-input_53_1020">Hobby Body Cream</span><span class="form-product-description" id="product-name-description-input_53_1020"></span></div><span class="form-product-details"><b><span data-wrapper-react="true"><span class="freeCurr" style="display:none">$</span><span id="input_53_1020_price"> Free</span><span class="freeCurr" style="display:none"></span></span></b></span>
-                      </span><span class="form-sub-label-container" style="vertical-align:top"><label class="form-sub-label" for="input_53_quantity_1020_0" style="min-height:13px">Quantity Case</label><input type="text" size="3" class="form-textbox validate[required] form-product-custom_quantity" name="q53_pleaseSpecify[special_1020][item_0]" id="input_53_quantity_1020_0" value="1" /></span></div>
-                    <div class="focus_action_button_container"><a class="btn-inline-product-delete" tabindex="0" role="button" aria-label="Delete Product"> </a><a class="btn-inline-product-settings" tabindex="0" role="button" aria-label="Product Settings"> </a></div>
-                  </div>
-                </span>
-                <div class="p_item_separator last_p_seperator"></div><span class="form-product-category-item title_collapsed last_p_category" category="2005"><b>Aiico</b><span class="selected-items-icon"></span></span><span class="form-product-item hover-product-item on_col1 not-category-found show_image show_option full_img new_ui" categories="2005" active-category="2005" pid="1026" aria-labelledby="label_53">
-                  <div data-wrapper-react="true" class="form-product-item-detail new_ui">
-                    <div class="p_col">
-                      <div class="p_checkbox"><input class="form-checkbox validate[required]  form-product-input" type="checkbox" id="input_53_1026" name="q53_pleaseSpecify[][id]" data-inputname="q53_pleaseSpecify[][id]" readonly="" aria-label="Select Product: Bleach" data-is-default-required="false" data-is-default-selected="false" value="1026" />
-                        <div class="checked"></div>
-                        <div class="select_border"></div>
-                      </div>
-                    </div>
-                    <div class="p_image">
-                      <div class="image_area form-product-image-with-options">
-                        <div style="position:absolute;width:100%;height:100%"><img loading="lazy" role="img" aria-label="Bleach" alt="Bleach Product Image" style="width:100%;height:100%;object-fit:contain" src="https://www.jotform.com/uploads/m7amed.9038/form_files/24141297_93b5_4963_8168_39d4ed7947ca_345_e0020d9ab3ea76a7de7634a3d2bdf7fc.webp" /></div>
-                      </div>
-                    </div>
-                    <div for="input_53_1026" class="form-product-container"><span data-wrapper-react="true">
-                        <div class="title_description"><span class="form-product-name" id="product-name-input_53_1026">Bleach</span><span class="form-product-description" id="product-name-description-input_53_1026"></span></div><span class="form-product-details"><b><span data-wrapper-react="true"><span class="freeCurr" style="display:none">$</span><span id="input_53_1026_price"> Free</span><span class="freeCurr" style="display:none"></span></span></b></span>
-                      </span><span class="form-sub-label-container" style="vertical-align:top"><label class="form-sub-label" for="input_53_quantity_1026_0" style="min-height:13px">Quantity Case</label><input type="text" size="3" class="form-textbox validate[required] form-product-custom_quantity" name="q53_pleaseSpecify[special_1026][item_0]" id="input_53_quantity_1026_0" value="1" /></span></div>
-                    <div class="focus_action_button_container"><a class="btn-inline-product-delete" tabindex="0" role="button" aria-label="Delete Product"> </a><a class="btn-inline-product-settings" tabindex="0" role="button" aria-label="Product Settings"> </a></div>
-                  </div>
-                </span>
-                <div class="p_item_separator "></div><span class="form-product-item hover-product-item on_col2 not-category-found show_image show_option full_img new_ui" categories="2005" active-category="2005" pid="1028" aria-labelledby="label_53">
-                  <div data-wrapper-react="true" class="form-product-item-detail new_ui">
-                    <div class="p_col">
-                      <div class="p_checkbox"><input class="form-checkbox validate[required]  form-product-input" type="checkbox" id="input_53_1028" name="q53_pleaseSpecify[][id]" data-inputname="q53_pleaseSpecify[][id]" readonly="" aria-label="Select Product: Dishwashing Liquid" data-is-default-required="false" data-is-default-selected="false" value="1028" />
-                        <div class="checked"></div>
-                        <div class="select_border"></div>
-                      </div>
-                    </div>
-                    <div class="p_image">
-                      <div class="image_area form-product-image-with-options">
-                        <div style="position:absolute;width:100%;height:100%"><img loading="lazy" role="img" aria-label="Dishwashing Liquid" alt="Dishwashing Liquid Product Image" style="width:100%;height:100%;object-fit:contain" src="https://www.jotform.com/uploads/m7amed.9038/form_files/zodk015_mr_stong_dishwashing_b6d4aa4f5af0862cf764c8df472df6d2.jpg" /></div>
-                      </div>
-                    </div>
-                    <div for="input_53_1028" class="form-product-container"><span data-wrapper-react="true">
-                        <div class="title_description"><span class="form-product-name" id="product-name-input_53_1028">Dishwashing Liquid</span><span class="form-product-description" id="product-name-description-input_53_1028"></span></div><span class="form-product-details"><b><span data-wrapper-react="true"><span class="freeCurr" style="display:none">$</span><span id="input_53_1028_price"> Free</span><span class="freeCurr" style="display:none"></span></span></b></span>
-                      </span><span class="form-sub-label-container" style="vertical-align:top"><label class="form-sub-label" for="input_53_quantity_1028_0" style="min-height:13px">Quantity Case</label><input type="text" size="3" class="form-textbox validate[required] form-product-custom_quantity" name="q53_pleaseSpecify[special_1028][item_0]" id="input_53_quantity_1028_0" value="1" /></span></div>
-                    <div class="focus_action_button_container"><a class="btn-inline-product-delete" tabindex="0" role="button" aria-label="Delete Product"> </a><a class="btn-inline-product-settings" tabindex="0" role="button" aria-label="Product Settings"> </a></div>
-                  </div>
-                </span>
-                <div class="p_item_separator "></div><span class="form-product-item hover-product-item on_col3 not-category-found show_image show_option full_img new_ui" categories="2005" active-category="2005" pid="1030" aria-labelledby="label_53">
-                  <div data-wrapper-react="true" class="form-product-item-detail new_ui">
-                    <div class="p_col">
-                      <div class="p_checkbox"><input class="form-checkbox validate[required]  form-product-input" type="checkbox" id="input_53_1030" name="q53_pleaseSpecify[][id]" data-inputname="q53_pleaseSpecify[][id]" readonly="" aria-label="Select Product: Gel  Freshener" data-is-default-required="false" data-is-default-selected="false" value="1030" />
-                        <div class="checked"></div>
-                        <div class="select_border"></div>
-                      </div>
-                    </div>
-                    <div class="p_image">
-                      <div class="image_area form-product-image-with-options">
-                        <div style="position:absolute;width:100%;height:100%"><img loading="lazy" role="img" aria-label="Gel  Freshener" alt="Gel  Freshener Product Image" style="width:100%;height:100%;object-fit:contain" src="https://www.jotform.com/uploads/m7amed.9038/form_files/zodk009op_2_1_e35bc146b9f9f58f0a798b476d86039c.jpg" /></div>
-                      </div>
-                    </div>
-                    <div for="input_53_1030" class="form-product-container"><span data-wrapper-react="true">
-                        <div class="title_description"><span class="form-product-name" id="product-name-input_53_1030">Gel Freshener</span><span class="form-product-description" id="product-name-description-input_53_1030"></span></div><span class="form-product-details"><b><span data-wrapper-react="true"><span class="freeCurr" style="display:none">$</span><span id="input_53_1030_price"> Free</span><span class="freeCurr" style="display:none"></span></span></b></span>
-                      </span><span class="form-sub-label-container" style="vertical-align:top"><label class="form-sub-label" for="input_53_quantity_1030_0" style="min-height:13px">Quantity Case</label><input type="text" size="3" class="form-textbox validate[required] form-product-custom_quantity" name="q53_pleaseSpecify[special_1030][item_0]" id="input_53_quantity_1030_0" value="1" /></span></div>
-                    <div class="focus_action_button_container"><a class="btn-inline-product-delete" tabindex="0" role="button" aria-label="Delete Product"> </a><a class="btn-inline-product-settings" tabindex="0" role="button" aria-label="Product Settings"> </a></div>
-                  </div>
-                </span>
-                <div class="p_item_separator "></div><span class="form-product-item hover-product-item on_col1 not-category-found show_image show_option full_img new_ui" categories="2005" active-category="2005" pid="1029" aria-labelledby="label_53">
-                  <div data-wrapper-react="true" class="form-product-item-detail new_ui">
-                    <div class="p_col">
-                      <div class="p_checkbox"><input class="form-checkbox validate[required]  form-product-input" type="checkbox" id="input_53_1029" name="q53_pleaseSpecify[][id]" data-inputname="q53_pleaseSpecify[][id]" readonly="" aria-label="Select Product: General freshener" data-is-default-required="false" data-is-default-selected="false" value="1029" />
-                        <div class="checked"></div>
-                        <div class="select_border"></div>
-                      </div>
-                    </div>
-                    <div class="p_image">
-                      <div class="image_area form-product-image-with-options">
-                        <div style="position:absolute;width:100%;height:100%"><img loading="lazy" role="img" aria-label="General freshener" alt="General freshener Product Image" style="width:100%;height:100%;object-fit:contain" src="https://www.jotform.com/uploads/m7amed.9038/form_files/54b3491e4ff30ac3ce9c5f5a6138aa27_400x300_77768fda4a7391a756afc136d7a66174.jpeg" /></div>
-                      </div>
-                    </div>
-                    <div for="input_53_1029" class="form-product-container"><span data-wrapper-react="true">
-                        <div class="title_description"><span class="form-product-name" id="product-name-input_53_1029">General freshener</span><span class="form-product-description" id="product-name-description-input_53_1029"></span></div><span class="form-product-details"><b><span data-wrapper-react="true"><span class="freeCurr" style="display:none">$</span><span id="input_53_1029_price"> Free</span><span class="freeCurr" style="display:none"></span></span></b></span>
-                      </span><span class="form-sub-label-container" style="vertical-align:top"><label class="form-sub-label" for="input_53_quantity_1029_0" style="min-height:13px">Quantity Case</label><input type="text" size="3" class="form-textbox validate[required] form-product-custom_quantity" name="q53_pleaseSpecify[special_1029][item_0]" id="input_53_quantity_1029_0" value="1" /></span></div>
-                    <div class="focus_action_button_container"><a class="btn-inline-product-delete" tabindex="0" role="button" aria-label="Delete Product"> </a><a class="btn-inline-product-settings" tabindex="0" role="button" aria-label="Product Settings"> </a></div>
-                  </div>
-                </span>
-                <div class="p_item_separator "></div><span class="form-product-item hover-product-item on_col2 not-category-found show_image show_option full_img new_ui" categories="2005" active-category="2005" pid="1032" aria-labelledby="label_53">
-                  <div data-wrapper-react="true" class="form-product-item-detail new_ui">
-                    <div class="p_col">
-                      <div class="p_checkbox"><input class="form-checkbox validate[required]  form-product-input" type="checkbox" id="input_53_1032" name="q53_pleaseSpecify[][id]" data-inputname="q53_pleaseSpecify[][id]" readonly="" aria-label="Select Product: Glass Cleaner" data-is-default-required="false" data-is-default-selected="false" value="1032" />
-                        <div class="checked"></div>
-                        <div class="select_border"></div>
-                      </div>
-                    </div>
-                    <div class="p_image">
-                      <div class="image_area form-product-image-with-options">
-                        <div style="position:absolute;width:100%;height:100%"><img loading="lazy" role="img" aria-label="Glass Cleaner" alt="Glass Cleaner Product Image" style="width:100%;height:100%;object-fit:contain" src="https://www.jotform.com/uploads/m7amed.9038/form_files/zodk008_en_806b1c92b59edc7941326fdaf1ed68b1.jpg" /></div>
-                      </div>
-                    </div>
-                    <div for="input_53_1032" class="form-product-container"><span data-wrapper-react="true">
-                        <div class="title_description"><span class="form-product-name" id="product-name-input_53_1032">Glass Cleaner</span><span class="form-product-description" id="product-name-description-input_53_1032"></span></div><span class="form-product-details"><b><span data-wrapper-react="true"><span class="freeCurr" style="display:none">$</span><span id="input_53_1032_price"> Free</span><span class="freeCurr" style="display:none"></span></span></b></span>
-                      </span><span class="form-sub-label-container" style="vertical-align:top"><label class="form-sub-label" for="input_53_quantity_1032_0" style="min-height:13px">Quantity Case</label><input type="text" size="3" class="form-textbox validate[required] form-product-custom_quantity" name="q53_pleaseSpecify[special_1032][item_0]" id="input_53_quantity_1032_0" value="1" /></span></div>
-                    <div class="focus_action_button_container"><a class="btn-inline-product-delete" tabindex="0" role="button" aria-label="Delete Product"> </a><a class="btn-inline-product-settings" tabindex="0" role="button" aria-label="Product Settings"> </a></div>
-                  </div>
-                </span>
-                <div class="p_item_separator "></div><span class="form-product-item hover-product-item on_col3 not-category-found show_image show_option full_img new_ui" categories="2005" active-category="2005" pid="1027" aria-labelledby="label_53">
-                  <div data-wrapper-react="true" class="form-product-item-detail new_ui">
-                    <div class="p_col">
-                      <div class="p_checkbox"><input class="form-checkbox validate[required]  form-product-input" type="checkbox" id="input_53_1027" name="q53_pleaseSpecify[][id]" data-inputname="q53_pleaseSpecify[][id]" readonly="" aria-label="Select Product: Multi-Purpose Cleaner" data-is-default-required="false" data-is-default-selected="false" value="1027" />
-                        <div class="checked"></div>
-                        <div class="select_border"></div>
-                      </div>
-                    </div>
-                    <div class="p_image">
-                      <div class="image_area form-product-image-with-options">
-                        <div style="position:absolute;width:100%;height:100%"><img loading="lazy" role="img" aria-label="Multi-Purpose Cleaner" alt="Multi-Purpose Cleaner Product Image" style="width:100%;height:100%;object-fit:contain" src="https://www.jotform.com/uploads/m7amed.9038/form_files/zodk004_en_1_3994ab6aacdb21835f606d6681f7610f.jpg" /></div>
-                      </div>
-                    </div>
-                    <div for="input_53_1027" class="form-product-container"><span data-wrapper-react="true">
-                        <div class="title_description"><span class="form-product-name" id="product-name-input_53_1027">Multi-Purpose Cleaner</span><span class="form-product-description" id="product-name-description-input_53_1027"></span></div><span class="form-product-details"><b><span data-wrapper-react="true"><span class="freeCurr" style="display:none">$</span><span id="input_53_1027_price"> Free</span><span class="freeCurr" style="display:none"></span></span></b></span>
-                      </span><span class="form-sub-label-container" style="vertical-align:top"><label class="form-sub-label" for="input_53_quantity_1027_0" style="min-height:13px">Quantity Case</label><input type="text" size="3" class="form-textbox validate[required] form-product-custom_quantity" name="q53_pleaseSpecify[special_1027][item_0]" id="input_53_quantity_1027_0" value="1" /></span></div>
-                    <div class="focus_action_button_container"><a class="btn-inline-product-delete" tabindex="0" role="button" aria-label="Delete Product"> </a><a class="btn-inline-product-settings" tabindex="0" role="button" aria-label="Product Settings"> </a></div>
-                  </div>
-                </span>
-                <div class="p_item_separator "></div><span class="form-product-item hover-product-item on_col1 not-category-found show_image show_option full_img new_ui" categories="2005" active-category="2005" pid="1034" aria-labelledby="label_53">
-                  <div data-wrapper-react="true" class="form-product-item-detail new_ui">
-                    <div class="p_col">
-                      <div class="p_checkbox"><input class="form-checkbox validate[required]  form-product-input" type="checkbox" id="input_53_1034" name="q53_pleaseSpecify[][id]" data-inputname="q53_pleaseSpecify[][id]" readonly="" aria-label="Select Product: Laundry Liquid" data-is-default-required="false" data-is-default-selected="false" value="1034" />
-                        <div class="checked"></div>
-                        <div class="select_border"></div>
-                      </div>
-                    </div>
-                    <div class="p_image">
-                      <div class="image_area form-product-image-with-options">
-                        <div style="position:absolute;width:100%;height:100%"><img loading="lazy" role="img" aria-label="Laundry Liquid" alt="Laundry Liquid Product Image" style="width:100%;height:100%;object-fit:contain" src="https://www.jotform.com/uploads/m7amed.9038/form_files/odk019_1_8a951c9664c2caf513fa0bfa32f38544.jpg" /></div>
-                      </div>
-                    </div>
-                    <div for="input_53_1034" class="form-product-container"><span data-wrapper-react="true">
-                        <div class="title_description"><span class="form-product-name" id="product-name-input_53_1034">Laundry Liquid</span><span class="form-product-description" id="product-name-description-input_53_1034"></span></div><span class="form-product-details"><b><span data-wrapper-react="true"><span class="freeCurr" style="display:none">$</span><span id="input_53_1034_price"> Free</span><span class="freeCurr" style="display:none"></span></span></b></span>
-                      </span><span class="form-sub-label-container" style="vertical-align:top"><label class="form-sub-label" for="input_53_quantity_1034_0" style="min-height:13px">Quantity Case</label><input type="text" size="3" class="form-textbox validate[required] form-product-custom_quantity" name="q53_pleaseSpecify[special_1034][item_0]" id="input_53_quantity_1034_0" value="1" /></span></div>
-                    <div class="focus_action_button_container"><a class="btn-inline-product-delete" tabindex="0" role="button" aria-label="Delete Product"> </a><a class="btn-inline-product-settings" tabindex="0" role="button" aria-label="Product Settings"> </a></div>
-                  </div>
-                </span>
-                <div class="p_item_separator "></div><span class="form-product-item hover-product-item on_col2 not-category-found show_image show_option full_img new_ui" categories="2005" active-category="2005" pid="1035" aria-labelledby="label_53">
-                  <div data-wrapper-react="true" class="form-product-item-detail new_ui">
-                    <div class="p_col">
-                      <div class="p_checkbox"><input class="form-checkbox validate[required]  form-product-input" type="checkbox" id="input_53_1035" name="q53_pleaseSpecify[][id]" data-inputname="q53_pleaseSpecify[][id]" readonly="" aria-label="Select Product: Liquid Soap" data-is-default-required="false" data-is-default-selected="false" value="1035" />
-                        <div class="checked"></div>
-                        <div class="select_border"></div>
-                      </div>
-                    </div>
-                    <div class="p_image">
-                      <div class="image_area form-product-image-with-options">
-                        <div style="position:absolute;width:100%;height:100%"><img loading="lazy" role="img" aria-label="Liquid Soap" alt="Liquid Soap Product Image" style="width:100%;height:100%;object-fit:contain" src="https://www.jotform.com/uploads/m7amed.9038/form_files/zodk023_1_180b3e26a59b5af7795b2addffa02693.jpg" /></div>
-                      </div>
-                    </div>
-                    <div for="input_53_1035" class="form-product-container"><span data-wrapper-react="true">
-                        <div class="title_description"><span class="form-product-name" id="product-name-input_53_1035">Liquid Soap</span><span class="form-product-description" id="product-name-description-input_53_1035"></span></div><span class="form-product-details"><b><span data-wrapper-react="true"><span class="freeCurr" style="display:none">$</span><span id="input_53_1035_price"> Free</span><span class="freeCurr" style="display:none"></span></span></b></span>
-                      </span><span class="form-sub-label-container" style="vertical-align:top"><label class="form-sub-label" for="input_53_quantity_1035_0" style="min-height:13px">Quantity Case</label><input type="text" size="3" class="form-textbox validate[required] form-product-custom_quantity" name="q53_pleaseSpecify[special_1035][item_0]" id="input_53_quantity_1035_0" value="1" /></span></div>
-                    <div class="focus_action_button_container"><a class="btn-inline-product-delete" tabindex="0" role="button" aria-label="Delete Product"> </a><a class="btn-inline-product-settings" tabindex="0" role="button" aria-label="Product Settings"> </a></div>
-                  </div>
-                </span>
-                <div class="payment_footer new_ui ">
-                  <div class="total_area">
-                    <div class="form-payment-total">
-                      <div id="total-text">Total</div>
-                      <div class="form-payment-price"><span data-wrapper-react="true">$<span id="payment_total">0.00</span></span></div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </li>
-      <li class="form-line" data-type="control_button" id="id_52">
-        <div id="cid_52" class="form-input-wide" data-layout="full">
-          <div data-align="auto" class="form-buttons-wrapper form-buttons-auto   jsTest-button-wrapperField"><button id="input_52" type="submit" class="form-submit-button form-submit-button-gradient-6 submit-button jf-form-buttons jsTest-submitField legacy-submit" data-component="button" data-content="">Submit</button></div>
-        </div>
-      </li>
-      <li style="display:none">Should be Empty: </li>
-    </ul>
-  </div>
-  
-  
-  
-</form>
-<link id=color-scheme-style href="https://cdn.jotfor.ms/stylebuilder/static/color-scheme.css?v=3.3.63881" type="text/css" rel="stylesheet" /></body>
+  <h1>Stock In Trade Form</h1>
+  <form id="stockForm">
+    <label for="week">Week</label>
+    <select id="week" name="week" required>
+      <option value="">Select Week</option>
+      <option value="1">1</option>
+      <option value="2">2</option>
+      <option value="3">3</option>
+      <option value="4">4</option>
+    </select>
+
+    <label for="channel">Channel</label>
+    <select id="channel" onchange="updateSalesmen()" required>
+      <option value="">Select Channel</option>
+    </select>
+
+    <label for="salesman">Salesman</label>
+    <select id="salesman" onchange="updateCustomers()" required>
+      <option value="">Select Salesman</option>
+    </select>
+
+    <label for="customer">Customer</label>
+    <select id="customer" required>
+      <option value="">Select Customer</option>
+    </select>
+
+    <label for="quantity">Stock Quantity</label>
+    <input type="number" id="quantity" name="quantity" required min="0">
+
+    <button type="submit">Submit</button>
+  </form>
+
+  <script>
+    const dropdownData = {
+  "Key Account": {
+    "ABDULLAH IYAD AL-OBEIDI": [
+      "300030 - Carrefoure",
+      "305384 - MM Bazar Market",
+      "305651 - Lalav Bazar",
+      "306010 - Levano market"
+    ],
+    "AMJAD NAZIM HUSSEIN": [
+      "130003 - abu tallal market",
+      "130004 - abu tallal 2 market",
+      "130005 - abu tallal Cosmetic",
+      "130006 - Jordan market",
+      "130018 - al-rayan market",
+      "130019 - al-rayan market",
+      "130022 - Iraqi Free Company",
+      "130028 - Al-Lera market",
+      "130036 - Al-Waha Center market",
+      "130038 - super market al-yusir",
+      "130046 - Totters App",
+      "130047 - humis market",
+      "130050 - Rosa mall",
+      "130067 - Alsaa Mall",
+      "130070 - AlMiraj Market 2",
+      "130071 - Amazon market",
+      "130075 - Salla Market",
+      "130083 - Nabeel market",
+      "130087 - Miswag Hyper market",
+      "130088 - happy home",
+      "130408 - Hazaar market",
+      "130597 - Hypermarket Al-Taa'awon",
+      "130597 - Hypermarket Al-Taa'awon  / Al-bayae 1",
+      "130649 - Market Wajd",
+      "131177 - market zeitoun 3",
+      "196840 - Talabat app"
+    ],
+    "AMMAR TAYSEER HASSAN": [
+      "130002 - Abu talib market",
+      "130004 - abu tallal 2 market",
+      "130007 - Ofuq Al Kawthar",
+      "130019 - al-rayan market",
+      "130030 - Bait AL-Tamween-Adhamiya",
+      "130031 - Bait AL-Tamween-Salaikh",
+      "130034 - Al-muatamen",
+      "130035 - Alnahrain market",
+      "130037 - Al-Waffi Center",
+      "130048 - Haider market",
+      "130052 - 7 days",
+      "130069 - Bait AL-Tamween-Fallujah",
+      "130077 - Mass Mall",
+      "130084 - Nour al-huda",
+      "130086 - Hyper  market Al-Warda",
+      "130090 - Waffer Al Jadreya",
+      "130091 - Waffer Alshaab",
+      "130092 - Waffer Karadaa",
+      "130581 - UGUR COMPANY",
+      "130588 - Red Toot Market",
+      "130594 - Carrefour",
+      "130624 - Waffer-Adhamiya",
+      "131032 - Al Nidaa Supermarket"
+    ],
+    "ASAAD FAYEK MAHMOUD": [
+      "200037 - \u0633\u0627\u0631\u0629 \u0644\u0644\u062a\u062c\u0645\u064a\u0644",
+      "200039 - \u0645\u0639\u062a\u0632 \u0628\u0635\u0631\u0629",
+      "200220 - \u0627\u0633\u0648\u0627\u0642 \u0627\u0644\u0632\u0627\u0626\u0631",
+      "200268 - \u0627\u0644\u0642\u0645\u0631 \u0627\u0644\u0645\u0646\u064a\u0631 \u0633\u0646\u062a\u0631",
+      "200277 - \u0627\u0633\u0648\u0627\u0642 \u0627\u0644\u062f\u0648\u063a\u062c\u064a",
+      "200304 - \u0635\u0627\u0644\u062d \u0633\u0646\u062a\u0631",
+      "200304 - \u0635\u0627\u0644\u062d \u0633\u0646\u062a\u0631 \u0627\u0644\u0648\u0641\u0648\u062f",
+      "200315 - \u0627\u0628\u0648 \u0627\u0644\u0647\u064a\u0644 \u0633\u0646\u062a\u0631",
+      "200315 - \u0633\u0646\u062a\u0631 \u0627\u0628\u0648 \u0627\u0644\u0647\u064a\u0644",
+      "200396 - \u0633\u0646\u062a\u0631 \u0645\u0627\u0632\u0646",
+      "200423 - \u0645\u0634\u0645\u0634\u0629",
+      "200425 - Raoan Center",
+      "200493 - \u0627\u0644\u0632\u0628\u064a\u0631 \u0633\u0646\u062a\u0631",
+      "200703 - \u0633\u0646\u062a\u0631 \u0627\u0644\u0628\u0631\u0627\u0636\u0639\u064a\u0647",
+      "200705 - \u0646\u0648\u0631 \u0627\u0644\u0632\u0647\u0631\u0627\u0621 \u0633\u0646\u062a\u0631",
+      "200722 - \u0628\u0635\u0631\u0647 \u0633\u0646\u062a\u0631",
+      "200723 - \u0633\u0646\u062a\u0631 \u0628\u0627\u0628\u0627 \u0627\u0634\u062a\u0631\u064a\u0644\u064a",
+      "200750 - \u0633\u0646\u062a\u0631 \u0627\u0644\u062e\u064a\u0631\u0627\u062a",
+      "200911 - \u0627\u064a\u0644\u064a\u0627 \u0633\u0646\u062a\u0631",
+      "200984 - \u0627\u0644\u063a\u064a\u0627\u062b \u0633\u0646\u062a\u0631",
+      "201034 - \u0627\u0644\u0631\u064a\u0627\u0646 \u0633\u0646\u062a\u0631",
+      "201080 - \u0627\u0644\u062e\u0644\u062c \u0633\u0646\u062a\u0631",
+      "201080 - \u0627\u0644\u062e\u0644\u064a\u062c \u0633\u0646\u062a\u0631",
+      "201081 - \u0627\u0644\u0641\u0636\u0644 \u0633\u0646\u062a\u0631",
+      "201096 - \u0643\u0645\u0627\u0644\u064a\u0627\u062a \u0645\u0639\u062a\u0632",
+      "201352 - \u0627\u0644\u0634\u0627\u0645 \u0645\u0627\u0631\u0643\u062a",
+      "201465 - \u0628\u0635\u0631\u0629 \u0633\u0646\u062a\u0631 3",
+      "202629 - \u0643\u0645\u0627\u0644\u064a\u0627\u062a \u0632\u064a\u0648\u0646\u064a",
+      "202780 - \u0645\u064a\u0644\u0627\u0646\u0648 \u0633\u0646\u062a\u0631",
+      "202848 - \u0645\u0643\u062a\u0628 \u0635\u062f\u0649 \u0627\u0644\u064a\u0642\u064a\u0646",
+      "202898 - \u0631\u0648\u0632 \u0633\u0646\u062a\u0631 \u0627\u0644\u0645\u0637\u064a\u062d\u0629",
+      "202903 - \u0633\u0646\u062a\u0631 \u062f\u0631 \u0627\u0644\u062c\u0646\u0648\u0628",
+      "202917 - Big Mart  \u0628\u0643 \u0645\u0627\u0631\u062a",
+      "202917 - Big Mart \u0628\u0643 \u0645\u0627\u0631\u062a",
+      "202975 - \u0631\u064a\u062a\u0627\u062c \u0633\u0646\u062a\u0631",
+      "202986 - \u0633\u0646\u062a\u0631 \u0627\u0644\u0633\u0627\u0639\u0629",
+      "203002 - \u0643\u0631\u0627\u0646\u062f \u0645\u0627\u0631\u0643\u062a",
+      "203036 - \u0627\u0644\u0647\u0644\u0627\u0644\u064a \u0633\u0646\u062a\u0631",
+      "203036 - \u0627\u0644\u0647\u0644\u0627\u0644\u064a \u0645\u0627\u0631\u0643\u062a",
+      "203182 - \u0633\u0646\u062a\u0631 \u0645\u062f\u064a\u0646\u0629 \u0627\u0644\u0646\u0631\u062c\u0633",
+      "203469 - \u062a\u0648\u0628 \u0645\u0627\u0631\u0643\u062a",
+      "203491 - \u062a\u0637\u0628\u064a\u0642 \u062a\u0648\u062a\u0631\u0632",
+      "203501 - \u0647\u0627\u064a\u0628\u0631 \u0645\u0627\u0631\u0643\u062a \u0627\u0644\u0628\u0631\u0643\u0629",
+      "203547 - Flower Garden"
+    ],
+    "BALEEN OMER RASOL": [
+      "300031 - Majidi Mall HM",
+      "302913 - Minera Zeren",
+      "305472 - Lazya Market Rasti Adala",
+      "305473 - lazya market Farmanbaran",
+      "305539 - Dahati Nwe",
+      "305664 - Market Amas",
+      "305677 - Darwazai Shorsh Market",
+      "305685 - Bestway supermarket",
+      "305860 - Darwaza Shoresh 2",
+      "305900 - soran bazar1",
+      "306010 - Levano market",
+      "306161 - Hafta bazar34",
+      "306195 - Rami Hyper market 1",
+      "306196 - New Azadi Market",
+      "306207 - star market",
+      "399901 - Italian City 2 Supermarket",
+      "399902 - Rami Hyper market 2",
+      "399903 - Rami Hyper market 3",
+      "399904 - Rami Hyper market 4"
+    ],
+    "MURTADA KHALID KAMIL ABBAS": [
+      "112626 - Al Madina Almonawra Supermarket / Altheqa",
+      "130005 - abu tallal Cosmetic",
+      "130011 - super market green apple",
+      "130021 - al-zaitone mall",
+      "130022 - Iraqi Free Company",
+      "130027 - Al-Qala market",
+      "130028 - Al-Lera market",
+      "130031 - Bait AL-Tamween-Salaikh",
+      "130032 - Bait AL-Tamween-Yarmouk",
+      "130033 - Al Madeena Al Monawara",
+      "130062 - Ageba market",
+      "130064 - Louloua market",
+      "130068 - al-ghaith market",
+      "130087 - Miswag Hyper market",
+      "130088 - happy home",
+      "131212 - Zaytouna Market",
+      "131213 - Kaf Market"
+    ],
+    "MUSTAFA MAHDI JASSEM": [
+      "102751 - babelon market",
+      "102751 - Babylon market",
+      "111496 - \u062d\u064a\u062f\u0631 \u0645\u0627\u0631\u0643\u062a",
+      "112626 - Al Madina Almonawra Supermarket / Altheqa",
+      "130008 - Akram market",
+      "130009 - al-ameer market",
+      "130012 - Al-toot market",
+      "130013 - Al-hamid mall",
+      "130014 - Al-hassan market",
+      "130016 - al-rabea' center",
+      "130022 - Iraqi Free Company",
+      "130025 - al-omeda",
+      "130029 - Al-mass center market",
+      "130033 - Al Madeena Al Monawara",
+      "130039 - A one  market",
+      "130042 - Tabarak Market",
+      "130059 - AL-Qemam company",
+      "130063 - Kishmesha market",
+      "130066 - Al-jawhara market",
+      "130076 - Shanit market",
+      "130329 - Alwaza Market",
+      "130413 - Al naenae market",
+      "130584 - Tammra Market",
+      "130625 - al-tawn-Bab Al Sharqi",
+      "130658 - Al Taawun Hypermarket - Sadr City",
+      "131114 - Shant App",
+      "196085 - \u0627\u0644\u0645\u062f\u0644\u0644"
+    ],
+    "OMER ABD ALWAHAB": [
+      "100271 - al-nour whole seller \\ abu ali",
+      "100338 - al-akhawain whole seller",
+      "100357 - al-walid \\ khalid whole seller",
+      "101160 - wosufi",
+      "105546 - \u0639\u0644\u0627\u0621 / \u0627\u0644\u0634\u0631\u0642 \u0627\u0644\u0627\u0648\u0633\u0637",
+      "105590 - \u0645\u062c\u0645\u0639 \u0627\u0644\u0627\u0646\u0648\u0627\u0631",
+      "105761 - \u0645\u0643\u062a\u0628 \u0627\u0644\u0645\u0648\u0632\u0639",
+      "106089 - \u0645\u0643\u062a\u0628 \u0627\u0644\u0639\u0637\u064a\u0641\u064a\u0647",
+      "106184 - \u0639\u0644\u0627\u0621 \u062a\u0636\u0627\u0645\u0646",
+      "106365 - \u0627\u0644\u0645\u062c\u0645\u0639 \u0627\u0644\u062a\u0631\u0643\u064a",
+      "107817 - \u0639\u0645\u0631 \u0627\u0644\u0645\u0634\u0647\u062f\u0627\u0646\u064a",
+      "109809 - \u062a\u062d\u0633\u064a\u0646 \u0627\u0644\u0645\u0646\u062f\u0644\u0627\u0648\u064a",
+      "110135 - \u0645\u0643\u062a\u0628 \u0627\u0644\u062d\u064a\u0627\u0644\u064a",
+      "130041 - Baity market",
+      "130056 - Siham Alobaidi",
+      "130057 - Said al-haleb",
+      "130058 - Saveway market",
+      "130073 - al-rasool market",
+      "130078 - Metro Kent Market",
+      "130080 - Al-resaafa market 2",
+      "130085 - Noor Alyasameen",
+      "130397 - Rose Paris",
+      "130398 - Al aietidal",
+      "130425 - Ammar Wali",
+      "130450 - Abu Ali Al-Tai's office",
+      "130451 - Albyaa Office",
+      "130452 - Al-Hussam office",
+      "130554 - luzin market",
+      "130598 - Hypermarket Al-Taa'awon  / Al-Hurriya",
+      "130616 - Hypermarket Al-Taa'awon-Salhiya",
+      "131000 - Raad Al-Mandlawi Office",
+      "131027 - Karim Al-Taie office",
+      "131034 - Abu Fouad Office",
+      "131035 - aliaetidal\u00a0- ali Office",
+      "131066 - Al-Nargis office",
+      "131137 - Haider Al-Bayati Office",
+      "131138 - Ali Al-Mandlay Office - Karam Al-Ataa Aleata",
+      "131148 - Hussein Al-Abidi's office",
+      "195796 - \u0627\u0644\u0637\u064a\u0628 \u0634\u0648\u0631\u062c\u0629",
+      "195799 - \u0645\u0643\u062a\u0628 \u0627\u0644\u062c\u0645\u0627\u0644",
+      "196351 - \u0639\u0627\u0644\u0645 \u0627\u0644\u0645\u0643\u064a\u0627\u062c",
+      "196352 - \u0647\u064a\u062b\u0645 \u0627\u0644\u0646\u0635\u0631\u0627\u0648\u064a",
+      "196353 - \u0635\u062f\u064a\u0642 \u0627\u0644\u0623\u0633\u0639\u0627\u0631",
+      "196354 - \u0645\u0643\u062a\u0628 \u0627\u0644\u0645\u062f\u0627\u0631",
+      "196355 - \u0645\u0643\u062a\u0628 \u0627\u0644\u0645\u0630\u0627\u0642",
+      "196366 - \u062c\u0645\u0644\u0629 \u0627\u0644\u0639\u0644\u0627",
+      "196377 - \u0645\u0643\u062a\u0628 \u0627\u0644\u0648\u0627\u0646",
+      "196379 - \u0645\u0643\u062a\u0628 \u0628\u0631\u0643\u0629 \u0627\u0644\u0627\u0645\u064a\u0631",
+      "196406 - \u0639\u0644\u064a \u062d\u0645\u0627\u062f\u064a",
+      "196407 - \u0642\u0627\u0633\u0645 \u0627\u0644\u062e\u0627\u0644\u062f\u064a",
+      "196408 - \u062c\u0645\u0644\u0629 \u0639\u0635\u0627\u0645",
+      "196411 - \u0628\u0631\u0643\u0627\u062a \u0627\u0644\u0646\u0648\u0631",
+      "196425 - \u062c\u0645\u0644\u0629 \u0639\u0645\u0627\u0631 \u0627\u0644\u0627\u0633\u062f\u064a",
+      "196426 - \u0645\u0643\u062a\u0628 \u0645\u0631\u064a\u0645",
+      "196436 - \u0645\u0643\u062a\u0628 \u0627\u0644\u0641\u0647\u062f",
+      "196487 - \u0645\u0631\u0643\u0632 \u0627\u0646\u062c\u064a",
+      "196493 - \u0627\u0644\u0645\u062f\u064a\u0646\u0629 \u0627\u0644\u0645\u0646\u0648\u0631\u0629 \u2013 \u0627\u0644\u062f\u0648\u0631\u0629",
+      "196520 - \u0645\u0643\u062a\u0628 \u0632\u0645\u0632\u0645",
+      "196521 - \u0645\u0643\u062a\u0628 \u0627\u0644\u0647\u062f\u0649 \u2013 \u0627\u0644\u0643\u0627\u0638\u0645\u064a\u0629",
+      "196541 - \u062c\u0645\u0644\u0629 \u0639\u0645\u0627\u062f \u0627\u0644\u0631\u0627\u0648\u064a",
+      "196560 - \u0645\u0643\u062a\u0628 \u0627\u0644\u062d\u0633\u0646\u064a\u0646 \u2013 \u0627\u0644\u0639\u0627\u0645\u0631\u064a\u0629",
+      "196563 - \u0633\u064a\u062f \u062d\u064a\u062f\u0631 \u2013 \u0627\u0644\u0634\u0648\u0631\u062c\u0629",
+      "196612 - \u0645\u0643\u062a\u0628 \u0627\u0644\u0642\u0631\u0644\u0648\u0633\u064a",
+      "196655 - \u0645\u0631\u0643\u0632 \u0645\u0628\u064a\u0639\u0627\u062a \u0646\u0628\u0639 \u0627\u0644\u0641\u0631\u0627\u062a",
+      "196739 - \u0645\u062d\u0644\u0627\u062a \u0627\u0644\u0639\u0628\u064a\u062f\u064a",
+      "196797 - \u0645\u0643\u062a\u0628 \u0627\u0644\u0628\u0631\u0643\u0627\u062a \u2013 \u0633\u0627\u062d\u0629 \u0639\u062f\u0646",
+      "196808 - \u0645\u062c\u0645\u0639 \u0627\u0644\u0648\u0633\u0627\u0645"
+    ],
+    "OMER ALI MOHAMMED": [
+      "106890 - \u062d\u064a\u0641\u0627 \u0645\u0648\u0644",
+      "130011 - super market green apple",
+      "130017 - Al-rabeaa market",
+      "130021 - al-zaitone mall",
+      "130032 - Bait AL-Tamween-Yarmouk",
+      "130041 - Baity market",
+      "130049 - Haifa mall",
+      "130056 - Siham Alobaidi",
+      "130057 - Said al-haleb",
+      "130058 - Saveway market",
+      "130064 - Louloua market",
+      "130067 - Alsaa Mall",
+      "130068 - al-ghaith market",
+      "130073 - al-rasool market",
+      "130075 - Salla Market",
+      "130078 - Metro Kent Market",
+      "130079 - al-resaafa market",
+      "130080 - Al-resaafa market 2",
+      "130085 - Noor Alyasameen",
+      "130088 - happy home",
+      "130345 - Al Joud Home Shopping",
+      "130386 - Al-Ta'ma Center",
+      "130415 - Abu Hamza Equipment",
+      "130554 - luzin market",
+      "130580 - Al Mustafa Group",
+      "130598 - Hypermarket Al-Taa'awon  / Al-Hurriya",
+      "130616 - Hypermarket Al-Taa'awon-Salhiya",
+      "196268 - \u0645\u0627\u0631\u0643\u062a \u0627\u0644\u0628\u0631\u0643\u0629",
+      "196841 - Express Market"
+    ],
+    "SALAH MAHDI SALEH": [
+      "112626 - Al Madina Almonawra Supermarket / Altheqa",
+      "130005 - abu tallal Cosmetic",
+      "130011 - super market green apple",
+      "130027 - Al-Qala market",
+      "130030 - Bait AL-Tamween-Adhamiya",
+      "130031 - Bait AL-Tamween-Salaikh",
+      "130032 - Bait AL-Tamween-Yarmouk",
+      "130043 - Al-wardaa whole seller",
+      "130062 - Ageba market",
+      "130069 - Bait AL-Tamween-Fallujah",
+      "130079 - al-resaafa market",
+      "130087 - Miswag Hyper market",
+      "130088 - happy home"
+    ],
+    "WOROOD WALEED ABDULKAREEM MOHAMMED": [
+      "112626 - Al Madina Almonawra Supermarket / Altheqa",
+      "130011 - super market green apple",
+      "130027 - Al-Qala market",
+      "130033 - Al Madeena Al Monawara",
+      "130062 - Ageba market",
+      "130079 - al-resaafa market",
+      "130088 - happy home"
+    ]
+  },
+  "SubD-C": {
+    "ISAM ABDULWAHID": [
+      "105830 - \u0627\u0628\u0648 \u0627\u0633\u064a\u0644",
+      "107572 - \u0634\u0631\u0643\u0629 \u0627\u0644\u0645\u0622\u062b\u0631 - \u0627\u062d\u0645\u062f \u062c\u0627\u0633\u0645 \u0639\u0628\u062f / \u0627\u0644\u0646\u062c\u0641",
+      "108384 - \u0639\u0644\u064a \u0634\u0648\u0631\u062c\u0629",
+      "108407 - \u0628\u0631\u0643\u0627\u062a \u0627\u0644\u0643\u0631\u0627\u0631",
+      "110643 - \u0634\u0631\u0643\u0629 \u0627\u0644\u0645\u0622\u062b\u0631 - \u0627\u062d\u0645\u062f \u062c\u0627\u0633\u0645 \u0639\u0628\u062f / \u0627\u0644\u062d\u0644\u0629",
+      "112122 - Ma'ather Al A'lia Karbalaa",
+      "130583 - Al Mustafa Office",
+      "131178 - Saif Al Qutby",
+      "196063 - \u062c\u0628\u0644 \u0639\u0644\u064a - \u0643\u0631\u0643\u0648\u0643",
+      "196210 - \u0627\u0643\u0631\u0645 \u0627\u0644\u062f\u0631\u064a\u0639\u064a",
+      "196260 - \u0645\u0643\u062a\u0628 \u0627\u0644\u0637\u064a\u0628\u0627\u062a",
+      "196348 - \u0645\u0643\u062a\u0628 \u0627\u0644\u062d\u0627\u0631\u062b",
+      "196405 - \u0645\u0643\u062a\u0628 \u0627\u0644\u0627\u0641\u0646\u0627\u0646 / \u0627\u0644\u0643\u0648\u062a",
+      "305720 - \u0645\u0634\u064a\u0631 \u0645\u062d\u0645\u062f",
+      "305987 - KDA Company  Duhok",
+      "306114 - Borj Al khalij",
+      "306154 - Ras al-Khaimah",
+      "306166 - Maktab Meer",
+      "306194 - Najm Alshamal",
+      "306212 - Unicosma"
+    ],
+    "SHAHER AHMED MUTLAK": [
+      "107572 - \u0634\u0631\u0643\u0629 \u0627\u0644\u0645\u0622\u062b\u0631 - \u0627\u062d\u0645\u062f \u062c\u0627\u0633\u0645 \u0639\u0628\u062f / \u0627\u0644\u0646\u062c\u0641",
+      "110643 - \u0634\u0631\u0643\u0629 \u0627\u0644\u0645\u0622\u062b\u0631 - \u0627\u062d\u0645\u062f \u062c\u0627\u0633\u0645 \u0639\u0628\u062f / \u0627\u0644\u062d\u0644\u0629",
+      "112122 - Ma'ather Al A'lia Karbalaa",
+      "130583 - Al Mustafa Office",
+      "196260 - \u0645\u0643\u062a\u0628 \u0627\u0644\u0637\u064a\u0628\u0627\u062a",
+      "196405 - \u0645\u0643\u062a\u0628 \u0627\u0644\u0627\u0641\u0646\u0627\u0646 / \u0627\u0644\u0643\u0648\u062a"
+    ]
+  },
+  "WholeSale": {
+    "ABDULLAH TAHSEEN BAJELAN": [
+      "196036 - \u0628\u0631\u0647\u0627\u0646",
+      "301406 - \u0643\u0645\u0627\u0644\u064a\u0627\u062a \u0645\u062d\u0645\u062f \u0634\u0648\u0627\u0646",
+      "303500 - Botan Company",
+      "303562 - \u0643\u0627\u062f\u0648\u0633",
+      "304173 - \u0634\u0645\u0627\u0644 \u0634\u064a\u062e \u0627\u0644\u0644\u0647",
+      "305720 - \u0645\u0634\u064a\u0631 \u0645\u062d\u0645\u062f",
+      "305781 - \u0634\u0648\u064a\u0646\u064a \u0634\u0648\u0627\u0646",
+      "305801 - D L beauty",
+      "305932 - \u0645\u062d\u0645\u062f \u0631\u0634\u064a\u062f \u062c\u0645\u0644\u0629",
+      "306158 - Shamal sheikh alla\\haji jamal",
+      "306200 - New Face",
+      "306201 - New Look Center",
+      "306205 - \u0645\u062e\u0632\u0646 \u0633\u0631\u0648\u0627\u0646"
+    ],
+    "AHMED HERZ MAHMOUD": [
+      "200009 - \u0633\u0639\u062f\u064a \u0639\u0634\u0627\u0631",
+      "200010 - \u0645\u062d\u0644\u0627\u062a \u0627\u0644\u0639\u0631\u0627\u0642\u064a",
+      "200125 - \u0639\u0644\u0648\u0629 \u0627\u0644\u062a\u0633\u0627\u0647\u0644",
+      "200125 - \u0639\u0644\u0648\u0629 \u0627\u0644\u062a\u0633\u0627\u0647\u0644 \u062e\u0627\u0631\u062c\u064a\u0629",
+      "200128 - \u0639\u0644\u0648\u0629 \u0627\u0644\u0633\u0644\u0627\u0645",
+      "200130 - \u0639\u0644\u0648\u0629 \u0627\u0644\u0639\u0645\u0631\u0627\u0646",
+      "200186 - \u0627\u0628\u0648 \u0639\u0628\u062f\u0627\u0644\u0644\u0647 \u0627\u0644\u0632\u0647\u064a\u0628\u0627\u0646",
+      "200186 - \u0639\u0644\u0648\u0629 \u0627\u0644\u0632\u0647\u064a\u0628\u0627\u0646 \u0627\u0628\u0648 \u0639\u0628\u062f \u0627\u0644\u0644\u0647",
+      "200196 - \u0639\u0644\u0648\u0629 \u0645\u062d\u0645\u062f \u0627\u0644\u0628\u0632\u0648\u0646\u064a",
+      "201109 - \u0627\u0644\u0628\u0627\u0646 \u0639\u0645\u0627\u0631",
+      "201112 - \u062d\u064a\u062f\u0631 \u0635\u0627\u062d\u0628",
+      "201113 - \u0635\u0628\u0627\u062d \u0627\u0644\u0633\u0627\u0639\u062f\u064a",
+      "201114 - \u0635\u0644\u0627\u062d \u0627\u0644\u0645\u0638\u0641\u0631",
+      "201115 - \u0639\u0644\u0648\u0629 \u0627\u0628\u0648 \u0636\u064a\u0627\u0621",
+      "201119 - \u0631\u062d\u064a\u0645 \u0627\u0644\u0632\u064a\u062f\u064a",
+      "201120 - \u0628\u0627\u0642\u0631 \u0627\u0644\u0645\u0638\u0641\u0631",
+      "201123 - \u0639\u0628\u062f \u0627\u0644\u0644\u0647 \u0639\u0628\u0627\u062f\u064a",
+      "201124 - \u062d\u064a\u062f\u0631 \u062e\u0644\u0641 \u0627\u0644\u0628\u0627\u0646",
+      "201126 - \u062d\u0633\u0646 \u062c\u0627\u0633\u0645",
+      "201127 - \u0645\u062d\u0644\u0627\u062a \u0639\u062f\u064a",
+      "201130 - \u0627\u0643\u0631\u0645 \u0627\u0644\u0639\u0632\u0627\u0648\u064a",
+      "201178 - \u0627\u0628\u0648 \u0639\u0644\u064a \u0642\u0631\u0646\u0629",
+      "201398 - \u0639\u0644\u0648\u0629 \u0627\u0644\u062d\u0633\u064a\u0646\u064a",
+      "201420 - \u0639\u0644\u0648\u0629 \u0631\u0632\u0627\u0642",
+      "201926 - \u0639\u0644\u0648\u0629 \u0628\u0631\u0643\u0627\u062a \u0627\u0644\u0631\u0636\u0627",
+      "202692 - \u062d\u0633\u0646 \u0627\u0644\u0645\u0637\u0648\u0631\u064a",
+      "202868 - \u0639\u0644\u0648\u0629 \u0627\u0644\u0639\u0645\u064a\u062f \u0631\u0639\u062f",
+      "203019 - \u062c\u0639\u0641\u0631 \u0646\u0627\u062c\u064a",
+      "203020 - \u0627\u0628\u0648 \u0627\u062d\u0645\u062f",
+      "203043 - \u0645\u0643\u062a\u0628 \u0631\u0648\u0632",
+      "203044 - \u0645\u0643\u062a\u0628 \u0627\u0628\u0648 \u0643\u0631\u0627\u0631",
+      "203047 - \u0645\u0643\u062a\u0628 \u062f\u0628\u064a",
+      "203053 - \u0645\u0643\u062a\u0628 \u0627\u0644\u0631\u062d\u0627\u0628",
+      "203173 - \u0645\u0643\u062a\u0628 \u062d\u0633\u0627\u0645",
+      "203174 - \u0639\u0644\u064a \u0635\u0627\u062d\u0628",
+      "203359 - \u0645\u0639\u0631\u0636 \u0646\u0648\u0631 \u0627\u0644\u0634\u0645\u0633",
+      "203360 - \u0639\u0644\u0648\u0629 \u0645\u0647\u0631\u0627\u062c\u0627",
+      "203391 - \u0645\u062c\u0645\u0639 \u0627\u0644\u063a\u062f\u064a\u0631",
+      "203392 - \u0645\u062d\u0644\u0627\u062a \u0639\u0644\u064a \u0645\u0648\u0633\u0649",
+      "203449 - \u0634\u0631\u0643\u0629 \u0627\u0644\u062d\u0633\u0646",
+      "203466 - \u0639\u0644\u0648\u0647 \u0627\u0644\u0633\u0645\u0627\u062d",
+      "203486 - \u0645\u0643\u062a\u0628 \u0645\u064a\u062b\u0627\u0642",
+      "203488 - \u0643\u0627\u0638\u0645 \u0633\u0627\u062f\u0647",
+      "203490 - \u0627\u0628\u0648 \u0631\u0636\u0627 \u0646\u0648\u0631 \u0627\u0644\u0634\u0645\u0633",
+      "203525 - Basrah Office"
+    ],
+    "ALI ADEL ABDELRAHMAN": [
+      "200096 - \u0633\u064a\u062f \u0633\u0639\u062f",
+      "201177 - \u0639\u0628\u062f \u0627\u0644\u0644\u0647 \u064a\u0648\u0633\u0641 \u0642\u0631\u0646\u0647",
+      "201183 - \u0633\u0639\u062f \u0645\u062c\u064a\u062f",
+      "201821 - \u0634\u0631\u0643\u0629 \u062e\u064a\u0631\u0627\u062a \u0627\u0644\u0632\u0628\u064a\u0631",
+      "203435 - \u0639\u0644\u064a \u0646\u0627\u0635\u0631 \u0646\u0627\u0635\u0631\u064a\u0629",
+      "203485 - \u0643\u0631\u064a\u0645 \u062c\u0648\u0627\u062f \u0639\u0645\u0627\u0631\u0629",
+      "203499 - \u0645\u0643\u062a\u0628 \u0627\u0644\u0646\u0648\u0631\u064a\u0646",
+      "203546 - \u0645\u0643\u062a\u0628 \u0627\u0644\u0642\u0628\u0633"
+    ],
+    "ALI TAHA KHALAF": [
+      "107792 - Mudhakhir tariq alyusr",
+      "112607 - Tareeq al salam drug stores",
+      "112608 - sanaya drug stores",
+      "130280 - Ozoon drug stores",
+      "130415 - Abu Hamza Equipment",
+      "130429 - Ahmedi office",
+      "130430 - Abu Talib office",
+      "130490 - Mudhakhir Mazaya Baghdad",
+      "130527 - Alnaaqus durg store",
+      "130577 - Mudhakhir adwyh masdar aldawa",
+      "130637 - Nawar office",
+      "131028 - Alhilal office",
+      "131065 - Baby canter-al Bayaa",
+      "131069 - Tajihisat alannaya",
+      "131094 - alshaghaf drug store",
+      "131106 - Bet.AL.tefal hay Alamel",
+      "131107 - lana canter hay ALamel",
+      "131124 - taghezat Alsaafa AL dahabya",
+      "131125 - sama Albaraka drug store",
+      "131139 - tajhazat sama Algadeer",
+      "131149 - Dwaa Alkindy Drug store",
+      "131150 - platin drug store",
+      "131188 - sumer milk center Al- muhmodia",
+      "131189 - mamame online app",
+      "131210 - AL.gaeth baby canter hay aljameaa",
+      "131211 - Taghezat AL hasaneen"
+    ],
+    "AYMAN SARDAR": [
+      "196036 - \u0628\u0631\u0647\u0627\u0646",
+      "196060 - Shwan",
+      "196063 - \u062c\u0628\u0644 \u0639\u0644\u064a - \u0643\u0631\u0643\u0648\u0643",
+      "300532 - baleen",
+      "302913 - Minera Zeren",
+      "305472 - Lazya Market Rasti Adala",
+      "305987 - KDA Company  Duhok",
+      "305987 - KDA Company -Duhok",
+      "306114 - Borj Al khalij"
+    ],
+    "EHAB QAHTAN MOHAMED": [
+      "106154 - \u0639\u0627\u0645\u0631 \u0646\u0639\u0645\u0647",
+      "106155 - \u0645\u0647\u062f\u064a \u0628\u0647\u062c\u062a",
+      "106156 - \u0639\u0645\u0627\u0631 \u0627\u0644\u0633\u0627\u062d\u0644",
+      "106166 - \u0627\u0644\u0647\u062c\u064a\u0646",
+      "106184 - \u0639\u0644\u0627\u0621 \u062a\u0636\u0627\u0645\u0646",
+      "106193 - \u0639\u0645\u0627\u0631 \u062c\u0648\u0627\u0646\u0629",
+      "106196 - \u0645\u062d\u0644\u0627\u062a \u0627\u0644\u0631\u0633\u0644",
+      "106222 - \u0646\u0634\u0623\u062a \u0627\u0644\u062f\u0627\u0648\u062f\u064a",
+      "106228 - \u064a\u0634\u0627\u0631 \u062d\u0627\u062c\u064a",
+      "106233 - \u0645\u0643\u062a\u0628 \u0627\u0644\u0631\u0636\u0627",
+      "106239 - \u0639\u064a\u0633\u0649 \u0627\u0644\u0639\u0643\u064a\u0644\u064a",
+      "106491 - \u0645\u062d\u0645\u062f \u0627\u0644\u062e\u0627\u0635\u0643\u064a",
+      "106755 - \u0645\u0643\u062a\u0628 \u0627\u0644\u0641\u0631\u0627\u062a",
+      "107225 - \u0645\u0643\u062a\u0628 \u0627\u0644\u0627\u062e\u0648\u064a\u0646",
+      "111154 - \u0645\u0643\u062a\u0628 \u0627\u0644\u0627\u0648\u0644",
+      "130398 - Al aietidal",
+      "130424 - Ammar Wali",
+      "130441 - Al-Fardous Al-Akbar Company",
+      "130486 - Abu Noor Office",
+      "130487 - Al Baraka Office",
+      "131034 - Abu Fouad Office",
+      "131035 - aliaetidal\u00a0- ali Office",
+      "131066 - Al-Nargis office",
+      "131137 - Haider Al-Bayati Office",
+      "131138 - Ali Al-Mandlay Office - Karam Al-Ataa Aleata",
+      "131148 - Hussein Al-Abidi's office",
+      "131180 - Al-Eahd Office",
+      "131181 - Sirwan Office",
+      "131187 - Al-Ahmad Stores - Hajj Mahmoud Al-Hilli",
+      "195796 - \u0627\u0644\u0637\u064a\u0628 \u0634\u0648\u0631\u062c\u0629",
+      "196216 - \u0645\u0643\u062a\u0628 \u0627\u0644\u0627\u062d\u0631\u0627\u0631",
+      "196219 - \u0645\u0627\u0644\u0643 - \u062c\u0645\u064a\u0644\u0629",
+      "196220 - \u0627\u0644\u0647\u062f\u064a\u0631 - \u062c\u0645\u064a\u0644\u0629",
+      "196242 - \u062f\u064a\u0627\u0631 \u0632\u0645\u0632\u0645",
+      "196357 - \u0631\u0628\u0648\u0639 \u0627\u0644\u062e\u0644\u064a\u062c",
+      "196365 - \u0645\u0643\u062a\u0628 \u0627\u0644\u0628\u0627\u0633\u0637",
+      "196406 - \u0639\u0644\u064a \u062d\u0645\u0627\u062f\u064a",
+      "196487 - \u0645\u0631\u0643\u0632 \u0627\u0646\u062c\u064a",
+      "196526 - \u0645\u0643\u062a\u0628 \u0627\u0631\u0627\u0632- \u0627\u0644\u0634\u0648\u0631\u062c\u0629",
+      "196593 - \u0643\u0627\u0645\u0644 \u0627\u0644\u0645\u0646\u062f\u0644\u0627\u0648\u064a",
+      "196612 - \u0645\u0643\u062a\u0628 \u0627\u0644\u0642\u0631\u0644\u0648\u0633\u064a",
+      "196648 - \u0645\u0643\u062a\u0628 \u0627\u0628\u0648 \u0631\u0642\u064a\u0629",
+      "196688 - \u0645\u0643\u062a\u0628 \u0627\u0644\u0645\u0645\u064a\u0632",
+      "196692 - \u0645\u0643\u062a\u0628 \u0627\u0644\u0639\u0627\u0626\u0644\u0629",
+      "196790 - \u0634\u0631\u0643\u0629 \u0645\u062f\u0649 \u0627\u0644\u0628\u0644\u0627\u062f (\u0627\u0644\u0639\u0643\u064a\u0644\u064a)",
+      "196805 - \u0645\u0643\u062a\u0628 \u0628\u0631\u0643\u0627\u062a \u0627\u0644\u0645\u0635\u0637\u0641\u0649"
+    ],
+    "LUAY ADEL RADHI NAHI": [
+      "112466 - Milk Center Al Azel",
+      "130429 - Ahmedi office",
+      "130430 - Abu Talib office",
+      "130432 - Al  Shahad Office",
+      "130564 - Anwar Al Ghadeer Office",
+      "130637 - Nawar office",
+      "131090 - alzahraa",
+      "131091 - anwar -almshajar",
+      "131123 - Ardh Al-Banafsaj Draug Store"
+    ],
+    "MAAN FAUAZ": [
+      "196036 - \u0628\u0631\u0647\u0627\u0646",
+      "305670 - Bakhtiar Duhok"
+    ],
+    "MOHAMMED KHUDAIER DALEF": [
+      "100271 - al-nour whole seller \\ abu ali",
+      "105546 - \u0639\u0644\u0627\u0621 / \u0627\u0644\u0634\u0631\u0642 \u0627\u0644\u0627\u0648\u0633\u0637",
+      "105590 - \u0645\u062c\u0645\u0639 \u0627\u0644\u0627\u0646\u0648\u0627\u0631",
+      "106014 - \u0637\u064a\u0628\u0629 / \u0641\u0644\u0648\u062c\u0629",
+      "107582 - \u062f\u062c\u0644\u0629",
+      "107817 - \u0639\u0645\u0631 \u0627\u0644\u0645\u0634\u0647\u062f\u0627\u0646\u064a",
+      "107834 - \u0627\u0633\u0648\u0627\u0642 \u0627\u0644\u0648\u0641\u0627\u0621",
+      "107834 - \u0627\u0644\u0648\u0641\u0627\u0621",
+      "108667 - \u0627\u0644\u0645\u0628\u0627\u0631\u0643",
+      "110304 - \u0627\u0644\u0631\u062d\u0645\u0629",
+      "110848 - \u0627\u064a\u0627\u062f \u0627\u0644\u062f\u0647\u0644\u0643\u064a",
+      "110955 - \u0643\u0648\u0632\u0645\u062a\u0643 \u0645\u062d\u0645\u062f \u0627\u0644\u0642\u0631\u064a\u0634\u064a",
+      "112639 - Jeddo Sweet Company",
+      "130353 - Nono Center",
+      "130423 - Narcissus office",
+      "130429 - Ahmedi office",
+      "130430 - Abu Talib office",
+      "130432 - Al  Shahad Office",
+      "130449 - Dubai Centre",
+      "130475 - Zahrat Al Khaleej Centre",
+      "130478 - Al Sultan Market",
+      "130481 - Nizar Al Kubaisi Office",
+      "130498 - Abdali Office",
+      "130514 - Office sirr el-gammal - abd allah al-fahl",
+      "130564 - Anwar Al Ghadeer Office",
+      "130565 - Abu Hussein Office",
+      "130582 - Amer Al-Jumaili office",
+      "130637 - Nawar office",
+      "131007 - Um Ammar Market",
+      "131008 - Bassem office",
+      "131028 - Alhilal office",
+      "131029 - Al Ghazal Market",
+      "131030 - Al-Tamayuz office",
+      "131121 - Al-Asil and Al-Amir Complex",
+      "131122 - Alostura Office",
+      "131157 - Al Ghazal Market 2 - Hit",
+      "131167 - UM Al-Qura Complex",
+      "131179 - Al Noor Office",
+      "131191 - Mohammed Al-Maadidi's Office",
+      "131192 - Al-Tasahul Office",
+      "131203 - Mohammed Al-Maadidi's Office",
+      "196349 - \u0645\u0643\u062a\u0628 \u0627\u0644\u0647\u0644\u0627\u0644",
+      "196351 - \u0639\u0627\u0644\u0645 \u0627\u0644\u0645\u0643\u064a\u0627\u062c",
+      "196353 - \u0635\u062f\u064a\u0642 \u0627\u0644\u0623\u0633\u0639\u0627\u0631",
+      "196354 - \u0645\u0643\u062a\u0628 \u0627\u0644\u0645\u062f\u0627\u0631",
+      "196366 - \u062c\u0645\u0644\u0629 \u0627\u0644\u0639\u0644\u0627",
+      "196377 - \u0645\u0643\u062a\u0628 \u0627\u0644\u0648\u0627\u0646",
+      "196379 - \u0645\u0643\u062a\u0628 \u0628\u0631\u0643\u0629 \u0627\u0644\u0627\u0645\u064a\u0631",
+      "196427 - \u0645\u0643\u062a\u0628 \u0631\u064a\u0645\u0627\u0633",
+      "196428 - \u0645\u0643\u062a\u0628 \u0627\u0644\u0647\u062f\u0641",
+      "196444 - \u0633\u064a\u062f \u062b\u0627\u0626\u0631",
+      "196456 - \u0645\u0643\u062a\u0628 \u0627\u0641\u0627\u0642 \u0627\u0644\u0635\u0627\u062f\u0642",
+      "196560 - \u0645\u0643\u062a\u0628 \u0627\u0644\u062d\u0633\u0646\u064a\u0646 \u2013 \u0627\u0644\u0639\u0627\u0645\u0631\u064a\u0629",
+      "196637 - \u0645\u0643\u062a\u0628 \u0639\u0628\u062f \u0627\u0644\u0644\u0647",
+      "196776 - \u0634\u0631\u0643\u0629 \u0627\u0644\u0634\u064a\u0645\u0627\u0621 \u2013 \u0627\u0644\u0641\u0644\u0648\u062c\u0629",
+      "196783 - \u0639\u0627\u0631\u0641 \u0627\u0644\u0643\u0628\u064a\u0633\u064a \u2013 \u0627\u0644\u0631\u0645\u0627\u062f\u064a",
+      "196811 - \u0645\u0643\u062a\u0628 \u0627\u0628\u0648 \u0643\u064a\u0644\u0627\u0646",
+      "196824 - \u0645\u0643\u062a\u0628 \u0643\u0646\u0632 \u0627\u0644\u062a\u062c\u0627\u0631\u0629",
+      "196825 - Al-sarheed Market",
+      "196838 - \u0645\u0631\u0643\u0632 \u0631\u0627\u0645\u064a\u062a\u0627",
+      "196839 - \u0627\u0631\u0636 \u0627\u0644\u0645\u0631\u0627\u0639\u064a \u0627\u0644\u062e\u0636\u0631\u0627\u0621",
+      "196843 - \u0627\u0644\u0645\u062f\u064a\u0646\u0629 \u0645\u0648\u0644",
+      "196844 - \u0645\u0631\u0643\u0632 \u062d\u0648\u0627\u0621",
+      "196847 - \u0645\u062d\u0645\u062f \u0639\u062f\u0646\u0627\u0646 \u0644\u0644\u0639\u0637\u0648\u0631",
+      "196857 - Mohammad Nader"
+    ],
+    "NAYAZI SARBAZ MUHIALDIN": [
+      "195932 - \u0634\u0648\u064a\u0646\u064a \u063a\u0632\u0648\u0627\u0646 \u0634\u064a\u062e \u0627\u0644\u0644\u0647",
+      "196036 - \u0628\u0631\u0647\u0627\u0646",
+      "196037 - \u0633\u0631\u0628\u0627\u0632",
+      "304173 - \u0634\u0645\u0627\u0644 \u0634\u064a\u062e \u0627\u0644\u0644\u0647",
+      "305781 - \u0634\u0648\u064a\u0646\u064a \u0634\u0648\u0627\u0646",
+      "306021 - Idress shikhalla",
+      "306142 - baleen Kamaliat",
+      "306147 - Shweeny Sardar",
+      "306149 - 7 bazar kogai"
+    ],
+    "OMER ABD ALWAHAB": [
+      "100271 - al-nour whole seller \\ abu ali",
+      "100338 - al-akhawain whole seller",
+      "105546 - \u0639\u0644\u0627\u0621 / \u0627\u0644\u0634\u0631\u0642 \u0627\u0644\u0627\u0648\u0633\u0637",
+      "105590 - \u0645\u062c\u0645\u0639 \u0627\u0644\u0627\u0646\u0648\u0627\u0631",
+      "106184 - \u0639\u0644\u0627\u0621 \u062a\u0636\u0627\u0645\u0646",
+      "107817 - \u0639\u0645\u0631 \u0627\u0644\u0645\u0634\u0647\u062f\u0627\u0646\u064a",
+      "130398 - Al aietidal",
+      "130425 - Ammar Wali",
+      "130452 - Al-Hussam office",
+      "131000 - Raad Al-Mandlawi Office",
+      "195796 - \u0627\u0644\u0637\u064a\u0628 \u0634\u0648\u0631\u062c\u0629",
+      "195799 - \u0645\u0643\u062a\u0628 \u0627\u0644\u062c\u0645\u0627\u0644",
+      "196354 - \u0645\u0643\u062a\u0628 \u0627\u0644\u0645\u062f\u0627\u0631",
+      "196355 - \u0645\u0643\u062a\u0628 \u0627\u0644\u0645\u0630\u0627\u0642",
+      "196366 - \u062c\u0645\u0644\u0629 \u0627\u0644\u0639\u0644\u0627",
+      "196377 - \u0645\u0643\u062a\u0628 \u0627\u0644\u0648\u0627\u0646",
+      "196406 - \u0639\u0644\u064a \u062d\u0645\u0627\u062f\u064a",
+      "196408 - \u062c\u0645\u0644\u0629 \u0639\u0635\u0627\u0645",
+      "196411 - \u0628\u0631\u0643\u0627\u062a \u0627\u0644\u0646\u0648\u0631",
+      "196425 - \u062c\u0645\u0644\u0629 \u0639\u0645\u0627\u0631 \u0627\u0644\u0627\u0633\u062f\u064a",
+      "196520 - \u0645\u0643\u062a\u0628 \u0632\u0645\u0632\u0645",
+      "196560 - \u0645\u0643\u062a\u0628 \u0627\u0644\u062d\u0633\u0646\u064a\u0646 \u2013 \u0627\u0644\u0639\u0627\u0645\u0631\u064a\u0629",
+      "196612 - \u0645\u0643\u062a\u0628 \u0627\u0644\u0642\u0631\u0644\u0648\u0633\u064a",
+      "196797 - \u0645\u0643\u062a\u0628 \u0627\u0644\u0628\u0631\u0643\u0627\u062a \u2013 \u0633\u0627\u062d\u0629 \u0639\u062f\u0646",
+      "196808 - \u0645\u062c\u0645\u0639 \u0627\u0644\u0648\u0633\u0627\u0645"
+    ]
+  }
+};
+
+    // Populate Channel dropdown
+    window.onload = function () {
+      const channelSelect = document.getElementById("channel");
+      Object.keys(dropdownData).forEach(channel => {
+        channelSelect.add(new Option(channel, channel));
+      });
+    };
+
+    function updateSalesmen() {
+      const channel = document.getElementById("channel").value;
+      const salesmanSelect = document.getElementById("salesman");
+      const customerSelect = document.getElementById("customer");
+      salesmanSelect.innerHTML = '<option value="">Select Salesman</option>';
+      customerSelect.innerHTML = '<option value="">Select Customer</option>';
+      if (channel && dropdownData[channel]) {
+        Object.keys(dropdownData[channel]).forEach(salesman => {
+          salesmanSelect.add(new Option(salesman, salesman));
+        });
+      }
+    }
+
+    function updateCustomers() {
+      const channel = document.getElementById("channel").value;
+      const salesman = document.getElementById("salesman").value;
+      const customerSelect = document.getElementById("customer");
+      customerSelect.innerHTML = '<option value="">Select Customer</option>';
+      if (channel && salesman && dropdownData[channel][salesman]) {
+        dropdownData[channel][salesman].forEach(customer => {
+          customerSelect.add(new Option(customer, customer));
+        });
+      }
+    }
+
+    document.getElementById("stockForm").addEventListener("submit", function(e) {
+      e.preventDefault();
+
+      const data = {
+        week: document.getElementById("week").value,
+        channel: document.getElementById("channel").value,
+        salesman: document.getElementById("salesman").value,
+        customer: document.getElementById("customer").value,
+        quantity: document.getElementById("quantity").value
+      };
+
+      fetch("https://script.google.com/macros/s/AKfycbyBoZSu4kpuzy4N4qD_ZGrty7zRm77JoJPhwkQh5BGK_6BZqCVpqJWknxZfsf_fH-tE/exec", {
+        method: "POST",
+        body: JSON.stringify(data),
+        headers: {
+          "Content-Type": "application/json"
+        }
+      })
+      .then(response => response.text())
+      .then(result => {
+        alert("Submitted successfully!");
+        document.getElementById("stockForm").reset();
+      })
+      .catch(error => {
+        alert("Error submitting form: " + error);
+      });
+    });
+  </script>
+</body>
 </html>
