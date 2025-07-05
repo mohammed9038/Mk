@@ -1,10 +1,67 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>Welcome</title>
-  </head>
-  <body>
-    <h1>Hello, GitHub Pages is working!</h1>
-    <p>This is my free website 🎉</p>
-  </body>
+<head>
+  <meta charset="UTF-8">
+  <title>Stock In Trade</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #e9f8f1;
+      color: #417505;
+      padding: 20px;
+      max-width: 700px;
+      margin: auto;
+    }
+    label {
+      display: block;
+      margin-top: 20px;
+      font-weight: bold;
+    }
+    select, input[type="number"] {
+      width: 100%;
+      padding: 8px;
+      margin-top: 5px;
+    }
+    button {
+      margin-top: 30px;
+      padding: 10px 20px;
+      background-color: #417505;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+
+  <img src="https://www.jotform.com/uploads/m7amed.9038/form_files/logo_transparent%20(1).68625c1ea46ee5.44749725.png" width="150" alt="Logo">
+
+  <h1>Stock In Trade</h1>
+  <p>Fill out the form in cases by customer and supplier</p>
+
+  <form>
+    <label for="week">Week <span style="color: red;">*</span></label>
+    <select id="week" name="week" required>
+      <option value="">Please Select</option>
+      <option value="1">1</option>
+      <option value="2">2</option>
+      <option value="3">3</option>
+      <option value="4">4</option>
+    </select>
+
+    <label for="customer">Customer <span style="color: red;">*</span></label>
+    <select id="customer" name="customer" required>
+      <option value="">Select Customer</option>
+      <option value="300030">300030 - Carrefoure</option>
+      <option value="305384">305384 - MM Bazar Market</option>
+      <!-- Add more as needed -->
+    </select>
+
+    <label for="quantity">Stock Quantity (in cases) <span style="color: red;">*</span></label>
+    <input type="number" id="quantity" name="quantity" min="0" required>
+
+    <button type="submit">Submit</button>
+  </form>
+
+</body>
 </html>
