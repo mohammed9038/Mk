@@ -116,7 +116,7 @@
 <body>
   <div class="form-container">
     <div class="center">
-      <img src="logo_transparent.png" alt="Logo" class="logo">
+      <img src="https://drive.google.com/uc?id=1s-Sq5KcLvuyszQ50w0wEQJyg-Edld_TQ" alt="Logo" class="logo">
       <h2>Stock In Trade</h2>
     </div>
 
@@ -181,11 +181,11 @@
           const products = parsed.data.reduce((acc, row) => {
             const group = row["Supplier"]?.trim();
             const name = row["Category"]?.trim();
-            const rawImage = (row.image || row.Image || row["Image URL"] || '').trim();
+            const rawImage = (row.Image3 || row.Image2 || row.image || row.Image || row["Image URL"] || '').trim();
             let image = '';
 
             if (rawImage.includes("drive.google.com")) {
-              const match = rawImage.match(/\/d\/([a-zA-Z0-9_-]+)/) || rawImage.match(/id=([a-zA-Z0-9_-]+)/);
+              const match = rawImage.match(/(?:\/d\/|id=)([a-zA-Z0-9_-]{10,})/);
               if (match && match[1]) {
                 image = `https://drive.google.com/uc?id=${match[1]}`;
               } else {
