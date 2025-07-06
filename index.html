@@ -164,7 +164,7 @@
         const parsed = Papa.parse(csv, { header: true });
         console.log("Dropdown data sample:", parsed.data[0]);
         const data = parsed.data.filter(d =>
-          d["Channel"]?.trim() && d["Salesman"]?.trim() && d["Customer"]?.trim()
+          d["Channel"]?.trim() && d["Salesman Name"]?.trim() && d["Customer Name"]?.trim()
         );
         console.log("Filtered data:", data);
 
@@ -186,7 +186,7 @@
           salesmanSelect.innerHTML = '<option value="">-- Select Salesman --</option>';
           customerSelect.innerHTML = '<option value="">-- Select Customer --</option>';
           const filteredSalesmen = data.filter(d => d["Channel"] === channelSelect.value);
-          const uniqueSalesmen = [...new Set(filteredSalesmen.map(d => d["Salesman"]))];
+          const uniqueSalesmen = [...new Set(filteredSalesmen.map(d => d["Salesman Name"]))];
           uniqueSalesmen.forEach(s => {
             const opt = document.createElement("option");
             opt.value = opt.text = s;
@@ -196,8 +196,8 @@
 
         salesmanSelect.onchange = () => {
           customerSelect.innerHTML = '<option value="">-- Select Customer --</option>';
-          const filteredCustomers = data.filter(d => d["Salesman"] === salesmanSelect.value);
-          const uniqueCustomers = [...new Set(filteredCustomers.map(d => d["Customer"]))];
+          const filteredCustomers = data.filter(d => d["Salesman Name"] === salesmanSelect.value);
+          const uniqueCustomers = [...new Set(filteredCustomers.map(d => d["Customer Name"]))];
           uniqueCustomers.forEach(c => {
             const opt = document.createElement("option");
             opt.value = opt.text = c;
@@ -213,7 +213,7 @@
         const products = parsed.data.reduce((acc, row) => {
           const group = row["Supplier"]?.trim();
           const name = row["Category"]?.trim();
-          const image = row.image?.trim();
+          const image = (row.image || row.Image || row["Image URL"] || '').trim();
           if (group && name) {
             if (!acc[group]) acc[group] = [];
             acc[group].push({ name, image });
@@ -242,9 +242,10 @@
           const productMap = [];
 
           items.forEach(({ name, image }) => {
+  console.log(`Loading product: ${name}, Image: ${image}`);
             const div = document.createElement("div");
             div.className = "product";
-            div.innerHTML = `<img src="${image || 'placeholder.jpg'}" alt="${name}" onerror="this.onerror=null; this.src='https://via.placeholder.com/80?text=No+Image'; this.style.border='2px solid red'; console.warn('Image failed:', this.src)"><span>${name}</span><input type="number" min="0" placeholder="Qty">`;
+            div.innerHTML = `<img src="${image || 'https://via.placeholder.com/80?text=No+Image'}" alt="${name}" onerror="this.onerror=null; this.src='https://via.placeholder.com/80?text=No+Image'; this.style.border='2px solid red'; console.warn('Image failed:', this.src)"><span>${name}</span><input type="number" min="0" placeholder="Qty">`;
             grid.appendChild(div);
             productMap.push({ name, element: div });
           });
