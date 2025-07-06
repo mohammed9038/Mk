@@ -140,7 +140,7 @@
 
     <div id="products"></div>
     <div class="center">
-      <button type="submit">Submit</button>
+      <button type="submit" onclick="submitForm()">Submit</button>
     </div>
   </div>
 
@@ -181,19 +181,7 @@
           const products = parsed.data.reduce((acc, row) => {
             const group = row["Supplier"]?.trim();
             const name = row["Category"]?.trim();
-            const rawImage = (row.Image3 || '').trim();
-            let image = '';
-
-            if (rawImage.includes("drive.google.com")) {
-              const match = rawImage.match(/(?:\/d\/|id=)([a-zA-Z0-9_-]{10,})/);
-              if (match && match[1]) {
-                image = `https://drive.google.com/uc?id=${match[1]}`;
-              } else {
-                console.warn("Invalid Google Drive image URL:", rawImage);
-              }
-            } else if (rawImage.startsWith("http")) {
-              image = rawImage;
-            }
+            const image = (row.image || '').trim();
 
             if (group && name) {
               if (!acc[group]) acc[group] = [];
@@ -250,6 +238,50 @@
             productsDiv.appendChild(contentDiv);
           });
         });
+    }
+
+    function resetForm() {
+      document.getElementById("week").value = "";
+      document.getElementById("channel").value = "";
+      document.getElementById("salesman").innerHTML = "<option value=''>-- Select Salesman --</option>";
+      document.getElementById("customer").innerHTML = "<option value=''>-- Select Customer --</option>";
+      document.querySelectorAll(".product input").forEach(input => input.value = "");
+    }
+
+    function submitForm() {
+      const week = document.getElementById("week").value;
+      const channel = document.getElementById("channel").value;
+      const salesman = document.getElementById("salesman").value;
+      const customer = document.getElementById("customer").value;
+      const productDivs = document.querySelectorAll(".product-grid .product");
+      const entries = [];
+      const duplicateCheck = new Set();
+
+      productDivs.forEach(div => {
+        const name = div.querySelector("span").textContent.trim();
+        const qty = div.querySelector("input").value;
+        const key = `${week}-${channel}-${salesman}-${customer}-${name}`;
+        if (qty && qty > 0 && !duplicateCheck.has(key)) {
+          entries.push({ week, channel, salesman, customer, product: name, qty });
+          duplicateCheck.add(key);
+        }
+      });
+
+      if (!entries.length) return alert("Please enter at least one product quantity.");
+
+      fetch("https://script.google.com/macros/s/AKfycbw1Qk2rlnlyAUQlVgfVj0xrCkgJ1zIAUocY5Yhr3BrfK-KWwbDKYiHqary17Iu5jcT7/exec", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(entries)
+      })
+      .then(res => res.text())
+      .then(result => {
+        alert("✅ Submission successful!");
+        resetForm();
+      })
+      .catch(err => {
+        alert("❌ Submission failed: " + err.message);
+      });
     }
 
     loadDropdowns();
