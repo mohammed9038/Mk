@@ -271,8 +271,8 @@
 
       fetch("https://script.google.com/macros/s/AKfycbw1Qk2rlnlyAUQlVgfVj0xrCkgJ1zIAUocY5Yhr3BrfK-KWwbDKYiHqary17Iu5jcT7/exec", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(entries)
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body: "data=" + encodeURIComponent(JSON.stringify(entries))
       })
       .then(res => res.text())
       .then(result => {
