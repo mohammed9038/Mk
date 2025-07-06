@@ -4,288 +4,89 @@
   <meta charset="UTF-8">
   <title>Stock In Trade</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
   <style>
     body {
       font-family: Arial, sans-serif;
-      background-color: #f4f4f4;
+      background-color: #f5f5f5;
       margin: 0;
-      padding: 0;
-    }
-    .form-container {
-      max-width: 900px;
-      margin: 20px auto;
-      background: white;
       padding: 20px;
-      border-radius: 8px;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-    }
-    .center {
-      text-align: center;
-    }
-    .logo {
-      max-width: 150px;
-    }
-    select, input[type="number"] {
-      width: 100%;
-      padding: 8px;
-      margin: 10px 0;
-      border-radius: 4px;
-      border: 1px solid #ccc;
-    }
-    label {
-      display: block;
-      margin-top: 10px;
-      font-weight: bold;
-    }
-    .collapsible {
-      background-color: #28a745;
-      color: white;
-      cursor: pointer;
-      padding: 10px;
-      width: 100%;
-      border: none;
-      text-align: left;
-      outline: none;
-      font-size: 18px;
-      border-radius: 4px;
-      margin-top: 15px;
-    }
-    .collapsible.active::after {
-      content: "\25BC";
-      float: right;
-    }
-    .collapsible::after {
-      content: "\25B2";
-      float: right;
-    }
-    .content {
-      display: none;
-      overflow: hidden;
-      padding: 10px 0;
-    }
-    .search-box {
-      padding: 10px;
-      margin-bottom: 10px;
-      width: 100%;
-      box-sizing: border-box;
-    }
-    .product-grid {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
     }
     .product {
-      background: #e6f5ec;
       border: 1px solid #ccc;
-      padding: 10px;
-      border-radius: 6px;
-      width: 120px;
-      text-align: center;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      transition: transform 0.2s;
-    }
-    .product:hover {
-      transform: scale(1.05);
-      box-shadow: 0 0 5px rgba(0,0,0,0.1);
+      border-radius: 10px;
+      padding: 15px;
+      background-color: white;
+      margin-bottom: 10px;
     }
     .product img {
-      width: 80px;
-      height: 80px;
-      object-fit: cover;
-      border-radius: 4px;
-      margin-bottom: 8px;
+      max-width: 100px;
+      display: block;
+      margin-bottom: 5px;
     }
-    button[type="submit"] {
-      padding: 10px 20px;
-      background-color: #007bff;
+    .submit-btn {
+      background-color: #007BFF;
       color: white;
+      padding: 10px 20px;
       border: none;
-      border-radius: 4px;
+      border-radius: 5px;
       cursor: pointer;
-    }
-    @media (max-width: 600px) {
-      .product {
-        width: 45%;
-      }
+      font-size: 16px;
     }
   </style>
 </head>
 <body>
-  <div class="form-container">
-    <div class="center">
-      <img src="https://drive.google.com/uc?id=1s-Sq5KcLvuyszQ50w0wEQJyg-Edld_TQ" alt="Logo" class="logo">
-      <h2>Stock In Trade</h2>
-    </div>
 
-    <label for="week">Select Week:</label>
-    <select id="week">
-      <option value="">-- Select Week --</option>
-      <option value="Week 1">Week 1</option>
-      <option value="Week 2">Week 2</option>
-      <option value="Week 3">Week 3</option>
-      <option value="Week 4">Week 4</option>
-    </select>
+  <h2>Stock In Trade Form</h2>
 
-    <label for="channel">Select Channel:</label>
-    <select id="channel"></select>
+  <div id="products"></div>
 
-    <label for="salesman">Select Salesman:</label>
-    <select id="salesman"></select>
-
-    <label for="customer">Select Customer:</label>
-    <select id="customer"></select>
-
-    <div id="products"></div>
-    <div class="center">
-      <button type="submit" onclick="submitForm()">Submit</button>
-    </div>
-  </div>
+  <button class="submit-btn" onclick="submitForm()">Submit</button>
 
   <script>
-    const channelSelect = document.getElementById("channel");
-    const salesmanSelect = document.getElementById("salesman");
-    const customerSelect = document.getElementById("customer");
+    const products = [
+      { product: "Fa Spray 200ml", img: "", qty: 0 },
+      { product: "Taft Spray 250ml", img: "", qty: 0 }
+    ];
 
-    function loadDropdowns() {
-      fetch("https://docs.google.com/spreadsheets/d/e/2PACX-1vREXfVVJ4zYuYx40MkvrBI8aH2OYr81ZlF2b_owlbT1o_RhXC44_egEmLCOiLrD5iVPo-CAuYRrVqIC/pub?gid=1284241246&single=true&output=csv")
-        .then(res => res.text())
-        .then(csv => {
-          const { data } = Papa.parse(csv, { header: true });
-          const channels = [...new Set(data.map(r => r.Channel))].filter(Boolean);
+    const container = document.getElementById("products");
 
-          channelSelect.innerHTML = `<option value="">-- Select Channel --</option>` + channels.map(c => `<option value="${c}">${c}</option>`).join("");
-
-          channelSelect.addEventListener("change", () => {
-            const salesmen = data.filter(r => r.Channel === channelSelect.value).map(r => r["Salesman Name"]);
-            const uniqueSalesmen = [...new Set(salesmen)].filter(Boolean);
-            salesmanSelect.innerHTML = `<option value="">-- Select Salesman --</option>` + uniqueSalesmen.map(s => `<option value="${s}">${s}</option>`).join("");
-            customerSelect.innerHTML = `<option value="">-- Select Customer --</option>`;
-          });
-
-          salesmanSelect.addEventListener("change", () => {
-            const customers = data.filter(r => r["Salesman Name"] === salesmanSelect.value).map(r => r["Customer Name"]);
-            const uniqueCustomers = [...new Set(customers)].filter(Boolean);
-            customerSelect.innerHTML = `<option value="">-- Select Customer --</option>` + uniqueCustomers.map(c => `<option value="${c}">${c}</option>`).join("");
-          });
-        });
-    }
-
-    function loadProducts() {
-      fetch('https://docs.google.com/spreadsheets/d/e/2PACX-1vREXfVVJ4zYuYx40MkvrBI8aH2OYr81ZlF2b_owlbT1o_RhXC44_egEmLCOiLrD5iVPo-CAuYRrVqIC/pub?gid=1032512900&single=true&output=csv')
-        .then(res => res.text())
-        .then(csv => {
-          const parsed = Papa.parse(csv, { header: true });
-          const products = parsed.data.reduce((acc, row) => {
-            const group = row["Supplier"]?.trim();
-            const name = row["Category"]?.trim();
-            const image = (row.image || '').trim();
-
-            if (group && name) {
-              if (!acc[group]) acc[group] = [];
-              acc[group].push({ name, image });
-            }
-
-            return acc;
-          }, {});
-
-          const productsDiv = document.getElementById("products");
-          productsDiv.innerHTML = '';
-
-          Object.entries(products).forEach(([group, items]) => {
-            const btn = document.createElement("button");
-            btn.className = "collapsible";
-            btn.textContent = group;
-
-            const searchInput = document.createElement("input");
-            searchInput.className = "search-box";
-            searchInput.type = "text";
-            searchInput.placeholder = `Search ${group}...`;
-
-            const contentDiv = document.createElement("div");
-            contentDiv.classList.add("content");
-            const grid = document.createElement("div");
-            grid.className = "product-grid";
-
-            const productMap = [];
-
-            items.forEach(({ name, image }) => {
-              const div = document.createElement("div");
-              div.className = "product";
-              div.innerHTML = `<img src="${image}" alt="${name}" onerror="this.onerror=null; this.src='https://via.placeholder.com/80?text=No+Image'; this.style.border='2px solid red';"><span>${name}</span><input type="number" min="0" placeholder="Qty">`;
-              grid.appendChild(div);
-              productMap.push({ name, element: div });
-            });
-
-            searchInput.addEventListener("input", () => {
-              const term = searchInput.value.toLowerCase();
-              productMap.forEach(({ name, element }) => {
-                element.style.display = name.toLowerCase().includes(term) ? "flex" : "none";
-              });
-            });
-
-            btn.addEventListener("click", function () {
-              this.classList.toggle("active");
-              contentDiv.style.display = contentDiv.style.display === "block" ? "none" : "block";
-            });
-
-            contentDiv.appendChild(searchInput);
-            contentDiv.appendChild(grid);
-            contentDiv.style.display = "none";
-            productsDiv.appendChild(btn);
-            productsDiv.appendChild(contentDiv);
-          });
-        });
-    }
-
-    function resetForm() {
-      document.getElementById("week").value = "";
-      document.getElementById("channel").value = "";
-      document.getElementById("salesman").innerHTML = "<option value=''>-- Select Salesman --</option>";
-      document.getElementById("customer").innerHTML = "<option value=''>-- Select Customer --</option>";
-      document.querySelectorAll(".product input").forEach(input => input.value = "");
-    }
+    products.forEach((p, index) => {
+      const div = document.createElement("div");
+      div.className = "product";
+      div.innerHTML = `
+        <label>${p.product}</label>
+        <input type="number" id="qty${index}" placeholder="Qty" />
+      `;
+      container.appendChild(div);
+    });
 
     function submitForm() {
-      const week = document.getElementById("week").value;
-      const channel = document.getElementById("channel").value;
-      const salesman = document.getElementById("salesman").value;
-      const customer = document.getElementById("customer").value;
-      const productDivs = document.querySelectorAll(".product-grid .product");
-      const entries = [];
-      const duplicateCheck = new Set();
+      const data = products.map((p, i) => ({
+        week: "Week 1",
+        channel: "Retail",
+        salesman: "Ali",
+        customer: "Al Manar",
+        product: p.product,
+        qty: parseInt(document.getElementById(`qty${i}`).value) || 0
+      }));
 
-      productDivs.forEach(div => {
-        const name = div.querySelector("span").textContent.trim();
-        const qty = div.querySelector("input").value;
-        const key = `${week}-${channel}-${salesman}-${customer}-${name}`;
-        if (qty && qty > 0 && !duplicateCheck.has(key)) {
-          entries.push({ week, channel, salesman, customer, product: name, qty });
-          duplicateCheck.add(key);
-        }
-      });
-
-      if (!entries.length) return alert("Please enter at least one product quantity.");
-
-      fetch("https://script.google.com/macros/s/AKfycbw1Qk2rlnlyAUQlVgfVj0xrCkgJ1zIAUocY5Yhr3BrfK-KWwbDKYiHqary17Iu5jcT7/exec", {
+      fetch("https://script.google.com/macros/s/AKfycbwyjGxaBdf_fwG0GNtekpR7KqyKEamp-tZqv8GBWW-Cu-KBqlaRFDXJDFv6O5Ge7DPa2Q/exec", {
         method: "POST",
-        headers: { "Content-Type": "application/x-www-form-urlencoded" },
-        body: "data=" + encodeURIComponent(JSON.stringify(entries))
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(data)
       })
-      .then(res => res.text())
-      .then(result => {
-        alert("✅ Submission successful!");
-        resetForm();
+      .then(res => res.json())
+      .then(response => {
+        console.log(response);
+        alert("Submitted successfully");
       })
-      .catch(err => {
-        alert("❌ Submission failed: " + err.message);
+      .catch(error => {
+        console.error(error);
+        alert("Submission failed: " + error.message);
       });
     }
-
-    loadDropdowns();
-    loadProducts();
   </script>
 </body>
 </html>
