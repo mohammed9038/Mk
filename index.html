@@ -217,7 +217,7 @@
             items.forEach(({ name, image }) => {
               const div = document.createElement("div");
               div.className = "product";
-              div.innerHTML = `<img src="${image}" alt="${name}" onerror="this.onerror=null; this.src='https://via.placeholder.com/80?text=No+Image';"><span>${name}</span><input type="number" min="0" placeholder="Qty">`;
+              div.innerHTML = `<img loading="lazy" src="${image}" alt="${name}" onerror="this.onerror=null; this.src='https://via.placeholder.com/80?text=No+Image';"><span>${name}</span><input type="number" min="0" placeholder="Qty">`;
               grid.appendChild(div);
               productMap.push({ name, element: div });
             });
@@ -286,14 +286,19 @@
       })
       .then(res => res.json())
       .then(response => {
-        alert("✅ Submission successful!");
-        resetForm();
+        if (response.status === "success") {
+          alert("✅ Submission successful!");
+          resetForm();
+        } else {
+          alert("❌ Error from server: " + response.message);
+        }
       })
       .catch(err => {
         alert("❌ Submission failed: " + err.message);
       });
     }
 
+    // Load dropdowns and products
     loadDropdowns();
     loadProducts();
   </script>
