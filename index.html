@@ -181,7 +181,7 @@
           const products = parsed.data.reduce((acc, row) => {
             const group = row["Supplier"]?.trim();
             const name = row["Category"]?.trim();
-            const rawImage = (row.Image3 || row.Image2 || row.image || row.Image || row["Image URL"] || '').trim();
+            const rawImage = (row.Image3 || '').trim();
             let image = '';
 
             if (rawImage.includes("drive.google.com")) {
