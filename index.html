@@ -162,13 +162,20 @@
       .then(res => res.text())
       .then(csv => {
         const parsed = Papa.parse(csv, { header: true });
-        const data = parsed.data.filter(d => d.channel && d.salesman && d.customer);
+        console.log("Dropdown data sample:", parsed.data[0]);
+        const data = parsed.data.filter(d =>
+          d["Channel"]?.trim() && d["Salesman"]?.trim() && d["Customer"]?.trim()
+        );
+        console.log("Filtered data:", data);
 
         const channelSelect = document.getElementById("channel");
         const salesmanSelect = document.getElementById("salesman");
         const customerSelect = document.getElementById("customer");
 
-        const uniqueChannels = [...new Set(data.map(d => d.channel))];
+        const uniqueChannels = [...new Set(data.map(d => d["Channel"]))];
+        if (uniqueChannels.length === 0) {
+          alert("No channels found. Check your Google Sheet formatting or column headers.");
+        }
         uniqueChannels.forEach(channel => {
           const opt = document.createElement("option");
           opt.value = opt.text = channel;
@@ -178,8 +185,8 @@
         channelSelect.onchange = () => {
           salesmanSelect.innerHTML = '<option value="">-- Select Salesman --</option>';
           customerSelect.innerHTML = '<option value="">-- Select Customer --</option>';
-          const filteredSalesmen = data.filter(d => d.channel === channelSelect.value);
-          const uniqueSalesmen = [...new Set(filteredSalesmen.map(d => d.salesman))];
+          const filteredSalesmen = data.filter(d => d["Channel"] === channelSelect.value);
+          const uniqueSalesmen = [...new Set(filteredSalesmen.map(d => d["Salesman"]))];
           uniqueSalesmen.forEach(s => {
             const opt = document.createElement("option");
             opt.value = opt.text = s;
@@ -189,8 +196,8 @@
 
         salesmanSelect.onchange = () => {
           customerSelect.innerHTML = '<option value="">-- Select Customer --</option>';
-          const filteredCustomers = data.filter(d => d.salesman === salesmanSelect.value);
-          const uniqueCustomers = [...new Set(filteredCustomers.map(d => d.customer))];
+          const filteredCustomers = data.filter(d => d["Salesman"] === salesmanSelect.value);
+          const uniqueCustomers = [...new Set(filteredCustomers.map(d => d["Customer"]))];
           uniqueCustomers.forEach(c => {
             const opt = document.createElement("option");
             opt.value = opt.text = c;
