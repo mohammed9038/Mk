@@ -4,248 +4,198 @@
   <meta charset="UTF-8">
   <title>Stock In Trade</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
   <style>
     body {
       font-family: Arial, sans-serif;
-      background-color: #f4f4f4;
+      background-color: #f5f5f5;
       margin: 0;
-      padding: 0;
-    }
-    .form-container {
-      max-width: 900px;
-      margin: 20px auto;
-      background: white;
       padding: 20px;
-      border-radius: 8px;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
     }
-    .center {
-      text-align: center;
-    }
-    .logo {
-      max-width: 150px;
+    .section {
+      margin-bottom: 20px;
     }
     select, input[type="number"] {
       width: 100%;
       padding: 8px;
-      margin: 10px 0;
+      margin-top: 5px;
+      margin-bottom: 10px;
       border-radius: 4px;
       border: 1px solid #ccc;
-    }
-    label {
-      display: block;
-      margin-top: 10px;
-      font-weight: bold;
     }
     .collapsible {
-      background-color: #28a745;
+      background-color: #007BFF;
       color: white;
       cursor: pointer;
       padding: 10px;
       width: 100%;
-      border: none;
       text-align: left;
+      border: none;
       outline: none;
       font-size: 18px;
-      border-radius: 4px;
-      margin-top: 15px;
-    }
-    .collapsible.active::after {
-      content: "\25BC";
-      float: right;
-    }
-    .collapsible::after {
-      content: "\25B2";
-      float: right;
+      border-radius: 5px;
+      margin-top: 10px;
     }
     .content {
+      padding: 0 10px;
       display: none;
       overflow: hidden;
-      padding: 10px 0;
-    }
-    .search-box {
-      padding: 10px;
+      background-color: white;
       margin-bottom: 10px;
-      width: 100%;
-      box-sizing: border-box;
+      border-radius: 5px;
     }
     .product-grid {
-      display: flex;
-      flex-wrap: wrap;
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
       gap: 10px;
-    }
-    .product {
-      background: #e6f5ec;
-      border: 1px solid #ccc;
       padding: 10px;
-      border-radius: 6px;
-      width: 120px;
+    }
+    .product-card {
+      background-color: #f9f9f9;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      padding: 10px;
       text-align: center;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      transition: transform 0.2s;
     }
-    .product:hover {
-      transform: scale(1.05);
-      box-shadow: 0 0 5px rgba(0,0,0,0.1);
+    .product-card img {
+      max-width: 100%;
+      height: auto;
     }
-    .product img {
-      width: 80px;
-      height: 80px;
-      object-fit: cover;
-      border-radius: 4px;
-      margin-bottom: 8px;
-    }
-    button[type="submit"] {
-      padding: 10px 20px;
-      background-color: #007bff;
+    .submit-btn {
+      background-color: #007BFF;
       color: white;
+      padding: 12px 20px;
       border: none;
-      border-radius: 4px;
+      border-radius: 5px;
       cursor: pointer;
-    }
-    @media (max-width: 600px) {
-      .product {
-        width: 45%;
-      }
+      font-size: 16px;
+      margin-top: 20px;
     }
   </style>
 </head>
 <body>
-  <div class="form-container">
-    <div class="center">
-      <img src="https://drive.google.com/uc?id=1s-Sq5KcLvuyszQ50w0wEQJyg-Edld_TQ" alt="Logo" class="logo">
-      <h2>Stock In Trade</h2>
-    </div>
 
+  <h2 style="text-align:center;">Stock In Trade Form</h2>
+
+  <div class="section">
     <label for="week">Select Week:</label>
     <select id="week">
-      <option value="">-- Select Week --</option>
-      <option value="Week 1">Week 1</option>
-      <option value="Week 2">Week 2</option>
-      <option value="Week 3">Week 3</option>
-      <option value="Week 4">Week 4</option>
+      <option value="">Select Week</option>
+      <option value="1">Week 1</option>
+      <option value="2">Week 2</option>
+      <option value="3">Week 3</option>
+      <option value="4">Week 4</option>
     </select>
 
-    <label for="channel">Select Channel:</label>
+    <label for="channel">Channel:</label>
     <select id="channel"></select>
 
-    <label for="salesman">Select Salesman:</label>
+    <label for="salesman">Salesman:</label>
     <select id="salesman"></select>
 
-    <label for="customer">Select Customer:</label>
+    <label for="customer">Customer:</label>
     <select id="customer"></select>
-
-    <div id="products"></div>
-    <div class="center">
-      <button type="submit" onclick="submitForm()">Submit</button>
-    </div>
   </div>
 
-  <script>
-    const channelSelect = document.getElementById("channel");
-    const salesmanSelect = document.getElementById("salesman");
-    const customerSelect = document.getElementById("customer");
+  <div id="productGroups"></div>
 
-    function loadDropdowns() {
-      fetch("https://docs.google.com/spreadsheets/d/e/2PACX-1vREXfVVJ4zYuYx40MkvrBI8aH2OYr81ZlF2b_owlbT1o_RhXC44_egEmLCOiLrD5iVPo-CAuYRrVqIC/pub?gid=1284241246&single=true&output=csv")
+  <button class="submit-btn" onclick="submitForm()">Submit</button>
+
+  <script>
+    const sheetUrl = "https://docs.google.com/spreadsheets/d/e/2PACX-1vREXfVVJ4zYuYx40MkvrBI8aH2OYr81ZlF2b_owlbT1o_RhXC44_egEmLCOiLrD5iVPo-CAuYRrVqIC/pub?gid=1284241246&single=true&output=csv";
+    const productUrl = "https://docs.google.com/spreadsheets/d/e/2PACX-1vREXfVVJ4zYuYx40MkvrBI8aH2OYr81ZlF2b_owlbT1o_RhXC44_egEmLCOiLrD5iVPo-CAuYRrVqIC/pub?gid=1032512900&single=true&output=csv";
+    const scriptURL = "https://script.google.com/macros/s/AKfycbwyjGxaBdf_fwG0GNtekpR7KqyKEamp-tZqv8GBWW-Cu-KBqlaRFDXJDFv6O5Ge7DPa2Q/exec";
+
+    let productMap = {};
+
+    function loadDropdownData() {
+      fetch(sheetUrl)
         .then(res => res.text())
         .then(csv => {
-          const { data } = Papa.parse(csv, { header: true });
-          const channels = [...new Set(data.map(r => r.Channel))].filter(Boolean);
-
-          channelSelect.innerHTML = `<option value="">-- Select Channel --</option>` + channels.map(c => `<option value="${c}">${c}</option>`).join("");
-
-          channelSelect.addEventListener("change", () => {
-            const salesmen = data.filter(r => r.Channel === channelSelect.value).map(r => r["Salesman Name"]);
-            const uniqueSalesmen = [...new Set(salesmen)].filter(Boolean);
-            salesmanSelect.innerHTML = `<option value="">-- Select Salesman --</option>` + uniqueSalesmen.map(s => `<option value="${s}">${s}</option>`).join("");
-            customerSelect.innerHTML = `<option value="">-- Select Customer --</option>`;
+          const lines = csv.split("\n").filter(line => line.trim() !== '');
+          const headers = lines[0].split(',');
+          const data = lines.slice(1).map(row => {
+            const values = row.split(',');
+            return headers.reduce((obj, header, i) => {
+              obj[header.trim()] = values[i]?.trim();
+              return obj;
+            }, {});
           });
 
-          salesmanSelect.addEventListener("change", () => {
-            const customers = data.filter(r => r["Salesman Name"] === salesmanSelect.value).map(r => r["Customer Name"]);
-            const uniqueCustomers = [...new Set(customers)].filter(Boolean);
-            customerSelect.innerHTML = `<option value="">-- Select Customer --</option>` + uniqueCustomers.map(c => `<option value="${c}">${c}</option>`).join("");
+          const channels = [...new Set(data.map(row => row.Channel))];
+          const channelSelect = document.getElementById('channel');
+          channelSelect.innerHTML = '<option value="">Select Channel</option>' + channels.map(c => `<option value="${c}">${c}</option>`).join('');
+
+          channelSelect.addEventListener('change', () => {
+            const selectedChannel = channelSelect.value;
+            const salesmen = [...new Set(data.filter(row => row.Channel === selectedChannel).map(row => row.Salesman))];
+            const salesmanSelect = document.getElementById('salesman');
+            salesmanSelect.innerHTML = '<option value="">Select Salesman</option>' + salesmen.map(s => `<option value="${s}">${s}</option>`).join('');
+
+            salesmanSelect.addEventListener('change', () => {
+              const selectedSalesman = salesmanSelect.value;
+              const customers = [...new Set(data.filter(row => row.Channel === selectedChannel && row.Salesman === selectedSalesman).map(row => row.Customer))];
+              const customerSelect = document.getElementById('customer');
+              customerSelect.innerHTML = '<option value="">Select Customer</option>' + customers.map(c => `<option value="${c}">${c}</option>`).join('');
+            });
           });
         });
     }
 
-    function loadProducts() {
-      fetch('https://docs.google.com/spreadsheets/d/e/2PACX-1vREXfVVJ4zYuYx40MkvrBI8aH2OYr81ZlF2b_owlbT1o_RhXC44_egEmLCOiLrD5iVPo-CAuYRrVqIC/pub?gid=1032512900&single=true&output=csv')
+    function loadProductGroups() {
+      fetch(productUrl)
         .then(res => res.text())
         .then(csv => {
-          const parsed = Papa.parse(csv, { header: true });
-          const products = parsed.data.reduce((acc, row) => {
-            const group = row["Supplier"]?.trim();
-            const name = row["Category"]?.trim();
-            const image = (row.Image || '').trim();
+          const lines = csv.split("\n").filter(line => line.trim() !== '');
+          const headers = lines[0].split(',');
+          const data = lines.slice(1).map(row => {
+            const values = row.split(',');
+            return headers.reduce((obj, header, i) => {
+              obj[header.trim()] = values[i]?.trim();
+              return obj;
+            }, {});
+          });
 
-            if (group && name) {
-              if (!acc[group]) acc[group] = [];
-              acc[group].push({ name, image });
-            }
-
+          productMap = data.reduce((acc, row) => {
+            if (!acc[row.Supplier]) acc[row.Supplier] = [];
+            acc[row.Supplier].push(row);
             return acc;
           }, {});
 
-          const productsDiv = document.getElementById("products");
-          productsDiv.innerHTML = '';
+          const container = document.getElementById("productGroups");
+          container.innerHTML = '';
 
-          Object.entries(products).forEach(([group, items]) => {
+          Object.entries(productMap).forEach(([supplier, items]) => {
             const btn = document.createElement("button");
             btn.className = "collapsible";
-            btn.textContent = group;
+            btn.textContent = supplier;
+            btn.onclick = function () {
+              this.classList.toggle("active");
+              const content = this.nextElementSibling;
+              content.style.display = content.style.display === "block" ? "none" : "block";
+            };
 
-            const searchInput = document.createElement("input");
-            searchInput.className = "search-box";
-            searchInput.type = "text";
-            searchInput.placeholder = `Search ${group}...`;
+            const content = document.createElement("div");
+            content.className = "content";
 
-            const contentDiv = document.createElement("div");
-            contentDiv.classList.add("content");
             const grid = document.createElement("div");
             grid.className = "product-grid";
 
-            const productMap = [];
-
-            items.forEach(({ name, image }) => {
-              const div = document.createElement("div");
-              div.className = "product";
-              div.innerHTML = `<img src="${image}" alt="${name}" onerror="this.onerror=null; this.src='https://via.placeholder.com/80?text=No+Image'; this.style.border='2px solid red';"><span>${name}</span><input type="number" min="0" placeholder="Qty">`;
-              grid.appendChild(div);
-              productMap.push({ name, element: div });
+            items.forEach(item => {
+              const card = document.createElement("div");
+              card.className = "product-card";
+              card.innerHTML = `
+                <img src="${item.Image}" alt="${item.Category}" onerror="this.onerror=null;this.src='https://via.placeholder.com/100x100?text=No+Image'">
+                <div>${item.Category}</div>
+                <input type="number" min="0" placeholder="Qty" data-name="${item.Category}" />
+              `;
+              grid.appendChild(card);
             });
 
-            searchInput.addEventListener("input", () => {
-              const term = searchInput.value.toLowerCase();
-              productMap.forEach(({ name, element }) => {
-                element.style.display = name.toLowerCase().includes(term) ? "flex" : "none";
-              });
-            });
-
-            btn.addEventListener("click", function () {
-              this.classList.toggle("active");
-              contentDiv.style.display = contentDiv.style.display === "block" ? "none" : "block";
-            });
-
-            contentDiv.appendChild(searchInput);
-            contentDiv.appendChild(grid);
-            contentDiv.style.display = "none";
-            productsDiv.appendChild(btn);
-            productsDiv.appendChild(contentDiv);
+            content.appendChild(grid);
+            container.appendChild(btn);
+            container.appendChild(content);
           });
         });
-    }
-
-    function resetForm() {
-      document.getElementById("week").value = "";
-      document.getElementById("channel").value = "";
-      document.getElementById("salesman").innerHTML = "<option value=''>-- Select Salesman --</option>";
-      document.getElementById("customer").innerHTML = "<option value=''>-- Select Customer --</option>";
-      document.querySelectorAll(".product input").forEach(input => input.value = "");
     }
 
     function submitForm() {
@@ -253,23 +203,34 @@
       const channel = document.getElementById("channel").value;
       const salesman = document.getElementById("salesman").value;
       const customer = document.getElementById("customer").value;
-      const productDivs = document.querySelectorAll(".product-grid .product");
+      const inputs = document.querySelectorAll("input[type='number'][data-name]");
       const entries = [];
-      const duplicateCheck = new Set();
 
-      productDivs.forEach(div => {
-        const name = div.querySelector("span").textContent.trim();
-        const qty = div.querySelector("input").value;
-        const key = `${week}-${channel}-${salesman}-${customer}-${name}`;
-        if (qty && qty > 0 && !duplicateCheck.has(key)) {
-          entries.push({ week, channel, salesman, customer, product: name, qty });
-          duplicateCheck.add(key);
+      if (!week || !channel || !salesman || !customer) {
+        alert("⚠️ Please fill in all dropdown fields before submitting.");
+        return;
+      }
+
+      inputs.forEach(input => {
+        const qty = parseInt(input.value);
+        if (qty && qty > 0) {
+          entries.push({
+            week,
+            channel,
+            salesman,
+            customer,
+            product: input.dataset.name,
+            qty
+          });
         }
       });
 
-      if (!entries.length) return alert("Please enter at least one product quantity.");
+      if (entries.length === 0) {
+        alert("⚠️ Please enter at least one product quantity.");
+        return;
+      }
 
-      fetch("https://script.google.com/macros/s/AKfycbwyjGxaBdf_fwG0GNtekpR7KqyKEamp-tZqv8GBWW-Cu-KBqlaRFDXJDFv6O5Ge7DPa2Q/exec", {
+      fetch(scriptURL, {
         method: "POST",
         headers: { "Content-Type": "application/x-www-form-urlencoded" },
         body: "data=" + encodeURIComponent(JSON.stringify(entries))
@@ -277,15 +238,19 @@
       .then(res => res.text())
       .then(result => {
         alert("✅ Submission successful!");
-        resetForm();
+        document.querySelectorAll("input[type='number']").forEach(i => i.value = "");
+        document.getElementById('week').value = "";
+        document.getElementById('channel').value = "";
+        document.getElementById('salesman').innerHTML = '<option value="">Select Salesman</option>';
+        document.getElementById('customer').innerHTML = '<option value="">Select Customer</option>';
       })
       .catch(err => {
         alert("❌ Submission failed: " + err.message);
       });
     }
 
-    loadDropdowns();
-    loadProducts();
+    loadDropdownData();
+    loadProductGroups();
   </script>
 </body>
 </html>
