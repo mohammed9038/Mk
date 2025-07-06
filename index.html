@@ -116,7 +116,7 @@
 <body>
   <div class="form-container">
     <div class="center">
-      <img src="logo_transparent (1).png" alt="Logo" class="logo">
+      <img src="logo_transparent.png" alt="Logo" class="logo">
       <h2>Stock In Trade</h2>
     </div>
 
@@ -181,20 +181,25 @@
           const products = parsed.data.reduce((acc, row) => {
             const group = row["Supplier"]?.trim();
             const name = row["Category"]?.trim();
-            const rawImage = row.image || row.Image || row["Image URL"] || '';
+            const rawImage = (row.image || row.Image || row["Image URL"] || '').trim();
             let image = '';
+
             if (rawImage.includes("drive.google.com")) {
-              const idMatch = rawImage.match(/\/file\/d\/([a-zA-Z0-9_-]+)/) || rawImage.match(/id=([a-zA-Z0-9_-]+)/);
-              if (idMatch) {
-                image = `https://drive.google.com/uc?export=view&id=${idMatch[1]}`;
+              const match = rawImage.match(/\/d\/([a-zA-Z0-9_-]+)/) || rawImage.match(/id=([a-zA-Z0-9_-]+)/);
+              if (match && match[1]) {
+                image = `https://drive.google.com/uc?id=${match[1]}`;
+              } else {
+                console.warn("Invalid Google Drive image URL:", rawImage);
               }
             } else if (rawImage.startsWith("http")) {
               image = rawImage;
             }
+
             if (group && name) {
               if (!acc[group]) acc[group] = [];
               acc[group].push({ name, image });
             }
+
             return acc;
           }, {});
 
@@ -221,7 +226,7 @@
             items.forEach(({ name, image }) => {
               const div = document.createElement("div");
               div.className = "product";
-              div.innerHTML = `<img src="${image || 'https://via.placeholder.com/80?text=No+Image'}" alt="${name}" onerror="this.onerror=null; this.src='https://via.placeholder.com/80?text=No+Image'; this.style.border='2px solid red';"><span>${name}</span><input type="number" min="0" placeholder="Qty">`;
+              div.innerHTML = `<img src="${image}" alt="${name}" onerror="this.onerror=null; this.src='https://via.placeholder.com/80?text=No+Image'; this.style.border='2px solid red';"><span>${name}</span><input type="number" min="0" placeholder="Qty">`;
               grid.appendChild(div);
               productMap.push({ name, element: div });
             });
