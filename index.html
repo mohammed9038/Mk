@@ -277,11 +277,9 @@
         return;
       }
 
-      fetch("https://script.google.com/macros/s/AKfycbz6xsUiS4c7VAHtVaYvQ7guMt9XNc4uB5YS7PNS66ImDZDpMCpqlKmrY9Z24GE26eVM5A/exec", {
+fetch("https://script.google.com/macros/s/AKfycbxUY0oJIOOyQhrn2nTtLEMDPyfCusAfXCR1zNF7Iyoq7THpX1zVDu3ag0BhamuGgYE3uw/exec", {
   method: "POST",
-  headers: {
-    "Content-Type": "application/json"
-  },
+  headers: { "Content-Type": "application/json" },
   body: JSON.stringify(entries)
 })
 
