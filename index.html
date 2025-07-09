@@ -278,12 +278,13 @@
       }
 
       fetch("https://script.google.com/macros/s/AKfycbz6xsUiS4c7VAHtVaYvQ7guMt9XNc4uB5YS7PNS66ImDZDpMCpqlKmrY9Z24GE26eVM5A/exec", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify(entries)
-      })
+  method: "POST",
+  headers: {
+    "Content-Type": "application/json"
+  },
+  body: JSON.stringify(entries)
+})
+
       .then(res => res.json())
       .then(response => {
         if (response.status === "success") {
