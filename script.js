@@ -111,8 +111,10 @@ function submitForm() {
   const entries = [];
   productDivs.forEach(div => {
     const name = div.querySelector("span").textContent.trim();
-    const qty = parseInt(div.querySelector("input").value);
-    if (qty > 0) {
+    // Use Number() to parse the quantity so we can detect invalid values
+    const qty = Number(div.querySelector("input").value);
+    // Only push entries when qty is a valid number greater than zero
+    if (!Number.isNaN(qty) && qty > 0) {
       entries.push({ week, channel, salesman, customer, product: name, qty });
     }
   });
