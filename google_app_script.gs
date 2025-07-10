@@ -9,7 +9,7 @@ function doPost(e) {
 
     const sheet = SpreadsheetApp.openById("1zNS074ahvESwNybnbYIvNthoXpRg64msgyNz-t1VSoI").getSheetByName("Sheet1");
     entries.forEach(row => {
-      sheet.appendRow([row.week, row.channel, row.salesman, row.customer, row.product, row.qty]);
+      sheet.appendRow([row.week, row.channel, row.salesman, row.customer, row.product, row.qty, row.sellout]);
     });
 
     return ContentService.createTextOutput(JSON.stringify({ status: "success" }))
