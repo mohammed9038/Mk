@@ -17,17 +17,13 @@ function doPost(e) {
     return ContentService
       .createTextOutput(JSON.stringify({ status: "success" }))
       .setMimeType(ContentService.MimeType.JSON)
-      .setHeaders({
-        "Access-Control-Allow-Origin": "*",
-        "Access-Control-Allow-Methods": "POST"
-      });
+      .setHeader("Access-Control-Allow-Origin", "*")
+      .setHeader("Access-Control-Allow-Methods", "POST");
 
   } catch (error) {
     return ContentService
       .createTextOutput(JSON.stringify({ status: "error", message: error.message }))
       .setMimeType(ContentService.MimeType.JSON)
-      .setHeaders({
-        "Access-Control-Allow-Origin": "*"
-      });
+      .setHeader("Access-Control-Allow-Origin", "*");
   }
 }
