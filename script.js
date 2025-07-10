@@ -124,7 +124,6 @@ function submitForm() {
   }
   fetch("https://script.google.com/macros/s/AKfycbwTTKahHaWxeODCJ2SmXMXxpRJfh9zeWHJjuEgLc4ZkMovWk-VZ3xiszTEUBFRlD1RZMg/exec", {
     method: "POST",
-    headers: { "Content-Type": "application/json" },
     body: JSON.stringify(entries)
   })
   .then(res => res.json())

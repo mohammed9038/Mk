@@ -16,6 +16,9 @@ Serve `index.html`, `script.js` and `styles.css` from any static host (GitHub Pa
 
 - The CSV links used in `loadDropdowns` and `loadProducts` should point to the published CSV exports of your Sheets.
 - The URL passed to `fetch` inside `submitForm` should be the web app URL from your deployed Apps Script.
+- Avoid setting a custom `Content-Type` header in the `fetch` call so that the
+  request is treated as a **simple request**. This prevents CORS preflight issues
+  when posting data to the Apps Script.
 
 Once these values are configured the form will send submissions directly to your spreadsheet.
 
