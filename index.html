@@ -1,45 +1,144 @@
-
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-  <meta charset="UTF-8" />
-  <title>Stock In Trade</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link rel="stylesheet" href="styles.css" />
-  <script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
+  <title>Custom Sales Form</title>
+  <style>
+    img {
+      max-width: 100px;
+      height: auto;
+    }
+    .supplier-section {
+      border: 1px solid #ccc;
+      margin-bottom: 20px;
+      padding: 10px;
+    }
+  </style>
 </head>
 <body>
-  <div class="form-container">
-    <div class="center">
-      <img src="https://drive.google.com/uc?id=1s-Sq5KcLvuyszQ50w0wEQJyg-Edld_TQ" alt="Logo" class="logo">
-      <h2>Stock In Trade</h2>
-    </div>
+  <h1>Sales Form</h1>
 
-    <label for="week">Select Week:</label>
-    <select id="week">
-      <option value="">-- Select Week --</option>
-      <option value="Week 1">Week 1</option>
-      <option value="Week 2">Week 2</option>
-      <option value="Week 3">Week 3</option>
-      <option value="Week 4">Week 4</option>
-    </select>
+  <form id="salesForm">
+    <label>Week:</label>
+    <select id="weekSelect">
+      <option>Week1</option>
+      <option>Week2</option>
+      <option>Week3</option>
+      <option>Week4</option>
+    </select><br><br>
 
-    <label for="channel">Select Channel:</label>
-    <select id="channel"></select>
+    <label>Channel:</label>
+    <select id="channelSelect"></select><br><br>
 
-    <label for="salesman">Select Salesman:</label>
-    <select id="salesman"></select>
+    <label>Salesman:</label>
+    <select id="salesmanSelect"></select><br><br>
 
-    <label for="customer">Select Customer:</label>
-    <select id="customer"></select>
+    <label>Customer:</label>
+    <select id="customerSelect"></select><br><br>
 
-    <div id="products"></div>
+    <div id="productContainer"></div>
+  </form>
 
-    <div class="center">
-      <button class="submit-btn" onclick="submitForm()">Submit</button>
-    </div>
-  </div>
+  <script>
+    const scriptURL = 'YOUR_SCRIPT_URL_HERE';
 
-  <script src="script.js"></script>
+    let data;
+
+    async function fetchData() {
+      const response = await fetch(scriptURL);
+      data = await response.json();
+
+      populateChannels();
+    }
+
+    function populateChannels() {
+      const channelSelect = document.getElementById('channelSelect');
+      channelSelect.innerHTML = '<option value="">--Select--</option>';
+
+      data.channels.forEach(channel => {
+        const opt = document.createElement('option');
+        opt.value = opt.text = channel;
+        channelSelect.appendChild(opt);
+      });
+
+      channelSelect.addEventListener('change', populateSalesmen);
+    }
+
+    function populateSalesmen() {
+      const channel = document.getElementById('channelSelect').value;
+      const salesmanSelect = document.getElementById('salesmanSelect');
+      salesmanSelect.innerHTML = '<option value="">--Select--</option>';
+
+      if (channel && data.channelMap[channel]) {
+        Object.keys(data.channelMap[channel]).forEach(salesman => {
+          const opt = document.createElement('option');
+          opt.value = opt.text = salesman;
+          salesmanSelect.appendChild(opt);
+        });
+      }
+
+      salesmanSelect.addEventListener('change', populateCustomers);
+    }
+
+    function populateCustomers() {
+      const channel = document.getElementById('channelSelect').value;
+      const salesman = document.getElementById('salesmanSelect').value;
+      const customerSelect = document.getElementById('customerSelect');
+      customerSelect.innerHTML = '<option value="">--Select--</option>';
+
+      if (channel && salesman && data.channelMap[channel][salesman]) {
+        data.channelMap[channel][salesman].forEach(customer => {
+          const opt = document.createElement('option');
+          opt.value = opt.text = customer;
+          customerSelect.appendChild(opt);
+        });
+      }
+    }
+
+    function displayProducts() {
+      const container = document.getElementById('productContainer');
+      container.innerHTML = '';
+
+      for (const supplier in data.suppliers) {
+        const section = document.createElement('div');
+        section.className = 'supplier-section';
+
+        const header = document.createElement('h3');
+        header.textContent = supplier;
+        section.appendChild(header);
+
+        data.suppliers[supplier].forEach(prod => {
+          const div = document.createElement('div');
+
+          const img = document.createElement('img');
+          img.src = prod.imageURL;
+
+          const label = document.createElement('span');
+          label.textContent = prod.productName;
+
+          const qtyInput = document.createElement('input');
+          qtyInput.type = 'number';
+          qtyInput.placeholder = 'QTY';
+
+          const sellInput = document.createElement('input');
+          sellInput.type = 'number';
+          sellInput.placeholder = 'Sell-out';
+
+          div.appendChild(img);
+          div.appendChild(label);
+          div.appendChild(document.createTextNode(' QTY: '));
+          div.appendChild(qtyInput);
+          div.appendChild(document.createTextNode(' Sell-out: '));
+          div.appendChild(sellInput);
+
+          section.appendChild(div);
+        });
+
+        container.appendChild(section);
+      }
+    }
+
+    // Init
+    fetchData().then(displayProducts);
+  </script>
 </body>
 </html>
