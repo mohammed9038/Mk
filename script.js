@@ -64,7 +64,12 @@ function loadProducts() {
         items.forEach(({ name, image }) => {
           const div = document.createElement("div");
           div.className = "product";
-          div.innerHTML = `<img loading="lazy" src="${image}" alt="${name}" onerror="this.onerror=null; this.src='https://via.placeholder.com/80?text=No+Image';"><span>${name}</span><input type="number" min="0" placeholder="Qty">`;
+          div.innerHTML = `
+            <img loading="lazy" src="${image}" alt="${name}" onerror="this.onerror=null; this.src='https://via.placeholder.com/80?text=No+Image';">
+            <span>${name}</span>
+            <input type="number" placeholder="Qty">
+            <input type="number" class="sellout" placeholder="Sellout Qty">
+          `;
           grid.appendChild(div);
           productMap.push({ name, element: div });
         });
@@ -89,14 +94,6 @@ function loadProducts() {
     });
 }
 
-function resetForm() {
-  document.getElementById("week").value = "";
-  channelSelect.value = "";
-  salesmanSelect.innerHTML = "<option value=''>-- Select Salesman --</option>";
-  customerSelect.innerHTML = "<option value=''>-- Select Customer --</option>";
-  document.querySelectorAll(".product input").forEach(input => input.value = "");
-}
-
 function submitForm() {
   const week = document.getElementById("week").value;
   const channel = channelSelect.value;
@@ -106,17 +103,20 @@ function submitForm() {
     alert("Please complete all selections before submitting.");
     return;
   }
+
   const productDivs = document.querySelectorAll(".product-grid .product");
   const entries = [];
   productDivs.forEach(div => {
     const name = div.querySelector("span").textContent.trim();
-    const qty = Number(div.querySelector("input").value);
-    if (!Number.isNaN(qty) && qty > 0) {
-      entries.push({ week, channel, salesman, customer, product: name, qty });
+    const qty = Number(div.querySelector("input[type='number']:not(.sellout)").value);
+    const sellout = Number(div.querySelector("input.sellout").value);
+    if ((!Number.isNaN(qty) && qty > 0) || (!Number.isNaN(sellout) && sellout > 0)) {
+      entries.push({ week, channel, salesman, customer, product: name, qty: qty || 0, sellout: sellout || 0 });
     }
   });
+
   if (entries.length === 0) {
-    alert("Please enter at least one product quantity.");
+    alert("Please enter at least one product quantity or sellout.");
     return;
   }
 
@@ -131,7 +131,7 @@ function submitForm() {
     .then(response => {
       if (response.status === "success") {
         alert("✅ Submission successful!");
-        resetForm();
+        location.reload();
       } else {
         alert("❌ Error from server: " + response.message);
       }
