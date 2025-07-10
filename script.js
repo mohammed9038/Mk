@@ -1,4 +1,3 @@
-
 const channelSelect = document.getElementById("channel");
 const salesmanSelect = document.getElementById("salesman");
 const customerSelect = document.getElementById("customer");
@@ -111,9 +110,7 @@ function submitForm() {
   const entries = [];
   productDivs.forEach(div => {
     const name = div.querySelector("span").textContent.trim();
-    // Use Number() to parse the quantity so we can detect invalid values
     const qty = Number(div.querySelector("input").value);
-    // Only push entries when qty is a valid number greater than zero
     if (!Number.isNaN(qty) && qty > 0) {
       entries.push({ week, channel, salesman, customer, product: name, qty });
     }
@@ -122,23 +119,27 @@ function submitForm() {
     alert("Please enter at least one product quantity.");
     return;
   }
+
+  const formData = new FormData();
+  formData.append("data", JSON.stringify(entries));
+
   fetch("https://script.google.com/macros/s/AKfycbwTTKahHaWxeODCJ2SmXMXxpRJfh9zeWHJjuEgLc4ZkMovWk-VZ3xiszTEUBFRlD1RZMg/exec", {
     method: "POST",
-    body: JSON.stringify(entries)
+    body: formData
   })
-  .then(res => res.json())
-  .then(response => {
-    if (response.status === "success") {
-      alert("✅ Submission successful!");
-      resetForm();
-    } else {
-      alert("❌ Error from server: " + response.message);
-    }
-  })
-  .catch(err => {
-    alert("❌ Submission failed: " + err.message);
-    console.error(err);
-  });
+    .then(res => res.json())
+    .then(response => {
+      if (response.status === "success") {
+        alert("✅ Submission successful!");
+        resetForm();
+      } else {
+        alert("❌ Error from server: " + response.message);
+      }
+    })
+    .catch(err => {
+      alert("❌ Submission failed: " + err.message);
+      console.error(err);
+    });
 }
 
 loadDropdowns();
