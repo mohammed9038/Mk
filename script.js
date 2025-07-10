@@ -25,6 +25,10 @@ function loadDropdowns() {
     });
 }
 
+function cleanImageUrl(url) {
+  return url?.trim() || 'https://via.placeholder.com/80?text=No+Image';
+}
+
 function loadProducts() {
   fetch('https://docs.google.com/spreadsheets/d/e/2PACX-1vREXfVVJ4zYuYx40MkvrBI8aH2OYr81ZlF2b_owlbT1o_RhXC44_egEmLCOiLrD5iVPo-CAuYRrVqIC/pub?gid=1032512900&single=true&output=csv')
     .then(res => res.text())
@@ -33,7 +37,7 @@ function loadProducts() {
       const products = parsed.data.reduce((acc, row) => {
         const group = row["Supplier"]?.trim();
         const name = row["Category"]?.trim();
-        const image = (row.Image || '').trim();
+        const image = cleanImageUrl(row["image"]);
         if (group && name) {
           if (!acc[group]) acc[group] = [];
           acc[group].push({ name, image });
@@ -94,6 +98,14 @@ function loadProducts() {
     });
 }
 
+function resetForm() {
+  document.getElementById("week").value = "";
+  channelSelect.value = "";
+  salesmanSelect.innerHTML = "<option value=''>-- Select Salesman --</option>";
+  customerSelect.innerHTML = "<option value=''>-- Select Customer --</option>";
+  document.querySelectorAll(".product input").forEach(input => input.value = "");
+}
+
 function submitForm() {
   const week = document.getElementById("week").value;
   const channel = channelSelect.value;
@@ -131,7 +143,7 @@ function submitForm() {
     .then(response => {
       if (response.status === "success") {
         alert("✅ Submission successful!");
-        location.reload();
+        resetForm();
       } else {
         alert("❌ Error from server: " + response.message);
       }
