@@ -37,7 +37,7 @@ async function submitData() {
   const payload = { address, date, salesRep, entries: collected };
 
   try {
-    const res = await fetch('YOUR_APPS_SCRIPT_URL', {
+    const res = await fetch('https://script.google.com/macros/s/AKfycbzfSWHROQG2Hx_FJtEMvnHtFgMjV8CG6ZfE5hUJ7e8HqJEOHDCzGlZ-i8Pauaj1yN7c/exec', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(payload)
