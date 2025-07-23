@@ -22,3 +22,6 @@ If you need to use a different deployment URL, update the value in `js/submit.js
 ## Troubleshooting
 
 If submission fails, check the browser console for errors and verify that the Apps Script deployment URL is correct and accessible.
+If you see a CORS error when submitting from another domain, ensure the request
+is a "simple" POST. The included script omits a `Content-Type` header so the
+Apps Script can be called without requiring a preflight request.
