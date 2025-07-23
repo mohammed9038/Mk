@@ -38,11 +38,14 @@ async function submitData() {
   const payload = { address, date, salesRep, entries: collected };
 
   try {
-    const res = await fetch('https://script.google.com/macros/s/AKfycbzfSWHROQG2Hx_FJtEMvnHtFgMjV8CG6ZfE5hUJ7e8HqJEOHDCzGlZ-i8Pauaj1yN7c/exec', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(payload)
-    });
+const res = await fetch(
+      'https://script.google.com/macros/s/AKfycbzfSWHROQG2Hx_FJtEMvnHtFgMjV8CG6ZfE5hUJ7e8HqJEOHDCzGlZ-i8Pauaj1yN7c/exec',
+      {
+        method: 'POST',
+        // Sending the body as plain text avoids a CORS preflight request.
+        body: JSON.stringify(payload)
+      }
+    );
     if(!res.ok) throw new Error('Request failed');
     alert('Submitted successfully');
   } catch (err) {
