@@ -77,15 +77,18 @@
     <div class="d-grid mb-3">
       <button type="button" id="add-entry" class="btn btn-success">+ Add Entry</button>
     </div>
-    <div class="row g-2 mb-4">
-      <div class="col-6">
-        <button type="button" id="preview" class="btn btn-primary w-100">Preview</button>
+      <div class="row g-2 mb-4">
+        <div class="col-6">
+          <button type="button" id="preview" class="btn btn-primary w-100">Preview</button>
+        </div>
+        <div class="col-6">
+          <button type="button" id="reset" class="btn btn-outline-secondary w-100">Reset</button>
+        </div>
       </div>
-      <div class="col-6">
-        <button type="button" id="reset" class="btn btn-outline-secondary w-100">Reset</button>
+      <div class="d-grid mb-4">
+        <button type="button" id="submit" class="btn btn-success">Submit</button>
       </div>
     </div>
-  </div>
 
   <!-- ENTRY TEMPLATE -->
   <template id="entry-template">
@@ -441,5 +444,6 @@
       };
     });
   </script>
+  <script src="js/submit.js"></script>
 </body>
 </html>
