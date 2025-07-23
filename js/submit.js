@@ -1,5 +1,4 @@
 const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzfSWHROQG2Hx_FJtEMvnHtFgMjV8CG6ZfE5hUJ7e8HqJEOHDCzGlZ-i8Pauaj1yN7c/exec';
-
 async function submitData() {
   const btn = document.getElementById('submit');
   if(btn) btn.disabled = true;
