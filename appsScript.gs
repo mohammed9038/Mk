@@ -1,18 +1,31 @@
-/**
- * Google Apps Script Web App
- * Exposes a POST endpoint to append form data to a spreadsheet.
- * Deploy as Web App and allow access to anyone with the link.
- */
 function doPost(e) {
-  var ss = SpreadsheetApp.getActiveSpreadsheet();
-  var sheet = ss.getSheetByName('Sheet1');
-  var data = JSON.parse(e.postData.contents);
+  const folder = DriveApp.getFolderById('1dPDt-M-FkzCQwFcESovLit6-466FuGd0');
+  const sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName('Data');
 
-  data.entries.forEach(function(entry) {
-    sheet.appendRow([
-      data.address,
-      data.date,
-      data.salesRep,
+  const payload = JSON.parse(e.parameter.data);
+  const address = payload.address;
+  const date = payload.date;
+  const salesRep = payload.salesRep;
+  const entries = payload.entries;
+  const blobs = e.files || {};
+
+  entries.forEach((entry, entryIdx) => {
+    const imageLinks = [];
+
+    for (let i = 0; i < entry.imageCount; i++) {
+      const key = `image_${entryIdx}_${i}`;
+      const blob = blobs[key];
+      if (blob) {
+        const file = folder.createFile(blob);
+        file.setSharing(DriveApp.Access.ANYONE_WITH_LINK, DriveApp.Permission.VIEW);
+        imageLinks.push(file.getUrl());
+      }
+    }
+
+    const row = [
+      address,
+      date,
+      salesRep,
       entry.classification,
       entry.supplier,
       entry.brand,
@@ -26,11 +39,11 @@ function doPost(e) {
       entry.visibility,
       entry.facing,
       entry.compFacing,
-      entry.images.join(', ')
-    ]);
+      imageLinks.join(', ')
+    ];
+
+    sheet.appendRow(row);
   });
 
-  return ContentService
-    .createTextOutput(JSON.stringify({status: 'ok'}))
-    .setMimeType(ContentService.MimeType.JSON);
+  return ContentService.createTextOutput("Success");
 }
