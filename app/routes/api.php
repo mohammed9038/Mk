@@ -11,6 +11,7 @@ use App\Http\Controllers\Api\V1\ActiveMonthYearController;
 use App\Http\Controllers\Api\V1\SalesTargetController;
 use App\Http\Controllers\Api\V1\DependencyController;
 use App\Http\Controllers\Api\V1\ReportController;
+use App\Http\Controllers\Api\V1\ImportController;
 
 Route::prefix('v1')->group(function () {
     Route::get('/auth/me', [AuthController::class, 'me']);
@@ -34,5 +35,6 @@ Route::prefix('v1')->group(function () {
 
         Route::get('/reports/summary', [ReportController::class, 'summary']);
         Route::get('/reports/export.xlsx', [ReportController::class, 'export']);
+        Route::post('/import/master-data', [ImportController::class, 'masterData']);
     });
 });
