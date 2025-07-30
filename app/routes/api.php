@@ -22,6 +22,7 @@ Route::prefix('v1')->group(function () {
     Route::apiResource('suppliers', SupplierController::class);
     Route::apiResource('categories', CategoryController::class);
     Route::apiResource('periods', ActiveMonthYearController::class);
+    Route::patch('periods/{year}/{month}', [ActiveMonthYearController::class, 'patchYearMonth']);
     Route::apiResource('targets', SalesTargetController::class);
 
     Route::get('/deps/channels', [DependencyController::class, 'channels']);
