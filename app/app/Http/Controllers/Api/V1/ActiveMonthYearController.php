@@ -11,9 +11,13 @@ class ActiveMonthYearController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        return ActiveMonthYear::all();
+        $query = ActiveMonthYear::query();
+        if ($request->filled('is_open')) {
+            $query->where('is_open', $request->boolean('is_open'));
+        }
+        return $query->get();
     }
 
     /**
@@ -60,5 +64,15 @@ class ActiveMonthYearController extends Controller
         $period = ActiveMonthYear::findOrFail($id);
         $period->delete();
         return response()->noContent();
+    }
+
+    public function patchYearMonth(string $year, string $month, Request $request)
+    {
+        $period = ActiveMonthYear::where('year', $year)->where('month', $month)->firstOrFail();
+        $data = $request->validate([
+            'is_open' => 'required|boolean',
+        ]);
+        $period->update($data);
+        return $period;
     }
 }
