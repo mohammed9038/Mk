@@ -100,6 +100,55 @@ class SalesTargetController extends Controller
         return SalesTarget::create($data);
     }
 
+    public function bulk(Request $request)
+    {
+        $this->authorize('create', SalesTarget::class);
+        $items = $request->validate([
+            '*.year' => 'required|integer',
+            '*.month' => 'required|integer',
+            '*.region_id' => 'required|exists:regions,id',
+            '*.channel_id' => 'required|exists:channels,id',
+            '*.salesman_id' => 'required|exists:salesmen,id',
+            '*.supplier_id' => 'required|exists:suppliers,id',
+            '*.category_id' => 'required|exists:categories,id',
+            '*.amount' => 'required|numeric',
+            '*.notes' => 'nullable',
+        ]);
+
+        $user = $request->user();
+        $created = [];
+
+        foreach ($items as $data) {
+            if ($user->role === 'manager' && ($user->region_id != $data['region_id'] || $user->channel_id != $data['channel_id'])) {
+                continue;
+            }
+
+            $open = ActiveMonthYear::where('year', $data['year'])
+                ->where('month', $data['month'])
+                ->where('is_open', true)
+                ->exists();
+            if (!$open) {
+                continue;
+            }
+
+            $exists = SalesTarget::where('year', $data['year'])
+                ->where('month', $data['month'])
+                ->where('salesman_id', $data['salesman_id'])
+                ->where('supplier_id', $data['supplier_id'])
+                ->where('category_id', $data['category_id'])
+                ->first();
+
+            if ($exists) {
+                $exists->update(['amount' => $data['amount'], 'notes' => $data['notes'] ?? null]);
+                $created[] = $exists;
+            } else {
+                $created[] = SalesTarget::create($data);
+            }
+        }
+
+        return $created;
+    }
+
     /**
      * Display the specified resource.
      */

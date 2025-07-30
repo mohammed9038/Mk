@@ -3,6 +3,8 @@
 namespace Database\Seeders;
 
 use App\Models\User;
+use App\Models\Region;
+use App\Models\Channel;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -13,11 +15,31 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // User::factory(10)->create();
+        $region = Region::create([
+            'region_code' => 'R1',
+            'name' => 'Default Region',
+        ]);
 
-        User::factory()->create([
-            'name' => 'Test User',
-            'email' => 'test@example.com',
+        $channel = Channel::create([
+            'channel_code' => 'C1',
+            'name' => 'Default Channel',
+            'region_id' => $region->id,
+        ]);
+
+        User::create([
+            'username' => 'admin',
+            'name' => 'Administrator',
+            'role' => 'admin',
+            'password' => bcrypt('password'),
+        ]);
+
+        User::create([
+            'username' => 'manager',
+            'name' => 'Manager',
+            'role' => 'manager',
+            'region_id' => $region->id,
+            'channel_id' => $channel->id,
+            'password' => bcrypt('password'),
         ]);
     }
 }

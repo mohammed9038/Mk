@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('channels', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('region_id')->constrained()->cascadeOnDelete();
             $table->string('channel_code')->unique();
             $table->string('name');
             $table->boolean('is_active')->default(true);
