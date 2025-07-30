@@ -26,6 +26,7 @@ Route::prefix('v1')->group(function () {
         Route::apiResource('periods', ActiveMonthYearController::class);
         Route::patch('periods/{year}/{month}', [ActiveMonthYearController::class, 'patchYearMonth']);
         Route::apiResource('targets', SalesTargetController::class);
+        Route::post('targets/bulk', [SalesTargetController::class, 'bulk']);
 
         Route::get('/deps/channels', [DependencyController::class, 'channels']);
         Route::get('/deps/salesmen', [DependencyController::class, 'salesmen']);
