@@ -5,6 +5,44 @@ All notable changes to the Al-Shariqah Shopify theme will be documented in this 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+# Changelog
+
+All notable changes to the Al-Shariqah Shopify theme will be documented in this file.
+
+The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
+and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
+
+## [2.1.0] - 2025-09-04
+
+### 🆕 Added
+- **Comprehensive Header Customization** - Full control over header layout and positioning
+- **Advanced Logo Positioning** - Top-left, top-center, middle-left, middle-center options
+- **Menu Type Selection** - Dropdown, mega menu, and drawer navigation options
+- **Search Bar Controls** - Position (left/center/right) and always-visible toggle
+- **Language/Country Selectors** - Positioning controls for localization elements
+- **Sticky Header Options** - Multiple behaviors (none, on-scroll-up, always, reduce-logo-size)
+- **Color Scheme Customization** - Separate schemes for header and top menu
+- **Mobile Layout Controls** - Specific mobile logo positioning
+- **Spacing Adjustments** - Padding and margin controls for fine-tuning
+- **Header Section Presets** - Pre-configured header layouts
+- **Standalone Header Option** - Alternative header section for troubleshooting
+
+### 🔧 Changed
+- **Header Group Configuration** - Updated with comprehensive settings schema
+- **Section Structure** - Enhanced section group system for better customizer integration
+- **Documentation** - Expanded README with detailed customization guide
+
+### 🛠️ Fixed
+- **Shopify Customizer Visibility** - Resolved header section not appearing in theme editor
+- **Section Group Settings** - Proper schema configuration for all customization options
+- **Mobile Responsiveness** - Enhanced mobile header layout and navigation
+
+### 📚 Documentation
+- **Setup Instructions** - Step-by-step header customization guide
+- **Troubleshooting Guide** - Common issues and solutions
+- **File Structure** - Updated with new header components
+- **Configuration Examples** - Detailed settings explanations
+
 ## [2.0.0] - 2025-09-04
 
 ### 🆕 Added
