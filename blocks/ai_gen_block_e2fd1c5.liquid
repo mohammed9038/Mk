@@ -1,0 +1,391 @@
+{% doc %}
+  @prompt
+    i want to add white bar after the header that have our Brands, our brand showing my brands that i have, the logo should get the collection image
+
+{% enddoc %}
+{% assign ai_gen_id = block.id | replace: '_', '' | downcase %}
+
+{% style %}
+  .ai-brands-bar-{{ ai_gen_id }} {
+    background-color: {{ block.settings.background_color }};
+    padding: {{ block.settings.padding_vertical }}px 0;
+    border-bottom: {{ block.settings.border_thickness }}px solid {{ block.settings.border_color }};
+    overflow: hidden;
+  }
+
+  .ai-brands-bar__container-{{ ai_gen_id }} {
+    max-width: {{ settings.page_width }}px;
+    margin: 0 auto;
+    padding: 0 {{ settings.spacing_grid_horizontal }}px;
+  }
+
+  .ai-brands-bar__content-{{ ai_gen_id }} {
+    display: flex;
+    align-items: center;
+    justify-content: {{ block.settings.alignment }};
+    gap: {{ block.settings.brand_spacing }}px;
+    flex-wrap: wrap;
+  }
+
+  .ai-brands-bar__title-{{ ai_gen_id }} {
+    color: {{ block.settings.text_color }};
+    font-size: {{ block.settings.title_size }}px;
+    font-weight: 600;
+    margin: 0;
+    white-space: nowrap;
+  }
+
+  .ai-brands-bar__brands-{{ ai_gen_id }} {
+    display: flex;
+    align-items: center;
+    gap: {{ block.settings.brand_spacing }}px;
+    flex-wrap: wrap;
+  }
+
+  .ai-brands-bar__brand-{{ ai_gen_id }} {
+    display: flex;
+    align-items: center;
+    height: {{ block.settings.brand_height }}px;
+    opacity: {{ block.settings.brand_opacity | divided_by: 100.0 }};
+    transition: opacity 0.3s ease;
+    text-decoration: none;
+  }
+
+  .ai-brands-bar__brand-{{ ai_gen_id }}:hover {
+    opacity: 1;
+  }
+
+  .ai-brands-bar__brand-image-{{ ai_gen_id }} {
+    max-height: 100%;
+    width: auto;
+    object-fit: contain;
+    filter: {{ block.settings.brand_filter }};
+  }
+
+  .ai-brands-bar__brand-placeholder-{{ ai_gen_id }} {
+    width: 120px;
+    height: {{ block.settings.brand_height }}px;
+    background-color: #f4f4f4;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+  }
+
+  .ai-brands-bar__brand-placeholder-{{ ai_gen_id }} svg {
+    width: 60%;
+    height: 60%;
+    opacity: 0.3;
+  }
+
+  .ai-brands-bar__empty-state-{{ ai_gen_id }} {
+    position: absolute;
+    bottom: -25px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 12px;
+    color: #666;
+    white-space: nowrap;
+    pointer-events: none;
+  }
+
+  @media screen and (max-width: 749px) {
+    .ai-brands-bar__content-{{ ai_gen_id }} {
+      justify-content: center;
+      text-align: center;
+    }
+
+    .ai-brands-bar__title-{{ ai_gen_id }} {
+      width: 100%;
+      margin-bottom: 16px;
+    }
+
+    .ai-brands-bar__brands-{{ ai_gen_id }} {
+      justify-content: center;
+    }
+
+    .ai-brands-bar__brand-{{ ai_gen_id }} {
+      height: {{ block.settings.brand_height | times: 0.8 }}px;
+    }
+
+    .ai-brands-bar__brand-placeholder-{{ ai_gen_id }} {
+      height: {{ block.settings.brand_height | times: 0.8 }}px;
+    }
+  }
+{% endstyle %}
+
+<div class="ai-brands-bar-{{ ai_gen_id }}" {{ block.shopify_attributes }}>
+  <div class="ai-brands-bar__container-{{ ai_gen_id }}">
+    <div class="ai-brands-bar__content-{{ ai_gen_id }}">
+      {% if block.settings.title != blank %}
+        <h2 class="ai-brands-bar__title-{{ ai_gen_id }}">{{ block.settings.title }}</h2>
+      {% endif %}
+
+      <div class="ai-brands-bar__brands-{{ ai_gen_id }}">
+        {% for i in (1..8) %}
+          {% assign brand_collection_key = 'brand_' | append: i | append: '_collection' %}
+          {% assign brand_collection = block.settings[brand_collection_key] %}
+
+          {% if brand_collection != blank %}
+            <a href="{{ brand_collection.url }}" class="ai-brands-bar__brand-{{ ai_gen_id }}">
+              {% if brand_collection.featured_image %}
+                <img
+                  src="{{ brand_collection.featured_image | image_url: width: 200 }}"
+                  alt="{{ brand_collection.title | escape }}"
+                  class="ai-brands-bar__brand-image-{{ ai_gen_id }}"
+                  loading="lazy"
+                  width="{{ brand_collection.featured_image.width }}"
+                  height="{{ brand_collection.featured_image.height }}"
+                >
+              {% else %}
+                <div class="ai-brands-bar__brand-placeholder-{{ ai_gen_id }}">
+                  {{ 'collection-1' | placeholder_svg_tag }}
+                </div>
+              {% endif %}
+            </a>
+          {% else %}
+            <div class="ai-brands-bar__brand-placeholder-{{ ai_gen_id }}">
+              {{ 'collection-1' | placeholder_svg_tag }}
+              {% if forloop.first %}
+                <div class="ai-brands-bar__empty-state-{{ ai_gen_id }}">
+                  Add your brand collections
+                </div>
+              {% endif %}
+            </div>
+          {% endif %}
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Our brands bar",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Content"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title",
+      "default": "Our Brands"
+    },
+    {
+      "type": "header",
+      "content": "Brand 1"
+    },
+    {
+      "type": "collection",
+      "id": "brand_1_collection",
+      "label": "Brand collection"
+    },
+    {
+      "type": "header",
+      "content": "Brand 2"
+    },
+    {
+      "type": "collection",
+      "id": "brand_2_collection",
+      "label": "Brand collection"
+    },
+    {
+      "type": "header",
+      "content": "Brand 3"
+    },
+    {
+      "type": "collection",
+      "id": "brand_3_collection",
+      "label": "Brand collection"
+    },
+    {
+      "type": "header",
+      "content": "Brand 4"
+    },
+    {
+      "type": "collection",
+      "id": "brand_4_collection",
+      "label": "Brand collection"
+    },
+    {
+      "type": "header",
+      "content": "Brand 5"
+    },
+    {
+      "type": "collection",
+      "id": "brand_5_collection",
+      "label": "Brand collection"
+    },
+    {
+      "type": "header",
+      "content": "Brand 6"
+    },
+    {
+      "type": "collection",
+      "id": "brand_6_collection",
+      "label": "Brand collection"
+    },
+    {
+      "type": "header",
+      "content": "Brand 7"
+    },
+    {
+      "type": "collection",
+      "id": "brand_7_collection",
+      "label": "Brand collection"
+    },
+    {
+      "type": "header",
+      "content": "Brand 8"
+    },
+    {
+      "type": "collection",
+      "id": "brand_8_collection",
+      "label": "Brand collection"
+    },
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "select",
+      "id": "alignment",
+      "label": "Alignment",
+      "options": [
+        {
+          "value": "flex-start",
+          "label": "Left"
+        },
+        {
+          "value": "center",
+          "label": "Center"
+        },
+        {
+          "value": "flex-end",
+          "label": "Right"
+        },
+        {
+          "value": "space-between",
+          "label": "Space between"
+        }
+      ],
+      "default": "center"
+    },
+    {
+      "type": "range",
+      "id": "brand_height",
+      "min": 30,
+      "max": 80,
+      "step": 5,
+      "unit": "px",
+      "label": "Brand logo height",
+      "default": 50
+    },
+    {
+      "type": "range",
+      "id": "brand_spacing",
+      "min": 10,
+      "max": 60,
+      "step": 5,
+      "unit": "px",
+      "label": "Spacing between brands",
+      "default": 30
+    },
+    {
+      "type": "range",
+      "id": "padding_vertical",
+      "min": 10,
+      "max": 60,
+      "step": 5,
+      "unit": "px",
+      "label": "Vertical padding",
+      "default": 20
+    },
+    {
+      "type": "header",
+      "content": "Style"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text color",
+      "default": "#000000"
+    },
+    {
+      "type": "range",
+      "id": "title_size",
+      "min": 12,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "label": "Title size",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "brand_opacity",
+      "min": 30,
+      "max": 100,
+      "step": 10,
+      "unit": "%",
+      "label": "Brand logo opacity",
+      "default": 70
+    },
+    {
+      "type": "select",
+      "id": "brand_filter",
+      "label": "Brand logo filter",
+      "options": [
+        {
+          "value": "none",
+          "label": "None"
+        },
+        {
+          "value": "grayscale(100%)",
+          "label": "Grayscale"
+        },
+        {
+          "value": "sepia(100%)",
+          "label": "Sepia"
+        }
+      ],
+      "default": "grayscale(100%)"
+    },
+    {
+      "type": "header",
+      "content": "Border"
+    },
+    {
+      "type": "range",
+      "id": "border_thickness",
+      "min": 0,
+      "max": 5,
+      "step": 1,
+      "unit": "px",
+      "label": "Border thickness",
+      "default": 1
+    },
+    {
+      "type": "color",
+      "id": "border_color",
+      "label": "Border color",
+      "default": "#e5e5e5"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Our brands bar"
+    }
+  ],
+  "tag": null
+}
+{% endschema %}
