@@ -20,11 +20,23 @@ This theme is built on Shopify's **Studio theme v13.0.1** with extensive customi
 - **Responsive Design** - Mobile-optimized layouts
 - **Dark/Light Themes** - Multiple color options
 
-### 🧭 **Navigation**
-- **Top Navigation Bar** - Customizable menu above header
-- **Flexible Header Layout** - Multiple positioning options
-- **Search Integration** - Enhanced search functionality
-- **Language Selector** - Multi-language support
+### 🧭 **Navigation & Header**
+- **Top Navigation Bar** - Customizable menu above header with alignment controls
+- **Flexible Header Layout** - Multiple positioning options (left, center, right)
+- **Advanced Search** - Positioned search bar with always-visible option
+- **Language Selector** - Multi-language support with positioning controls
+- **Country Selector** - Currency and region selection
+- **Sticky Header** - Multiple sticky behaviors (always, on-scroll, reduce-logo)
+- **Mobile Responsive** - Optimized mobile navigation and layout
+
+### 🎛️ **Header Customization**
+- **Logo Positioning** - Top-left, top-center, middle-left, middle-center
+- **Menu Types** - Dropdown, mega menu, drawer options
+- **Search Settings** - Position (left/center/right), always visible toggle
+- **Localization** - Language and country selector positioning
+- **Color Schemes** - Separate schemes for header and top menu
+- **Spacing Controls** - Padding and margin adjustments
+- **Mobile Layout** - Logo positioning for mobile devices
 
 ### 🛒 **E-commerce Features**
 - **Product Collections** - Phones, Accessories, Cables, Cases
@@ -68,11 +80,41 @@ This theme is built on Shopify's **Studio theme v13.0.1** with extensive customi
 
 ## ⚙️ Configuration
 
-### **Header Settings**
-- **Logo Position**: Middle-left, Top-center, etc.
-- **Search Bar**: Position and visibility options
-- **Language Selector**: Position control
-- **Top Menu**: Enable/disable navigation bar above header
+### **Header Customization**
+The theme includes comprehensive header customization options accessible through the Shopify theme customizer:
+
+#### **Logo Settings**
+- **Logo Position**: Choose from top-left, top-center, middle-left, middle-center
+- **Mobile Logo Position**: Center or left alignment for mobile devices
+
+#### **Top Navigation Bar**
+- **Show Top Menu**: Enable/disable navigation menu above header
+- **Menu Selection**: Choose which navigation menu to display
+- **Alignment**: Left, center, or right alignment
+- **Color Scheme**: Separate color scheme for top menu
+
+#### **Search Configuration**
+- **Search Bar Visibility**: Show/hide search functionality
+- **Search Position**: Header left, center, or right
+- **Always Visible**: Toggle between search icon and always-visible search bar
+
+#### **Localization Settings**
+- **Language Selector**: Enable/disable with positioning controls
+- **Country Selector**: Currency and region selection
+- **Position Control**: Place selectors left, right, or center
+
+#### **Header Styling**
+- **Sticky Behavior**: None, on-scroll-up, always, or reduce-logo-size
+- **Color Schemes**: Separate schemes for header and menu
+- **Line Separator**: Optional visual separator
+- **Spacing Controls**: Padding and margin adjustments
+
+### **Setup Instructions**
+1. **Navigate to Theme Customizer**: Shopify Admin > Themes > Customize
+2. **Find Header Section**: Look for "Header" or "Header (Customizable)" 
+3. **Configure Options**: Use the settings panels to customize appearance
+4. **Create Menus**: Set up navigation menus in Shopify Admin first
+5. **Test Responsiveness**: Preview on mobile and desktop
 
 ### **Navigation Setup**
 1. Create navigation menus in Shopify Admin
@@ -132,9 +174,40 @@ This theme is built on Shopify's **Studio theme v13.0.1** with extensive customi
 ├── layout/           # Theme templates
 ├── locales/          # Translation files
 ├── sections/         # Section files
+│   ├── header.liquid              # Main header section
+│   ├── header-group.json          # Header group configuration
+│   └── header-customizable.liquid # Standalone header option
 ├── snippets/         # Reusable code snippets
+│   └── header-search-bar.liquid   # Search component
 └── templates/        # Page templates
 ```
+
+### **Key Customization Files**
+- `sections/header.liquid` - Main header template with enhancements
+- `sections/header-group.json` - Header section group settings
+- `sections/header-customizable.liquid` - Alternative header section
+- `snippets/header-search-bar.liquid` - Always-visible search bar
+
+## 🚨 Troubleshooting
+
+### **Header Customization Not Showing**
+If header customization options don't appear in the Shopify customizer:
+
+1. **Check Section Groups**: Ensure `header-group.json` is properly configured
+2. **Use Alternative Section**: Try the "Header (Customizable)" section instead
+3. **Clear Cache**: Hard refresh your browser (Ctrl+F5)
+4. **Re-upload Theme**: Upload the latest theme files to Shopify
+
+### **Common Issues**
+- **Menu Not Appearing**: Ensure navigation menus are created in Shopify Admin
+- **Search Not Working**: Check that search functionality is enabled in theme settings
+- **Mobile Issues**: Test responsive settings and mobile-specific configurations
+- **Performance**: Monitor page load times after customizations
+
+### **Getting Help**
+- Check Shopify documentation for theme customization
+- Test changes in a development theme first
+- Contact support if issues persist
 
 ### **Key Files**
 - `sections/header.liquid` - Enhanced header with navigation
