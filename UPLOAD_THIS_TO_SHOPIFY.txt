@@ -1,0 +1,21 @@
+INSTRUCTIONS FOR SHOPIFY UPLOAD:
+
+1. Go to: https://admin.shopify.com/store/al-shareqa/themes
+2. Click "Actions" → "Edit code" on your current theme
+3. In left sidebar: Sections → header.liquid
+4. Select ALL content in the editor (Ctrl+A)
+5. Delete everything
+6. Copy the ENTIRE content from: sections/header.liquid in this folder
+7. Paste into Shopify editor
+8. Click "Save"
+9. Go back to Theme Customizer to see new settings
+
+NEW SETTINGS YOU'LL SEE:
+- Search Settings (show/hide, positioning)
+- Top Navigation (enable top menu bar)
+- Language selector position (left/right positioning)
+
+The enhanced header.liquid file is ready in your local folder at:
+sections/header.liquid
+
+Simply copy ALL the content from that file and paste it into Shopify's header.liquid editor.
