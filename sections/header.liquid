@@ -293,7 +293,11 @@
           </localization-form>
         {%- endif -%}
       </div>
-      {% render 'header-search', input_id: 'Search-In-Modal' %}
+      
+      {%- comment -%} Conditional search positioning {%- endcomment -%}
+      {%- if section.settings.show_search_bar and section.settings.search_position == 'header_right' or section.settings.search_position == blank -%}
+        {% render 'header-search', input_id: 'Search-In-Modal' %}
+      {%- endif -%}
 
       {%- if shop.customer_accounts_enabled -%}
         <a href="{%- if customer -%}{{ routes.account_url }}{%- else -%}{{ routes.account_login_url }}{%- endif -%}" class="header__icon header__icon--account link focus-inset{% if section.settings.menu != blank %} small-hide{% endif %}">
@@ -620,6 +624,36 @@
       "id": "enable_language_selector",
       "default": false,
       "label": "t:sections.header.settings.enable_language_selector.label"
+    },
+    {
+      "type": "header",
+      "content": "Search Settings"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_search_bar",
+      "default": true,
+      "label": "Show search bar"
+    },
+    {
+      "type": "select",
+      "id": "search_position",
+      "options": [
+        {
+          "value": "header_right",
+          "label": "Header right"
+        },
+        {
+          "value": "header_center",
+          "label": "Header center"
+        },
+        {
+          "value": "header_left",
+          "label": "Header left"
+        }
+      ],
+      "default": "header_right",
+      "label": "Search bar position"
     },
     {
       "type": "header",
