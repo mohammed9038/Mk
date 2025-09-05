@@ -1,0 +1,491 @@
+{% doc %}
+  @prompt
+    i want to add white bar after the header that have our Brands, our brand showing my brands that i have, the logo should get the collection image, the brand are moving Horizontally the images should be clear in the bar, where is the image logo ? its not showing
+
+{% enddoc %}
+{% assign ai_gen_id = block.id | replace: '_', '' | downcase %}
+
+{% style %}
+  .ai-brands-bar-{{ ai_gen_id }} {
+    background-color: {{ block.settings.background_color }};
+    padding: {{ block.settings.padding_vertical }}px 0;
+    overflow: hidden;
+    position: relative;
+    border-top: {{ block.settings.border_thickness }}px solid {{ block.settings.border_color }};
+    border-bottom: {{ block.settings.border_thickness }}px solid {{ block.settings.border_color }};
+  }
+
+  .ai-brands-bar__container-{{ ai_gen_id }} {
+    max-width: 100%;
+    margin: 0 auto;
+  }
+
+  .ai-brands-bar__title-{{ ai_gen_id }} {
+    text-align: center;
+    margin: 0 0 {{ block.settings.title_spacing }}px;
+    color: {{ block.settings.text_color }};
+    font-size: {{ block.settings.title_size }}px;
+    font-weight: 600;
+  }
+
+  .ai-brands-bar__scroll-container-{{ ai_gen_id }} {
+    overflow: hidden;
+    position: relative;
+    width: 100%;
+  }
+
+  .ai-brands-bar__track-{{ ai_gen_id }} {
+    display: flex;
+    align-items: center;
+    gap: {{ block.settings.logo_spacing }}px;
+    animation: ai-brands-scroll-{{ ai_gen_id }} {{ block.settings.scroll_speed }}s linear infinite;
+    width: max-content;
+  }
+
+  {% if block.settings.pause_on_hover %}
+    .ai-brands-bar__track-{{ ai_gen_id }}:hover {
+      animation-play-state: paused;
+    }
+  {% endif %}
+
+  .ai-brands-bar__logo-{{ ai_gen_id }} {
+    flex-shrink: 0;
+    height: {{ block.settings.logo_height }}px;
+    width: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: {{ block.settings.logo_background }};
+    border-radius: {{ block.settings.logo_border_radius }}px;
+    padding: {{ block.settings.logo_padding }}px;
+    transition: transform 0.3s ease;
+    min-width: {{ block.settings.logo_max_width }}px;
+  }
+
+  .ai-brands-bar__logo-{{ ai_gen_id }}:hover {
+    transform: scale({{ block.settings.hover_scale }});
+  }
+
+  .ai-brands-bar__logo-link-{{ ai_gen_id }} {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    text-decoration: none;
+  }
+
+  .ai-brands-bar__logo-image-{{ ai_gen_id }} {
+    max-height: calc({{ block.settings.logo_height }}px - {{ block.settings.logo_padding | times: 2 }}px);
+    max-width: calc({{ block.settings.logo_max_width }}px - {{ block.settings.logo_padding | times: 2 }}px);
+    width: auto;
+    height: auto;
+    object-fit: contain;
+    filter: {{ block.settings.logo_filter }};
+    display: block;
+  }
+
+  .ai-brands-bar__logo-placeholder-{{ ai_gen_id }} {
+    height: calc({{ block.settings.logo_height }}px - {{ block.settings.logo_padding | times: 2 }}px);
+    width: calc({{ block.settings.logo_max_width }}px - {{ block.settings.logo_padding | times: 2 }}px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #f4f4f4;
+    border-radius: 4px;
+    border: 2px dashed #ccc;
+  }
+
+  .ai-brands-bar__logo-placeholder-{{ ai_gen_id }} svg {
+    width: 40px;
+    height: 40px;
+    opacity: 0.4;
+  }
+
+  .ai-brands-bar__placeholder-text-{{ ai_gen_id }} {
+    font-size: 10px;
+    color: #999;
+    text-align: center;
+    margin-top: 4px;
+  }
+
+  .ai-brands-bar__empty-state-{{ ai_gen_id }} {
+    text-align: center;
+    padding: 40px 20px;
+    color: #666;
+    font-size: 14px;
+  }
+
+  @keyframes ai-brands-scroll-{{ ai_gen_id }} {
+    0% {
+      transform: translateX(0);
+    }
+    100% {
+      transform: translateX(-50%);
+    }
+  }
+
+  @media screen and (max-width: 749px) {
+    .ai-brands-bar__logo-{{ ai_gen_id }} {
+      height: {{ block.settings.logo_height | times: 0.8 }}px;
+      padding: {{ block.settings.logo_padding | times: 0.8 }}px;
+      min-width: {{ block.settings.logo_max_width | times: 0.8 }}px;
+    }
+
+    .ai-brands-bar__logo-image-{{ ai_gen_id }} {
+      max-width: calc({{ block.settings.logo_max_width | times: 0.8 }}px - {{ block.settings.logo_padding | times: 1.6 }}px);
+      max-height: calc({{ block.settings.logo_height | times: 0.8 }}px - {{ block.settings.logo_padding | times: 1.6 }}px);
+    }
+
+    .ai-brands-bar__title-{{ ai_gen_id }} {
+      font-size: {{ block.settings.title_size | times: 0.9 }}px;
+    }
+  }
+{% endstyle %}
+
+<brands-bar-{{ ai_gen_id }} class="ai-brands-bar-{{ ai_gen_id }}" {{ block.shopify_attributes }}>
+  <div class="ai-brands-bar__container-{{ ai_gen_id }}">
+    {% if block.settings.show_title and block.settings.title != blank %}
+      <h2 class="ai-brands-bar__title-{{ ai_gen_id }}">{{ block.settings.title }}</h2>
+    {% endif %}
+
+    {% assign has_collections = false %}
+    {% assign collections_array = '' %}
+    {% for i in (1..8) %}
+      {% assign collection_key = 'collection_' | append: i %}
+      {% if block.settings[collection_key] != blank %}
+        {% assign has_collections = true %}
+        {% assign collections_array = collections_array | append: collection_key | append: ',' %}
+      {% endif %}
+    {% endfor %}
+
+    {% if has_collections %}
+      <div class="ai-brands-bar__scroll-container-{{ ai_gen_id }}">
+        <div class="ai-brands-bar__track-{{ ai_gen_id }}">
+          {% comment %} Create two sets for seamless loop {% endcomment %}
+          {% for duplicate in (1..2) %}
+            {% for i in (1..8) %}
+              {% assign collection_key = 'collection_' | append: i %}
+              {% assign collection = block.settings[collection_key] %}
+              
+              {% if collection != blank %}<div class="ai-brands-bar__logo-{{ ai_gen_id }}">
+                  {% if block.settings.enable_links %}
+                    <a href="{{ collection.url }}" class="ai-brands-bar__logo-link-{{ ai_gen_id }}" aria-label="{{ collection.title | escape }}">
+                  {% endif %}
+                  {% if collection.featured_image %}
+                    <img
+                      src="{{ collection.featured_image | image_url: width: 400 }}"
+                      alt="{{ collection.title | escape }}"
+                      class="ai-brands-bar__logo-image-{{ ai_gen_id }}"
+                      loading="lazy"
+                      width="400"
+                      height="400"
+                    >
+                  {% elsif collection.image %}
+                    <img
+                      src="{{ collection.image | image_url: width: 400 }}"
+                      alt="{{ collection.title | escape }}"
+                      class="ai-brands-bar__logo-image-{{ ai_gen_id }}"
+                      loading="lazy"
+                      width="400"
+                      height="400"
+                    >
+                  {% else %}
+                    <div class="ai-brands-bar__logo-placeholder-{{ ai_gen_id }}">
+                      {{ 'collection-1' | placeholder_svg_tag }}<div class="ai-brands-bar__placeholder-text-{{ ai_gen_id }}">{{ collection.title | truncate: 15 }}</div>
+                    </div>
+                  {% endif %}
+                  
+                  {% if block.settings.enable_links %}
+                    </a>
+                  {% endif %}
+                </div>
+              {% endif %}
+            {% endfor %}
+          {% endfor %}
+        </div>
+      </div>
+    {% else %}
+      <div class="ai-brands-bar__empty-state-{{ ai_gen_id }}">
+        Next, select your brand collections to display their logos
+      </div>
+    {% endif %}
+  </div>
+</brands-bar-{{ ai_gen_id }}><script>
+  (function() {
+    class BrandsBar{{ ai_gen_id }} extends HTMLElement {
+      constructor() {
+        super();
+      }
+
+      connectedCallback() {
+        this.track = this.querySelector('.ai-brands-bar__track-{{ ai_gen_id }}');
+        this.setupScrolling();
+      }
+
+      setupScrolling() {
+        if (!this.track) return;
+
+        const logos = this.track.querySelectorAll('.ai-brands-bar__logo-{{ ai_gen_id }}');
+        if (logos.length === 0) return;
+
+        this.track.addEventListener('animationiteration', () => {
+          this.track.style.transform = 'translateX(0)';
+        });
+      }
+    }
+
+    customElements.define('brands-bar-{{ ai_gen_id }}', BrandsBar{{ ai_gen_id }});
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Brands bar",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Content"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_title",
+      "label": "Show title",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title",
+      "default": "Our Brands"
+    },
+    {
+      "type": "range",
+      "id": "title_size",
+      "min": 16,
+      "max": 40,
+      "step": 2,
+      "unit": "px",
+      "label": "Title size",
+      "default": 24
+    },
+    {
+      "type": "range",
+      "id": "title_spacing",
+      "min": 0,
+      "max": 40,
+      "step": 4,
+      "unit": "px",
+      "label": "Title spacing",
+      "default": 20
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_links",
+      "label": "Make logos clickable",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Brand collections"
+    },
+    {
+      "type": "collection",
+      "id": "collection_1",
+      "label": "Brand 1"
+    },
+    {
+      "type": "collection",
+      "id": "collection_2",
+      "label": "Brand 2"
+    },
+    {
+      "type": "collection",
+      "id": "collection_3",
+      "label": "Brand 3"
+    },
+    {
+      "type": "collection",
+      "id": "collection_4",
+      "label": "Brand 4"
+    },
+    {
+      "type": "collection",
+      "id": "collection_5",
+      "label": "Brand 5"
+    },
+    {
+      "type": "collection",
+      "id": "collection_6",
+      "label": "Brand 6"
+    },
+    {
+      "type": "collection",
+      "id": "collection_7",
+      "label": "Brand 7"
+    },
+    {
+      "type": "collection",
+      "id": "collection_8",
+      "label": "Brand 8"
+    },
+    {
+      "type": "header",
+      "content": "Logo style"
+    },
+    {
+      "type": "range",
+      "id": "logo_height",
+      "min": 40,
+      "max": 120,
+      "step": 10,
+      "unit": "px",
+      "label": "Logo height",
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "logo_max_width",
+      "min": 80,
+      "max": 200,
+      "step": 10,
+      "unit": "px",
+      "label": "Logo max width",
+      "default": 140
+    },
+    {
+      "type": "range",
+      "id": "logo_padding",
+      "min": 0,
+      "max": 20,
+      "step": 2,
+      "unit": "px",
+      "label": "Logo padding",
+      "default": 12
+    },
+    {
+      "type": "range",
+      "id": "logo_spacing",
+      "min": 20,
+      "max": 80,
+      "step": 5,
+      "unit": "px",
+      "label": "Logo spacing",
+      "default": 40
+    },
+    {
+      "type": "color",
+      "id": "logo_background",
+      "label": "Logo background",
+      "default": "#ffffff"
+    },
+    {
+      "type": "range",
+      "id": "logo_border_radius",
+      "min": 0,
+      "max": 20,
+      "step": 2,
+      "unit": "px",
+      "label": "Logo border radius",
+      "default": 8
+    },
+    {
+      "type": "select",
+      "id": "logo_filter",
+      "label": "Logo filter",
+      "options": [
+        {
+          "value": "none",
+          "label": "None"
+        },
+        {
+          "value": "grayscale(100%)",
+          "label": "Grayscale"
+        },
+        {
+          "value": "opacity(0.7)",
+          "label": "Faded"
+        }
+      ],
+      "default": "none"
+    },
+    {
+      "type": "header",
+      "content": "Animation"
+    },
+    {
+      "type": "range",
+      "id": "scroll_speed",
+      "min": 10,
+      "max": 60,
+      "step": 5,
+      "unit": "s",
+      "label": "Scroll speed",
+      "default": 30
+    },
+    {
+      "type": "checkbox",
+      "id": "pause_on_hover",
+      "label": "Pause on hover",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "hover_scale",
+      "min": 1,
+      "max": 1.2,
+      "step": 0.1,
+      "label": "Hover scale",
+      "default": 1.1
+    },
+    {
+      "type": "header",
+      "content": "Bar style"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text color",
+      "default": "#000000"
+    },
+    {
+      "type": "range",
+      "id": "padding_vertical",
+      "min": 10,
+      "max": 60,
+      "step": 5,
+      "unit": "px",
+      "label": "Vertical padding",
+      "default": 30
+    },
+    {
+      "type": "range",
+      "id": "border_thickness",
+      "min": 0,
+      "max": 5,
+      "step": 1,
+      "unit": "px",
+      "label": "Border thickness",
+      "default": 1
+    },
+    {
+      "type": "color",
+      "id": "border_color",
+      "label": "Border color",
+      "default": "#e5e5e5"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Brands bar"
+    }
+  ],
+  "tag": null
+}
+{% endschema %}
