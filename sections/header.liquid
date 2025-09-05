@@ -240,7 +240,9 @@
       endif
 
       if section.settings.logo_position == 'top-center' or section.settings.menu == blank
-        render 'header-search', input_id: 'Search-In-Modal-1'
+        if section.settings.show_search_bar
+          render 'header-search', input_id: 'Search-In-Modal-1'
+        endif
       endif
     -%}
 
@@ -258,12 +260,7 @@
       </div>
     {%- endif -%}
 
-    {%- comment -%} Left positioned search {%- endcomment -%}
-    {%- if section.settings.show_search_bar and section.settings.search_position == 'header_left' -%}
-      <div class="header__search header__search--left">
-        {% render 'header-search', input_id: 'Search-In-Header-Left' %}
-      </div>
-    {%- endif -%}
+    {%- comment -%} Left positioned search - REMOVED, using icon instead {%- endcomment -%}
 
     {%- if section.settings.logo_position != 'middle-center' -%}
       {%- if request.page_type == 'index' -%}
@@ -335,12 +332,7 @@
       {%- endif -%}
     {%- endif -%}
 
-    {%- comment -%} Center positioned search {%- endcomment -%}
-    {%- if section.settings.show_search_bar and section.settings.search_position == 'header_center' -%}
-      <div class="header__search header__search--center">
-        {% render 'header-search', input_id: 'Search-In-Header-Center' %}
-      </div>
-    {%- endif -%}
+    {%- comment -%} Center positioned search - REMOVED, using icon instead {%- endcomment -%}
 
     <div class="header__icons{% if section.settings.enable_country_selector or section.settings.enable_language_selector %} header__icons--localization header-localization{% endif %}">
       <div class="desktop-localization-wrapper">
@@ -401,11 +393,9 @@
         {%- endif -%}
       </div>
       
-      {%- comment -%} Conditional search positioning {%- endcomment -%}
+      {%- comment -%} Search icon (conditional) {%- endcomment -%}
       {%- if section.settings.show_search_bar -%}
-        {%- if section.settings.search_position == 'header_right' or section.settings.search_position == blank -%}
-          {% render 'header-search', input_id: 'Search-In-Modal' %}
-        {%- endif -%}
+        {% render 'header-search', input_id: 'Search-In-Modal' %}
       {%- endif -%}
 
       {%- if shop.customer_accounts_enabled -%}
@@ -759,27 +749,8 @@
       "type": "checkbox",
       "id": "show_search_bar",
       "default": true,
-      "label": "Show search bar"
-    },
-    {
-      "type": "select",
-      "id": "search_position",
-      "options": [
-        {
-          "value": "header_right",
-          "label": "Header right"
-        },
-        {
-          "value": "header_center",
-          "label": "Header center"
-        },
-        {
-          "value": "header_left",
-          "label": "Header left"
-        }
-      ],
-      "default": "header_right",
-      "label": "Search bar position"
+      "label": "Show search icon",
+      "info": "Display the search icon in the header"
     },
     {
       "type": "header",
@@ -793,11 +764,29 @@
       "info": "Display a small navigation menu above the main header"
     },
     {
-      "type": "text",
+      "type": "select",
       "id": "top_menu_handle",
-      "label": "Top navigation menu handle",
-      "info": "Enter the menu handle (e.g., 'footer' or 'top-nav')",
-      "default": "footer"
+      "options": [
+        {
+          "value": "",
+          "label": "None"
+        },
+        {
+          "value": "main-menu",
+          "label": "Main menu"
+        },
+        {
+          "value": "footer",
+          "label": "Footer menu"
+        },
+        {
+          "value": "top-nav",
+          "label": "Top navigation"
+        }
+      ],
+      "default": "",
+      "label": "Top navigation menu",
+      "info": "Choose which menu to display in the top navigation bar"
     },
     {
       "type": "header",
