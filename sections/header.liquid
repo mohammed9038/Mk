@@ -49,6 +49,39 @@
     display: flex;
   }
 
+  /* Top Navigation Styles */
+  .top-nav-wrapper {
+    border-bottom: 1px solid rgba(var(--color-foreground), 0.08);
+    padding: 0.5rem 0;
+  }
+
+  .top-nav__list {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .top-nav__link {
+    font-size: 1.3rem;
+    text-decoration: none;
+    color: rgba(var(--color-foreground), 0.7);
+    transition: color var(--duration-short) ease;
+  }
+
+  .top-nav__link:hover,
+  .top-nav__link--active {
+    color: rgba(var(--color-foreground), 1);
+  }
+
+  @media screen and (max-width: 749px) {
+    .top-nav-wrapper {
+      display: none;
+    }
+  }
+
   .list-menu {
     list-style: none;
     padding: 0;
@@ -142,6 +175,24 @@
 -%}
 
 <{% if section.settings.sticky_header_type != 'none' %}sticky-header data-sticky-type="{{ section.settings.sticky_header_type }}"{% else %}div{% endif %} class="header-wrapper color-{{ section.settings.color_scheme }} gradient{% if section.settings.show_line_separator %} header-wrapper--border-bottom{% endif %}">
+  
+  {%- comment -%} Top Navigation Bar {%- endcomment -%}
+  {%- if section.settings.show_top_menu and section.settings.top_menu != blank -%}
+    <div class="top-nav-wrapper page-width">
+      <nav class="top-nav" role="navigation" aria-label="Top navigation">
+        <ul class="top-nav__list list-unstyled" role="list">
+          {%- for link in linklists[section.settings.top_menu].links -%}
+            <li class="top-nav__item">
+              <a href="{{ link.url }}" class="top-nav__link link link--text{% if link.current %} top-nav__link--active{% endif %}">
+                {{ link.title | escape }}
+              </a>
+            </li>
+          {%- endfor -%}
+        </ul>
+      </nav>
+    </div>
+  {%- endif -%}
+
   {%- liquid
     assign social_links = false
     assign localization_forms = false
@@ -654,6 +705,23 @@
       ],
       "default": "header_right",
       "label": "Search bar position"
+    },
+    {
+      "type": "header",
+      "content": "Top Navigation"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_top_menu",
+      "default": false,
+      "label": "Show top navigation bar",
+      "info": "Display a small navigation menu above the main header"
+    },
+    {
+      "type": "link_list",
+      "id": "top_menu",
+      "label": "Top navigation menu",
+      "info": "Select which menu to display in the top bar"
     },
     {
       "type": "header",
