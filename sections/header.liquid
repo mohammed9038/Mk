@@ -185,11 +185,11 @@
 <{% if section.settings.sticky_header_type != 'none' %}sticky-header data-sticky-type="{{ section.settings.sticky_header_type }}"{% else %}div{% endif %} class="header-wrapper color-{{ section.settings.color_scheme }} gradient{% if section.settings.show_line_separator %} header-wrapper--border-bottom{% endif %}">
   
   {%- comment -%} Top Navigation Bar {%- endcomment -%}
-  {%- if section.settings.show_top_menu and section.settings.top_menu != blank -%}
+  {%- if section.settings.show_top_menu and section.settings.top_menu_handle != blank -%}
     <div class="top-nav-wrapper page-width">
       <nav class="top-nav" role="navigation" aria-label="Top navigation">
         <ul class="top-nav__list list-unstyled" role="list">
-          {%- for link in linklists[section.settings.top_menu].links -%}
+          {%- for link in linklists[section.settings.top_menu_handle].links -%}
             <li class="top-nav__item">
               <a href="{{ link.url }}" class="top-nav__link link link--text{% if link.current %} top-nav__link--active{% endif %}">
                 {{ link.title | escape }}
@@ -757,10 +757,11 @@
       "info": "Display a small navigation menu above the main header"
     },
     {
-      "type": "link_list",
-      "id": "top_menu",
-      "label": "Top navigation menu",
-      "info": "Select which menu to display in the top bar"
+      "type": "text",
+      "id": "top_menu_handle",
+      "label": "Top navigation menu handle",
+      "info": "Enter the menu handle (e.g., 'footer' or 'top-nav')",
+      "default": "footer"
     },
     {
       "type": "header",
