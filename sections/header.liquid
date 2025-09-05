@@ -148,6 +148,26 @@
       padding-bottom: {{ section.settings.padding_bottom }}px;
     }
   }
+
+  /* Search positioning styles */
+  .header__search--left {
+    order: 1;
+    margin-right: 1rem;
+  }
+  
+  .header__search--center {
+    display: flex;
+    justify-content: center;
+    flex: 1;
+    margin: 0 1rem;
+  }
+  
+  @media screen and (max-width: 749px) {
+    .header__search--left,
+    .header__search--center {
+      display: none;
+    }
+  }
 {%- endstyle -%}
 
 <script src="{{ 'details-disclosure.js' | asset_url }}" defer="defer"></script>
@@ -238,6 +258,13 @@
       </div>
     {%- endif -%}
 
+    {%- comment -%} Left positioned search {%- endcomment -%}
+    {%- if section.settings.show_search_bar and section.settings.search_position == 'header_left' -%}
+      <div class="header__search header__search--left">
+        {% render 'header-search', input_id: 'Search-In-Header-Left' %}
+      </div>
+    {%- endif -%}
+
     {%- if section.settings.logo_position != 'middle-center' -%}
       {%- if request.page_type == 'index' -%}
         <h1 class="header__heading">
@@ -308,6 +335,13 @@
       {%- endif -%}
     {%- endif -%}
 
+    {%- comment -%} Center positioned search {%- endcomment -%}
+    {%- if section.settings.show_search_bar and section.settings.search_position == 'header_center' -%}
+      <div class="header__search header__search--center">
+        {% render 'header-search', input_id: 'Search-In-Header-Center' %}
+      </div>
+    {%- endif -%}
+
     <div class="header__icons{% if section.settings.enable_country_selector or section.settings.enable_language_selector %} header__icons--localization header-localization{% endif %}">
       <div class="desktop-localization-wrapper">
         {%- if section.settings.enable_country_selector and localization.available_countries.size > 1 -%}
@@ -368,8 +402,10 @@
       </div>
       
       {%- comment -%} Conditional search positioning {%- endcomment -%}
-      {%- if section.settings.show_search_bar and section.settings.search_position == 'header_right' or section.settings.search_position == blank -%}
-        {% render 'header-search', input_id: 'Search-In-Modal' %}
+      {%- if section.settings.show_search_bar -%}
+        {%- if section.settings.search_position == 'header_right' or section.settings.search_position == blank -%}
+          {% render 'header-search', input_id: 'Search-In-Modal' %}
+        {%- endif -%}
       {%- endif -%}
 
       {%- if shop.customer_accounts_enabled -%}
