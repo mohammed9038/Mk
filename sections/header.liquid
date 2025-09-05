@@ -82,6 +82,14 @@
     }
   }
 
+  /* Language selector positioning */
+  .header__left-localization {
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+
   .list-menu {
     list-style: none;
     padding: 0;
@@ -216,6 +224,20 @@
       endif
     -%}
 
+    {%- comment -%} Left positioned language selector {%- endcomment -%}
+    {%- if section.settings.enable_language_selector and localization.available_languages.size > 1 and section.settings.language_selector_position == 'header_left' -%}
+      <div class="header__left-localization desktop-localization-wrapper">
+        <localization-form class="small-hide medium-hide no-js-hidden" data-prevent-hide>
+          {%- form 'localization', id: 'HeaderLanguageFormLeft', class: 'localization-form' -%}
+            <div>
+              <h2 class="visually-hidden" id="HeaderLanguageLabelLeft">{{ 'localization.language_label' | t }}</h2>
+              {%- render 'language-localization', localPosition: 'HeaderLanguageLeft' -%}
+            </div>
+          {%- endform -%}
+        </localization-form>
+      </div>
+    {%- endif -%}
+
     {%- if section.settings.logo_position != 'middle-center' -%}
       {%- if request.page_type == 'index' -%}
         <h1 class="header__heading">
@@ -316,7 +338,7 @@
           </localization-form>
         {% endif %}
 
-        {%- if section.settings.enable_language_selector and localization.available_languages.size > 1 -%}
+        {%- if section.settings.enable_language_selector and localization.available_languages.size > 1 and section.settings.language_selector_position == 'header_right' or section.settings.language_selector_position == blank -%}
           <noscript class="small-hide medium-hide">
             {%- form 'localization', id: 'HeaderLanguageMobileFormNoScript', class: 'localization-form' -%}
               <div class="localization-form__select">
@@ -675,6 +697,23 @@
       "id": "enable_language_selector",
       "default": false,
       "label": "t:sections.header.settings.enable_language_selector.label"
+    },
+    {
+      "type": "select",
+      "id": "language_selector_position",
+      "options": [
+        {
+          "value": "header_right",
+          "label": "Header right"
+        },
+        {
+          "value": "header_left",
+          "label": "Header left"
+        }
+      ],
+      "default": "header_right",
+      "label": "Language selector position",
+      "info": "Choose where to display the language selector"
     },
     {
       "type": "header",
