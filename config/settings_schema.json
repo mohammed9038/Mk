@@ -2099,6 +2099,127 @@
         "id": "cart_color_scheme",
         "label": "t:sections.all.colors.label",
         "default": "scheme-1"
+      },
+      {
+        "type": "header",
+        "content": "🚀 Enhanced Cart Features"
+      },
+      {
+        "type": "checkbox",
+        "id": "cart_enable_free_shipping_bar",
+        "label": "Enable free shipping progress bar",
+        "default": true
+      },
+      {
+        "type": "text",
+        "id": "cart_free_shipping_threshold",
+        "label": "Free shipping threshold amount",
+        "default": "50",
+        "info": "Enter amount without currency symbol (e.g., 50)"
+      },
+      {
+        "type": "color",
+        "id": "cart_progress_color",
+        "label": "Progress bar color"
+      },
+      {
+        "type": "checkbox",
+        "id": "cart_show_recommendations",
+        "label": "Show recommended products",
+        "default": true
+      },
+      {
+        "type": "collection",
+        "id": "cart_recommended_collection",
+        "label": "Recommended products collection",
+        "info": "Select collection for recommended products in cart"
+      },
+      {
+        "type": "range",
+        "id": "cart_recommended_limit",
+        "min": 2,
+        "max": 6,
+        "step": 1,
+        "default": 4,
+        "label": "Number of recommended products"
+      },
+      {
+        "type": "checkbox",
+        "id": "cart_show_savings",
+        "label": "Show total savings banner",
+        "default": true
+      },
+      {
+        "type": "checkbox",
+        "id": "cart_show_trust_badges",
+        "label": "Show trust badges",
+        "default": true
+      },
+      {
+        "type": "checkbox",
+        "id": "cart_enable_urgency_timer",
+        "label": "Enable urgency timer",
+        "default": false,
+        "info": "Shows countdown timer to encourage quick checkout"
+      },
+      {
+        "type": "range",
+        "id": "cart_urgency_minutes",
+        "min": 5,
+        "max": 60,
+        "step": 5,
+        "default": 15,
+        "unit": "min",
+        "label": "Urgency timer duration"
+      },
+      {
+        "type": "text",
+        "id": "cart_urgency_message",
+        "label": "Urgency timer message",
+        "default": "⚡ Limited time offer! Complete your order in:"
+      },
+      {
+        "type": "header",
+        "content": "🎁 Cart Upsell Features"
+      },
+      {
+        "type": "checkbox",
+        "id": "cart_enable_volume_discounts",
+        "label": "Show volume discount hints",
+        "default": true
+      },
+      {
+        "type": "checkbox",
+        "id": "cart_enable_cross_sell",
+        "label": "Enable cross-sell suggestions",
+        "default": true
+      },
+      {
+        "type": "text",
+        "id": "cart_cross_sell_title",
+        "label": "Cross-sell section title",
+        "default": "You might also like"
+      },
+      {
+        "type": "header",
+        "content": "💳 Checkout Enhancements"
+      },
+      {
+        "type": "checkbox",
+        "id": "cart_show_payment_icons",
+        "label": "Show accepted payment icons",
+        "default": true
+      },
+      {
+        "type": "checkbox",
+        "id": "cart_enable_express_checkout",
+        "label": "Highlight express checkout buttons",
+        "default": true
+      },
+      {
+        "type": "color",
+        "id": "cart_shipping_background",
+        "label": "Shipping info background color"
       }
     ]
   }

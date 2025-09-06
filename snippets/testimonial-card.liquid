@@ -1,0 +1,52 @@
+{% comment %}
+  Renders a testimonial card
+  
+  Accepts:
+  - block: Block object with testimonial data
+  - section_id: Section ID for unique styling
+{% endcomment %}
+
+<div class="testimonial-card testimonial-card-{{ section_id }}{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}" 
+     {{ block.shopify_attributes }}
+     {% if settings.animations_reveal_on_scroll %}
+       data-cascade
+       style="--animation-order: {{ forloop.index }};"
+     {% endif %}>
+  
+  {% if block.settings.rating > 0 %}
+    <div class="testimonial-rating testimonial-rating-{{ section_id }}">
+      {% for i in (1..5) %}
+        <span class="testimonial-star">
+          {% if i <= block.settings.rating %}★{% else %}☆{% endif %}
+        </span>
+      {% endfor %}
+    </div>
+  {% endif %}
+  
+  {% if block.settings.quote != blank %}
+    <div class="testimonial-quote testimonial-quote-{{ section_id }}">
+      {{ block.settings.quote }}
+    </div>
+  {% endif %}
+  
+  <div class="testimonial-author testimonial-author-{{ section_id }}">
+    {% if block.settings.avatar %}
+      <img src="{{ block.settings.avatar | image_url: width: 120 }}" 
+           alt="{{ block.settings.name | escape }}"
+           class="testimonial-avatar testimonial-avatar-{{ section_id }}"
+           loading="lazy">
+    {% endif %}
+    
+    {% if block.settings.name != blank %}
+      <div class="testimonial-name testimonial-name-{{ section_id }}">
+        {{ block.settings.name }}
+      </div>
+    {% endif %}
+    
+    {% if block.settings.title != blank %}
+      <div class="testimonial-title testimonial-title-{{ section_id }}">
+        {{ block.settings.title }}
+      </div>
+    {% endif %}
+  </div>
+</div>
