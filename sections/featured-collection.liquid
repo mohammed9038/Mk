@@ -396,6 +396,132 @@
     },
     {
       "type": "header",
+      "content": "Enhanced Product Display"
+    },
+    {
+      "type": "select",
+      "id": "product_card_style",
+      "options": [
+        {
+          "value": "standard",
+          "label": "Standard"
+        },
+        {
+          "value": "modern",
+          "label": "Modern (with shadow)"
+        },
+        {
+          "value": "minimal",
+          "label": "Minimal"
+        },
+        {
+          "value": "elevated",
+          "label": "Elevated (hover effects)"
+        }
+      ],
+      "default": "standard",
+      "label": "Product card style"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_product_badges",
+      "default": true,
+      "label": "Show product badges (sale, new, etc.)"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_quick_view",
+      "default": false,
+      "label": "Show quick view button"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_compare_button",
+      "default": false,
+      "label": "Show compare button"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_wishlist_button",
+      "default": false,
+      "label": "Show wishlist button"
+    },
+    {
+      "type": "select",
+      "id": "product_title_size",
+      "options": [
+        {
+          "value": "small",
+          "label": "Small"
+        },
+        {
+          "value": "medium",
+          "label": "Medium"
+        },
+        {
+          "value": "large",
+          "label": "Large"
+        }
+      ],
+      "default": "medium",
+      "label": "Product title size"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_product_description",
+      "default": false,
+      "label": "Show product description excerpt"
+    },
+    {
+      "type": "range",
+      "id": "description_length",
+      "min": 50,
+      "max": 200,
+      "step": 10,
+      "default": 100,
+      "label": "Description character limit",
+      "info": "Only applies when description is enabled"
+    },
+    {
+      "type": "header",
+      "content": "Layout Options"
+    },
+    {
+      "type": "select",
+      "id": "section_width",
+      "options": [
+        {
+          "value": "narrow",
+          "label": "Narrow"
+        },
+        {
+          "value": "standard",
+          "label": "Standard"
+        },
+        {
+          "value": "wide",
+          "label": "Wide"
+        },
+        {
+          "value": "full",
+          "label": "Full width"
+        }
+      ],
+      "default": "standard",
+      "label": "Section width"
+    },
+    {
+      "type": "range",
+      "id": "product_spacing",
+      "min": 8,
+      "max": 40,
+      "step": 4,
+      "unit": "px",
+      "label": "Spacing between products",
+      "default": 16
+    },
+    {
+      "type": "header",
       "content": "t:sections.featured-collection.settings.header_mobile.content"
     },
     {
