@@ -169,93 +169,83 @@
     }
   }
 
-  /* Flexible Header Layout Styles */
-  .header__layout {
+  /* Header Layout Styles */
+  .header__top-nav {
+    border-bottom: 1px solid rgba(var(--color-foreground), 0.08);
+    padding: 0.5rem 0;
+    text-align: center;
+  }
+
+  .header__top-navigation .list-menu {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .header__main-row {
     display: flex;
     align-items: center;
+    justify-content: space-between;
     width: 100%;
     gap: 1rem;
   }
 
-  .header__layout--horizontal {
-    flex-direction: row;
-    justify-content: space-between;
+  .header__left-section {
+    display: flex;
+    align-items: center;
+    flex: 0 0 auto;
   }
 
-  .header__layout--stacked {
-    flex-direction: column;
-    gap: 1rem;
+  .header__center-section {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex: 1 1 auto;
+    max-width: 500px;
+    margin: 0 2rem;
   }
 
-  .header__layout--split .header__logo-section {
-    order: 1;
-  }
-
-  .header__layout--split .header__navigation {
-    order: 2;
-  }
-
-  .header__layout--split .header__utilities {
-    order: 0;
-  }
-
-  /* Logo positioning */
-  .header__logo--left { order: 1; }
-  .header__logo--center { order: 2; flex: 1; text-align: center; }
-  .header__logo--right { order: 3; text-align: right; }
-
-  /* Navigation positioning */
-  .header__navigation--left { order: 1; }
-  .header__navigation--center { order: 2; flex: 1; justify-content: center; }
-  .header__navigation--right { order: 3; }
-  .header__navigation--top { order: 0; width: 100%; }
-
-  /* Search positioning */
-  .header__search--left { order: 1; }
-  .header__search--center { order: 2; flex: 1; justify-content: center; }
-  .header__search--right { order: 3; justify-content: flex-end; }
-  .header__search--hidden { display: none; }
-
-  /* Utilities positioning */
-  .header__utilities--left { order: 1; }
-  .header__utilities--center { order: 2; flex: 1; justify-content: center; }
-  .header__utilities--right { order: 3; }
-
-  .header__utilities {
+  .header__right-section {
     display: flex;
     align-items: center;
     gap: 1rem;
+    flex: 0 0 auto;
   }
 
-  .header__search-section {
-    display: flex;
-    align-items: center;
+  .header__search-bar {
+    width: 100%;
+    max-width: 400px;
   }
 
-  .header__logo-section {
-    display: flex;
-    align-items: center;
-  }
-
-  .header__navigation {
+  .header__localization {
     display: flex;
     align-items: center;
   }
 
   /* Mobile responsive adjustments */
-  @media screen and (max-width: 749px) {
-    .header__layout {
-      flex-wrap: wrap;
-    }
-    
-    .header__navigation--center,
-    .header__navigation--left,
-    .header__navigation--right {
+  @media screen and (max-width: 989px) {
+    .header__top-nav {
       display: none;
     }
     
-    .header__search--center,
-    .header__search--left {
+    .header__center-section {
+      display: none;
+    }
+    
+    .header__search-bar {
+      display: none;
+    }
+
+    .header__main-row {
+      justify-content: space-between;
+    }
+  }
+
+  @media screen and (max-width: 749px) {
+    .header__right-section .header__localization {
       display: none;
     }
   }
@@ -345,24 +335,35 @@
       {% render 'header-drawer' %}
     {%- endif -%}
 
-    {%- comment -%} Flexible Header Layout {%- endcomment -%}
-    <div class="header__layout header__layout--{{ section.settings.header_layout | default: 'horizontal' }}">
-      
-      {%- comment -%} Navigation (when positioned left or right) {%- endcomment -%}
-      {%- if section.settings.navigation_position == 'left' -%}
-        <nav class="header__navigation header__navigation--left">
-          {%- if section.settings.menu != blank -%}
-            {%- if section.settings.menu_type_desktop == 'dropdown' -%}
-              {% render 'header-dropdown-menu' %}
-            {%- elsif section.settings.menu_type_desktop != 'drawer' -%}
-              {% render 'header-mega-menu' %}
-            {%- endif -%}
+    {%- comment -%} Top Navigation Row - Main Navigation {%- endcomment -%}
+    {%- if section.settings.show_top_menu and section.settings.menu != blank -%}
+      <div class="header__top-nav">
+        <nav class="header__top-navigation">
+          {%- if section.settings.menu_type_desktop == 'dropdown' -%}
+            {% render 'header-dropdown-menu' %}
+          {%- elsif section.settings.menu_type_desktop != 'drawer' -%}
+            {% render 'header-mega-menu' %}
+          {%- else -%}
+            <ul class="list-menu list-menu--inline" role="list">
+              {%- for link in linklists[section.settings.menu].links -%}
+                <li>
+                  <a href="{{ link.url }}" class="header__menu-item list-menu__item link link--text focus-inset{% if link.current %} list-menu__item--active{% endif %}">
+                    <span>{{ link.title | escape }}</span>
+                  </a>
+                </li>
+              {%- endfor -%}
+            </ul>
           {%- endif -%}
         </nav>
-      {%- endif -%}
+      </div>
+    {%- endif -%}
 
-      {%- comment -%} Logo Section {%- endcomment -%}
-      <div class="header__logo-section header__logo--{{ section.settings.logo_position | default: 'left' }}">
+    {%- comment -%} Main Header Row {%- endcomment -%}
+    <div class="header__main-row">
+      
+      {%- comment -%} Left Section {%- endcomment -%}
+      <div class="header__left-section">
+        {%- comment -%} Logo {%- endcomment -%}
         {%- if request.page_type == 'index' -%}
           <h1 class="header__heading">
         {%- endif -%}
@@ -392,23 +393,13 @@
         {%- endif -%}
       </div>
 
-      {%- comment -%} Navigation (when positioned center/top) {%- endcomment -%}
-      {%- if section.settings.navigation_position == 'center' or section.settings.navigation_position == 'top' -%}
-        <nav class="header__navigation header__navigation--{{ section.settings.navigation_position | default: 'center' }}">
-          {%- if section.settings.menu != blank -%}
-            {%- if section.settings.menu_type_desktop == 'dropdown' -%}
-              {% render 'header-dropdown-menu' %}
-            {%- elsif section.settings.menu_type_desktop != 'drawer' -%}
-              {% render 'header-mega-menu' %}
-            {%- endif -%}
-          {%- endif -%}
-        </nav>
-      {%- endif -%}
-
-      {%- comment -%} Search Section {%- endcomment -%}
-      <div class="header__search-section header__search--{{ section.settings.search_position | default: 'center' }}">
+      {%- comment -%} Center Section - Search Bar {%- endcomment -%}
+      <div class="header__center-section">
+        {%- comment -%} Search {%- endcomment -%}
         {%- if section.settings.show_search_bar -%}
-          {% render 'header-search', input_id: 'Search-In-Modal-1' %}
+          <div class="header__search-bar">
+            {% render 'header-search', input_id: 'Search-In-Header' %}
+          </div>
         {%- elsif section.settings.show_search_icon -%}
           <details-modal class="header__search">
             <details>
@@ -433,8 +424,8 @@
         {%- endif -%}
       </div>
 
-      {%- comment -%} Utilities Section (Cart, Account, Language) {%- endcomment -%}
-      <div class="header__utilities header__utilities--{{ section.settings.utilities_position | default: 'right' }}">
+      {%- comment -%} Right Section - Account, Cart, Language {%- endcomment -%}
+      <div class="header__right-section">
         
         {%- comment -%} Language Selector {%- endcomment -%}
         {%- if section.settings.enable_language_selector and localization.available_languages.size > 1 -%}
@@ -514,20 +505,6 @@
           {%- endif -%}
         </a>
       </div>
-
-      {%- comment -%} Navigation (when positioned right) {%- endcomment -%}
-      {%- if section.settings.navigation_position == 'right' -%}
-        <nav class="header__navigation header__navigation--right">
-          {%- if section.settings.menu != blank -%}
-            {%- if section.settings.menu_type_desktop == 'dropdown' -%}
-              {% render 'header-dropdown-menu' %}
-            {%- elsif section.settings.menu_type_desktop != 'drawer' -%}
-              {% render 'header-mega-menu' %}
-            {%- endif -%}
-          {%- endif -%}
-        </nav>
-      {%- endif -%}
-
     </div>
   </header>
 
@@ -947,14 +924,14 @@
     {
       "type": "checkbox",
       "id": "show_search_bar",
-      "default": false,
+      "default": true,
       "label": "Show search bar",
       "info": "Display a full search bar instead of just an icon"
     },
     {
       "type": "checkbox",
       "id": "show_search_icon",
-      "default": true,
+      "default": false,
       "label": "Show search icon",
       "info": "Display the search icon (opens modal when clicked)"
     },
@@ -965,34 +942,9 @@
     {
       "type": "checkbox",
       "id": "show_top_menu",
-      "default": false,
-      "label": "Show top navigation bar",
-      "info": "Display a small navigation menu above the main header"
-    },
-    {
-      "type": "select",
-      "id": "top_menu_handle",
-      "options": [
-        {
-          "value": "",
-          "label": "None"
-        },
-        {
-          "value": "main-menu",
-          "label": "Main menu"
-        },
-        {
-          "value": "footer",
-          "label": "Footer menu"
-        },
-        {
-          "value": "top-nav",
-          "label": "Top navigation"
-        }
-      ],
-      "default": "",
-      "label": "Top navigation menu",
-      "info": "Choose which menu to display in the top navigation bar"
+      "default": true,
+      "label": "Show navigation at top",
+      "info": "Display the main navigation menu above the header"
     },
     {
       "type": "header",
