@@ -300,11 +300,11 @@
 <{% if section.settings.sticky_header_type != 'none' %}sticky-header data-sticky-type="{{ section.settings.sticky_header_type }}"{% else %}div{% endif %} class="header-wrapper color-{{ section.settings.color_scheme }} gradient{% if section.settings.show_line_separator %} header-wrapper--border-bottom{% endif %}">
   
   {%- comment -%} Top Navigation Bar {%- endcomment -%}
-  {%- if section.settings.show_top_menu and section.settings.top_menu_handle != blank -%}
+  {%- if section.settings.show_top_menu and section.settings.menu != blank -%}
     <div class="top-nav-wrapper page-width">
       <nav class="top-nav" role="navigation" aria-label="Top navigation">
         <ul class="top-nav__list list-unstyled" role="list">
-          {%- for link in linklists[section.settings.top_menu_handle].links -%}
+          {%- for link in linklists[section.settings.menu].links -%}
             <li class="top-nav__item">
               <a href="{{ link.url }}" class="top-nav__link link link--text{% if link.current %} top-nav__link--active{% endif %}">
                 {{ link.title | escape }}
@@ -333,29 +333,6 @@
     {%- comment -%} Mobile Menu Drawer {%- endcomment -%}
     {%- if section.settings.menu != blank -%}
       {% render 'header-drawer' %}
-    {%- endif -%}
-
-    {%- comment -%} Top Navigation Row - Main Navigation {%- endcomment -%}
-    {%- if section.settings.show_top_menu and section.settings.menu != blank -%}
-      <div class="header__top-nav">
-        <nav class="header__top-navigation">
-          {%- if section.settings.menu_type_desktop == 'dropdown' -%}
-            {% render 'header-dropdown-menu' %}
-          {%- elsif section.settings.menu_type_desktop != 'drawer' -%}
-            {% render 'header-mega-menu' %}
-          {%- else -%}
-            <ul class="list-menu list-menu--inline" role="list">
-              {%- for link in linklists[section.settings.menu].links -%}
-                <li>
-                  <a href="{{ link.url }}" class="header__menu-item list-menu__item link link--text focus-inset{% if link.current %} list-menu__item--active{% endif %}">
-                    <span>{{ link.title | escape }}</span>
-                  </a>
-                </li>
-              {%- endfor -%}
-            </ul>
-          {%- endif -%}
-        </nav>
-      </div>
     {%- endif -%}
 
     {%- comment -%} Main Header Row {%- endcomment -%}
@@ -504,50 +481,15 @@
             </div>
           {%- endif -%}
         </a>
+
+        {%- comment -%} App Blocks {%- endcomment -%}
+        {%- for block in section.blocks -%}
+          {%- case block.type -%}
+            {%- when '@app' -%}
+              {% render block %}
+          {%- endcase -%}
+        {%- endfor -%}
       </div>
-    </div>
-  </header>
-
-      {%- if shop.customer_accounts_enabled -%}
-        <a href="{%- if customer -%}{{ routes.account_url }}{%- else -%}{{ routes.account_login_url }}{%- endif -%}" class="header__icon header__icon--account link focus-inset{% if section.settings.menu != blank %} small-hide{% endif %}">
-          {% render 'icon-account' %}
-          <span class="visually-hidden">
-            {%- liquid
-              if customer
-                echo 'customer.account_fallback' | t
-              else
-                echo 'customer.log_in' | t
-              endif
-            -%}
-          </span>
-        </a>
-      {%- endif -%}
-
-      {%- for block in section.blocks -%}
-        {%- case block.type -%}
-          {%- when '@app' -%}
-            {% render block %}
-        {%- endcase -%}
-      {%- endfor -%}
-
-      <a href="{{ routes.cart_url }}" class="header__icon header__icon--cart link focus-inset" id="cart-icon-bubble">
-        {%- liquid
-          if cart == empty
-            render 'icon-cart-empty'
-          else
-            render 'icon-cart'
-          endif
-        -%}
-        <span class="visually-hidden">{{ 'templates.cart.cart' | t }}</span>
-        {%- if cart != empty -%}
-          <div class="cart-count-bubble">
-            {%- if cart.item_count < 100 -%}
-              <span aria-hidden="true">{{ cart.item_count }}</span>
-            {%- endif -%}
-            <span class="visually-hidden">{{ 'sections.header.cart_count' | t: count: cart.item_count }}</span>
-          </div>
-        {%- endif -%}
-      </a>
     </div>
   </header>
 </{% if section.settings.sticky_header_type != 'none' %}sticky-header{% else %}div{% endif %}>
@@ -833,89 +775,6 @@
       "id": "enable_language_selector",
       "default": false,
       "label": "t:sections.header.settings.enable_language_selector.label"
-    },
-    {
-      "type": "select",
-      "id": "language_selector_position",
-      "options": [
-        {
-          "value": "header_right",
-          "label": "Header right"
-        },
-        {
-          "value": "header_left",
-          "label": "Header left"
-        }
-      ],
-      "default": "header_right",
-      "label": "Language selector position",
-      "info": "Choose where to display the language selector"
-    },
-    {
-      "type": "header",
-      "content": "Header Layout"
-    },
-    {
-      "type": "select",
-      "id": "header_layout",
-      "options": [
-        { "value": "horizontal", "label": "Horizontal (Single Row)" },
-        { "value": "stacked", "label": "Stacked (Multiple Rows)" },
-        { "value": "split", "label": "Split Layout" }
-      ],
-      "default": "horizontal",
-      "label": "Header layout style",
-      "info": "Choose how elements are arranged in the header"
-    },
-    {
-      "type": "select",
-      "id": "navigation_position",
-      "options": [
-        { "value": "left", "label": "Left" },
-        { "value": "center", "label": "Center" },
-        { "value": "right", "label": "Right" },
-        { "value": "top", "label": "Above header (separate row)" }
-      ],
-      "default": "center",
-      "label": "Navigation position",
-      "info": "Where to position the main navigation menu"
-    },
-    {
-      "type": "select",
-      "id": "logo_position",
-      "options": [
-        { "value": "left", "label": "Left" },
-        { "value": "center", "label": "Center" },
-        { "value": "right", "label": "Right" }
-      ],
-      "default": "left",
-      "label": "Logo position",
-      "info": "Where to position the logo"
-    },
-    {
-      "type": "select",
-      "id": "search_position",
-      "options": [
-        { "value": "left", "label": "Left" },
-        { "value": "center", "label": "Center" },
-        { "value": "right", "label": "Right" },
-        { "value": "hidden", "label": "Hidden" }
-      ],
-      "default": "center",
-      "label": "Search position",
-      "info": "Where to position the search functionality"
-    },
-    {
-      "type": "select",
-      "id": "utilities_position",
-      "options": [
-        { "value": "left", "label": "Left" },
-        { "value": "center", "label": "Center" },
-        { "value": "right", "label": "Right" }
-      ],
-      "default": "right",
-      "label": "Utilities position",
-      "info": "Where to position cart, account, and language selector"
     },
     {
       "type": "header",
