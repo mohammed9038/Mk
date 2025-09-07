@@ -1,53 +1,140 @@
 /**
- * Comprehensive Image Loading Fix
- * Handles all image loading issues, 404s, and missing images
+ * Modern Shopify Image Loading Fix
+ * Follows Shopify best practices for responsive images and error handling
+ * Based on official Shopify documentation: https://shopify.dev/docs/storefronts/themes/best-practices/performance
  */
 
-class ImageLoadingFix {
+class ShopifyImageFix {
   constructor() {
     this.retryAttempts = 3;
-    this.retryDelay = 1000;
-    this.placeholderCreated = new Set();
+    this.retryDelay = 500;
+    this.processedImages = new Set();
+    this.config = {
+      // Shopify CDN responsive widths following best practices
+      responsiveWidths: [165, 360, 533, 720, 940, 1066, 1200, 1500, 1920],
+      placeholderColor: '#f8f9fa',
+      loadingSpinnerColor: '#007bff'
+    };
     
     this.init();
   }
 
   init() {
-    // Fix existing broken images
-    this.fixBrokenImages();
-    
-    // Setup observers for dynamically loaded content
-    this.setupMutationObserver();
-    
-    // Fix missing product images
-    this.fixMissingProductImages();
-    
-    console.log('🖼️ Image Loading Fix initialized');
+    // Wait for DOM to be ready
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', () => this.startImageFix());
+    } else {
+      this.startImageFix();
+    }
   }
 
-  fixBrokenImages() {
-    const images = document.querySelectorAll('img');
+  startImageFix() {
+    // Fix existing images
+    this.fixAllImages();
+    
+    // Setup mutation observer for dynamic content
+    this.setupMutationObserver();
+    
+    // Handle theme editor changes
+    if (window.Shopify && window.Shopify.designMode) {
+      document.addEventListener('shopify:section:load', () => this.fixAllImages());
+      document.addEventListener('shopify:section:reorder', () => this.fixAllImages());
+    }
+    
+    console.log('🖼️ Shopify Image Fix initialized following best practices');
+  }
+
+  fixAllImages() {
+    // Target all image containers following Shopify patterns
+    const imageSelectors = [
+      'img[src*="cdn.shopify.com"]',
+      '.card__media img',
+      '.product__media img', 
+      '.featured_media img',
+      'img[data-src]',
+      'img.product-card-image',
+      '.media img',
+      '[data-media-id] img'
+    ];
+    
+    const images = document.querySelectorAll(imageSelectors.join(', '));
     
     images.forEach(img => {
-      if (img.complete && img.naturalHeight === 0) {
-        // Image failed to load
+      if (this.processedImages.has(img)) return;
+      this.processedImages.add(img);
+      
+      this.setupImageHandlers(img);
+      
+      // Check if image is already failed
+      if (img.complete && img.naturalWidth === 0) {
         this.handleImageError(img);
-      } else {
-        // Setup error handler for future failures
-        img.addEventListener('error', () => this.handleImageError(img));
-        img.addEventListener('load', () => this.handleImageSuccess(img));
       }
     });
+    
+    console.log(`🔍 Processed ${images.length} Shopify images`);
+  }
+
+  setupImageHandlers(img) {
+    // Modern event listeners following Shopify best practices
+    img.addEventListener('error', () => this.handleImageError(img), { once: false });
+    img.addEventListener('load', () => this.handleImageSuccess(img), { once: true });
+    
+    // Ensure proper loading attribute for performance
+    if (!img.hasAttribute('loading') && !this.isAboveFold(img)) {
+      img.setAttribute('loading', 'lazy');
+    }
+    
+    // Add proper sizes if missing
+    if (!img.hasAttribute('sizes') && img.hasAttribute('srcset')) {
+      img.setAttribute('sizes', this.getDefaultSizes());
+    }
   }
 
   handleImageError(img) {
-    const imgId = img.src || img.dataset.src || 'unknown';
+    const imgSrc = img.src || img.dataset.src || '';
+    const retryCount = parseInt(img.dataset.retryCount || '0');
     
-    if (this.placeholderCreated.has(imgId)) {
-      return; // Already handled
+    console.warn('🚫 Image failed to load:', imgSrc.substring(0, 80) + '...');
+    
+    if (retryCount < this.retryAttempts && imgSrc.includes('cdn.shopify.com')) {
+      // Retry with smaller image size for Shopify CDN
+      this.retryWithSmallerSize(img, retryCount);
+    } else {
+      // Create proper Shopify-style placeholder
+      this.createShopifyPlaceholder(img);
+    }
+  }
+
+  retryWithSmallerSize(img, retryCount) {
+    const currentSrc = img.src;
+    let newSrc = currentSrc;
+    
+    // Extract current width and try smaller size
+    const widthMatch = currentSrc.match(/[?&]width=(\d+)/);
+    if (widthMatch) {
+      const currentWidth = parseInt(widthMatch[1]);
+      const smallerWidth = this.findSmallerWidth(currentWidth);
+      
+      if (smallerWidth) {
+        newSrc = currentSrc.replace(/([?&])width=\d+/, `$1width=${smallerWidth}`);
+      }
+    } else {
+      // Add width parameter if missing
+      const separator = currentSrc.includes('?') ? '&' : '?';
+      newSrc = `${currentSrc}${separator}width=533`;
     }
     
-    console.warn('🚫 Image failed to load:', imgId);
+    if (newSrc !== currentSrc) {
+      img.dataset.retryCount = (retryCount + 1).toString();
+      
+      setTimeout(() => {
+        img.src = newSrc;
+        console.log(`� Retry ${retryCount + 1}: Loading smaller image size`);
+      }, this.retryDelay * (retryCount + 1));
+    } else {
+      this.createShopifyPlaceholder(img);
+    }
+  }
     
     // Get retry count
     const retryCount = parseInt(img.dataset.retryCount || '0');

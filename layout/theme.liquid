@@ -467,7 +467,14 @@
       <script src="{{ 'predictive-search.js' | asset_url }}" defer="defer"></script>
     {%- endif -%}
     
-    <!-- Image loading fix script for handling missing images and 404 errors -->
-    <script src="{{ 'image-fix.js' | asset_url }}" defer="defer"></script>
+    <!-- Modern Shopify Image Fix following best practices -->
+        <!-- Shopify Image Loading Fixes -->
+    <script src="{{ 'shopify-image-fix.js' | asset_url }}" defer></script>
+    <script src="{{ 'brand-image-fix.js' | asset_url }}" defer></script>
+    
+    {% comment %} Development and debugging tools {% endcomment %}
+    {% if request.design_mode %}
+      <script src="{{ 'collection-validator.js' | asset_url }}" defer></script>
+    {% endif %}
   </body>
 </html>
