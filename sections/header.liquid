@@ -380,36 +380,40 @@
 
       {%- comment -%} Center Section - Search Bar {%- endcomment -%}
       <div class="header__center-section">
-        {%- comment -%} Always show search bar in center {%- endcomment -%}
-        <div class="header__search-bar">
-          {% render 'header-search-bar', input_id: 'Search-In-Header' %}
-        </div>
+        {%- comment -%} Search Bar {%- endcomment -%}
+        {%- if section.settings.show_search_bar -%}
+          <div class="header__search-bar">
+            {% render 'header-search-bar', input_id: 'Search-In-Header' %}
+          </div>
+        {%- endif -%}
       </div>
 
       {%- comment -%} Right Section - Account, Cart, Language {%- endcomment -%}
       <div class="header__right-section">
         
         {%- comment -%} Mobile Search Icon {%- endcomment -%}
-        <details-modal class="header__search header__search--mobile">
-          <details>
-            <summary class="header__icon header__icon--search header__icon--summary link focus-inset modal__toggle" aria-haspopup="dialog" aria-label="{{ 'general.search.search' | t }}">
-              <span>
-                <svg class="modal__toggle-open icon icon-search" aria-hidden="true" focusable="false">
-                  <use href="#icon-search">
-                </svg>
-                <svg class="modal__toggle-close icon icon-close" aria-hidden="true" focusable="false">
-                  <use href="#icon-close">
-                </svg>
-              </span>
-            </summary>
-            <div class="search-modal modal__content gradient" role="dialog" aria-modal="true" aria-label="{{ 'general.search.search' | t }}">
-              <div class="modal-overlay"></div>
-              <div class="search-modal__content search-modal__content-bottom" tabindex="-1">
-                {% render 'header-search', input_id: 'Search-In-Mobile-Modal' %}
+        {%- if section.settings.show_search_bar or section.settings.show_search_icon -%}
+          <details-modal class="header__search header__search--mobile">
+            <details>
+              <summary class="header__icon header__icon--search header__icon--summary link focus-inset modal__toggle" aria-haspopup="dialog" aria-label="{{ 'general.search.search' | t }}">
+                <span>
+                  <svg class="modal__toggle-open icon icon-search" aria-hidden="true" focusable="false">
+                    <use href="#icon-search">
+                  </svg>
+                  <svg class="modal__toggle-close icon icon-close" aria-hidden="true" focusable="false">
+                    <use href="#icon-close">
+                  </svg>
+                </span>
+              </summary>
+              <div class="search-modal modal__content gradient" role="dialog" aria-modal="true" aria-label="{{ 'general.search.search' | t }}">
+                <div class="modal-overlay"></div>
+                <div class="search-modal__content search-modal__content-bottom" tabindex="-1">
+                  {% render 'header-search', input_id: 'Search-In-Mobile-Modal' %}
+                </div>
               </div>
-            </div>
-          </details>
-        </details-modal>
+            </details>
+          </details-modal>
+        {%- endif -%}
         
         {%- comment -%} Language Selector {%- endcomment -%}
         {%- if section.settings.enable_language_selector and localization.available_languages.size > 1 -%}
