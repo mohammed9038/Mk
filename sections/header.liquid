@@ -1,5 +1,6 @@
 <link rel="stylesheet" href="{{ 'component-list-menu.css' | asset_url }}" media="print" onload="this.media='all'">
 <link rel="stylesheet" href="{{ 'component-search.css' | asset_url }}" media="print" onload="this.media='all'">
+<link rel="stylesheet" href="{{ 'component-search-bar.css' | asset_url }}" media="print" onload="this.media='all'">
 <link rel="stylesheet" href="{{ 'component-menu-drawer.css' | asset_url }}" media="print" onload="this.media='all'">
 <link rel="stylesheet" href="{{ 'component-cart-notification.css' | asset_url }}" media="print" onload="this.media='all'">
 <link rel="stylesheet" href="{{ 'component-cart-items.css' | asset_url }}" media="print" onload="this.media='all'">
@@ -21,6 +22,7 @@
 
 <noscript>{{ 'component-list-menu.css' | asset_url | stylesheet_tag }}</noscript>
 <noscript>{{ 'component-search.css' | asset_url | stylesheet_tag }}</noscript>
+<noscript>{{ 'component-search-bar.css' | asset_url | stylesheet_tag }}</noscript>
 <noscript>{{ 'component-menu-drawer.css' | asset_url | stylesheet_tag }}</noscript>
 <noscript>{{ 'component-cart-notification.css' | asset_url | stylesheet_tag }}</noscript>
 <noscript>{{ 'component-cart-items.css' | asset_url | stylesheet_tag }}</noscript>
@@ -220,13 +222,20 @@
     max-width: 400px;
   }
 
-  .header__search--mobile {
+  .header__search--mobile-only {
     display: none;
   }
 
   .header__localization {
     display: flex;
     align-items: center;
+  }
+
+  /* Desktop: Hide mobile search when search bar is shown */
+  @media screen and (min-width: 990px) {
+    .header__search--mobile-only {
+      display: none !important;
+    }
   }
 
   /* Mobile responsive adjustments */
@@ -243,7 +252,7 @@
       display: none;
     }
 
-    .header__search--mobile {
+    .header__search--mobile-only {
       display: block;
     }
 
@@ -391,9 +400,31 @@
       {%- comment -%} Right Section - Account, Cart, Language {%- endcomment -%}
       <div class="header__right-section">
         
-        {%- comment -%} Mobile Search Icon {%- endcomment -%}
-        {%- if section.settings.show_search_bar or section.settings.show_search_icon -%}
-          <details-modal class="header__search header__search--mobile">
+        {%- comment -%} Mobile Search Icon (only when search bar is disabled or on mobile) {%- endcomment -%}
+        {%- if section.settings.show_search_icon and section.settings.show_search_bar == false -%}
+          <details-modal class="header__search">
+            <details>
+              <summary class="header__icon header__icon--search header__icon--summary link focus-inset modal__toggle" aria-haspopup="dialog" aria-label="{{ 'general.search.search' | t }}">
+                <span>
+                  <svg class="modal__toggle-open icon icon-search" aria-hidden="true" focusable="false">
+                    <use href="#icon-search">
+                  </svg>
+                  <svg class="modal__toggle-close icon icon-close" aria-hidden="true" focusable="false">
+                    <use href="#icon-close">
+                  </svg>
+                </span>
+              </summary>
+              <div class="search-modal modal__content gradient" role="dialog" aria-modal="true" aria-label="{{ 'general.search.search' | t }}">
+                <div class="modal-overlay"></div>
+                <div class="search-modal__content search-modal__content-bottom" tabindex="-1">
+                  {% render 'header-search', input_id: 'Search-In-Modal' %}
+                </div>
+              </div>
+            </details>
+          </details-modal>
+        {%- elsif section.settings.show_search_bar -%}
+          {%- comment -%} Mobile-only search icon when search bar is enabled {%- endcomment -%}
+          <details-modal class="header__search header__search--mobile-only">
             <details>
               <summary class="header__icon header__icon--search header__icon--summary link focus-inset modal__toggle" aria-haspopup="dialog" aria-label="{{ 'general.search.search' | t }}">
                 <span>
@@ -796,14 +827,14 @@
       "id": "show_search_bar",
       "default": true,
       "label": "Show search bar",
-      "info": "Display a full search bar instead of just an icon"
+      "info": "Display a full search bar in the header center. When enabled, search icon only appears on mobile."
     },
     {
       "type": "checkbox",
       "id": "show_search_icon",
       "default": false,
-      "label": "Show search icon",
-      "info": "Display the search icon (opens modal when clicked)"
+      "label": "Show search icon only",
+      "info": "Display only a search icon (opens modal when clicked). Use this instead of the search bar for a minimal design."
     },
     {
       "type": "header",

@@ -1,0 +1,247 @@
+/* ========================================
+   HEADER SEARCH BAR STYLING
+   Customize your search bar appearance here
+   ======================================== */
+
+/* Main search container */
+.header__search-form {
+  width: 100%;
+  max-width: 400px;
+  position: relative;
+}
+
+.header__search-form__form {
+  position: relative;
+  width: 100%;
+}
+
+/* Search input field */
+.header__search-field {
+  position: relative;
+  margin: 0;
+}
+
+.header__search-input {
+  width: 100%;
+  padding: 0.8rem 4rem 0.8rem 1.5rem;
+  border: 1px solid rgba(var(--color-foreground), 0.2);
+  border-radius: 25px;
+  background: rgba(var(--color-background), 0.95);
+  font-size: 1.4rem;
+  line-height: 1.4;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Focus state */
+.header__search-input:focus {
+  border-color: rgb(var(--color-foreground));
+  box-shadow: 0 0 0 2px rgba(var(--color-foreground), 0.1), 
+              0 4px 8px rgba(0, 0, 0, 0.15);
+  outline: none;
+  transform: translateY(-1px);
+}
+
+/* Placeholder styling */
+.header__search-input::placeholder {
+  color: rgba(var(--color-foreground), 0.6);
+  font-style: italic;
+}
+
+/* Search button */
+.header__search-button {
+  position: absolute;
+  right: 0.5rem;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgb(var(--color-foreground));
+  border: none;
+  padding: 0.6rem;
+  cursor: pointer;
+  border-radius: 50%;
+  transition: all 0.3s ease;
+  z-index: 2;
+}
+
+.header__search-button:hover {
+  background: rgba(var(--color-foreground), 0.8);
+  transform: translateY(-50%) scale(1.1);
+}
+
+.header__search-button .icon {
+  width: 1.6rem;
+  height: 1.6rem;
+  color: rgb(var(--color-background));
+}
+
+/* Hide label */
+.header__search-field .field__label {
+  position: absolute;
+  left: -9999px;
+  opacity: 0;
+}
+
+/* Predictive search dropdown */
+.predictive-search--header {
+  position: absolute;
+  top: calc(100% + 0.5rem);
+  left: 0;
+  right: 0;
+  background: rgb(var(--color-background));
+  border: 1px solid rgba(var(--color-foreground), 0.2);
+  border-radius: 12px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+  z-index: 1000;
+  max-height: 400px;
+  overflow-y: auto;
+  opacity: 0;
+  transform: translateY(-10px);
+  transition: all 0.3s ease;
+}
+
+.predictive-search--header[data-predictive-search-visible] {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ========================================
+   SEARCH BAR VARIATIONS
+   Uncomment the style you prefer
+   ======================================== */
+
+/* Modern Flat Style */
+/*
+.header__search-input {
+  border-radius: 8px;
+  border: 2px solid rgba(var(--color-foreground), 0.1);
+  background: rgb(var(--color-background));
+  box-shadow: none;
+}
+
+.header__search-button {
+  border-radius: 6px;
+  background: rgba(var(--color-foreground), 0.1);
+}
+*/
+
+/* Minimal Underline Style */
+/*
+.header__search-input {
+  border: none;
+  border-bottom: 2px solid rgba(var(--color-foreground), 0.3);
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+  padding: 0.8rem 4rem 0.8rem 0.5rem;
+}
+
+.header__search-input:focus {
+  border-bottom-color: rgb(var(--color-foreground));
+  box-shadow: none;
+  transform: none;
+}
+*/
+
+/* Bold Rounded Style */
+/*
+.header__search-input {
+  border: 3px solid rgb(var(--color-foreground));
+  border-radius: 30px;
+  font-weight: 600;
+}
+
+.header__search-button {
+  background: rgb(var(--color-foreground));
+  border: 2px solid rgb(var(--color-foreground));
+}
+*/
+
+/* ========================================
+   RESPONSIVE DESIGN
+   ======================================== */
+
+/* Tablet adjustments */
+@media screen and (max-width: 1200px) {
+  .header__search-form {
+    max-width: 350px;
+  }
+}
+
+@media screen and (max-width: 990px) {
+  .header__search-form {
+    max-width: 300px;
+  }
+  
+  .header__search-input {
+    font-size: 1.5rem;
+    padding: 0.9rem 4rem 0.9rem 1.2rem;
+  }
+}
+
+/* Mobile adjustments */
+@media screen and (max-width: 749px) {
+  .header__search-form {
+    max-width: 100%;
+  }
+  
+  .header__search-input {
+    font-size: 1.6rem;
+    padding: 1rem 4.5rem 1rem 1.5rem;
+    border-radius: 20px;
+  }
+  
+  .header__search-button {
+    padding: 0.8rem;
+  }
+  
+  .header__search-button .icon {
+    width: 1.8rem;
+    height: 1.8rem;
+  }
+}
+
+/* ========================================
+   ANIMATION EFFECTS
+   ======================================== */
+
+/* Smooth entrance animation */
+@keyframes searchBarSlideIn {
+  from {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.header__search-form {
+  animation: searchBarSlideIn 0.5s ease-out;
+}
+
+/* Loading spinner for predictive search */
+.predictive-search__loading-state {
+  display: flex;
+  justify-content: center;
+  padding: 2rem;
+}
+
+/* Search suggestions styling */
+.predictive-search__results {
+  padding: 1rem 0;
+}
+
+.predictive-search__item {
+  padding: 0.8rem 1.5rem;
+  border-bottom: 1px solid rgba(var(--color-foreground), 0.1);
+  transition: background-color 0.2s ease;
+}
+
+.predictive-search__item:hover {
+  background: rgba(var(--color-foreground), 0.05);
+}
+
+.predictive-search__item:last-child {
+  border-bottom: none;
+}
