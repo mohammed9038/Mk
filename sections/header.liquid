@@ -4,6 +4,7 @@
 <link rel="stylesheet" href="{{ 'component-menu-drawer.css' | asset_url }}" media="print" onload="this.media='all'">
 <link rel="stylesheet" href="{{ 'component-cart-notification.css' | asset_url }}" media="print" onload="this.media='all'">
 <link rel="stylesheet" href="{{ 'component-cart-items.css' | asset_url }}" media="print" onload="this.media='all'">
+<link rel="stylesheet" href="{{ 'featured-collection-improvements.css' | asset_url }}" media="print" onload="this.media='all'">
 {%- if settings.predictive_search_enabled -%}
   <link rel="stylesheet" href="{{ 'component-price.css' | asset_url }}" media="print" onload="this.media='all'">
 {%- endif -%}
@@ -403,13 +404,20 @@
   /* Responsive width */
   @media screen and (max-width: 990px) {
     .header__search-form {
-      max-width: {{ section.settings.search_width | default: 400 | divided_by: 1.3 }}px;
+      max-width: {{ section.settings.search_width | default: 400 | divided_by: 1.2 }}px;
     }
   }
 
   @media screen and (max-width: 749px) {
     .header__search-form {
-      max-width: {{ section.settings.search_width | default: 400 | divided_by: 1.6 }}px;
+      max-width: {{ section.settings.search_width | default: 400 | divided_by: 1.4 }}px;
+    }
+  }
+
+  @media screen and (max-width: 480px) {
+    .header__search-form {
+      max-width: calc(100vw - 80px);
+      min-width: 200px;
     }
   }
 {%- endstyle -%}
@@ -1045,11 +1053,12 @@
       "type": "range",
       "id": "search_width",
       "min": 200,
-      "max": 600,
+      "max": 800,
       "step": 20,
       "unit": "px",
       "label": "📐 Search bar width",
-      "default": 400
+      "default": 400,
+      "info": "Set search bar width. Larger values work best on wide screens."
     },
     {
       "type": "header",
