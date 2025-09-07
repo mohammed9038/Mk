@@ -36,70 +36,11 @@
 
     {% render 'meta-tags' %}
 
-    {%- comment -%}
-    JavaScript Performance Optimization Strategy:
-    1. Critical JS loads immediately (blocking)
-    2. Component loader manages smart loading
-    3. Non-critical JS loads asynchronously
-    {%- endcomment -%}
-    
-    {%- comment -%} PHASE 4 ADVANCED JAVASCRIPT OPTIMIZATION {%- endcomment -%}
-    
-    {%- comment -%} Core Critical JavaScript (loads immediately) {%- endcomment -%}
-    {%- if 'theme-error-recovery.js' | asset_url -%}
-      <script src="{{ 'theme-error-recovery.js' | asset_url }}" defer></script>
-    {%- endif -%}
-    {%- if 'error-handler.js' | asset_url -%}
-      <script src="{{ 'error-handler.js' | asset_url }}" defer></script>
-    {%- endif -%}
-    {%- if 'core-critical.js' | asset_url -%}
-      <script src="{{ 'core-critical.js' | asset_url }}" defer></script>
-    {%- endif -%}
-    {%- if 'global-optimized.js' | asset_url -%}
-      <script src="{{ 'global-optimized.js' | asset_url }}" defer></script>
-    {%- endif -%}
-    
-    {%- comment -%} Search functionality enhancement {%- endcomment -%}
-    {%- if 'advanced-search-controller.js' | asset_url -%}
-      <script src="{{ 'advanced-search-controller.js' | asset_url }}" defer></script>
-    {%- endif -%}
-    
-    {%- comment -%} Product card enhancements for all pages {%- endcomment -%}
-    {%- if 'shopify-image-handler.js' | asset_url -%}
-      <script src="{{ 'shopify-image-handler.js' | asset_url }}" defer></script>
-    {%- endif -%}
-    
-    {%- comment -%} Advanced Performance System {%- endcomment -%}
-    {%- if 'performance-utils.js' | asset_url -%}
-      <script src="{{ 'performance-utils.js' | asset_url }}" defer></script>
-    {%- endif -%}
-    {%- if 'component-loader-advanced.js' | asset_url -%}
-      <script src="{{ 'component-loader-advanced.js' | asset_url }}" defer></script>
-    {%- endif -%}
-    {%- if 'slider-components.js' | asset_url -%}
-      <script src="{{ 'slider-components.js' | asset_url }}" defer></script>
-    {%- endif -%}
-    
-    {%- comment -%} Template-specific optimizations {%- endcomment -%}
-    {%- if template contains 'product' -%}
-      <link rel="preload" href="{{ 'product-components.js' | asset_url }}" as="script">
-      <link rel="preload" href="{{ 'quick-order-optimized.js' | asset_url }}" as="script">
-    {%- endif -%}
-    
-    {%- if template contains 'collection' or template contains 'search' -%}
-      <link rel="preload" href="{{ 'facets-optimized.js' | asset_url }}" as="script">
-      <link rel="preload" href="{{ 'search-optimized.js' | asset_url }}" as="script">
-    {%- endif -%}
-    
-    {%- if template contains 'cart' -%}
-      <link rel="preload" href="{{ 'cart-optimized.js' | asset_url }}" as="script">
-    {%- endif -%}
-    
-    {%- unless template == 'index' -%}
-      <link rel="preload" href="{{ 'menu-components.js' | asset_url }}" as="script">
-    {%- endunless -%}    {%- comment -%} Conditional feature loading {%- endcomment -%}
+    <script src="{{ 'constants.js' | asset_url }}" defer="defer"></script>
+    <script src="{{ 'pubsub.js' | asset_url }}" defer="defer"></script>
+    <script src="{{ 'global.js' | asset_url }}" defer="defer"></script>
     {%- if settings.animations_reveal_on_scroll -%}
-      <script src="{{ 'animations.js' | asset_url }}" defer></script>
+      <script src="{{ 'animations.js' | asset_url }}" defer="defer"></script>
     {%- endif -%}
 
     {{ content_for_header }}
@@ -117,94 +58,48 @@
       {{ body_font_bold_italic | font_face: font_display: 'swap' }}
       {{ settings.type_header_font | font_face: font_display: 'swap' }}
 
-      {% comment %} Define color schemes directly since settings.color_schemes is not available {% endcomment %}
-      :root,
-      .color-scheme-1 {
-        --color-background: 252,252,252;
-        --gradient-background: #fcfcfc;
-        --color-foreground: 16,57,72;
-        --color-background-contrast: 235,235,235;
-        --color-shadow: 16,57,72;
-        --color-button: 16,57,72;
-        --color-button-text: 252,252,252;
-        --color-secondary-button: 252,252,252;
-        --color-secondary-button-text: 5,44,70;
-        --color-link: 5,44,70;
-        --color-badge-foreground: 16,57,72;
-        --color-badge-background: 252,252,252;
-        --color-badge-border: 16,57,72;
-        --payment-terms-background-color: rgb(252,252,252);
-      }
+      {% assign scheme_classes = '' %}
+      {% for scheme in settings.color_schemes -%}
+        {% assign scheme_classes = scheme_classes | append: ', .color-' | append: scheme.id %}
+        {% if forloop.index == 1 -%}
+          :root,
+        {%- endif %}
+        .color-{{ scheme.id }} {
+          --color-background: {{ scheme.settings.background.red }},{{ scheme.settings.background.green }},{{ scheme.settings.background.blue }};
+        {% if scheme.settings.background_gradient != empty %}
+          --gradient-background: {{ scheme.settings.background_gradient }};
+        {% else %}
+          --gradient-background: {{ scheme.settings.background }};
+        {% endif %}
 
-      .color-scheme-2 {
-        --color-background: 235,236,237;
-        --gradient-background: #ebeced;
-        --color-foreground: 16,57,72;
-        --color-background-contrast: 210,211,212;
-        --color-shadow: 16,57,72;
-        --color-button: 16,57,72;
-        --color-button-text: 235,236,237;
-        --color-secondary-button: 235,236,237;
-        --color-secondary-button-text: 16,57,72;
-        --color-link: 16,57,72;
-        --color-badge-foreground: 16,57,72;
-        --color-badge-background: 235,236,237;
-        --color-badge-border: 16,57,72;
-        --payment-terms-background-color: rgb(235,236,237);
-      }
+        {% liquid
+          assign background_color = scheme.settings.background
+          assign background_color_brightness = background_color | color_brightness
+          if background_color_brightness <= 26
+            assign background_color_contrast = background_color | color_lighten: 50
+          elsif background_color_brightness <= 65
+            assign background_color_contrast = background_color | color_lighten: 5
+          else
+            assign background_color_contrast = background_color | color_darken: 25
+          endif
+        %}
 
-      .color-scheme-3 {
-        --color-background: 16,57,72;
-        --gradient-background: #103948;
-        --color-foreground: 235,236,237;
-        --color-background-contrast: 41,82,97;
-        --color-shadow: 235,236,237;
-        --color-button: 252,252,252;
-        --color-button-text: 16,57,72;
-        --color-secondary-button: 16,57,72;
-        --color-secondary-button-text: 235,236,237;
-        --color-link: 235,236,237;
-        --color-badge-foreground: 235,236,237;
-        --color-badge-background: 16,57,72;
-        --color-badge-border: 235,236,237;
-        --payment-terms-background-color: rgb(16,57,72);
+        --color-foreground: {{ scheme.settings.text.red }},{{ scheme.settings.text.green }},{{ scheme.settings.text.blue }};
+        --color-background-contrast: {{ background_color_contrast.red }},{{ background_color_contrast.green }},{{ background_color_contrast.blue }};
+        --color-shadow: {{ scheme.settings.shadow.red }},{{ scheme.settings.shadow.green }},{{ scheme.settings.shadow.blue }};
+        --color-button: {{ scheme.settings.button.red }},{{ scheme.settings.button.green }},{{ scheme.settings.button.blue }};
+        --color-button-text: {{ scheme.settings.button_label.red }},{{ scheme.settings.button_label.green }},{{ scheme.settings.button_label.blue }};
+        --color-secondary-button: {{ scheme.settings.background.red }},{{ scheme.settings.background.green }},{{ scheme.settings.background.blue }};
+        --color-secondary-button-text: {{ scheme.settings.secondary_button_label.red }},{{ scheme.settings.secondary_button_label.green }},{{ scheme.settings.secondary_button_label.blue }};
+        --color-link: {{ scheme.settings.secondary_button_label.red }},{{ scheme.settings.secondary_button_label.green }},{{ scheme.settings.secondary_button_label.blue }};
+        --color-badge-foreground: {{ scheme.settings.text.red }},{{ scheme.settings.text.green }},{{ scheme.settings.text.blue }};
+        --color-badge-background: {{ scheme.settings.background.red }},{{ scheme.settings.background.green }},{{ scheme.settings.background.blue }};
+        --color-badge-border: {{ scheme.settings.text.red }},{{ scheme.settings.text.green }},{{ scheme.settings.text.blue }};
+        --payment-terms-background-color: rgb({{ scheme.settings.background.rgb }});
       }
+      {% endfor %}
 
-      .color-scheme-4 {
-        --color-background: 16,57,72;
-        --gradient-background: #103948;
-        --color-foreground: 252,252,252;
-        --color-background-contrast: 41,82,97;
-        --color-shadow: 252,252,252;
-        --color-button: 252,252,252;
-        --color-button-text: 16,57,72;
-        --color-secondary-button: 16,57,72;
-        --color-secondary-button-text: 252,252,252;
-        --color-link: 252,252,252;
-        --color-badge-foreground: 252,252,252;
-        --color-badge-background: 16,57,72;
-        --color-badge-border: 252,252,252;
-        --payment-terms-background-color: rgb(16,57,72);
-      }
-
-      .color-scheme-5 {
-        --color-background: 252,252,252;
-        --gradient-background: #fcfcfc;
-        --color-foreground: 16,57,72;
-        --color-background-contrast: 235,235,235;
-        --color-shadow: 16,57,72;
-        --color-button: 235,236,237;
-        --color-button-text: 16,57,72;
-        --color-secondary-button: 252,252,252;
-        --color-secondary-button-text: 16,57,72;
-        --color-link: 16,57,72;
-        --color-badge-foreground: 16,57,72;
-        --color-badge-background: 252,252,252;
-        --color-badge-border: 16,57,72;
-        --payment-terms-background-color: rgb(252,252,252);
-      }
-
-      body {
+      {{ scheme_classes | prepend: 'body' }} {
         color: rgba(var(--color-foreground), 0.75);
         background-color: rgb(var(--color-background));
       }
@@ -365,41 +260,7 @@
       }
     {% endstyle %}
 
-    {%- comment -%}
-    Performance Optimization: Modular CSS Loading Strategy
-    Critical CSS loads first, then progressive enhancement
-    {%- endcomment -%}
-    
-    {%- comment -%} Critical styles - Load immediately {%- endcomment -%}
-    {{ 'base-critical.css' | asset_url | stylesheet_tag: preload: true }}
-    {{ 'base-core.css' | asset_url | stylesheet_tag: preload: true }}
-    
-    {%- comment -%} Essential variables - Load with high priority {%- endcomment -%}
-    {{ 'base-variables.css' | asset_url | stylesheet_tag: preload: true }}
-    
-    {%- comment -%} Component styles - Load asynchronously for better performance {%- endcomment -%}
-    <link rel="stylesheet" href="{{ 'component-grid-optimized.css' | asset_url }}" media="print" onload="this.media='all'">
-    <link rel="stylesheet" href="{{ 'component-button-optimized.css' | asset_url }}" media="print" onload="this.media='all'">
-    <link rel="stylesheet" href="{{ 'component-form-optimized.css' | asset_url }}" media="print" onload="this.media='all'">
-    <link rel="stylesheet" href="{{ 'product-card-enhancements.css' | asset_url }}" media="print" onload="this.media='all'">
-    <link rel="stylesheet" href="{{ 'base-media-queries.css' | asset_url }}" media="print" onload="this.media='all'">
-    <link rel="stylesheet" href="{{ 'error-fixes.css' | asset_url }}" media="print" onload="this.media='all'">
-    
-    {%- comment -%} Legacy base.css - Load last for backward compatibility {%- endcomment -%}
-    <link rel="stylesheet" href="{{ 'base.css' | asset_url }}" media="print" onload="this.media='all'">
-    
-    {%- comment -%} Fallback for users with JavaScript disabled {%- endcomment -%}
-    <noscript>
-      {{ 'component-grid-optimized.css' | asset_url | stylesheet_tag }}
-      {{ 'component-button-optimized.css' | asset_url | stylesheet_tag }}
-      {{ 'component-form-optimized.css' | asset_url | stylesheet_tag }}
-      {{ 'product-card-enhancements.css' | asset_url | stylesheet_tag }}
-      {%- if 'product-image-enhancements.css' | asset_url -%}
-        {{ 'product-image-enhancements.css' | asset_url | stylesheet_tag }}
-      {%- endif -%}
-      {{ 'base-media-queries.css' | asset_url | stylesheet_tag }}
-      {{ 'base.css' | asset_url | stylesheet_tag }}
-    </noscript>
+    {{ 'base.css' | asset_url | stylesheet_tag }}
 
     {%- unless settings.type_body_font.system? -%}
       <link rel="preload" as="font" href="{{ settings.type_body_font | font_url }}" type="font/woff2" crossorigin>
@@ -428,7 +289,7 @@
         document.documentElement.classList.add('shopify-design-mode');
       }
     </script>
- <script type="text/javascript" src="https://firebasestorage.googleapis.com/v0/b/vajro/o/app_install_popup_href_v2.js?alt=media" defer></script> 
+ <script type="text/javascript" src="https://firebasestorage.googleapis.com/v0/b/vajro/o/app_install_popup_href_v2.js?alt=media"></script> 
 <script> 
     VJR_BANNER.init({ 
         "title": "Al Shariqah", // Title of the app 
@@ -512,16 +373,5 @@
     {%- if settings.predictive_search_enabled -%}
       <script src="{{ 'predictive-search.js' | asset_url }}" defer="defer"></script>
     {%- endif -%}
-    
-    <!-- Modern Shopify Image Fix following best practices -->
-        <!-- Shopify Image Loading Fixes -->
-    <script src="{{ 'shopify-image-fix.js' | asset_url }}" defer></script>
-    <script src="{{ 'brand-image-fix.js' | asset_url }}" defer></script>
-    <script src="{{ 'image-diagnostic.js' | asset_url }}" defer></script>
-    
-    {% comment %} Development and debugging tools {% endcomment %}
-    {% if request.design_mode %}
-      <script src="{{ 'collection-validator.js' | asset_url }}" defer></script>
-    {% endif %}
   </body>
 </html>
