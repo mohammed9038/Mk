@@ -10,6 +10,22 @@
   border-top: 1px solid rgba(var(--color-border), 0.2);
   padding: 8px 0 max(8px, env(safe-area-inset-bottom));
   display: none; /* Hidden by default, shown only on mobile */
+  box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Mobile Navigation Styling Variables - Customize these for different styles */
+.mobile-nav {
+  /* Background options - uncomment one of these: */
+  /* background: rgb(var(--color-background)); */ /* White background */
+  /* background: rgb(var(--color-foreground)); */ /* Dark background */
+  /* background: linear-gradient(135deg, rgb(var(--color-button)), rgb(var(--color-button-text))); */ /* Gradient */
+  
+  /* Border options */
+  /* border-top: 2px solid rgb(var(--color-button)); */ /* Colored border */
+  /* border-radius: 20px 20px 0 0; */ /* Rounded top corners */
+  
+  /* Height adjustment */
+  /* min-height: 70px; */ /* Taller navigation */
 }
 
 .mobile-nav__list {
@@ -107,6 +123,11 @@
     display: block;
   }
   
+  /* Hide header cart on mobile when mobile nav is present */
+  .header__cart--desktop {
+    display: none !important;
+  }
+  
   /* Add bottom padding to body to prevent content being hidden behind nav */
   body {
     padding-bottom: 80px;
@@ -122,6 +143,50 @@
   body {
     padding-bottom: 0;
   }
+  
+  /* Show header cart on desktop */
+  .header__cart--desktop {
+    display: flex !important;
+  }
+}
+
+/* Height variations */
+.mobile-nav--compact {
+  padding: 4px 0 max(4px, env(safe-area-inset-bottom));
+}
+
+.mobile-nav--compact .mobile-nav__link {
+  min-height: 40px;
+  padding: 4px 2px;
+}
+
+.mobile-nav--compact .mobile-nav__icon {
+  width: 20px;
+  height: 20px;
+  margin-bottom: 2px;
+}
+
+.mobile-nav--compact .mobile-nav__text {
+  font-size: 0.9rem;
+}
+
+.mobile-nav--tall {
+  padding: 12px 0 max(12px, env(safe-area-inset-bottom));
+}
+
+.mobile-nav--tall .mobile-nav__link {
+  min-height: 60px;
+  padding: 12px 8px;
+}
+
+.mobile-nav--tall .mobile-nav__icon {
+  width: 28px;
+  height: 28px;
+  margin-bottom: 6px;
+}
+
+.mobile-nav--tall .mobile-nav__text {
+  font-size: 1.1rem;
 }
 
 /* Search overlay for mobile */
@@ -199,6 +264,68 @@
     opacity: 1;
   }
 }
+
+/* ===== MOBILE NAVIGATION STYLE THEMES ===== */
+/* Uncomment one of these sections for different themes */
+
+/* Theme 1: iOS Style (default) */
+/*
+.mobile-nav {
+  background: rgba(255, 255, 255, 0.9) !important;
+  backdrop-filter: blur(20px);
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+}
+.mobile-nav__link {
+  color: #007AFF !important;
+}
+*/
+
+/* Theme 2: Android Material Design */
+/*
+.mobile-nav {
+  background: #FFFFFF !important;
+  border-top: none;
+  box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.15);
+  border-radius: 0;
+}
+.mobile-nav__link {
+  color: #6200EA !important;
+}
+.mobile-nav__link.active {
+  color: #6200EA !important;
+  background: rgba(98, 0, 234, 0.1);
+  border-radius: 12px;
+}
+*/
+
+/* Theme 3: Dark Mode */
+/*
+.mobile-nav {
+  background: #1A1A1A !important;
+  border-top: 1px solid #333;
+}
+.mobile-nav__link {
+  color: #FFFFFF !important;
+}
+.mobile-nav__link.active {
+  color: #00D4AA !important;
+}
+*/
+
+/* Theme 4: Colorful Gradient */
+/*
+.mobile-nav {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+  border-top: none;
+}
+.mobile-nav__link {
+  color: #FFFFFF !important;
+}
+.mobile-nav__badge {
+  background: #FF6B6B !important;
+  color: #FFFFFF !important;
+}
+*/
 
 /* Active page indicator */
 .mobile-nav__link.active::before {

@@ -1,9 +1,20 @@
 {% comment %}
   Mobile Bottom Navigation
   Renders a fixed bottom navigation for mobile devices with Home, Cart, Search, and Account links
+  
+  CUSTOMIZATION OPTIONS:
+  You can customize the styling by uncommenting different theme sections in component-mobile-navigation.css
+  Available themes: iOS Style, Android Material, Dark Mode, Colorful Gradient
 {% endcomment %}
 
-<nav class="mobile-nav" role="navigation" aria-label="{{ 'general.navigation.mobile_menu' | t }}">
+{% comment %} Mobile Navigation Settings {% endcomment %}
+{% assign mobile_nav_style = 'default' %} <!-- Options: default, ios, android, dark, gradient -->
+{% assign show_text_labels = true %} <!-- Set to false to hide text labels -->
+{% assign navigation_height = 'normal' %} <!-- Options: compact, normal, tall -->
+
+<nav class="mobile-nav mobile-nav--{{ mobile_nav_style }} mobile-nav--{{ navigation_height }}" 
+     role="navigation" 
+     aria-label="{{ 'general.navigation.mobile_menu' | t }}">
   <ul class="mobile-nav__list">
     <!-- Home -->
     <li class="mobile-nav__item">
@@ -14,7 +25,9 @@
         <div class="mobile-nav__icon">
           {% render 'icon-home' %}
         </div>
-        <span class="mobile-nav__text">{{ 'general.navigation.home' | t | default: 'Home' }}</span>
+        {% if show_text_labels %}
+          <span class="mobile-nav__text">{{ 'general.navigation.home' | t | default: 'Home' }}</span>
+        {% endif %}
       </a>
     </li>
 
@@ -27,7 +40,9 @@
         <div class="mobile-nav__icon">
           {% render 'icon-search' %}
         </div>
-        <span class="mobile-nav__text">{{ 'general.search.search' | t | default: 'Search' }}</span>
+        {% if show_text_labels %}
+          <span class="mobile-nav__text">{{ 'general.search.search' | t | default: 'Search' }}</span>
+        {% endif %}
       </a>
     </li>
 
@@ -49,7 +64,9 @@
         {% else %}
           <span class="mobile-nav__badge" aria-hidden="true"></span>
         {% endif %}
-        <span class="mobile-nav__text">{{ 'sections.cart.title' | t | default: 'Cart' }}</span>
+        {% if show_text_labels %}
+          <span class="mobile-nav__text">{{ 'sections.cart.title' | t | default: 'Cart' }}</span>
+        {% endif %}
       </a>
     </li>
 
@@ -62,13 +79,15 @@
         <div class="mobile-nav__icon">
           {% render 'icon-account' %}
         </div>
-        <span class="mobile-nav__text">
-          {% if customer %}
-            {{ 'customer.account.title' | t | default: 'Account' }}
-          {% else %}
-            {{ 'customer.log_in' | t | default: 'Login' }}
-          {% endif %}
-        </span>
+        {% if show_text_labels %}
+          <span class="mobile-nav__text">
+            {% if customer %}
+              {{ 'customer.account.title' | t | default: 'Account' }}
+            {% else %}
+              {{ 'customer.log_in' | t | default: 'Login' }}
+            {% endif %}
+          </span>
+        {% endif %}
       </a>
     </li>
   </ul>
