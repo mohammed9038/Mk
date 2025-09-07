@@ -129,7 +129,8 @@
     align-items: center;
     position: relative;
     width: 100%;
-    max-width: 400px;
+    max-width: {{ section.settings.search_bar_width | default: 400 }}px;
+    min-width: 250px;
   }
 
   .header__search-bar--left {
@@ -141,9 +142,11 @@
   .header__search-bar--center {
     grid-area: search-center;
     justify-self: center;
-    margin: 0 2rem;
+    margin: 0 auto;
     display: flex;
     justify-content: center;
+    width: 100%;
+    max-width: {{ section.settings.search_bar_width | default: 500 }}px;
   }
 
   .header__search-bar--right {
@@ -157,21 +160,33 @@
     .header__search-bar {
       display: none;
     }
-  }
-
-  /* Hide search icon when search bar is shown */
-  .header--has-search-left .header__search,
-  .header--has-search-center .header__search,
-  .header--has-search-right .header__search {
-    display: none;
-  }
-
-  /* Show search icon on mobile when search bar is hidden */
-  @media screen and (max-width: 749px) {
+    
+    /* Show search icon on mobile instead */
     .header--has-search-left .header__search,
     .header--has-search-center .header__search,
     .header--has-search-right .header__search {
-      display: block;
+      display: block !important;
+    }
+    
+    /* Simplify mobile grid */
+    .header--has-search-left,
+    .header--has-search-center,
+    .header--has-search-right {
+      grid-template-areas: "heading icons" !important;
+      grid-template-columns: 1fr auto !important;
+    }
+  }
+
+  /* Tablet adjustments */
+  @media screen and (max-width: 989px) and (min-width: 750px) {
+    .header__search-bar--center {
+      max-width: 350px;
+      margin: 0 1rem;
+    }
+    
+    .header__search-bar .header__search-input {
+      font-size: 13px;
+      padding: 10px 15px;
     }
   }
 
@@ -199,12 +214,13 @@
     padding: {{ section.settings.search_bar_padding | default: 12 }}px {{ section.settings.search_button_padding | default: 8 | times: 2 | plus: section.settings.search_icon_size | default: 16 | plus: 12 }}px {{ section.settings.search_bar_padding | default: 12 }}px {{ section.settings.search_bar_padding | default: 12 | times: 1.5 }}px;
     border: {{ section.settings.search_bar_border_width | default: 1 }}px solid {% if section.settings.search_bar_border_color == 'accent' %}rgb(var(--color-button)){% else %}rgba(var(--color-foreground), 0.2){% endif %};
     border-radius: {{ section.settings.search_bar_border_radius | default: 25 }}px;
-    background: {% if section.settings.search_bar_background == 'transparent' %}transparent{% elsif section.settings.search_bar_background == 'accent' %}rgba(var(--color-button), 0.1){% else %}rgba(var(--color-base-background-1), 0.95){% endif %};
+    background: {% if section.settings.search_bar_background == 'transparent' %}transparent{% elsif section.settings.search_bar_background == 'accent' %}rgba(var(--color-button), 0.1){% elsif section.settings.search_bar_background == 'white' %}rgba(255, 255, 255, 0.95){% elsif section.settings.search_bar_background == 'dark' %}rgba(0, 0, 0, 0.1){% else %}rgba(var(--color-base-background-1), 0.95){% endif %};
     font-size: {{ section.settings.search_bar_font_size | default: 14 }}px;
     color: rgb(var(--color-foreground));
     transition: all var(--duration-short) ease;
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
+    box-shadow: {% if section.settings.search_bar_background == 'white' %}0 2px 10px rgba(0, 0, 0, 0.1){% else %}none{% endif %};
   }
 
   .header__search-bar .header__search-input:focus {
@@ -271,6 +287,15 @@
     border: 0;
   }
 
+  /* Hide search icon when search bar is shown on desktop */
+  @media screen and (min-width: 750px) {
+    .header--has-search-left .header__search,
+    .header--has-search-center .header__search,
+    .header--has-search-right .header__search {
+      display: none;
+    }
+  }
+
   /* Header Grid Layout Updates for Search Bar */
   .header--has-search-left {
     grid-template-areas: "search-left heading navigation icons";
@@ -280,6 +305,14 @@
   .header--has-search-center {
     grid-template-areas: "heading navigation search-center icons";
     grid-template-columns: auto auto 1fr auto;
+    align-items: center;
+  }
+
+  .header--has-search-center .header__search-bar--center {
+    justify-self: center;
+    width: 100%;
+    max-width: {{ section.settings.search_bar_width | default: 500 }}px;
+    margin: 0 1rem;
   }
 
   .header--has-search-right {
@@ -1092,12 +1125,12 @@
     {
       "type": "range",
       "id": "search_bar_width",
-      "min": 200,
-      "max": 500,
+      "min": 250,
+      "max": 700,
       "step": 10,
       "unit": "px",
       "label": "Search Bar Width",
-      "default": 300
+      "default": 500
     },
     {
       "type": "select",
@@ -1110,6 +1143,14 @@
         {
           "value": "transparent",
           "label": "Transparent"
+        },
+        {
+          "value": "white",
+          "label": "White"
+        },
+        {
+          "value": "dark",
+          "label": "Dark"
         },
         {
           "value": "accent",
