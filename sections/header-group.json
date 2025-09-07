@@ -31,7 +31,7 @@
       ],
       "name": "Header",
       "settings": {
-        "logo_position": "middle-left",
+        "logo_position": "top-left",
         "menu": "new-manu",
         "menu_type_desktop": "mega",
         "sticky_header_type": "on-scroll-up",
@@ -47,7 +47,7 @@
         "search_background": "#fcfcfc",
         "search_border": "#e0e0e0",
         "search_text": "#333333",
-        "search_width": 400,
+        "search_width": 600,
         "show_top_menu": true,
         "mobile_logo_position": "center",
         "margin_bottom": 0,

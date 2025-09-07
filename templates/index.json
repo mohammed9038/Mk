@@ -1,1 +1,642 @@
-{"sections":{"175699773976acf0ef":{"type":"_blocks","blocks":{"ai_gen_block_3b08850_4FPBDT":{"type":"ai_gen_block_3b08850","settings":{"header_text":"Our Brands","header_alignment":"center","header_font_size":16,"header_font_weight":"600","header_height":40,"header_padding_top":0,"header_padding_bottom":0,"header_padding_horizontal":0,"header_text_color":"#103948","header_background_color":"#ffffff","brand_list":["acer","anker","apple","belkin","green-lion","hoco","honor","hp","infinix","jbl","lenovo","mi","microsoft","porodo","samsung","wiwu"],"scroll_speed":30,"pause_on_hover":true,"bar_height":100,"bar_padding_top":0,"bar_padding_bottom":10,"brand_image_height":150,"brand_max_width":140,"brand_spacing":15,"brand_opacity":100,"brand_filter":"none","text_size":8,"background_color":"#fcfcfc","border_thickness":0,"border_color":"#fcfcfc"},"blocks":{}}},"block_order":["ai_gen_block_3b08850_4FPBDT"],"settings":{}},"slideshow_yUVXcA":{"type":"slideshow","blocks":{"slide_JycLa3":{"type":"slide","settings":{"image":"shopify:\/\/shop_images\/Iraq-Baghdad-Al_Shareqa_New_-11_c32b55df-2cba-480b-8802-9b3e2700437a.png","heading":"","heading_size":"h1","subheading":"","button_label":"","link":"","button_style_secondary":false,"box_align":"middle-center","show_text_box":false,"text_alignment":"center","image_overlay_opacity":0,"color_scheme":"scheme-3","text_alignment_mobile":"center"}},"slide_3E6rJK":{"type":"slide","settings":{"image":"shopify:\/\/shop_images\/Iraq-Baghdad-Al_Shareqa_New_-_2_2d8847c2-d0a4-4703-95e7-d3f4bd9054e0.png","heading":"","heading_size":"h2","subheading":"","button_label":"","link":"","button_style_secondary":false,"box_align":"middle-center","show_text_box":false,"text_alignment":"center","image_overlay_opacity":0,"color_scheme":"scheme-3","text_alignment_mobile":"center"}},"slide_WwAhxm":{"type":"slide","settings":{"image":"shopify:\/\/shop_images\/Iraq-Baghdad-Al_Shareqa_New_-_3.png","heading":"","heading_size":"h1","subheading":"","button_label":"","link":"","button_style_secondary":false,"box_align":"middle-center","show_text_box":false,"text_alignment":"center","image_overlay_opacity":0,"color_scheme":"scheme-3","text_alignment_mobile":"center"}}},"block_order":["slide_JycLa3","slide_3E6rJK","slide_WwAhxm"],"settings":{"layout":"full_bleed","slide_height":"adapt_image","slider_visual":"dots","auto_rotate":true,"change_slides_speed":5,"image_behavior":"none","show_text_below":false,"accessibility_info":"Slideshow about our brand"}},"collection_list_CWdVFy":{"type":"collection-list","blocks":{"featured_collection_EdGQtQ":{"type":"featured_collection","settings":{"collection":"accessories"}},"featured_collection_fme6Un":{"type":"featured_collection","settings":{"collection":"cables"}},"featured_collection_j8npnV":{"type":"featured_collection","settings":{"collection":"car-accessories"}},"featured_collection_7pzkLp":{"type":"featured_collection","settings":{"collection":"cases-covers"}},"featured_collection_6bfUWX":{"type":"featured_collection","settings":{"collection":"chargers"}}},"block_order":["featured_collection_EdGQtQ","featured_collection_fme6Un","featured_collection_j8npnV","featured_collection_7pzkLp","featured_collection_6bfUWX"],"settings":{"title":"Collections","heading_size":"h2","image_ratio":"square","columns_desktop":5,"color_scheme":"scheme-3","show_view_all":true,"columns_mobile":"2","swipe_on_mobile":true,"padding_top":0,"padding_bottom":0}},"featured_collection_nTyPeK":{"type":"featured-collection","settings":{"title":"Phones","heading_size":"h2","description":"","show_description":false,"description_style":"body","collection":"phones","products_to_show":4,"columns_desktop":4,"full_width":false,"show_view_all":true,"view_all_style":"solid","enable_desktop_slider":false,"color_scheme":"","image_ratio":"square","image_shape":"default","show_secondary_image":true,"show_vendor":false,"show_rating":false,"enable_quick_add":true,"columns_mobile":"2","swipe_on_mobile":false,"padding_top":36,"padding_bottom":36}},"featured_collection_FiQQNw":{"type":"featured-collection","disabled":true,"settings":{"title":"Offers","heading_size":"h2","description":"","show_description":false,"description_style":"body","collection":"offer","products_to_show":4,"columns_desktop":4,"full_width":false,"show_view_all":true,"view_all_style":"solid","enable_desktop_slider":false,"color_scheme":"","image_ratio":"square","image_shape":"default","show_secondary_image":true,"show_vendor":false,"show_rating":false,"enable_quick_add":true,"columns_mobile":"2","swipe_on_mobile":false,"padding_top":36,"padding_bottom":36}},"image_banner_cA9Y94":{"type":"image-banner","disabled":true,"settings":{"image":"shopify:\/\/shop_images\/Iraq-Baghdad-Al_Shareqa_-1678677.png","image_overlay_opacity":0,"image_height":"medium","desktop_content_position":"middle-center","show_text_box":true,"desktop_content_alignment":"center","color_scheme":"","image_behavior":"zoom-in","mobile_content_alignment":"center","stack_images_on_mobile":true,"show_text_below":true}},"slideshow_nfydnD":{"type":"slideshow","blocks":{"slide_Bfh4dt":{"type":"slide","settings":{"image":"shopify:\/\/shop_images\/post46n.png","heading":"","heading_size":"h2","subheading":"","button_label":"منتجات شاومي","link":"shopify:\/\/collections\/mi","button_style_secondary":true,"box_align":"bottom-left","show_text_box":false,"text_alignment":"left","image_overlay_opacity":0,"color_scheme":"scheme-3","text_alignment_mobile":"center"}},"slide_mYtx6h":{"type":"slide","settings":{"image":"shopify:\/\/shop_images\/post56_1.png","heading":"","heading_size":"h1","subheading":"","button_label":"","link":"","button_style_secondary":false,"box_align":"middle-center","show_text_box":false,"text_alignment":"center","image_overlay_opacity":0,"color_scheme":"scheme-1","text_alignment_mobile":"center"}}},"block_order":["slide_Bfh4dt","slide_mYtx6h"],"settings":{"layout":"full_bleed","slide_height":"medium","slider_visual":"dots","auto_rotate":false,"change_slides_speed":5,"image_behavior":"none","show_text_below":true,"accessibility_info":""}},"slideshow_wH7cEh":{"type":"slideshow","settings":{"layout":"full_bleed","slide_height":"medium","slider_visual":"counter","auto_rotate":false,"change_slides_speed":5,"image_behavior":"none","show_text_below":true,"accessibility_info":"Slideshow about our brand"}},"featured_collection_WAgNhD":{"type":"featured-collection","settings":{"title":"","heading_size":"h2","description":"","show_description":false,"description_style":"body","collection":"mi","products_to_show":3,"columns_desktop":3,"full_width":false,"show_view_all":true,"view_all_style":"solid","enable_desktop_slider":false,"color_scheme":"","image_ratio":"square","image_shape":"default","show_secondary_image":false,"show_vendor":false,"show_rating":false,"enable_quick_add":false,"columns_mobile":"2","swipe_on_mobile":false,"padding_top":36,"padding_bottom":36}},"featured_product_ND98V9":{"type":"featured-product","blocks":{"text_KEJth8":{"type":"text","settings":{"text":"{{ section.settings.product.vendor }}","text_style":"uppercase"}},"title_CMYbz4":{"type":"title","settings":{"heading_size":"h1"}},"price_TJi3Gn":{"type":"price","settings":{}},"variant_picker_R3nc4n":{"type":"variant_picker","settings":{"picker_type":"button","swatch_shape":"circle"}},"quantity_selector_RCCEFd":{"type":"quantity_selector","settings":{}},"buy_buttons_VGkcQd":{"type":"buy_buttons","settings":{"show_dynamic_checkout":true,"show_gift_card_recipient":true}},"share_VE7UgT":{"type":"share","settings":{"share_label":"Share"}}},"block_order":["text_KEJth8","title_CMYbz4","price_TJi3Gn","variant_picker_R3nc4n","quantity_selector_RCCEFd","buy_buttons_VGkcQd","share_VE7UgT"],"settings":{"product":"iphone-16-pro-max-256gb-1sim","color_scheme":"","secondary_background":false,"media_size":"medium","constrain_to_viewport":true,"media_fit":"contain","media_position":"left","image_zoom":"lightbox","hide_variants":false,"enable_video_looping":false,"padding_top":36,"padding_bottom":36}},"featured_collection_FgDApg":{"type":"featured-collection","settings":{"title":"Featured collection","heading_size":"h1","description":"","show_description":false,"description_style":"body","collection":"samsung","products_to_show":9,"columns_desktop":3,"full_width":false,"show_view_all":true,"view_all_style":"solid","enable_desktop_slider":false,"color_scheme":"","image_ratio":"adapt","image_shape":"default","show_secondary_image":false,"show_vendor":false,"show_rating":false,"enable_quick_add":true,"columns_mobile":"2","swipe_on_mobile":false,"padding_top":36,"padding_bottom":36}},"slideshow_aiJkgK":{"type":"slideshow","blocks":{"slide_Kdmgfq":{"type":"slide","settings":{"image":"shopify:\/\/shop_images\/Iraq-Baghdad-Al_Shareqa_New_-_4.png","heading":"","heading_size":"h1","subheading":"","button_label":"","link":"","button_style_secondary":false,"box_align":"middle-center","show_text_box":false,"text_alignment":"center","image_overlay_opacity":0,"color_scheme":"","text_alignment_mobile":"center"}},"slide_THLJU9":{"type":"slide","settings":{"image":"shopify:\/\/shop_images\/post48_1.png","heading":"","heading_size":"h1","subheading":"","button_label":"","link":"","button_style_secondary":false,"box_align":"middle-center","show_text_box":false,"text_alignment":"center","image_overlay_opacity":0,"color_scheme":"scheme-1","text_alignment_mobile":"center"}}},"block_order":["slide_Kdmgfq","slide_THLJU9"],"settings":{"layout":"full_bleed","slide_height":"adapt_image","slider_visual":"counter","auto_rotate":false,"change_slides_speed":5,"image_behavior":"none","show_text_below":true,"accessibility_info":"Slideshow about our brand"}},"featured_collection_t6egip":{"type":"featured-collection","settings":{"title":"","heading_size":"h2","description":"","show_description":false,"description_style":"body","collection":"anker","products_to_show":2,"columns_desktop":3,"full_width":true,"show_view_all":true,"view_all_style":"solid","enable_desktop_slider":false,"color_scheme":"","image_ratio":"adapt","image_shape":"default","show_secondary_image":true,"show_vendor":false,"show_rating":false,"enable_quick_add":true,"columns_mobile":"2","swipe_on_mobile":true,"padding_top":36,"padding_bottom":36}},"image_banner_ptBBFF":{"type":"image-banner","settings":{"image":"shopify:\/\/shop_images\/post55.png","image_overlay_opacity":0,"image_height":"small","desktop_content_position":"middle-center","show_text_box":true,"desktop_content_alignment":"center","color_scheme":"","image_behavior":"none","mobile_content_alignment":"center","stack_images_on_mobile":true,"show_text_below":true}}},"order":["175699773976acf0ef","slideshow_yUVXcA","collection_list_CWdVFy","featured_collection_nTyPeK","featured_collection_FiQQNw","image_banner_cA9Y94","slideshow_nfydnD","slideshow_wH7cEh","featured_collection_WAgNhD","featured_product_ND98V9","featured_collection_FgDApg","slideshow_aiJkgK","featured_collection_t6egip","image_banner_ptBBFF"]}
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "175699773976acf0ef": {
+      "type": "_blocks",
+      "blocks": {
+        "ai_gen_block_3b08850_4FPBDT": {
+          "type": "ai_gen_block_3b08850",
+          "settings": {
+            "header_text": "Our Brands",
+            "header_alignment": "center",
+            "header_font_size": 16,
+            "header_font_weight": "600",
+            "header_height": 40,
+            "header_padding_top": 0,
+            "header_padding_bottom": 0,
+            "header_padding_horizontal": 0,
+            "header_text_color": "#103948",
+            "header_background_color": "#ffffff",
+            "brand_list": [
+              "acer",
+              "anker",
+              "apple",
+              "belkin",
+              "green-lion",
+              "hoco",
+              "honor",
+              "hp",
+              "infinix",
+              "jbl",
+              "lenovo",
+              "mi",
+              "microsoft",
+              "porodo",
+              "samsung",
+              "wiwu"
+            ],
+            "scroll_speed": 30,
+            "pause_on_hover": true,
+            "bar_height": 100,
+            "bar_padding_top": 0,
+            "bar_padding_bottom": 10,
+            "brand_image_height": 150,
+            "brand_max_width": 140,
+            "brand_spacing": 15,
+            "brand_opacity": 100,
+            "brand_filter": "none",
+            "text_size": 8,
+            "background_color": "#fcfcfc",
+            "border_thickness": 0,
+            "border_color": "#fcfcfc"
+          },
+          "blocks": {}
+        }
+      },
+      "block_order": [
+        "ai_gen_block_3b08850_4FPBDT"
+      ],
+      "settings": {}
+    },
+    "slideshow_yUVXcA": {
+      "type": "slideshow",
+      "blocks": {
+        "slide_JycLa3": {
+          "type": "slide",
+          "settings": {
+            "image": "shopify://shop_images/Iraq-Baghdad-Al_Shareqa_New_-11_c32b55df-2cba-480b-8802-9b3e2700437a.png",
+            "heading": "",
+            "heading_size": "h1",
+            "subheading": "",
+            "button_label": "",
+            "link": "",
+            "button_style_secondary": false,
+            "box_align": "middle-center",
+            "show_text_box": false,
+            "text_alignment": "center",
+            "image_overlay_opacity": 0,
+            "color_scheme": "scheme-3",
+            "text_alignment_mobile": "center"
+          }
+        },
+        "slide_3E6rJK": {
+          "type": "slide",
+          "settings": {
+            "image": "shopify://shop_images/Iraq-Baghdad-Al_Shareqa_New_-_2_2d8847c2-d0a4-4703-95e7-d3f4bd9054e0.png",
+            "heading": "",
+            "heading_size": "h2",
+            "subheading": "",
+            "button_label": "",
+            "link": "",
+            "button_style_secondary": false,
+            "box_align": "middle-center",
+            "show_text_box": false,
+            "text_alignment": "center",
+            "image_overlay_opacity": 0,
+            "color_scheme": "scheme-3",
+            "text_alignment_mobile": "center"
+          }
+        },
+        "slide_WwAhxm": {
+          "type": "slide",
+          "settings": {
+            "image": "shopify://shop_images/Iraq-Baghdad-Al_Shareqa_New_-_3.png",
+            "heading": "",
+            "heading_size": "h1",
+            "subheading": "",
+            "button_label": "",
+            "link": "",
+            "button_style_secondary": false,
+            "box_align": "middle-center",
+            "show_text_box": false,
+            "text_alignment": "center",
+            "image_overlay_opacity": 0,
+            "color_scheme": "scheme-3",
+            "text_alignment_mobile": "center"
+          }
+        }
+      },
+      "block_order": [
+        "slide_JycLa3",
+        "slide_3E6rJK",
+        "slide_WwAhxm"
+      ],
+      "settings": {
+        "layout": "full_bleed",
+        "slide_height": "adapt_image",
+        "slider_visual": "dots",
+        "auto_rotate": true,
+        "change_slides_speed": 5,
+        "image_behavior": "none",
+        "show_text_below": false,
+        "accessibility_info": "Slideshow about our brand"
+      }
+    },
+    "collection_list_CWdVFy": {
+      "type": "collection-list",
+      "blocks": {
+        "featured_collection_EdGQtQ": {
+          "type": "featured_collection",
+          "settings": {
+            "collection": "accessories"
+          }
+        },
+        "featured_collection_fme6Un": {
+          "type": "featured_collection",
+          "settings": {
+            "collection": "cables"
+          }
+        },
+        "featured_collection_j8npnV": {
+          "type": "featured_collection",
+          "settings": {
+            "collection": "car-accessories"
+          }
+        },
+        "featured_collection_7pzkLp": {
+          "type": "featured_collection",
+          "settings": {
+            "collection": "cases-covers"
+          }
+        },
+        "featured_collection_6bfUWX": {
+          "type": "featured_collection",
+          "settings": {
+            "collection": "chargers"
+          }
+        }
+      },
+      "block_order": [
+        "featured_collection_EdGQtQ",
+        "featured_collection_fme6Un",
+        "featured_collection_j8npnV",
+        "featured_collection_7pzkLp",
+        "featured_collection_6bfUWX"
+      ],
+      "settings": {
+        "title": "Collections",
+        "heading_size": "h2",
+        "image_ratio": "square",
+        "columns_desktop": 5,
+        "color_scheme": "scheme-3",
+        "show_view_all": true,
+        "columns_mobile": "2",
+        "swipe_on_mobile": true,
+        "padding_top": 0,
+        "padding_bottom": 0
+      }
+    },
+    "featured_collection_nTyPeK": {
+      "type": "featured-collection",
+      "settings": {
+        "title": "Phones",
+        "heading_size": "h2",
+        "description": "",
+        "show_description": false,
+        "description_style": "body",
+        "collection": "phones",
+        "products_to_show": 4,
+        "columns_desktop": 4,
+        "full_width": false,
+        "show_view_all": true,
+        "view_all_style": "solid",
+        "enable_desktop_slider": false,
+        "color_scheme": "",
+        "image_ratio": "square",
+        "image_shape": "default",
+        "show_secondary_image": true,
+        "show_vendor": false,
+        "show_rating": false,
+        "enable_quick_add": true,
+        "product_card_style": "standard",
+        "show_product_badges": true,
+        "show_quick_view": false,
+        "show_compare_button": false,
+        "show_wishlist_button": false,
+        "product_title_size": "medium",
+        "show_product_description": false,
+        "description_length": 100,
+        "section_width": "standard",
+        "product_spacing": 16,
+        "columns_mobile": "2",
+        "swipe_on_mobile": false,
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
+    },
+    "featured_collection_FiQQNw": {
+      "type": "featured-collection",
+      "disabled": true,
+      "settings": {
+        "title": "Offers",
+        "heading_size": "h2",
+        "description": "",
+        "show_description": false,
+        "description_style": "body",
+        "collection": "offer",
+        "products_to_show": 4,
+        "columns_desktop": 4,
+        "full_width": false,
+        "show_view_all": true,
+        "view_all_style": "solid",
+        "enable_desktop_slider": false,
+        "color_scheme": "",
+        "image_ratio": "square",
+        "image_shape": "default",
+        "show_secondary_image": true,
+        "show_vendor": false,
+        "show_rating": false,
+        "enable_quick_add": true,
+        "product_card_style": "standard",
+        "show_product_badges": true,
+        "show_quick_view": false,
+        "show_compare_button": false,
+        "show_wishlist_button": false,
+        "product_title_size": "medium",
+        "show_product_description": false,
+        "description_length": 100,
+        "section_width": "standard",
+        "product_spacing": 16,
+        "columns_mobile": "2",
+        "swipe_on_mobile": false,
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
+    },
+    "image_banner_cA9Y94": {
+      "type": "image-banner",
+      "disabled": true,
+      "settings": {
+        "image": "shopify://shop_images/Iraq-Baghdad-Al_Shareqa_-1678677.png",
+        "image_overlay_opacity": 0,
+        "image_height": "medium",
+        "desktop_content_position": "middle-center",
+        "show_text_box": true,
+        "desktop_content_alignment": "center",
+        "color_scheme": "",
+        "image_behavior": "zoom-in",
+        "mobile_content_alignment": "center",
+        "stack_images_on_mobile": true,
+        "show_text_below": true,
+        "container_width": "full-width",
+        "content_max_width": 500,
+        "padding_top": 0,
+        "padding_bottom": 0,
+        "enable_parallax": false,
+        "border_radius": 0
+      }
+    },
+    "slideshow_nfydnD": {
+      "type": "slideshow",
+      "blocks": {
+        "slide_Bfh4dt": {
+          "type": "slide",
+          "settings": {
+            "image": "shopify://shop_images/post46n.png",
+            "heading": "",
+            "heading_size": "h2",
+            "subheading": "",
+            "button_label": "منتجات شاومي",
+            "link": "shopify://collections/mi",
+            "button_style_secondary": true,
+            "box_align": "bottom-left",
+            "show_text_box": false,
+            "text_alignment": "left",
+            "image_overlay_opacity": 0,
+            "color_scheme": "scheme-3",
+            "text_alignment_mobile": "center"
+          }
+        },
+        "slide_mYtx6h": {
+          "type": "slide",
+          "settings": {
+            "image": "shopify://shop_images/post56_1.png",
+            "heading": "",
+            "heading_size": "h1",
+            "subheading": "",
+            "button_label": "",
+            "link": "",
+            "button_style_secondary": false,
+            "box_align": "middle-center",
+            "show_text_box": false,
+            "text_alignment": "center",
+            "image_overlay_opacity": 0,
+            "color_scheme": "scheme-1",
+            "text_alignment_mobile": "center"
+          }
+        }
+      },
+      "block_order": [
+        "slide_Bfh4dt",
+        "slide_mYtx6h"
+      ],
+      "settings": {
+        "layout": "full_bleed",
+        "slide_height": "medium",
+        "slider_visual": "dots",
+        "auto_rotate": false,
+        "change_slides_speed": 5,
+        "image_behavior": "none",
+        "show_text_below": true,
+        "accessibility_info": ""
+      }
+    },
+    "slideshow_wH7cEh": {
+      "type": "slideshow",
+      "settings": {
+        "layout": "full_bleed",
+        "slide_height": "medium",
+        "slider_visual": "counter",
+        "auto_rotate": false,
+        "change_slides_speed": 5,
+        "image_behavior": "none",
+        "show_text_below": true,
+        "accessibility_info": "Slideshow about our brand"
+      }
+    },
+    "featured_collection_WAgNhD": {
+      "type": "featured-collection",
+      "settings": {
+        "title": "",
+        "heading_size": "h2",
+        "description": "",
+        "show_description": false,
+        "description_style": "body",
+        "collection": "mi",
+        "products_to_show": 3,
+        "columns_desktop": 3,
+        "full_width": false,
+        "show_view_all": true,
+        "view_all_style": "solid",
+        "enable_desktop_slider": false,
+        "color_scheme": "",
+        "image_ratio": "square",
+        "image_shape": "default",
+        "show_secondary_image": false,
+        "show_vendor": false,
+        "show_rating": false,
+        "enable_quick_add": false,
+        "product_card_style": "standard",
+        "show_product_badges": true,
+        "show_quick_view": false,
+        "show_compare_button": false,
+        "show_wishlist_button": false,
+        "product_title_size": "medium",
+        "show_product_description": false,
+        "description_length": 100,
+        "section_width": "standard",
+        "product_spacing": 16,
+        "columns_mobile": "2",
+        "swipe_on_mobile": false,
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
+    },
+    "featured_product_ND98V9": {
+      "type": "featured-product",
+      "blocks": {
+        "text_KEJth8": {
+          "type": "text",
+          "settings": {
+            "text": "{{ section.settings.product.vendor }}",
+            "text_style": "uppercase"
+          }
+        },
+        "title_CMYbz4": {
+          "type": "title",
+          "settings": {
+            "heading_size": "h1"
+          }
+        },
+        "price_TJi3Gn": {
+          "type": "price",
+          "settings": {}
+        },
+        "variant_picker_R3nc4n": {
+          "type": "variant_picker",
+          "settings": {
+            "picker_type": "button",
+            "swatch_shape": "circle"
+          }
+        },
+        "quantity_selector_RCCEFd": {
+          "type": "quantity_selector",
+          "settings": {}
+        },
+        "buy_buttons_VGkcQd": {
+          "type": "buy_buttons",
+          "settings": {
+            "show_dynamic_checkout": true,
+            "show_gift_card_recipient": true
+          }
+        },
+        "share_VE7UgT": {
+          "type": "share",
+          "settings": {
+            "share_label": "Share"
+          }
+        }
+      },
+      "block_order": [
+        "text_KEJth8",
+        "title_CMYbz4",
+        "price_TJi3Gn",
+        "variant_picker_R3nc4n",
+        "quantity_selector_RCCEFd",
+        "buy_buttons_VGkcQd",
+        "share_VE7UgT"
+      ],
+      "settings": {
+        "product": "iphone-16-pro-max-256gb-1sim",
+        "color_scheme": "",
+        "secondary_background": false,
+        "media_size": "medium",
+        "constrain_to_viewport": true,
+        "media_fit": "contain",
+        "media_position": "left",
+        "image_zoom": "lightbox",
+        "hide_variants": false,
+        "enable_video_looping": false,
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
+    },
+    "featured_collection_FgDApg": {
+      "type": "featured-collection",
+      "settings": {
+        "title": "Featured collection",
+        "heading_size": "h1",
+        "description": "",
+        "show_description": false,
+        "description_style": "body",
+        "collection": "samsung",
+        "products_to_show": 9,
+        "columns_desktop": 3,
+        "full_width": false,
+        "show_view_all": true,
+        "view_all_style": "solid",
+        "enable_desktop_slider": false,
+        "color_scheme": "",
+        "image_ratio": "adapt",
+        "image_shape": "default",
+        "show_secondary_image": false,
+        "show_vendor": false,
+        "show_rating": false,
+        "enable_quick_add": true,
+        "product_card_style": "standard",
+        "show_product_badges": true,
+        "show_quick_view": false,
+        "show_compare_button": false,
+        "show_wishlist_button": false,
+        "product_title_size": "medium",
+        "show_product_description": false,
+        "description_length": 100,
+        "section_width": "standard",
+        "product_spacing": 16,
+        "columns_mobile": "2",
+        "swipe_on_mobile": false,
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
+    },
+    "slideshow_aiJkgK": {
+      "type": "slideshow",
+      "blocks": {
+        "slide_Kdmgfq": {
+          "type": "slide",
+          "settings": {
+            "image": "shopify://shop_images/Iraq-Baghdad-Al_Shareqa_New_-_4.png",
+            "heading": "",
+            "heading_size": "h1",
+            "subheading": "",
+            "button_label": "",
+            "link": "",
+            "button_style_secondary": false,
+            "box_align": "middle-center",
+            "show_text_box": false,
+            "text_alignment": "center",
+            "image_overlay_opacity": 0,
+            "color_scheme": "",
+            "text_alignment_mobile": "center"
+          }
+        },
+        "slide_THLJU9": {
+          "type": "slide",
+          "settings": {
+            "image": "shopify://shop_images/post48_1.png",
+            "heading": "",
+            "heading_size": "h1",
+            "subheading": "",
+            "button_label": "",
+            "link": "",
+            "button_style_secondary": false,
+            "box_align": "middle-center",
+            "show_text_box": false,
+            "text_alignment": "center",
+            "image_overlay_opacity": 0,
+            "color_scheme": "scheme-1",
+            "text_alignment_mobile": "center"
+          }
+        }
+      },
+      "block_order": [
+        "slide_Kdmgfq",
+        "slide_THLJU9"
+      ],
+      "settings": {
+        "layout": "full_bleed",
+        "slide_height": "adapt_image",
+        "slider_visual": "counter",
+        "auto_rotate": false,
+        "change_slides_speed": 5,
+        "image_behavior": "none",
+        "show_text_below": true,
+        "accessibility_info": "Slideshow about our brand"
+      }
+    },
+    "featured_collection_t6egip": {
+      "type": "featured-collection",
+      "settings": {
+        "title": "",
+        "heading_size": "h2",
+        "description": "",
+        "show_description": false,
+        "description_style": "body",
+        "collection": "anker",
+        "products_to_show": 2,
+        "columns_desktop": 3,
+        "full_width": true,
+        "show_view_all": true,
+        "view_all_style": "solid",
+        "enable_desktop_slider": false,
+        "color_scheme": "",
+        "image_ratio": "adapt",
+        "image_shape": "default",
+        "show_secondary_image": true,
+        "show_vendor": false,
+        "show_rating": false,
+        "enable_quick_add": true,
+        "product_card_style": "standard",
+        "show_product_badges": true,
+        "show_quick_view": false,
+        "show_compare_button": false,
+        "show_wishlist_button": false,
+        "product_title_size": "medium",
+        "show_product_description": false,
+        "description_length": 100,
+        "section_width": "standard",
+        "product_spacing": 16,
+        "columns_mobile": "2",
+        "swipe_on_mobile": true,
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
+    },
+    "image_banner_ptBBFF": {
+      "type": "image-banner",
+      "settings": {
+        "image": "shopify://shop_images/post55.png",
+        "image_overlay_opacity": 0,
+        "image_height": "small",
+        "desktop_content_position": "middle-center",
+        "show_text_box": true,
+        "desktop_content_alignment": "center",
+        "color_scheme": "",
+        "image_behavior": "none",
+        "mobile_content_alignment": "center",
+        "stack_images_on_mobile": true,
+        "show_text_below": true,
+        "container_width": "full-width",
+        "content_max_width": 500,
+        "padding_top": 0,
+        "padding_bottom": 0,
+        "enable_parallax": false,
+        "border_radius": 0
+      }
+    }
+  },
+  "order": [
+    "175699773976acf0ef",
+    "slideshow_yUVXcA",
+    "collection_list_CWdVFy",
+    "featured_collection_nTyPeK",
+    "featured_collection_FiQQNw",
+    "image_banner_cA9Y94",
+    "slideshow_nfydnD",
+    "slideshow_wH7cEh",
+    "featured_collection_WAgNhD",
+    "featured_product_ND98V9",
+    "featured_collection_FgDApg",
+    "slideshow_aiJkgK",
+    "featured_collection_t6egip",
+    "image_banner_ptBBFF"
+  ]
+}
