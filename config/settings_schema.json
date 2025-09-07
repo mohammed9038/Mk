@@ -97,6 +97,53 @@
           "secondary_button": "background",
           "on_secondary_button": "secondary_button_label",
           "secondary_button_border": "secondary_button_label"
+        },
+        "presets": {
+          "scheme-1": {
+            "background": "#fcfcfc",
+            "background_gradient": "",
+            "text": "#103948",
+            "button": "#103948",
+            "button_label": "#fcfcfc",
+            "secondary_button_label": "#052c46",
+            "shadow": "#103948"
+          },
+          "scheme-2": {
+            "background": "#ebeced",
+            "background_gradient": "",
+            "text": "#103948",
+            "button": "#103948",
+            "button_label": "#ebeced",
+            "secondary_button_label": "#103948",
+            "shadow": "#103948"
+          },
+          "scheme-3": {
+            "background": "#0a3864",
+            "background_gradient": "",
+            "text": "#ebeced",
+            "button": "#fcfcfc",
+            "button_label": "#084e68",
+            "secondary_button_label": "#fcfcfc",
+            "shadow": "#084e68"
+          },
+          "scheme-4": {
+            "background": "#bc5631",
+            "background_gradient": "",
+            "text": "#fcfcfc",
+            "button": "#fcfcfc",
+            "button_label": "#bc5631",
+            "secondary_button_label": "#fcfcfc",
+            "shadow": "#103948"
+          },
+          "scheme-5": {
+            "background": "#18566c",
+            "background_gradient": "",
+            "text": "#fcfcfc",
+            "button": "#fcfcfc",
+            "button_label": "#18566c",
+            "secondary_button_label": "#fcfcfc",
+            "shadow": "#103948"
+          }
         }
       }
     ]
