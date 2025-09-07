@@ -60,7 +60,7 @@
     <script src="{{ 'advanced-search-controller.js' | asset_url }}" defer></script>
     
     {%- comment -%} Product card enhancements for all pages {%- endcomment -%}
-    <script src="{{ 'image-fallback.js' | asset_url }}" defer></script>
+    <script src="{{ 'shopify-image-handler.js' | asset_url }}" defer></script>
     
     {%- comment -%} Advanced Performance System {%- endcomment -%}
     {%- if 'performance-utils.js' | asset_url -%}
@@ -340,6 +340,7 @@
       {{ 'component-button-optimized.css' | asset_url | stylesheet_tag }}
       {{ 'component-form-optimized.css' | asset_url | stylesheet_tag }}
       {{ 'product-card-enhancements.css' | asset_url | stylesheet_tag }}
+      {{ 'product-image-enhancements.css' | asset_url | stylesheet_tag }}
       {{ 'base-media-queries.css' | asset_url | stylesheet_tag }}
       {{ 'base.css' | asset_url | stylesheet_tag }}
     </noscript>
