@@ -391,7 +391,7 @@
     <div class="ai-header-main-content-{{ ai_gen_id }}">
       <div class="ai-header-logo-{{ ai_gen_id }}">
         {% if block.settings.logo %}
-          <a href="/">
+          <a href="{{ routes.root_url }}">
             <img 
               src="{{ block.settings.logo | image_url: width: 300 }}" 
               alt="{{ shop.name }}"
@@ -401,7 +401,7 @@
             >
           </a>
         {% else %}
-          <a href="/" class="ai-header-logo-placeholder-{{ ai_gen_id }}">
+          <a href="{{ routes.root_url }}" class="ai-header-logo-placeholder-{{ ai_gen_id }}">
             {{ shop.name }}
           </a>
         {% endif %}

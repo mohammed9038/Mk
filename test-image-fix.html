@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Fix Test</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .test-section {
+            margin: 30px 0;
+            padding: 20px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+        }
+        .test-section h2 {
+            color: #333;
+            margin-top: 0;
+        }
+        .image-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+        .image-card {
+            border: 1px solid #eee;
+            padding: 10px;
+            border-radius: 4px;
+        }
+        .image-card img {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+            border-radius: 4px;
+        }
+        .log {
+            background: #f5f5f5;
+            padding: 15px;
+            border-radius: 4px;
+            font-family: monospace;
+            font-size: 12px;
+            max-height: 200px;
+            overflow-y: auto;
+        }
+        .status {
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 4px;
+        }
+        .status.success { background: #d4edda; color: #155724; }
+        .status.error { background: #f8d7da; color: #721c24; }
+        .status.warning { background: #fff3cd; color: #856404; }
+    </style>
+</head>
+<body>
+    <h1>🖼️ Image Loading Fix Test Suite</h1>
+    
+    <div class="status" id="status">
+        <strong>Testing Status:</strong> <span id="statusText">Initializing...</span>
+    </div>
+
+    <!-- Test Section 1: Valid Images -->
+    <div class="test-section">
+        <h2>✅ Test 1: Valid Images (Should Load Normally)</h2>
+        <div class="image-grid">
+            <div class="image-card">
+                <img src="https://via.placeholder.com/300x200/0066cc/ffffff?text=Valid+Image+1" alt="Valid test image 1">
+                <p>Valid placeholder image</p>
+            </div>
+            <div class="image-card">
+                <img src="https://via.placeholder.com/300x200/009900/ffffff?text=Valid+Image+2" alt="Valid test image 2">
+                <p>Another valid image</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Test Section 2: Broken Images -->
+    <div class="test-section">
+        <h2>❌ Test 2: Broken Images (Should Show Placeholders)</h2>
+        <div class="image-grid">
+            <div class="image-card">
+                <img src="https://nonexistent-domain-12345.com/fake-image.jpg" alt="Broken image 1">
+                <p>Broken URL - should show placeholder</p>
+            </div>
+            <div class="image-card">
+                <img src="/assets/nonexistent-product-image.jpg" alt="Missing product image">
+                <p>Missing local image - should show placeholder</p>
+            </div>
+            <div class="image-card">
+                <img src="https://example.com/404-image.png" alt="404 image">
+                <p>404 image - should retry then show placeholder</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Test Section 3: Dynamic Content -->
+    <div class="test-section">
+        <h2>🔄 Test 3: Dynamic Content (Should Be Monitored)</h2>
+        <div id="dynamicContainer" class="image-grid">
+            <!-- Images will be added dynamically via JavaScript -->
+        </div>
+        <button onclick="addDynamicImages()">Add Dynamic Images</button>
+        <button onclick="addBrokenDynamicImages()">Add Broken Dynamic Images</button>
+    </div>
+
+    <!-- Test Section 4: Product Images Simulation -->
+    <div class="test-section">
+        <h2>🛍️ Test 4: Product Images Simulation</h2>
+        <div class="image-grid">
+            <div class="image-card product-card">
+                <img src="https://fake-shopify-cdn.com/missing-product.jpg" alt="Product image 1" class="product-image">
+                <p>Simulated product image (missing)</p>
+            </div>
+            <div class="image-card product-card">
+                <img src="/nonexistent/product-gallery-image.webp" alt="Product gallery image" class="product-image">
+                <p>Product gallery image (missing)</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Test Results -->
+    <div class="test-section">
+        <h2>📊 Test Results & Console Log</h2>
+        <div id="testLog" class="log">
+            Test log will appear here...
+        </div>
+        <button onclick="clearLog()">Clear Log</button>
+        <button onclick="runImageTest()">Run Manual Test</button>
+    </div>
+
+    <!-- Load the Image Fix Script -->
+    <script src="assets/image-fix.js"></script>
+    
+    <script>
+        // Test utilities
+        let testLog = [];
+        
+        function log(message, type = 'info') {
+            const timestamp = new Date().toLocaleTimeString();
+            const logEntry = `[${timestamp}] ${type.toUpperCase()}: ${message}`;
+            testLog.push(logEntry);
+            updateLogDisplay();
+            console.log(logEntry);
+        }
+        
+        function updateLogDisplay() {
+            const logElement = document.getElementById('testLog');
+            logElement.innerHTML = testLog.slice(-20).join('\n');
+            logElement.scrollTop = logElement.scrollHeight;
+        }
+        
+        function clearLog() {
+            testLog = [];
+            updateLogDisplay();
+        }
+        
+        function updateStatus(text, type = 'info') {
+            const statusElement = document.getElementById('status');
+            const statusText = document.getElementById('statusText');
+            statusText.textContent = text;
+            statusElement.className = `status ${type}`;
+        }
+        
+        // Dynamic image testing
+        function addDynamicImages() {
+            const container = document.getElementById('dynamicContainer');
+            const validImages = [
+                'https://via.placeholder.com/250x150/ff6600/ffffff?text=Dynamic+1',
+                'https://via.placeholder.com/250x150/6600ff/ffffff?text=Dynamic+2'
+            ];
+            
+            validImages.forEach((src, index) => {
+                const card = document.createElement('div');
+                card.className = 'image-card';
+                card.innerHTML = `
+                    <img src="${src}" alt="Dynamic image ${index + 1}">
+                    <p>Dynamic image ${index + 1}</p>
+                `;
+                container.appendChild(card);
+            });
+            
+            log('Added valid dynamic images');
+        }
+        
+        function addBrokenDynamicImages() {
+            const container = document.getElementById('dynamicContainer');
+            const brokenImages = [
+                'https://broken-dynamic-url.com/image1.jpg',
+                '/missing/dynamic-image.png'
+            ];
+            
+            brokenImages.forEach((src, index) => {
+                const card = document.createElement('div');
+                card.className = 'image-card';
+                card.innerHTML = `
+                    <img src="${src}" alt="Broken dynamic image ${index + 1}">
+                    <p>Broken dynamic image ${index + 1}</p>
+                `;
+                container.appendChild(card);
+            });
+            
+            log('Added broken dynamic images - should trigger image fix');
+        }
+        
+        function runImageTest() {
+            log('Starting manual image test...');
+            
+            const images = document.querySelectorAll('img');
+            let brokenCount = 0;
+            let validCount = 0;
+            
+            images.forEach((img, index) => {
+                if (img.complete) {
+                    if (img.naturalHeight === 0) {
+                        brokenCount++;
+                        log(`Image ${index + 1} is broken: ${img.src}`, 'error');
+                    } else {
+                        validCount++;
+                        log(`Image ${index + 1} loaded successfully: ${img.src}`, 'success');
+                    }
+                } else {
+                    log(`Image ${index + 1} is still loading: ${img.src}`, 'warning');
+                }
+            });
+            
+            log(`Test complete: ${validCount} valid, ${brokenCount} broken images`);
+            updateStatus(`Test complete: ${validCount} valid, ${brokenCount} broken images`, 
+                        brokenCount === 0 ? 'success' : 'warning');
+        }
+        
+        // Monitor for image fix events
+        document.addEventListener('DOMContentLoaded', function() {
+            log('Image fix test page loaded');
+            updateStatus('Test page loaded - monitoring images...', 'success');
+            
+            // Wait a bit then run initial test
+            setTimeout(() => {
+                runImageTest();
+            }, 2000);
+        });
+        
+        // Override console methods to capture image fix logs
+        const originalLog = console.log;
+        const originalWarn = console.warn;
+        const originalError = console.error;
+        
+        console.log = function(...args) {
+            if (args[0] && args[0].includes('🖼️')) {
+                log(args.join(' '), 'info');
+            }
+            originalLog.apply(console, args);
+        };
+        
+        console.warn = function(...args) {
+            if (args[0] && (args[0].includes('Image') || args[0].includes('🚫'))) {
+                log(args.join(' '), 'warning');
+            }
+            originalWarn.apply(console, args);
+        };
+        
+        console.error = function(...args) {
+            log(args.join(' '), 'error');
+            originalError.apply(console, args);
+        };
+    </script>
+</body>
+</html>

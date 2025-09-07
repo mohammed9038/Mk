@@ -11,8 +11,8 @@
   --color-foreground: {{ settings.colors_text | default: '#1a202c' }};
   
   /* Typography settings */
-  {% assign heading_font = settings.type_header_font | default: fonts.body %}
-  {% assign body_font = settings.type_body_font | default: fonts.body %}
+  {% assign heading_font = settings.type_header_font | default: "Arial, sans-serif" %}
+  {% assign body_font = settings.type_body_font | default: "Arial, sans-serif" %}
   
   --font-heading: {{ heading_font.family }}, {{ heading_font.fallback_families }};
   --font-body: {{ body_font.family }}, {{ body_font.fallback_families }};
