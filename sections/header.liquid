@@ -357,6 +357,13 @@
       
       {%- comment -%} Left Section {%- endcomment -%}
       <div class="header__left-section">
+        {%- comment -%} Search in left position {%- endcomment -%}
+        {%- if section.settings.show_search_bar and section.settings.search_position == 'left' -%}
+          <div class="header__search-bar header__search-bar--left">
+            {% render 'header-search-bar', input_id: 'Search-In-Header-Left' %}
+          </div>
+        {%- endif -%}
+        
         {%- comment -%} Logo {%- endcomment -%}
         {%- if request.page_type == 'index' -%}
           <h1 class="header__heading">
@@ -387,12 +394,12 @@
         {%- endif -%}
       </div>
 
-      {%- comment -%} Center Section - Search Bar {%- endcomment -%}
+      {%- comment -%} Center Section {%- endcomment -%}
       <div class="header__center-section">
-        {%- comment -%} Search Bar {%- endcomment -%}
-        {%- if section.settings.show_search_bar -%}
-          <div class="header__search-bar">
-            {% render 'header-search-bar', input_id: 'Search-In-Header' %}
+        {%- comment -%} Search in center position {%- endcomment -%}
+        {%- if section.settings.show_search_bar and section.settings.search_position == 'center' -%}
+          <div class="header__search-bar header__search-bar--center">
+            {% render 'header-search-bar', input_id: 'Search-In-Header-Center' %}
           </div>
         {%- endif -%}
       </div>
@@ -400,7 +407,14 @@
       {%- comment -%} Right Section - Account, Cart, Language {%- endcomment -%}
       <div class="header__right-section">
         
-        {%- comment -%} Mobile Search Icon (only when search bar is disabled or on mobile) {%- endcomment -%}
+        {%- comment -%} Search in right position {%- endcomment -%}
+        {%- if section.settings.show_search_bar and section.settings.search_position == 'right' -%}
+          <div class="header__search-bar header__search-bar--right">
+            {% render 'header-search-bar', input_id: 'Search-In-Header-Right' %}
+          </div>
+        {%- endif -%}
+        
+        {%- comment -%} Search icon fallback or mobile {%- endcomment -%}
         {%- if section.settings.show_search_icon and section.settings.show_search_bar == false -%}
           <details-modal class="header__search">
             <details>
@@ -820,7 +834,7 @@
     },
     {
       "type": "header",
-      "content": "Search Settings"
+      "content": "🔍 Search Bar Settings"
     },
     {
       "type": "checkbox",
@@ -837,8 +851,125 @@
       "info": "Display only a search icon (opens modal when clicked). Use this instead of the search bar for a minimal design."
     },
     {
+      "type": "text",
+      "id": "search_placeholder",
+      "default": "Search products...",
+      "label": "Search placeholder text",
+      "info": "Text displayed inside the search bar when empty"
+    },
+    {
+      "type": "select",
+      "id": "search_position",
+      "options": [
+        {
+          "value": "center",
+          "label": "Center"
+        },
+        {
+          "value": "left",
+          "label": "Left side"
+        },
+        {
+          "value": "right",
+          "label": "Right side"
+        }
+      ],
+      "default": "center",
+      "label": "Search bar position",
+      "info": "Where to display the search bar in the header"
+    },
+    {
       "type": "header",
-      "content": "Top Navigation"
+      "content": "🎨 Search Bar Design"
+    },
+    {
+      "type": "select",
+      "id": "search_style",
+      "options": [
+        {
+          "value": "rounded",
+          "label": "Rounded (Default)"
+        },
+        {
+          "value": "flat",
+          "label": "Modern Flat"
+        },
+        {
+          "value": "minimal",
+          "label": "Minimal Underline"
+        },
+        {
+          "value": "bold",
+          "label": "Bold Rounded"
+        }
+      ],
+      "default": "rounded",
+      "label": "Search bar style",
+      "info": "Choose the visual style of the search bar"
+    },
+    {
+      "type": "color",
+      "id": "search_background",
+      "label": "Search bar background",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "search_border",
+      "label": "Search bar border",
+      "default": "#e0e0e0"
+    },
+    {
+      "type": "color",
+      "id": "search_text",
+      "label": "Search text color",
+      "default": "#333333"
+    },
+    {
+      "type": "color",
+      "id": "search_button_bg",
+      "label": "Search button background",
+      "default": "#333333"
+    },
+    {
+      "type": "color",
+      "id": "search_button_icon",
+      "label": "Search button icon",
+      "default": "#ffffff"
+    },
+    {
+      "type": "range",
+      "id": "search_width",
+      "min": 200,
+      "max": 600,
+      "step": 20,
+      "unit": "px",
+      "label": "Search bar width",
+      "default": 400
+    },
+    {
+      "type": "range",
+      "id": "search_height",
+      "min": 30,
+      "max": 60,
+      "step": 2,
+      "unit": "px",
+      "label": "Search bar height",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "search_border_radius",
+      "min": 0,
+      "max": 30,
+      "step": 2,
+      "unit": "px",
+      "label": "Border radius",
+      "default": 25
+    },
+    {
+      "type": "header",
+      "content": "📍 Top Navigation"
     },
     {
       "type": "checkbox",

@@ -3,11 +3,12 @@
 
   Accepts:
   - input_id: {String} Id for the search input element (required)
-  - placeholder: {String} Placeholder text for search input
 
   Usage:
   {% render 'header-search-bar', input_id: 'HeaderSearch' %}
 {% endcomment %}
+
+{%- assign search_placeholder = section.settings.search_placeholder | default: 'Search products...' -%}
 
 {%- if settings.predictive_search_enabled -%}
   <predictive-search class="header__search-form" data-loading-text="{{ 'accessibility.loading' | t }}">
@@ -22,7 +23,7 @@
         type="search"
         name="q"
         value="{{ search.terms | escape }}"
-        placeholder="{{ 'general.search.search' | t }}..."
+        placeholder="{{ search_placeholder }}"
         {%- if settings.predictive_search_enabled -%}
           role="combobox"
           aria-expanded="false"
@@ -61,3 +62,63 @@
 {%- else -%}
   </search-form>
 {%- endif -%}
+
+<style>
+  /* Dynamic styling based on section settings */
+  .header__search-form {
+    width: 100%;
+    max-width: {{ section.settings.search_width | default: 400 }}px;
+  }
+
+  .header__search-input {
+    height: {{ section.settings.search_height | default: 40 }}px;
+    border-radius: {{ section.settings.search_border_radius | default: 25 }}px;
+    background-color: {{ section.settings.search_background | default: '#ffffff' }};
+    border-color: {{ section.settings.search_border | default: '#e0e0e0' }};
+    color: {{ section.settings.search_text | default: '#333333' }};
+    padding: 0 4rem 0 1.5rem;
+  }
+
+  .header__search-button {
+    background-color: {{ section.settings.search_button_bg | default: '#333333' }};
+    border-radius: 50%;
+  }
+
+  .header__search-button .icon {
+    color: {{ section.settings.search_button_icon | default: '#ffffff' }};
+  }
+
+  /* Style variations */
+  {%- if section.settings.search_style == 'flat' -%}
+    .header__search-input {
+      border-radius: 8px;
+      border-width: 2px;
+      box-shadow: none;
+    }
+    .header__search-button {
+      border-radius: 6px;
+    }
+  {%- elsif section.settings.search_style == 'minimal' -%}
+    .header__search-input {
+      border: none;
+      border-bottom: 2px solid {{ section.settings.search_border | default: '#e0e0e0' }};
+      border-radius: 0;
+      background: transparent;
+      box-shadow: none;
+    }
+  {%- elsif section.settings.search_style == 'bold' -%}
+    .header__search-input {
+      border-width: 3px;
+      font-weight: 600;
+    }
+  {%- endif -%}
+
+  /* Position-specific styles */
+  .header__search-bar--left {
+    margin-right: 2rem;
+  }
+  
+  .header__search-bar--right {
+    margin-left: 2rem;
+  }
+</style>
