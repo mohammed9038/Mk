@@ -530,15 +530,16 @@
                   {% capture sizes %}(max-width: {{ settings.logo_width | times: 2 }}px) 50vw, {{ settings.logo_width }}px{% endcapture %}
                   {% capture widths %}{{ settings.logo_width }}, {{ settings.logo_width | times: 1.5 | round }}, {{ settings.logo_width | times: 2 }}{% endcapture %}
                   {%- if settings.logo -%}
-                    {{ settings.logo | image_url: width: 600 | image_tag:
-                      class: 'header__heading-logo motion-reduce',
-                      widths: widths,
-                      height: logo_height,
-                      width: settings.logo_width,
-                      alt: logo_alt,
-                      sizes: sizes,
-                      preload: true
-                    }}
+                    <img
+                      src="{{ settings.logo | image_url: width: 600 }}"
+                      alt="{{ logo_alt }}"
+                      class="header__heading-logo motion-reduce"
+                      width="{{ settings.logo_width }}"
+                      height="{{ logo_height }}"
+                      sizes="{{ sizes }}"
+                      srcset="{{ settings.logo | image_url: width: settings.logo_width }} {{ settings.logo_width }}w, {{ settings.logo | image_url: width: settings.logo_width | times: 1.5 | round }} {{ settings.logo_width | times: 1.5 | round }}w, {{ settings.logo | image_url: width: settings.logo_width | times: 2 }} {{ settings.logo_width | times: 2 }}w"
+                      loading="eager"
+                    >
                   {%- endif -%}
                 </div>
               {%- else -%}

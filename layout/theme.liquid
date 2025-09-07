@@ -46,6 +46,9 @@
     {%- comment -%} PHASE 4 ADVANCED JAVASCRIPT OPTIMIZATION {%- endcomment -%}
     
     {%- comment -%} Core Critical JavaScript (loads immediately) {%- endcomment -%}
+    {%- if 'theme-error-recovery.js' | asset_url -%}
+      <script src="{{ 'theme-error-recovery.js' | asset_url }}" defer></script>
+    {%- endif -%}
     {%- if 'error-handler.js' | asset_url -%}
       <script src="{{ 'error-handler.js' | asset_url }}" defer></script>
     {%- endif -%}
