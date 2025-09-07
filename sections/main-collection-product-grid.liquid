@@ -144,12 +144,9 @@
             >
               {%- for product in collection.products -%}
                 {% assign lazy_load = false %}
-                {%- comment -%}
-                  Temporarily disabled lazy loading to debug image loading issues
-                  {%- if forloop.index > 2 -%}
-                    {%- assign lazy_load = true -%}
-                  {%- endif -%}
-                {%- endcomment -%}
+                {%- if forloop.index > 2 -%}
+                  {%- assign lazy_load = true -%}
+                {%- endif -%}
                 <li
                   class="grid__item{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}"
                   {% if settings.animations_reveal_on_scroll %}
