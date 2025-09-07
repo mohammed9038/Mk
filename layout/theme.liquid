@@ -46,12 +46,20 @@
     {%- comment -%} PHASE 4 ADVANCED JAVASCRIPT OPTIMIZATION {%- endcomment -%}
     
     {%- comment -%} Core Critical JavaScript (loads immediately) {%- endcomment -%}
-    <script src="{{ 'core-critical.js' | asset_url }}" defer></script>
-    <script src="{{ 'global-optimized.js' | asset_url }}" defer></script>
+    {%- if 'core-critical.js' | asset_url -%}
+      <script src="{{ 'core-critical.js' | asset_url }}" defer></script>
+    {%- endif -%}
+    {%- if 'global-optimized.js' | asset_url -%}
+      <script src="{{ 'global-optimized.js' | asset_url }}" defer></script>
+    {%- endif -%}
     
     {%- comment -%} Advanced Performance System {%- endcomment -%}
-    <script src="{{ 'performance-utils.js' | asset_url }}" defer></script>
-    <script src="{{ 'component-loader-advanced.js' | asset_url }}" defer></script>
+    {%- if 'performance-utils.js' | asset_url -%}
+      <script src="{{ 'performance-utils.js' | asset_url }}" defer></script>
+    {%- endif -%}
+    {%- if 'component-loader-advanced.js' | asset_url -%}
+      <script src="{{ 'component-loader-advanced.js' | asset_url }}" defer></script>
+    {%- endif -%}
     
     {%- comment -%} Template-specific optimizations {%- endcomment -%}
     {%- if template contains 'product' -%}
