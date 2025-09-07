@@ -1,0 +1,39 @@
+{% comment %}
+  Color Scheme Diagnostic Template
+  This template will help diagnose what's available in settings
+{% endcomment %}
+
+<div style="background: white; padding: 20px; margin: 20px; border: 2px solid #000;">
+  <h2>Color Scheme Diagnostic</h2>
+  
+  <h3>Settings Debug:</h3>
+  <p><strong>settings.color_schemes exists:</strong> {{ settings.color_schemes | default: 'NOT FOUND' }}</p>
+  <p><strong>settings.color_schemes size:</strong> {{ settings.color_schemes.size | default: 'NO SIZE' }}</p>
+  
+  {% if settings.color_schemes %}
+    <h3>Color Schemes Found:</h3>
+    {% for scheme in settings.color_schemes %}
+      <div style="border: 1px solid #ccc; margin: 10px 0; padding: 10px;">
+        <p><strong>Scheme ID:</strong> {{ scheme.id }}</p>
+        <p><strong>Scheme Index:</strong> {{ forloop.index }}</p>
+        {% if scheme.settings %}
+          <p><strong>Background:</strong> {{ scheme.settings.background }}</p>
+          <p><strong>Text:</strong> {{ scheme.settings.text }}</p>
+          <p><strong>Button:</strong> {{ scheme.settings.button }}</p>
+        {% else %}
+          <p><strong>No scheme.settings found</strong></p>
+        {% endif %}
+      </div>
+    {% endfor %}
+  {% else %}
+    <h3>No Color Schemes Found</h3>
+    <p>settings.color_schemes is empty or undefined</p>
+  {% endif %}
+  
+  <h3>All Settings Keys:</h3>
+  <div style="font-family: monospace; font-size: 12px;">
+    {% for setting in settings %}
+      <p>{{ setting[0] }}: {{ setting[1] | truncate: 50 }}</p>
+    {% endfor %}
+  </div>
+</div>
