@@ -1,39 +1,36 @@
 /* ========================================
-   HEADER SEARCH BAR STYLING - ENHANCED RESPONSIVE
-   Fixed width behavior and interaction states
+   HEADER SEARCH BAR - ADVANCED STYLING
+   Ensures responsive behavior and overrides conflicts.
    ======================================== */
 
-/* Main search container - Enhanced responsive behavior */
+/* Main search container - uses transition for smooth resizing */
 .header__search-form {
-  width: 100%;
-  max-width: 400px !important;
-  min-width: 280px !important;
-  position: relative;
   display: flex;
   align-items: center;
   flex: 1 1 auto;
-  transition: all 0.3s ease-in-out !important;
+  position: relative;
+  width: 100%;
+  min-width: 280px !important;
+  max-width: 400px; /* Default state */
+  transition: max-width 0.35s cubic-bezier(0.4, 0, 0.2, 1) !important;
 }
 
-/* Expanded state */
-.header__search-form.search-expanded {
-  max-width: 600px !important;
-  min-width: 400px !important;
-  z-index: 1000;
+/* Active/focused state for the search bar */
+.header__search-form.search-is-active {
+  max-width: 600px !important; /* Expanded state */
+  z-index: 1001; /* Ensure it's above other elements */
 }
 
 .header__search-form__form {
-  position: relative;
   width: 100%;
-  flex: 1;
+  position: relative;
 }
 
-/* Search field container - Override base.css field styles */
+/* Search field container - remove default borders */
 .header__search-field {
   position: relative;
   margin: 0;
   width: 100%;
-  flex: 1;
 }
 
 .header__search-field:before,
@@ -41,343 +38,71 @@
   display: none !important;
 }
 
-/* Search input field - Complete override with highest specificity */
-.header__search-form .header__search-input,
-.header__search-form input[type="search"].header__search-input,
-.header__search-form .search__input.header__search-input,
-.header__search-form .field__input.header__search-input {
-  /* Size and position */
+/* Search input field - high specificity override */
+.header__search-form .search__input.field__input {
+  /* Sizing and positioning */
   width: 100% !important;
   height: 45px !important;
   padding: 0 50px 0 20px !important;
   margin: 0 !important;
   
-  /* Border and background - use defaults if no section settings */
-  border: 2px solid rgba(255,255,255,0.3) !important;
+  /* Border and background */
+  border: 2px solid var(--color-search-border, rgba(255,255,255,0.3)) !important;
   border-radius: 25px !important;
-  background-color: rgba(255,255,255,0.15) !important;
+  background-color: var(--color-search-background, rgba(255,255,255,0.15)) !important;
   
   /* Text styling */
-  color: #ffffff !important;
-  font-size: 14px !important;
-  font-weight: 400 !important;
-  line-height: 1.4 !important;
+  color: var(--color-search-text, #ffffff) !important;
+  font-size: 1rem !important;
   
-  /* Effects */
-  transition: all 0.3s ease !important;
-  box-shadow: 0 4px 15px rgba(0,0,0,0.1) !important;
-  backdrop-filter: blur(10px) !important;
-  
-  /* Reset webkit styles */
-  -webkit-appearance: none !important;
-  appearance: none !important;
-  
-  /* Override base.css field styles */
-  top: auto !important;
-  left: auto !important;
-  right: auto !important;
-  bottom: auto !important;
-  flex-grow: unset !important;
-  text-align: left !important;
+  /* Transitions and appearance */
+  transition: all 0.2s ease-in-out !important;
+  -webkit-appearance: none;
 }
 
-/* Focus state - Complete override */
-.header__search-form .header__search-input:focus,
-.header__search-form input[type="search"].header__search-input:focus,
-.header__search-form .search__input.header__search-input:focus,
-.header__search-form .field__input.header__search-input:focus {
-  border-color: rgba(255,255,255,0.8) !important;
-  background-color: rgba(255,255,255,0.25) !important;
-  outline: none !important;
-  box-shadow: 0 0 0 3px rgba(255,255,255,0.2), 
-              0 8px 25px rgba(0,0,0,0.15) !important;
-  transform: translateY(-2px) !important;
-  color: #ffffff !important;
-  border-radius: 25px !important;
-  
-  /* Override base.css focus behavior */
-  padding: 0 50px 0 20px !important;
-  margin: 0 !important;
-}
-
-/* Placeholder styling - Complete override */
-.header__search-form .header__search-input::placeholder,
-.header__search-form input[type="search"].header__search-input::placeholder,
-.header__search-form .search__input.header__search-input::placeholder,
-.header__search-form .field__input.header__search-input::placeholder {
-  color: rgba(255,255,255,0.7) !important;
-  font-style: normal !important;
-  font-weight: 300 !important;
-  opacity: 1 !important;
-}
-
-/* Search button - Complete override */
-.header__search-form .header__search-button,
-.header__search-form .search__button.header__search-button,
-.header__search-form .field__button.header__search-button {
-  position: absolute !important;
-  right: 8px !important;
-  top: 50% !important;
-  transform: translateY(-50%) !important;
-  width: 30px !important;
-  height: 30px !important;
-  background: rgba(255,255,255,0.2) !important;
-  border: none !important;
-  border-radius: 50% !important;
-  cursor: pointer !important;
-  transition: all 0.3s ease !important;
-  backdrop-filter: blur(10px) !important;
-  display: flex !important;
-  align-items: center !important;
-  justify-content: center !important;
-  z-index: 2 !important;
-  padding: 0 !important;
-}
-
-.header__search-form .header__search-button:hover,
-.header__search-form .search__button.header__search-button:hover,
-.header__search-form .field__button.header__search-button:hover {
-  background: rgba(255,255,255,0.3) !important;
-  transform: translateY(-50%) scale(1.1) !important;
-}
-
-.header__search-form .header__search-button .icon,
-.header__search-form .search__button.header__search-button .icon,
-.header__search-form .field__button.header__search-button .icon {
-  width: 16px !important;
-  height: 16px !important;
-  color: #ffffff !important;
-  fill: #ffffff !important;
-}
-
-/* Hide label - Complete override */
-.header__search-form .header__search-field .field__label,
-.header__search-form .field__label {
-  display: none !important;
-  position: absolute !important;
-  left: -9999px !important;
-  opacity: 0 !important;
-}
-
-/* Predictive search dropdown - Complete override */
-.header__search-form .predictive-search--header {
-  position: absolute;
-  top: calc(100% + 10px);
-  left: 0;
-  right: 0;
-  background: rgba(255,255,255,0.95) !important;
-  backdrop-filter: blur(15px) !important;
-  border: 1px solid rgba(255,255,255,0.2) !important;
-  border-radius: 15px !important;
-  box-shadow: 0 10px 40px rgba(0,0,0,0.2) !important;
-  z-index: 1000;
-  max-height: 400px;
-  overflow-y: auto;
-  opacity: 0;
-  transform: translateY(-10px);
-  transition: all 0.3s ease;
-}
-
-.header__search-form .predictive-search--header[data-predictive-search-visible] {
+/* Placeholder styling */
+.header__search-form .search__input.field__input::placeholder {
+  color: var(--color-search-placeholder, rgba(255,255,255,0.7)) !important;
   opacity: 1;
-  transform: translateY(0);
 }
 
-/* Ensure predictive search text is visible */
-.header__search-form .predictive-search--header * {
-  color: #333333 !important;
+/* Focus state for the input */
+.header__search-form .search__input.field__input:focus {
+  border-color: var(--color-search-border-focus, #ffffff) !important;
+  box-shadow: 0 0 10px rgba(255,255,255,0.2);
 }
 
-/* Predictive search dropdown - Modern Glass */
-.predictive-search--header {
+/* Search button styling */
+.header__search-form .search__button {
   position: absolute;
-  top: calc(100% + 10px);
-  left: 0;
-  right: 0;
-  background: rgba(255,255,255,0.95) !important;
-  backdrop-filter: blur(15px) !important;
-  border: 1px solid rgba(255,255,255,0.2) !important;
-  border-radius: 15px !important;
-  box-shadow: 0 10px 40px rgba(0,0,0,0.2) !important;
-  z-index: 1000;
-  max-height: 400px;
-  overflow-y: auto;
-  opacity: 0;
-  transform: translateY(-10px);
-  transition: all 0.3s ease;
-}
-
-.predictive-search--header[data-predictive-search-visible] {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-/* Ensure predictive search text is visible */
-.predictive-search--header * {
-  color: #333333 !important;
-}
-
-/* Override any conflicting search styles */
-.header__search-form .search__input,
-.header__search-form .field__input {
-  width: 100% !important;
-  height: 45px !important;
-  padding: 0 50px 0 20px !important;
-  border: 2px solid rgba(255,255,255,0.3) !important;
-  border-radius: 25px !important;
-  background: rgba(255,255,255,0.15) !important;
-  color: #ffffff !important;
-  font-size: 14px !important;
-  backdrop-filter: blur(10px) !important;
-}
-
-.header__search-form .search__input:focus,
-.header__search-form .field__input:focus {
-  border-radius: 25px !important;
-  background: rgba(255,255,255,0.25) !important;
-  color: #ffffff !important;
-  box-shadow: 0 0 0 3px rgba(255,255,255,0.2), 
-              0 8px 25px rgba(0,0,0,0.15) !important;
-}
-
-/* ========================================
-   SEARCH BAR VARIATIONS
-   Uncomment the style you prefer
-   ======================================== */
-
-/* Modern Flat Style */
-/*
-.header__search-input {
-  border-radius: 8px;
-  border: 2px solid rgba(var(--color-foreground), 0.1);
-  background: rgb(var(--color-background));
-  box-shadow: none;
-}
-
-.header__search-button {
-  border-radius: 6px;
-  background: rgba(var(--color-foreground), 0.1);
-}
-*/
-
-/* Minimal Underline Style */
-/*
-.header__search-input {
-  border: none;
-  border-bottom: 2px solid rgba(var(--color-foreground), 0.3);
-  border-radius: 0;
-  background: transparent;
-  box-shadow: none;
-  padding: 0.8rem 4rem 0.8rem 0.5rem;
-}
-
-.header__search-input:focus {
-  border-bottom-color: rgb(var(--color-foreground));
-  box-shadow: none;
-  transform: none;
-}
-*/
-
-/* Bold Rounded Style */
-/*
-.header__search-input {
-  border: 3px solid rgb(var(--color-foreground));
-  border-radius: 30px;
-  font-weight: 600;
-}
-
-.header__search-button {
-  background: rgb(var(--color-foreground));
-  border: 2px solid rgb(var(--color-foreground));
-}
-*/
-
-/* ========================================
-   RESPONSIVE DESIGN
-   ======================================== */
-
-/* Tablet adjustments */
-@media screen and (max-width: 1200px) {
-  .header__search-form {
-    max-width: 350px;
-  }
-}
-
-@media screen and (max-width: 990px) {
-  .header__search-form {
-    max-width: 300px;
-  }
-  
-  .header__search-input {
-    font-size: 1.5rem;
-    padding: 0.9rem 4rem 0.9rem 1.2rem;
-  }
-}
-
-/* Mobile adjustments */
-@media screen and (max-width: 749px) {
-  .header__search-form {
-    max-width: 100%;
-  }
-  
-  .header__search-input {
-    font-size: 1.6rem;
-    padding: 1rem 4.5rem 1rem 1.5rem;
-    border-radius: 20px;
-  }
-  
-  .header__search-button {
-    padding: 0.8rem;
-  }
-  
-  .header__search-button .icon {
-    width: 1.8rem;
-    height: 1.8rem;
-  }
-}
-
-/* ========================================
-   ANIMATION EFFECTS
-   ======================================== */
-
-/* Smooth entrance animation */
-@keyframes searchBarSlideIn {
-  from {
-    opacity: 0;
-    transform: translateX(-20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateX(0);
-  }
-}
-
-.header__search-form {
-  animation: searchBarSlideIn 0.5s ease-out;
-}
-
-/* Loading spinner for predictive search */
-.predictive-search__loading-state {
+  right: 5px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 40px;
+  height: 40px;
   display: flex;
+  align-items: center;
   justify-content: center;
-  padding: 2rem;
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  color: var(--color-search-icon, #ffffff);
 }
 
-/* Search suggestions styling */
-.predictive-search__results {
-  padding: 1rem 0;
+.header__search-form .search__button .icon-search {
+  width: 20px;
+  height: 20px;
 }
 
-.predictive-search__item {
-  padding: 0.8rem 1.5rem;
-  border-bottom: 1px solid rgba(var(--color-foreground), 0.1);
-  transition: background-color 0.2s ease;
-}
+/* Responsive adjustments */
+@media (max-width: 749px) {
+  .header__search-form {
+    min-width: 250px !important;
+    max-width: 280px !important; /* Default mobile state */
+  }
 
-.predictive-search__item:hover {
-  background: rgba(var(--color-foreground), 0.05);
-}
-
-.predictive-search__item:last-child {
-  border-bottom: none;
+  .header__search-form.search-is-active {
+    max-width: calc(100vw - 40px) !important; /* Expanded mobile state */
+  }
 }

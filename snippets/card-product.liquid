@@ -76,7 +76,6 @@
                 {% endunless %}
                 width="{{ card_product.featured_media.width }}"
                 height="{{ card_product.featured_media.height }}"
-                onerror="console.log('Image failed to load:', this.src); this.style.display='none'; this.nextElementSibling && (this.nextElementSibling.style.display='flex');"
               >
               {% comment %}theme-check-enable ImgLazyLoading{% endcomment %}
               

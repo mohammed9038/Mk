@@ -57,10 +57,11 @@
     {%- endif -%}
     
     {%- comment -%} Search functionality enhancement {%- endcomment -%}
-    <script src="{{ 'search-bar-enhancer.js' | asset_url }}" defer></script>
+    <script src="{{ 'advanced-search-controller.js' | asset_url }}" defer></script>
     
     {%- comment -%} Product card enhancements for all pages {%- endcomment -%}
     <script src="{{ 'product-card-enhancer.js' | asset_url }}" defer></script>
+    <script src="{{ 'image-fallback.js' | asset_url }}" defer></script>
     
     {%- comment -%} Advanced Performance System {%- endcomment -%}
     {%- if 'performance-utils.js' | asset_url -%}
