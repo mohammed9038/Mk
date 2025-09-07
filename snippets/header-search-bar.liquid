@@ -94,21 +94,23 @@
     color: {{ section.settings.search_text | default: '#ffffff' }} !important;
     font-size: 14px !important;
     font-weight: 400 !important;
-    backdrop-filter: blur(10px) !important;
     transition: all 0.3s ease !important;
     box-shadow: 0 4px 15px rgba(0,0,0,0.1) !important;
+    -webkit-appearance: none !important;
+    appearance: none !important;
   }
 
   .header__search-input:focus {
     border-color: {{ section.settings.search_border | default: 'rgba(255,255,255,0.8)' }} !important;
     background-color: {{ section.settings.search_background | default: 'rgba(255,255,255,0.25)' }} !important;
     outline: none !important;
-    box-shadow: 0 0 0 3px rgba(255,255,255,0.2), 0 8px 25px rgba(0,0,0,0.15) !important;
+    box-shadow: 0 0 0 3px {{ section.settings.search_border | default: 'rgba(255,255,255,0.2)' | color_modify: 'alpha', 0.3 }}, 0 8px 25px rgba(0,0,0,0.15) !important;
     transform: translateY(-2px) !important;
+    color: {{ section.settings.search_text | default: '#ffffff' }} !important;
   }
 
   .header__search-input::placeholder {
-    color: {{ section.settings.search_text | default: 'rgba(255,255,255,0.7)' }} !important;
+    color: {{ section.settings.search_text | default: '#ffffff' | color_modify: 'alpha', 0.7 }} !important;
     font-style: normal !important;
     font-weight: 300 !important;
   }
@@ -227,5 +229,33 @@
       width: 28px !important;
       height: 28px !important;
     }
+  }
+
+  /* Force color overrides - Higher specificity */
+  .header__search-form .header__search-input,
+  .header__search-form input[type="search"],
+  .header__search-form .search__input,
+  .header__search-form .field__input {
+    background-color: {{ section.settings.search_background | default: 'rgba(255,255,255,0.15)' }} !important;
+    color: {{ section.settings.search_text | default: '#ffffff' }} !important;
+    border-color: {{ section.settings.search_border | default: 'rgba(255,255,255,0.3)' }} !important;
+    border-radius: 25px !important;
+  }
+
+  .header__search-form .header__search-input:focus,
+  .header__search-form input[type="search"]:focus,
+  .header__search-form .search__input:focus,
+  .header__search-form .field__input:focus {
+    background-color: {{ section.settings.search_background | default: 'rgba(255,255,255,0.25)' }} !important;
+    color: {{ section.settings.search_text | default: '#ffffff' }} !important;
+    border-color: {{ section.settings.search_border | default: 'rgba(255,255,255,0.8)' }} !important;
+    border-radius: 25px !important;
+  }
+
+  .header__search-form .header__search-input::placeholder,
+  .header__search-form input[type="search"]::placeholder,
+  .header__search-form .search__input::placeholder,
+  .header__search-form .field__input::placeholder {
+    color: {{ section.settings.search_text | default: '#ffffff' | color_modify: 'alpha', 0.7 }} !important;
   }
 </style>
