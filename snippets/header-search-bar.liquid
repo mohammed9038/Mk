@@ -64,61 +64,168 @@
 {%- endif -%}
 
 <style>
-  /* Dynamic styling based on section settings */
+  /* Modern Search Bar Styling */
   .header__search-form {
     width: 100%;
     max-width: {{ section.settings.search_width | default: 400 }}px;
+    position: relative;
+    display: flex;
+    align-items: center;
+  }
+
+  .header__search-form__form {
+    width: 100%;
+    position: relative;
+  }
+
+  .header__search-field {
+    position: relative;
+    width: 100%;
+    margin: 0;
   }
 
   .header__search-input {
-    height: {{ section.settings.search_height | default: 40 }}px;
-    border-radius: {{ section.settings.search_border_radius | default: 25 }}px;
-    background-color: {{ section.settings.search_background | default: '#ffffff' }};
-    border-color: {{ section.settings.search_border | default: '#e0e0e0' }};
-    color: {{ section.settings.search_text | default: '#333333' }};
-    padding: 0 4rem 0 1.5rem;
+    width: 100% !important;
+    height: 45px !important;
+    padding: 0 50px 0 20px !important;
+    border: 2px solid {{ section.settings.search_border | default: 'rgba(255,255,255,0.3)' }} !important;
+    border-radius: 25px !important;
+    background-color: {{ section.settings.search_background | default: 'rgba(255,255,255,0.15)' }} !important;
+    color: {{ section.settings.search_text | default: '#ffffff' }} !important;
+    font-size: 14px !important;
+    font-weight: 400 !important;
+    backdrop-filter: blur(10px) !important;
+    transition: all 0.3s ease !important;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1) !important;
+  }
+
+  .header__search-input:focus {
+    border-color: {{ section.settings.search_border | default: 'rgba(255,255,255,0.8)' }} !important;
+    background-color: {{ section.settings.search_background | default: 'rgba(255,255,255,0.25)' }} !important;
+    outline: none !important;
+    box-shadow: 0 0 0 3px rgba(255,255,255,0.2), 0 8px 25px rgba(0,0,0,0.15) !important;
+    transform: translateY(-2px) !important;
+  }
+
+  .header__search-input::placeholder {
+    color: {{ section.settings.search_text | default: 'rgba(255,255,255,0.7)' }} !important;
+    font-style: normal !important;
+    font-weight: 300 !important;
   }
 
   .header__search-button {
-    background-color: {{ section.settings.search_button_bg | default: '#333333' }};
-    border-radius: 50%;
+    position: absolute !important;
+    right: 8px !important;
+    top: 50% !important;
+    transform: translateY(-50%) !important;
+    width: 30px !important;
+    height: 30px !important;
+    background: {{ section.settings.search_button_bg | default: 'rgba(255,255,255,0.2)' }} !important;
+    border: none !important;
+    border-radius: 50% !important;
+    cursor: pointer !important;
+    transition: all 0.3s ease !important;
+    backdrop-filter: blur(10px) !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+  }
+
+  .header__search-button:hover {
+    background: {{ section.settings.search_button_bg | default: 'rgba(255,255,255,0.3)' }} !important;
+    transform: translateY(-50%) scale(1.1) !important;
   }
 
   .header__search-button .icon {
-    color: {{ section.settings.search_button_icon | default: '#ffffff' }};
+    width: 16px !important;
+    height: 16px !important;
+    color: {{ section.settings.search_button_icon | default: '#ffffff' }} !important;
+    fill: {{ section.settings.search_button_icon | default: '#ffffff' }} !important;
+  }
+
+  .header__search-field .field__label {
+    display: none !important;
+  }
+
+  /* Predictive search styling */
+  .predictive-search--header {
+    position: absolute;
+    top: calc(100% + 10px);
+    left: 0;
+    right: 0;
+    background: rgba(255,255,255,0.95) !important;
+    backdrop-filter: blur(15px) !important;
+    border: 1px solid rgba(255,255,255,0.2) !important;
+    border-radius: 15px !important;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.2) !important;
+    z-index: 1000;
+    max-height: 400px;
+    overflow-y: auto;
+    opacity: 0;
+    transform: translateY(-10px);
+    transition: all 0.3s ease;
+  }
+
+  .predictive-search--header[data-predictive-search-visible] {
+    opacity: 1;
+    transform: translateY(0);
   }
 
   /* Style variations */
   {%- if section.settings.search_style == 'flat' -%}
     .header__search-input {
-      border-radius: 8px;
-      border-width: 2px;
-      box-shadow: none;
+      border-radius: 10px !important;
+      backdrop-filter: none !important;
+      background-color: {{ section.settings.search_background | default: '#ffffff' }} !important;
+      color: {{ section.settings.search_text | default: '#333333' }} !important;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1) !important;
     }
     .header__search-button {
-      border-radius: 6px;
+      border-radius: 8px !important;
+      background: {{ section.settings.search_button_bg | default: '#333333' }} !important;
     }
   {%- elsif section.settings.search_style == 'minimal' -%}
     .header__search-input {
-      border: none;
-      border-bottom: 2px solid {{ section.settings.search_border | default: '#e0e0e0' }};
-      border-radius: 0;
-      background: transparent;
-      box-shadow: none;
+      border: none !important;
+      border-bottom: 2px solid {{ section.settings.search_border | default: 'rgba(255,255,255,0.5)' }} !important;
+      border-radius: 0 !important;
+      background: transparent !important;
+      backdrop-filter: none !important;
+      box-shadow: none !important;
+    }
+    .header__search-input:focus {
+      box-shadow: none !important;
+      transform: none !important;
     }
   {%- elsif section.settings.search_style == 'bold' -%}
     .header__search-input {
-      border-width: 3px;
-      font-weight: 600;
+      border-width: 3px !important;
+      font-weight: 600 !important;
     }
   {%- endif -%}
 
-  /* Position-specific styles */
-  .header__search-bar--left {
-    margin-right: 2rem;
+  /* Responsive design */
+  @media screen and (max-width: 990px) {
+    .header__search-form {
+      max-width: 300px;
+    }
+    .header__search-input {
+      height: 40px !important;
+      font-size: 13px !important;
+    }
   }
-  
-  .header__search-bar--right {
-    margin-left: 2rem;
+
+  @media screen and (max-width: 749px) {
+    .header__search-form {
+      max-width: 250px;
+    }
+    .header__search-input {
+      height: 38px !important;
+      padding: 0 45px 0 15px !important;
+    }
+    .header__search-button {
+      width: 28px !important;
+      height: 28px !important;
+    }
   }
 </style>
