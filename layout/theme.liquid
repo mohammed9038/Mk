@@ -259,7 +259,22 @@
       }
     {% endstyle %}
 
-    {{ 'base.css' | asset_url | stylesheet_tag }}
+    {%- comment -%}
+    Performance Optimization: Load critical CSS inline for fastest rendering
+    {%- endcomment -%}
+    {{ 'base-critical.css' | asset_url | stylesheet_tag: preload: true }}
+    
+    {%- comment -%}
+    Load optimized modular CSS asynchronously
+    {%- endcomment -%}
+    <link rel="stylesheet" href="{{ 'base-variables.css' | asset_url }}" media="print" onload="this.media='all'">
+    <link rel="stylesheet" href="{{ 'component-grid-optimized.css' | asset_url }}" media="print" onload="this.media='all'">
+    <link rel="stylesheet" href="{{ 'base.css' | asset_url }}" media="print" onload="this.media='all'">
+    <noscript>
+      {{ 'base-variables.css' | asset_url | stylesheet_tag }}
+      {{ 'component-grid-optimized.css' | asset_url | stylesheet_tag }}
+      {{ 'base.css' | asset_url | stylesheet_tag }}
+    </noscript>
 
     {%- unless settings.type_body_font.system? -%}
       <link rel="preload" as="font" href="{{ settings.type_body_font | font_url }}" type="font/woff2" crossorigin>
