@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Al-Shariqah Theme - Optimization Test Page</title>
+    
+    <!-- Critical CSS (simulated) -->
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: #f5f5f5;
+            color: #333;
+        }
+        
+        .test-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            padding: 40px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .test-header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid #e0e0e0;
+        }
+        
+        .test-section {
+            margin-bottom: 40px;
+            padding: 20px;
+            border: 1px solid #e0e0e0;
+            border-radius: 4px;
+        }
+        
+        .test-section h3 {
+            margin-top: 0;
+            color: #2c5282;
+            border-bottom: 1px solid #e0e0e0;
+            padding-bottom: 10px;
+        }
+        
+        .component-test {
+            margin: 20px 0;
+            padding: 15px;
+            background: #f9f9f9;
+            border-radius: 4px;
+        }
+        
+        .btn {
+            background: #3182ce;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        
+        .btn:hover {
+            background: #2c5282;
+        }
+        
+        .btn:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+        }
+        
+        .results {
+            margin-top: 20px;
+            padding: 20px;
+            background: #f0f4f8;
+            border-radius: 4px;
+            border-left: 4px solid #3182ce;
+        }
+        
+        .status {
+            display: inline-block;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+        
+        .status.pass { background: #c6f6d5; color: #22543d; }
+        .status.fail { background: #fed7d7; color: #742a2a; }
+        .status.warn { background: #fefcbf; color: #744210; }
+        
+        .loading {
+            opacity: 0.6;
+            pointer-events: none;
+        }
+        
+        .quantity-input {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin: 10px 0;
+        }
+        
+        .quantity-input input {
+            width: 60px;
+            text-align: center;
+            padding: 5px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+    <div class="test-container">
+        <div class="test-header">
+            <h1>🧪 Al-Shariqah Theme Optimization Tests</h1>
+            <p>Testing all optimized components and performance features</p>
+            <button id="runAllTests" class="btn">Run All Tests</button>
+            <button id="runQuickTest" class="btn">Quick Test</button>
+        </div>
+
+        <!-- Component Tests -->
+        <div class="test-section">
+            <h3>📦 Core Components Test</h3>
+            
+            <!-- Quantity Input Test -->
+            <div class="component-test">
+                <h4>Quantity Input Component</h4>
+                <quantity-input data-min="1" data-max="10">
+                    <button name="minus" class="btn">-</button>
+                    <input type="number" value="1" min="1" max="10">
+                    <button name="plus" class="btn">+</button>
+                </quantity-input>
+            </div>
+
+            <!-- Modal Test -->
+            <div class="component-test">
+                <h4>Modal Dialog Component</h4>
+                <modal-opener data-modal="#test-modal">
+                    <button class="btn">Open Test Modal</button>
+                </modal-opener>
+                
+                <modal-dialog id="test-modal" style="display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background: white; padding: 20px; border-radius: 8px; box-shadow: 0 4px 20px rgba(0,0,0,0.3); z-index: 1000;">
+                    <h3>Test Modal</h3>
+                    <p>This modal tests the optimized modal component.</p>
+                    <button id="ModalClose-test" class="btn">Close Modal</button>
+                </modal-dialog>
+            </div>
+
+            <!-- Deferred Media Test -->
+            <div class="component-test">
+                <h4>Deferred Media Component</h4>
+                <deferred-media>
+                    <button id="Deferred-Poster-test" class="btn">Load Media</button>
+                    <template>
+                        <div style="padding: 20px; background: #e2e8f0; border-radius: 4px;">
+                            <p>✅ Deferred media content loaded successfully!</p>
+                        </div>
+                    </template>
+                </deferred-media>
+            </div>
+        </div>
+
+        <!-- Performance Tests -->
+        <div class="test-section">
+            <h3>⚡ Performance Features Test</h3>
+            
+            <div class="component-test">
+                <h4>Performance Monitoring</h4>
+                <button id="testWebP" class="btn">Test WebP Support</button>
+                <button id="testMetrics" class="btn">Check Performance Metrics</button>
+                <button id="testImageOptimization" class="btn">Test Image Optimization</button>
+            </div>
+
+            <div class="component-test">
+                <h4>Component Loading System</h4>
+                <button id="testComponentLoader" class="btn">Test Component Loader</button>
+                <button id="loadTestComponent" class="btn">Load Test Component</button>
+                <button id="checkLoadedComponents" class="btn">Check Loaded Components</button>
+            </div>
+        </div>
+
+        <!-- Utility Tests -->
+        <div class="test-section">
+            <h3>🔧 Utility Functions Test</h3>
+            
+            <div class="component-test">
+                <h4>Theme Utilities</h4>
+                <button id="testDebounce" class="btn">Test Debounce</button>
+                <button id="testThrottle" class="btn">Test Throttle</button>
+                <button id="testFocusManager" class="btn">Test Focus Management</button>
+            </div>
+        </div>
+
+        <!-- Results Display -->
+        <div class="results" id="testResults" style="display: none;">
+            <h3>📊 Test Results</h3>
+            <div id="resultsContent"></div>
+        </div>
+    </div>
+
+    <!-- Load our optimized JavaScript files -->
+    <script src="assets/core-critical.js"></script>
+    <script src="assets/global-optimized.js"></script>
+    <script src="assets/performance-utils.js"></script>
+    <script src="assets/component-loader-advanced.js"></script>
+    <script src="assets/optimization-test-suite.js"></script>
+
+    <script>
+        // Test page functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const resultsDiv = document.getElementById('testResults');
+            const resultsContent = document.getElementById('resultsContent');
+            
+            // Show results function
+            function showResults(content) {
+                resultsContent.innerHTML = content;
+                resultsDiv.style.display = 'block';
+                resultsDiv.scrollIntoView({ behavior: 'smooth' });
+            }
+            
+            // Run all tests button
+            document.getElementById('runAllTests').addEventListener('click', async function() {
+                this.disabled = true;
+                this.textContent = 'Running Tests...';
+                
+                // Clear previous results
+                showResults('<p>🔄 Running comprehensive optimization tests...</p>');
+                
+                // Run the test suite (it will display results in console)
+                setTimeout(() => {
+                    const testResults = window.AlShariqahTheme?.TestResults;
+                    if (testResults) {
+                        const html = `
+                            <div>
+                                <h4>Test Summary:</h4>
+                                <p><span class="status pass">PASSED: ${testResults.passed}</span></p>
+                                <p><span class="status fail">FAILED: ${testResults.failed}</span></p>
+                                <p><span class="status warn">WARNINGS: ${testResults.warnings}</span></p>
+                                <p><strong>Success Rate: ${((testResults.passed / (testResults.passed + testResults.failed + testResults.warnings)) * 100).toFixed(1)}%</strong></p>
+                                <p>📝 Check browser console for detailed results.</p>
+                            </div>
+                        `;
+                        showResults(html);
+                    } else {
+                        showResults('<p>❌ Test results not available. Check console for errors.</p>');
+                    }
+                    
+                    this.disabled = false;
+                    this.textContent = 'Run All Tests';
+                }, 2000);
+            });
+            
+            // Quick test button
+            document.getElementById('runQuickTest').addEventListener('click', function() {
+                const checks = [
+                    { name: 'AlShariqahTheme namespace', test: () => typeof window.AlShariqahTheme !== 'undefined' },
+                    { name: 'ThemeUtils loaded', test: () => window.AlShariqahTheme?.ThemeUtils },
+                    { name: 'ComponentLoader loaded', test: () => window.AlShariqahTheme?.ComponentLoader },
+                    { name: 'PerformanceOptimizer loaded', test: () => window.AlShariqahTheme?.PerformanceOptimizer },
+                    { name: 'Custom elements support', test: () => 'customElements' in window },
+                    { name: 'Performance API available', test: () => 'performance' in window }
+                ];
+                
+                let passed = 0;
+                let failed = 0;
+                let html = '<h4>Quick Test Results:</h4>';
+                
+                checks.forEach(check => {
+                    const result = check.test();
+                    if (result) {
+                        passed++;
+                        html += `<p><span class="status pass">✅ ${check.name}</span></p>`;
+                    } else {
+                        failed++;
+                        html += `<p><span class="status fail">❌ ${check.name}</span></p>`;
+                    }
+                });
+                
+                html += `<p><strong>Quick Test: ${passed}/${checks.length} passed</strong></p>`;
+                showResults(html);
+            });
+            
+            // Individual test buttons
+            document.getElementById('testWebP').addEventListener('click', async function() {
+                if (window.AlShariqahTheme?.PerformanceOptimizer?.supportsWebP) {
+                    const supports = await window.AlShariqahTheme.PerformanceOptimizer.supportsWebP();
+                    showResults(`<p>WebP Support: <strong>${supports ? 'YES' : 'NO'}</strong></p>`);
+                } else {
+                    showResults('<p>❌ PerformanceOptimizer not available</p>');
+                }
+            });
+            
+            document.getElementById('testComponentLoader').addEventListener('click', function() {
+                if (window.AlShariqahTheme?.ComponentLoader) {
+                    const loader = window.AlShariqahTheme.ComponentLoader;
+                    const loadedComponents = loader.getLoadedComponents ? loader.getLoadedComponents() : [];
+                    showResults(`
+                        <p>✅ ComponentLoader is working</p>
+                        <p>Loaded components: ${loadedComponents.length}</p>
+                        <pre>${JSON.stringify(loadedComponents, null, 2)}</pre>
+                    `);
+                } else {
+                    showResults('<p>❌ ComponentLoader not available</p>');
+                }
+            });
+            
+            document.getElementById('testDebounce').addEventListener('click', function() {
+                if (window.AlShariqahTheme?.ThemeUtils?.debounce) {
+                    let callCount = 0;
+                    const debouncedFn = window.AlShariqahTheme.ThemeUtils.debounce(() => {
+                        callCount++;
+                        showResults(`<p>✅ Debounce working! Called ${callCount} time(s)</p>`);
+                    }, 500);
+                    
+                    // Call multiple times quickly
+                    debouncedFn();
+                    debouncedFn();
+                    debouncedFn();
+                    
+                    showResults('<p>🔄 Testing debounce... (should see result in 500ms)</p>');
+                } else {
+                    showResults('<p>❌ Debounce function not available</p>');
+                }
+            });
+        });
+    </script>
+</body>
+</html>

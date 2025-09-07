@@ -1,0 +1,64 @@
+{% comment %}
+  Renders an inline header search bar (not modal). Should be used with 'header.liquid'
+
+  Accepts:
+  - input_id: {String} Id for the search input element (required)
+
+  Usage:
+  {% render 'header-search-bar', input_id: 'HeaderSearch' %}
+{% endcomment %}
+
+{%- assign search_placeholder = section.settings.search_placeholder | default: 'Search products...' -%}
+
+{%- if settings.predictive_search_enabled -%}
+  <predictive-search class="header__search-form" data-loading-text="{{ 'accessibility.loading' | t }}">
+{%- else -%}
+  <search-form class="header__search-form">
+{%- endif -%}
+  <form action="{{ routes.search_url }}" method="get" role="search" class="search header__search-form__form">
+    <div class="field header__search-field">
+      <input
+        class="search__input field__input header__search-input"
+        id="{{ input_id }}"
+        type="search"
+        name="q"
+        value="{{ search.terms | escape }}"
+        placeholder="{{ search_placeholder }}"
+        {%- if settings.predictive_search_enabled -%}
+          role="combobox"
+          aria-expanded="false"
+          aria-owns="predictive-search-results"
+          aria-controls="predictive-search-results"
+          aria-haspopup="listbox"
+          aria-autocomplete="list"
+          autocorrect="off"
+          autocomplete="off"
+          autocapitalize="off"
+          spellcheck="false"
+        {%- endif -%}
+      >
+      <label class="field__label" for="{{ input_id }}">{{ 'general.search.search' | t }}</label>
+      <button
+        type="submit"
+        class="search__button field__button header__search-button"
+        aria-label="{{ 'general.search.search' | t }}"
+      >
+        <svg class="icon icon-search" aria-hidden="true" focusable="false">
+          <use href="#icon-search">
+        </svg>
+      </button>
+
+      {%- if settings.predictive_search_enabled -%}
+        <div class="predictive-search predictive-search--header" tabindex="-1" data-predictive-search>
+          {%- render 'loading-spinner', class: 'predictive-search__loading-state' -%}
+        </div>
+
+        <span class="predictive-search-status visually-hidden" role="status" aria-hidden="true"></span>
+      {%- endif -%}
+    </div>
+  </form>
+{%- if settings.predictive_search_enabled -%}
+  </predictive-search>
+{%- else -%}
+  </search-form>
+{%- endif -%}

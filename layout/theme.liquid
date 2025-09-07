@@ -36,11 +36,43 @@
 
     {% render 'meta-tags' %}
 
-    <script src="{{ 'constants.js' | asset_url }}" defer="defer"></script>
-    <script src="{{ 'pubsub.js' | asset_url }}" defer="defer"></script>
-    <script src="{{ 'global.js' | asset_url }}" defer="defer"></script>
+    {%- comment -%}
+    JavaScript Performance Optimization Strategy:
+    1. Critical JS loads immediately (blocking)
+    2. Component loader manages smart loading
+    3. Non-critical JS loads asynchronously
+    {%- endcomment -%}
+    
+    {%- comment -%} PHASE 4 ADVANCED JAVASCRIPT OPTIMIZATION {%- endcomment -%}
+    
+    {%- comment -%} Core Critical JavaScript (loads immediately) {%- endcomment -%}
+    <script src="{{ 'core-critical.js' | asset_url }}" defer></script>
+    <script src="{{ 'global-optimized.js' | asset_url }}" defer></script>
+    
+    {%- comment -%} Advanced Performance System {%- endcomment -%}
+    <script src="{{ 'performance-utils.js' | asset_url }}" defer></script>
+    <script src="{{ 'component-loader-advanced.js' | asset_url }}" defer></script>
+    
+    {%- comment -%} Template-specific optimizations {%- endcomment -%}
+    {%- if template contains 'product' -%}
+      <link rel="preload" href="{{ 'product-components.js' | asset_url }}" as="script">
+      <link rel="preload" href="{{ 'quick-order-optimized.js' | asset_url }}" as="script">
+    {%- endif -%}
+    
+    {%- if template contains 'collection' or template contains 'search' -%}
+      <link rel="preload" href="{{ 'facets-optimized.js' | asset_url }}" as="script">
+      <link rel="preload" href="{{ 'search-optimized.js' | asset_url }}" as="script">
+    {%- endif -%}
+    
+    {%- if template contains 'cart' -%}
+      <link rel="preload" href="{{ 'cart-optimized.js' | asset_url }}" as="script">
+    {%- endif -%}
+    
+    {%- unless template == 'index' -%}
+      <link rel="preload" href="{{ 'menu-components.js' | asset_url }}" as="script">
+    {%- endunless -%}    {%- comment -%} Conditional feature loading {%- endcomment -%}
     {%- if settings.animations_reveal_on_scroll -%}
-      <script src="{{ 'animations.js' | asset_url }}" defer="defer"></script>
+      <script src="{{ 'animations.js' | asset_url }}" defer></script>
     {%- endif -%}
 
     {{ content_for_header }}
