@@ -28,6 +28,60 @@
   /* min-height: 70px; */ /* Taller navigation */
 }
 
+/* Theme Style Classes */
+.mobile-nav--ios {
+  background: rgba(255, 255, 255, 0.9) !important;
+  backdrop-filter: blur(20px);
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.mobile-nav--ios .mobile-nav__link {
+  color: #007AFF !important;
+}
+
+.mobile-nav--android {
+  background: #FFFFFF !important;
+  border-top: none;
+  box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.15);
+  border-radius: 0;
+}
+
+.mobile-nav--android .mobile-nav__link {
+  color: #6200EA !important;
+}
+
+.mobile-nav--android .mobile-nav__link.active {
+  background: rgba(98, 0, 234, 0.1);
+  border-radius: 12px;
+}
+
+.mobile-nav--dark {
+  background: #1A1A1A !important;
+  border-top: 1px solid #333;
+}
+
+.mobile-nav--dark .mobile-nav__link {
+  color: #FFFFFF !important;
+}
+
+.mobile-nav--dark .mobile-nav__link.active {
+  color: #00D4AA !important;
+}
+
+.mobile-nav--gradient {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+  border-top: none;
+}
+
+.mobile-nav--gradient .mobile-nav__link {
+  color: #FFFFFF !important;
+}
+
+.mobile-nav--gradient .mobile-nav__badge {
+  background: #FF6B6B !important;
+  color: #FFFFFF !important;
+}
+
 .mobile-nav__list {
   display: flex;
   justify-content: space-around;

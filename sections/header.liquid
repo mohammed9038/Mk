@@ -381,6 +381,40 @@
       padding-top: 0.5rem;
     }
   }
+
+  /* Mobile Navigation Dynamic Styles */
+  {% if section.settings.enable_mobile_navigation %}
+    {% if section.settings.mobile_nav_style == 'custom' %}
+      .mobile-nav--custom {
+        background: {{ section.settings.mobile_nav_background | color_modify: 'alpha', section.settings.mobile_nav_transparency | divided_by: 100.0 }} !important;
+        border-radius: {{ section.settings.mobile_nav_border_radius }}px {{ section.settings.mobile_nav_border_radius }}px 0 0;
+        border-top: 1px solid {{ section.settings.mobile_nav_background | color_darken: 10 }};
+      }
+      
+      .mobile-nav--custom .mobile-nav__link {
+        color: {{ section.settings.mobile_nav_text_color }} !important;
+      }
+      
+      .mobile-nav--custom .mobile-nav__link.active {
+        color: {{ section.settings.mobile_nav_active_color }} !important;
+      }
+      
+      .mobile-nav--custom .mobile-nav__badge {
+        background: {{ section.settings.mobile_nav_badge_color }} !important;
+        color: {{ section.settings.mobile_nav_badge_color | color_contrast: '#FFFFFF' }} !important;
+      }
+    {% endif %}
+  {% else %}
+    .mobile-nav {
+      display: none !important;
+    }
+    
+    @media screen and (max-width: 749px) {
+      body {
+        padding-bottom: 0 !important;
+      }
+    }
+  {% endif %}
 </style>
 
 {%- style -%}
@@ -1383,6 +1417,126 @@
       "unit": "px",
       "label": "t:sections.all.padding.padding_bottom",
       "default": 20
+    },
+    {
+      "type": "header",
+      "content": "Mobile Navigation Settings"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_mobile_navigation",
+      "label": "Enable Mobile Bottom Navigation",
+      "default": true,
+      "info": "Show app-style bottom navigation on mobile devices"
+    },
+    {
+      "type": "select",
+      "id": "mobile_nav_style",
+      "options": [
+        {
+          "value": "default",
+          "label": "Default Theme Style"
+        },
+        {
+          "value": "ios",
+          "label": "iOS Style (Blurred)"
+        },
+        {
+          "value": "android",
+          "label": "Android Material"
+        },
+        {
+          "value": "dark",
+          "label": "Dark Theme"
+        },
+        {
+          "value": "gradient",
+          "label": "Colorful Gradient"
+        },
+        {
+          "value": "custom",
+          "label": "Custom Colors"
+        }
+      ],
+      "default": "default",
+      "label": "Mobile Navigation Style"
+    },
+    {
+      "type": "select",
+      "id": "mobile_nav_height",
+      "options": [
+        {
+          "value": "compact",
+          "label": "Compact (40px)"
+        },
+        {
+          "value": "normal",
+          "label": "Normal (56px)"
+        },
+        {
+          "value": "tall",
+          "label": "Tall (72px)"
+        }
+      ],
+      "default": "normal",
+      "label": "Navigation Height"
+    },
+    {
+      "type": "checkbox",
+      "id": "mobile_nav_show_labels",
+      "label": "Show Text Labels",
+      "default": true,
+      "info": "Show text below icons (Home, Cart, etc.)"
+    },
+    {
+      "type": "color",
+      "id": "mobile_nav_background",
+      "label": "Background Color (Custom Style)",
+      "default": "#ffffff",
+      "info": "Only applies when Custom Colors style is selected"
+    },
+    {
+      "type": "color",
+      "id": "mobile_nav_text_color",
+      "label": "Icon & Text Color (Custom Style)",
+      "default": "#000000",
+      "info": "Only applies when Custom Colors style is selected"
+    },
+    {
+      "type": "color",
+      "id": "mobile_nav_active_color",
+      "label": "Active Icon Color (Custom Style)",
+      "default": "#007AFF",
+      "info": "Color for the current page icon"
+    },
+    {
+      "type": "color",
+      "id": "mobile_nav_badge_color",
+      "label": "Cart Badge Color (Custom Style)",
+      "default": "#FF3B30",
+      "info": "Background color for cart item count badge"
+    },
+    {
+      "type": "range",
+      "id": "mobile_nav_border_radius",
+      "min": 0,
+      "max": 30,
+      "step": 2,
+      "unit": "px",
+      "label": "Border Radius (Custom Style)",
+      "default": 0,
+      "info": "Rounded corners for navigation bar"
+    },
+    {
+      "type": "range",
+      "id": "mobile_nav_transparency",
+      "min": 70,
+      "max": 100,
+      "step": 5,
+      "unit": "%",
+      "label": "Background Opacity",
+      "default": 95,
+      "info": "Background transparency level"
     }
   ],
   "blocks": [
