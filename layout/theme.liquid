@@ -260,19 +260,32 @@
     {% endstyle %}
 
     {%- comment -%}
-    Performance Optimization: Load critical CSS inline for fastest rendering
+    Performance Optimization: Modular CSS Loading Strategy
+    Critical CSS loads first, then progressive enhancement
     {%- endcomment -%}
-    {{ 'base-critical.css' | asset_url | stylesheet_tag: preload: true }}
     
-    {%- comment -%}
-    Load optimized modular CSS asynchronously
-    {%- endcomment -%}
-    <link rel="stylesheet" href="{{ 'base-variables.css' | asset_url }}" media="print" onload="this.media='all'">
+    {%- comment -%} Critical styles - Load immediately {%- endcomment -%}
+    {{ 'base-critical.css' | asset_url | stylesheet_tag: preload: true }}
+    {{ 'base-core.css' | asset_url | stylesheet_tag: preload: true }}
+    
+    {%- comment -%} Essential variables - Load with high priority {%- endcomment -%}
+    {{ 'base-variables.css' | asset_url | stylesheet_tag: preload: true }}
+    
+    {%- comment -%} Component styles - Load asynchronously for better performance {%- endcomment -%}
     <link rel="stylesheet" href="{{ 'component-grid-optimized.css' | asset_url }}" media="print" onload="this.media='all'">
+    <link rel="stylesheet" href="{{ 'component-button-optimized.css' | asset_url }}" media="print" onload="this.media='all'">
+    <link rel="stylesheet" href="{{ 'component-form-optimized.css' | asset_url }}" media="print" onload="this.media='all'">
+    <link rel="stylesheet" href="{{ 'base-media-queries.css' | asset_url }}" media="print" onload="this.media='all'">
+    
+    {%- comment -%} Legacy base.css - Load last for backward compatibility {%- endcomment -%}
     <link rel="stylesheet" href="{{ 'base.css' | asset_url }}" media="print" onload="this.media='all'">
+    
+    {%- comment -%} Fallback for users with JavaScript disabled {%- endcomment -%}
     <noscript>
-      {{ 'base-variables.css' | asset_url | stylesheet_tag }}
       {{ 'component-grid-optimized.css' | asset_url | stylesheet_tag }}
+      {{ 'component-button-optimized.css' | asset_url | stylesheet_tag }}
+      {{ 'component-form-optimized.css' | asset_url | stylesheet_tag }}
+      {{ 'base-media-queries.css' | asset_url | stylesheet_tag }}
       {{ 'base.css' | asset_url | stylesheet_tag }}
     </noscript>
 

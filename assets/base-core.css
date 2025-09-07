@@ -1,0 +1,264 @@
+/* ===================================================================
+   BASE CORE - Essential styles only (replaces bloated base.css)
+   =================================================================== */
+
+/* Critical Typography */
+html {
+  box-sizing: border-box;
+  font-size: calc(var(--font-body-scale) * 62.5%);
+  height: 100%;
+}
+
+body {
+  display: grid;
+  grid-template-rows: auto auto 1fr auto;
+  grid-template-columns: 100%;
+  min-height: 100%;
+  margin: 0;
+  font-size: 1.5rem;
+  letter-spacing: 0.06rem;
+  line-height: calc(1 + 0.8 / var(--font-body-scale));
+  font-family: var(--font-body-family);
+  font-style: var(--font-body-style);
+  font-weight: var(--font-body-weight);
+  color: rgba(var(--color-foreground), 0.75);
+  background-color: rgb(var(--color-background));
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: inherit;
+}
+
+/* Essential Heading Styles */
+h1, .h1 { font-size: calc(var(--font-heading-scale) * 3rem); }
+h2, .h2 { font-size: calc(var(--font-heading-scale) * 2rem); }
+h3, .h3 { font-size: calc(var(--font-heading-scale) * 1.7rem); }
+h4, .h4 { font-size: calc(var(--font-heading-scale) * 1.5rem); }
+h5, .h5 { font-size: calc(var(--font-heading-scale) * 1.2rem); }
+h6, .h6 { color: rgba(var(--color-foreground), 0.75); }
+
+h1, h2, h3, h4, h5, h6,
+.h1, .h2, .h3, .h4, .h5, .h6 {
+  font-family: var(--font-heading-family);
+  font-style: var(--font-heading-style);
+  font-weight: var(--font-heading-weight);
+  letter-spacing: calc(var(--font-heading-scale) * 0.06rem);
+  line-height: calc(1 + 0.3 / max(1, var(--font-heading-scale)));
+  margin: 0 0 1.5rem 0;
+  word-break: break-word;
+}
+
+/* Essential Links */
+a {
+  color: rgba(var(--color-foreground), var(--alpha-link));
+  text-decoration: none;
+}
+
+a:hover {
+  color: rgb(var(--color-foreground));
+}
+
+/* Essential Lists */
+ul, ol {
+  margin: 0;
+  padding: 0;
+}
+
+li {
+  list-style: none;
+}
+
+/* Essential Text Elements */
+p {
+  margin: 0 0 1.5rem 0;
+}
+
+blockquote {
+  font-style: italic;
+  color: rgba(var(--color-foreground), 0.75);
+  border-left: 0.2rem solid rgba(var(--color-foreground), 0.2);
+  padding-left: 1rem;
+  margin: 1.5rem 0;
+}
+
+/* Essential Sectioning */
+.section {
+  padding: var(--spacing-sections-mobile) 0;
+}
+
+.section + .section {
+  margin-top: var(--spacing-sections-mobile);
+}
+
+/* Essential Utilities */
+.hidden {
+  display: none !important;
+}
+
+.visually-hidden {
+  position: absolute !important;
+  overflow: hidden;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  border: 0;
+  clip: rect(0 0 0 0);
+  word-wrap: normal !important;
+}
+
+.visually-hidden--inline {
+  margin: 0;
+  height: 1em;
+}
+
+.list-unstyled {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* Essential Layout */
+.page-width {
+  max-width: var(--page-width);
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+
+.page-width-desktop {
+  padding: 0;
+  margin: 0 auto;
+}
+
+.page-width--narrow {
+  max-width: 72.6rem;
+}
+
+body:has(.section-header .drawer-menu) .announcement-bar-section .page-width {
+  max-width: 100%;
+}
+
+.page-width.drawer-menu {
+  max-width: 100%;
+}
+
+/* Essential Media */
+.media {
+  display: block;
+  background-color: rgba(var(--color-foreground), 0.1);
+  position: relative;
+  overflow: hidden;
+}
+
+.media--transparent {
+  background-color: transparent;
+}
+
+.media > *:not(.zoom):not(.deferred-media__poster-button),
+.media model-viewer {
+  display: block;
+  max-width: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+}
+
+.media > img {
+  object-fit: cover;
+  object-position: center center;
+  transition: opacity 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+/* Essential Aspect Ratios */
+.media--square { padding-bottom: 100%; }
+.media--portrait { padding-bottom: 125%; }
+.media--landscape { padding-bottom: 66.6%; }
+.media--cropped { padding-bottom: 56%; }
+.media--16-9 { padding-bottom: 56.25%; }
+.media--circle { 
+  padding-bottom: 100%; 
+  border-radius: 50%; 
+}
+
+/* Essential Animations */
+deferred-media {
+  display: block;
+}
+
+.loading-overlay {
+  position: absolute;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(var(--color-background), 0.7);
+  display: none;
+}
+
+.loading-overlay .loading__spinner {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+/* Essential Skip Link */
+.skip-to-content-link {
+  position: absolute;
+  top: -4rem;
+  left: 2rem;
+  z-index: 1000;
+  padding: 1rem 2rem;
+  background-color: rgb(var(--color-background));
+  color: rgb(var(--color-foreground));
+  border: 0.1rem solid rgba(var(--color-foreground), 0.2);
+  border-radius: 0.4rem;
+  text-decoration: none;
+}
+
+.skip-to-content-link:focus {
+  top: 2rem;
+}
+
+/* Essential Focus Management */
+.focus-none {
+  outline: none;
+}
+
+.focus-none:focus {
+  outline: none;
+}
+
+/* No JS Support */
+.no-js:not(html) {
+  display: none !important;
+}
+
+html.no-js .no-js:not(html) {
+  display: block !important;
+}
+
+.no-js-inline {
+  display: none !important;
+}
+
+html.no-js .no-js-inline {
+  display: inline-block !important;
+}
+
+/* Essential Animation Base */
+@media (prefers-reduced-motion: no-preference) {
+  .scroll-trigger {
+    opacity: 0;
+    transform: translateY(2rem);
+  }
+  
+  .scroll-trigger:not(.scroll-trigger--offscreen) {
+    opacity: 1;
+    transform: translateY(0);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+}
