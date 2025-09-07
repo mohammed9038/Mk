@@ -1,0 +1,108 @@
+/* ===================================
+   ERROR FIXES & CSP COMPLIANCE
+   ================================= */
+
+/* Hidden class to replace inline display:none */
+.hidden {
+  display: none !important;
+}
+
+/* Fallback styles for components that might fail */
+.slider-fallback {
+  overflow: hidden;
+}
+
+.slider-fallback .grid__item {
+  display: none;
+}
+
+.slider-fallback .grid__item:first-child {
+  display: block;
+}
+
+/* Error handling styles */
+.error-boundary {
+  padding: 20px;
+  border: 1px solid #e74c3c;
+  background: #fdf2f2;
+  color: #721c24;
+  border-radius: 4px;
+  margin: 10px 0;
+}
+
+/* Image loading error fixes */
+.image-error {
+  background: #f8f9fa;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 200px;
+  color: #6c757d;
+}
+
+/* Loading states */
+.loading {
+  opacity: 0.6;
+  pointer-events: none;
+}
+
+.loading::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 20px;
+  height: 20px;
+  margin: -10px 0 0 -10px;
+  border: 2px solid #e0e0e0;
+  border-top: 2px solid #007bff;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* CSP-safe animations */
+.fade-in {
+  animation: fadeIn 0.3s ease-in;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.slide-in {
+  animation: slideIn 0.5s ease-out;
+}
+
+@keyframes slideIn {
+  from { transform: translateY(30px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+/* Component error fallbacks */
+.component-error {
+  padding: 10px;
+  background: #fff3cd;
+  border: 1px solid #ffeaa7;
+  border-radius: 4px;
+  color: #856404;
+  font-size: 0.875rem;
+}
+
+/* Accessibility improvements */
+.sr-only {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  padding: 0 !important;
+  margin: -1px !important;
+  overflow: hidden !important;
+  clip: rect(0, 0, 0, 0) !important;
+  white-space: nowrap !important;
+  border: 0 !important;
+}

@@ -46,6 +46,9 @@
     {%- comment -%} PHASE 4 ADVANCED JAVASCRIPT OPTIMIZATION {%- endcomment -%}
     
     {%- comment -%} Core Critical JavaScript (loads immediately) {%- endcomment -%}
+    {%- if 'error-handler.js' | asset_url -%}
+      <script src="{{ 'error-handler.js' | asset_url }}" defer></script>
+    {%- endif -%}
     {%- if 'core-critical.js' | asset_url -%}
       <script src="{{ 'core-critical.js' | asset_url }}" defer></script>
     {%- endif -%}
@@ -59,6 +62,9 @@
     {%- endif -%}
     {%- if 'component-loader-advanced.js' | asset_url -%}
       <script src="{{ 'component-loader-advanced.js' | asset_url }}" defer></script>
+    {%- endif -%}
+    {%- if 'slider-components.js' | asset_url -%}
+      <script src="{{ 'slider-components.js' | asset_url }}" defer></script>
     {%- endif -%}
     
     {%- comment -%} Template-specific optimizations {%- endcomment -%}
@@ -316,6 +322,7 @@
     <link rel="stylesheet" href="{{ 'component-button-optimized.css' | asset_url }}" media="print" onload="this.media='all'">
     <link rel="stylesheet" href="{{ 'component-form-optimized.css' | asset_url }}" media="print" onload="this.media='all'">
     <link rel="stylesheet" href="{{ 'base-media-queries.css' | asset_url }}" media="print" onload="this.media='all'">
+    <link rel="stylesheet" href="{{ 'error-fixes.css' | asset_url }}" media="print" onload="this.media='all'">
     
     {%- comment -%} Legacy base.css - Load last for backward compatibility {%- endcomment -%}
     <link rel="stylesheet" href="{{ 'base.css' | asset_url }}" media="print" onload="this.media='all'">
