@@ -77,12 +77,50 @@
 
 /* Better responsive behavior for wider search bars */
 .header__search-form {
-  flex-shrink: 1;
-  min-width: 200px;
-  max-width: 100%;
+  flex: 1 1 auto !important; /* Allow flexible growth */
+  max-width: 600px !important; /* Increased maximum width */
+  min-width: 280px !important; /* Minimum width for usability */
 }
 
-/* Ensure search bar doesn't overflow on small screens */
+/* Desktop: Allow search bar to take more space */
+@media screen and (min-width: 990px) {
+  .header__search-form {
+    max-width: 700px !important;
+    min-width: 400px !important;
+  }
+}
+
+/* Tablet: Moderate width */
+@media screen and (min-width: 750px) and (max-width: 989px) {
+  .header__search-form {
+    max-width: 500px !important;
+    min-width: 300px !important;
+  }
+}
+
+/* Mobile: Ensure search bar doesn't overflow */
+@media screen and (max-width: 749px) {
+  .header__search-form {
+    width: calc(100vw - 140px) !important;
+    max-width: calc(100vw - 140px) !important;
+    min-width: 200px !important;
+    flex: 1 1 auto !important;
+  }
+  
+  .header__search-input {
+    font-size: 14px !important;
+    padding: 0 45px 0 16px !important;
+    height: 42px !important;
+  }
+  
+  .header__search-button {
+    width: 32px !important;
+    height: 32px !important;
+    right: 8px !important;
+  }
+}
+
+/* Very small screens */
 @media screen and (max-width: 480px) {
   .header__search-form {
     width: calc(100vw - 120px) !important;
@@ -93,6 +131,7 @@
   .header__search-input {
     font-size: 13px !important;
     padding: 0 40px 0 15px !important;
+    height: 40px !important;
   }
   
   .header__search-button {

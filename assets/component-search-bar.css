@@ -6,15 +6,18 @@
 /* Main search container */
 .header__search-form {
   width: 100%;
-  max-width: 400px;
+  max-width: 600px !important; /* Increased from 400px */
+  min-width: 280px !important; /* Added minimum width */
   position: relative;
   display: flex;
   align-items: center;
+  flex: 1 1 auto; /* Allow flexible growth */
 }
 
 .header__search-form__form {
   position: relative;
   width: 100%;
+  flex: 1;
 }
 
 /* Search field container - Override base.css field styles */
@@ -22,6 +25,7 @@
   position: relative;
   margin: 0;
   width: 100%;
+  flex: 1;
 }
 
 .header__search-field:before,
