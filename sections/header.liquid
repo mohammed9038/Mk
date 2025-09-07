@@ -129,7 +129,8 @@
     align-items: center;
     position: relative;
     width: 100%;
-    max-width: {{ section.settings.search_bar_width | default: 400 }}px;
+    padding-left: {{ section.settings.search_bar_horizontal_padding | default: 20 }}px;
+    padding-right: {{ section.settings.search_bar_horizontal_padding | default: 20 }}px;
     min-width: 250px;
   }
 
@@ -137,6 +138,7 @@
     grid-area: search-left;
     justify-self: start;
     margin-right: 2rem;
+    max-width: {{ section.settings.search_bar_max_width | default: 400 }}px;
   }
 
   .header__search-bar--center {
@@ -144,7 +146,7 @@
     justify-self: center;
     align-self: center;
     width: 100%;
-    max-width: {{ section.settings.search_bar_width | default: 500 }}px;
+    max-width: {{ section.settings.search_bar_max_width | default: 600 }}px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -159,13 +161,13 @@
 
   .header__search-bar--center .header__search-field {
     width: 100%;
-    max-width: {{ section.settings.search_bar_width | default: 500 }}px;
   }
 
   .header__search-bar--right {
     grid-area: search-right;
     justify-self: end;
     margin-left: 2rem;
+    max-width: {{ section.settings.search_bar_max_width | default: 400 }}px;
   }
 
   /* Hide search bar on mobile */
@@ -206,7 +208,6 @@
   /* Search Bar Form Styling */
   .header__search-bar {
     width: 100%;
-    max-width: {{ section.settings.search_bar_width | default: 300 }}px;
   }
 
   .header__search-bar .header__search-form {
@@ -224,6 +225,7 @@
 
   .header__search-bar .header__search-input {
     width: 100%;
+    height: {{ section.settings.search_bar_height | default: 44 }}px;
     padding: {{ section.settings.search_bar_padding | default: 12 }}px {{ section.settings.search_button_padding | default: 8 | times: 2 | plus: section.settings.search_icon_size | default: 16 | plus: 12 }}px {{ section.settings.search_bar_padding | default: 12 }}px {{ section.settings.search_bar_padding | default: 12 | times: 1.5 }}px;
     border: {{ section.settings.search_bar_border_width | default: 1 }}px solid {% if section.settings.search_bar_border_color == 'accent' %}rgb(var(--color-button)){% else %}rgba(var(--color-foreground), 0.2){% endif %};
     border-radius: {{ section.settings.search_bar_border_radius | default: 25 }}px;
@@ -325,11 +327,7 @@
     justify-self: center;
     align-self: center;
     width: 100%;
-    max-width: {{ section.settings.search_bar_width | default: 500 }}px;
-  }
-    width: 100%;
-    max-width: {{ section.settings.search_bar_width | default: 500 }}px;
-    margin: 0 1rem;
+    max-width: {{ section.settings.search_bar_max_width | default: 600 }}px;
   }
 
   .header--has-search-right {
@@ -1175,13 +1173,36 @@
     },
     {
       "type": "range",
-      "id": "search_bar_width",
-      "min": 250,
-      "max": 700,
-      "step": 10,
+      "id": "search_bar_max_width",
+      "min": 300,
+      "max": 800,
+      "step": 20,
       "unit": "px",
-      "label": "Search Bar Width",
-      "default": 500
+      "label": "Search Bar Maximum Width",
+      "info": "Maximum width of the search bar container",
+      "default": 600
+    },
+    {
+      "type": "range",
+      "id": "search_bar_horizontal_padding",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "label": "Search Bar Side Padding",
+      "info": "Padding on left and right sides - reduces effective search bar width",
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "search_bar_height",
+      "min": 32,
+      "max": 60,
+      "step": 2,
+      "unit": "px",
+      "label": "Search Bar Height",
+      "info": "Overall height of the search input field",
+      "default": 44
     },
     {
       "type": "select",
