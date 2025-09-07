@@ -70,23 +70,26 @@
                 src="{{ card_product.featured_media | image_url: width: 533 }}"
                 sizes="(min-width: {{ settings.page_width }}px) {{ settings.page_width | minus: 130 | divided_by: 4 }}px, (min-width: 990px) calc((100vw - 130px) / 4), (min-width: 750px) calc((100vw - 120px) / 3), calc((100vw - 35px) / 2)"
                 alt="{{ card_product.featured_media.alt | default: card_product.title | escape }}"
-                class="motion-reduce"
+                class="motion-reduce product-card-image"
                 {% unless lazy_load == false %}
                   loading="lazy"
                 {% endunless %}
                 width="{{ card_product.featured_media.width }}"
                 height="{{ card_product.featured_media.height }}"
-                onerror="this.style.display='none'; this.nextElementSibling && this.nextElementSibling.style.display='block';"
+                onerror="console.log('Image failed to load:', this.src); this.style.display='none'; this.nextElementSibling && (this.nextElementSibling.style.display='flex');"
               >
               {% comment %}theme-check-enable ImgLazyLoading{% endcomment %}
               
               {%- comment -%} Fallback placeholder if image fails to load {%- endcomment -%}
-              <div class="image-placeholder" style="display: none; width: 100%; height: 100%; background: #f8f9fa; display: flex; align-items: center; justify-content: center; color: #6c757d; font-size: 0.875rem;">
-                <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
-                  <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
-                  <circle cx="8.5" cy="8.5" r="1.5"/>
-                  <polyline points="21,15 16,10 5,21"/>
-                </svg>
+              <div class="image-placeholder" style="display: none; width: 100%; height: 280px; background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%); display: flex; align-items: center; justify-content: center; color: #6c757d; font-size: 0.875rem; border-radius: 8px;">
+                <div style="text-align: center;">
+                  <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" style="margin-bottom: 8px; opacity: 0.5;">
+                    <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
+                    <circle cx="8.5" cy="8.5" r="1.5"/>
+                    <polyline points="21,15 16,10 5,21"/>
+                  </svg>
+                  <div>{{ card_product.title | truncate: 25 }}</div>
+                </div>
               </div>
 
               {%- if card_product.media[1] != null and show_secondary_image -%}

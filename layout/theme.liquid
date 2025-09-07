@@ -56,6 +56,12 @@
       <script src="{{ 'global-optimized.js' | asset_url }}" defer></script>
     {%- endif -%}
     
+    {%- comment -%} Search functionality enhancement {%- endcomment -%}
+    <script src="{{ 'search-bar-enhancer.js' | asset_url }}" defer></script>
+    
+    {%- comment -%} Product card enhancements for all pages {%- endcomment -%}
+    <script src="{{ 'product-card-enhancer.js' | asset_url }}" defer></script>
+    
     {%- comment -%} Advanced Performance System {%- endcomment -%}
     {%- if 'performance-utils.js' | asset_url -%}
       <script src="{{ 'performance-utils.js' | asset_url }}" defer></script>
@@ -76,7 +82,6 @@
     {%- if template contains 'collection' or template contains 'search' -%}
       <link rel="preload" href="{{ 'facets-optimized.js' | asset_url }}" as="script">
       <link rel="preload" href="{{ 'search-optimized.js' | asset_url }}" as="script">
-      <script src="{{ 'product-card-enhancer.js' | asset_url }}" defer></script>
     {%- endif -%}
     
     {%- if template contains 'cart' -%}

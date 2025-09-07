@@ -17,19 +17,54 @@
       this.setupImageErrorHandling();
       this.setupCardNavigation();
       this.setupLazyLoading();
+      this.fixExistingImages();
       console.log('✅ Product Card Enhancer initialized');
     }
 
     setupImageErrorHandling() {
       // Handle images that fail to load
       document.addEventListener('error', (e) => {
-        if (e.target.tagName === 'IMG' && e.target.closest('.card-product')) {
+        if (e.target.tagName === 'IMG' && e.target.closest('.card-wrapper, .product-card-wrapper')) {
           this.handleImageError(e.target);
         }
       }, true);
 
       // Monitor existing images
       this.checkExistingImages();
+    }
+
+    fixExistingImages() {
+      // Fix images that may have broken src attributes
+      const images = document.querySelectorAll('.card-wrapper img, .product-card-wrapper img');
+      images.forEach(img => {
+        // Check if image src is valid
+        if (!img.src || img.src === '' || img.src === window.location.href) {
+          this.fixImageSrc(img);
+        }
+        
+        // Check if image failed to load
+        if (img.complete && !img.naturalHeight) {
+          this.handleImageError(img);
+        }
+      });
+    }
+
+    fixImageSrc(img) {
+      const card = img.closest('.card-wrapper, .product-card-wrapper');
+      if (!card) return;
+
+      // Try to find product data
+      const productLink = card.querySelector('a[href*="/products/"]');
+      if (productLink) {
+        // Extract product handle from URL
+        const productHandle = productLink.href.split('/products/')[1]?.split('?')[0];
+        if (productHandle) {
+          // Attempt to rebuild image URL (this is a fallback approach)
+          const fallbackSrc = `/cdn/shop/products/${productHandle}_300x300.jpg`;
+          img.src = fallbackSrc;
+          console.log(`🔧 Fixed image src for product: ${productHandle}`);
+        }
+      }
     }
 
     checkExistingImages() {

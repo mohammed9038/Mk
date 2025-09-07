@@ -1,17 +1,25 @@
 /* ========================================
-   HEADER SEARCH BAR STYLING - COMPLETE OVERRIDE
-   Fixes all conflicts with base.css and component-search.css
+   HEADER SEARCH BAR STYLING - ENHANCED RESPONSIVE
+   Fixed width behavior and interaction states
    ======================================== */
 
-/* Main search container */
+/* Main search container - Enhanced responsive behavior */
 .header__search-form {
   width: 100%;
-  max-width: 600px !important; /* Increased from 400px */
-  min-width: 280px !important; /* Added minimum width */
+  max-width: 400px !important;
+  min-width: 280px !important;
   position: relative;
   display: flex;
   align-items: center;
-  flex: 1 1 auto; /* Allow flexible growth */
+  flex: 1 1 auto;
+  transition: all 0.3s ease-in-out !important;
+}
+
+/* Expanded state */
+.header__search-form.search-expanded {
+  max-width: 600px !important;
+  min-width: 400px !important;
+  z-index: 1000;
 }
 
 .header__search-form__form {
