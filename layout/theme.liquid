@@ -76,6 +76,7 @@
     {%- if template contains 'collection' or template contains 'search' -%}
       <link rel="preload" href="{{ 'facets-optimized.js' | asset_url }}" as="script">
       <link rel="preload" href="{{ 'search-optimized.js' | asset_url }}" as="script">
+      <script src="{{ 'product-card-enhancer.js' | asset_url }}" defer></script>
     {%- endif -%}
     
     {%- if template contains 'cart' -%}
@@ -321,6 +322,7 @@
     <link rel="stylesheet" href="{{ 'component-grid-optimized.css' | asset_url }}" media="print" onload="this.media='all'">
     <link rel="stylesheet" href="{{ 'component-button-optimized.css' | asset_url }}" media="print" onload="this.media='all'">
     <link rel="stylesheet" href="{{ 'component-form-optimized.css' | asset_url }}" media="print" onload="this.media='all'">
+    <link rel="stylesheet" href="{{ 'product-card-enhancements.css' | asset_url }}" media="print" onload="this.media='all'">
     <link rel="stylesheet" href="{{ 'base-media-queries.css' | asset_url }}" media="print" onload="this.media='all'">
     <link rel="stylesheet" href="{{ 'error-fixes.css' | asset_url }}" media="print" onload="this.media='all'">
     
@@ -332,6 +334,7 @@
       {{ 'component-grid-optimized.css' | asset_url | stylesheet_tag }}
       {{ 'component-button-optimized.css' | asset_url | stylesheet_tag }}
       {{ 'component-form-optimized.css' | asset_url | stylesheet_tag }}
+      {{ 'product-card-enhancements.css' | asset_url | stylesheet_tag }}
       {{ 'base-media-queries.css' | asset_url | stylesheet_tag }}
       {{ 'base.css' | asset_url | stylesheet_tag }}
     </noscript>
