@@ -418,11 +418,13 @@
 
   /* ========================================
      MOBILE NAVIGATION DYNAMIC STYLING
-     Uses theme customizer settings
+     Uses theme customizer settings - FIXED VERSION
      ======================================== */
   
   {% if section.settings.enable_mobile_navigation %}
     .mobile-nav {
+      display: none !important; /* Hidden by default, shown on mobile */
+      
       {% case section.settings.mobile_nav_style %}
         {% when 'ios' %}
           background: rgba(255, 255, 255, {{ section.settings.mobile_nav_transparency | default: 90 | divided_by: 100.0 }}) !important;
@@ -442,8 +444,10 @@
             rgba(118, 75, 162, {{ section.settings.mobile_nav_transparency | default: 90 | divided_by: 100.0 }})) !important;
           border-top: none !important;
         {% when 'custom' %}
-          background: {{ section.settings.mobile_nav_background_color | default: '#FFFFFF' | color_modify: 'alpha', section.settings.mobile_nav_transparency | default: 95 | divided_by: 100.0 }} !important;
-          border-top: 1px solid {{ section.settings.mobile_nav_border_color | default: '#E5E5E5' }} !important;
+          {% assign bg_color = section.settings.mobile_nav_background_color | default: '#FFFFFF' %}
+          {% assign transparency = section.settings.mobile_nav_transparency | default: 95 | divided_by: 100.0 %}
+          background: {{ bg_color | color_modify: 'alpha', transparency }} !important;
+          border-top: 1px solid {{ section.settings.mobile_nav_text_color | default: '#E5E5E5' | color_modify: 'alpha', 0.3 }} !important;
         {% else %}
           background: rgba(var(--color-background), {{ section.settings.mobile_nav_transparency | default: 95 | divided_by: 100.0 }}) !important;
           border-top: 1px solid rgba(var(--color-border), 0.2) !important;
@@ -451,11 +455,14 @@
       
       {% case section.settings.mobile_nav_height %}
         {% when 'compact' %}
-          padding: 8px 0 calc(8px + env(safe-area-inset-bottom)) 0 !important;
+          padding: 6px 0 calc(6px + env(safe-area-inset-bottom)) 0 !important;
+          min-height: 40px !important;
         {% when 'tall' %}
-          padding: 20px 0 calc(20px + env(safe-area-inset-bottom)) 0 !important;
+          padding: 16px 0 calc(16px + env(safe-area-inset-bottom)) 0 !important;
+          min-height: 72px !important;
         {% else %}
-          padding: 12px 0 calc(12px + env(safe-area-inset-bottom)) 0 !important;
+          padding: 10px 0 calc(10px + env(safe-area-inset-bottom)) 0 !important;
+          min-height: 56px !important;
       {% endcase %}
       
       border-radius: {{ section.settings.mobile_nav_border_radius | default: 0 }}px {{ section.settings.mobile_nav_border_radius | default: 0 }}px 0 0 !important;
@@ -478,7 +485,8 @@
       {% endcase %}
     }
     
-    .mobile-nav__link.mobile-nav__link--active {
+    .mobile-nav__link.active,
+    .mobile-nav__link:hover {
       {% case section.settings.mobile_nav_style %}
         {% when 'ios' %}
           color: #007AFF !important;
@@ -494,7 +502,34 @@
           background: rgba(255, 255, 255, 0.2) !important;
         {% when 'custom' %}
           color: {{ section.settings.mobile_nav_active_color | default: '#007AFF' }} !important;
-          background: {{ section.settings.mobile_nav_active_color | default: '#007AFF' | color_modify: 'alpha', 0.1 }} !important;
+          background: {{ section.settings.mobile_nav_active_color | default: '#007AFF' | color_modify: 'alpha', 0.15 }} !important;
+        {% else %}
+          color: rgb(var(--color-accent)) !important;
+          background: rgba(var(--color-accent), 0.1) !important;
+      {% endcase %}
+      border-radius: {{ section.settings.mobile_nav_border_radius | default: 8 | divided_by: 2 }}px !important;
+    }
+    
+    .mobile-nav__badge {
+      {% case section.settings.mobile_nav_style %}
+        {% when 'custom' %}
+          background: {{ section.settings.mobile_nav_cart_badge_color | default: '#FF3B30' }} !important;
+          color: #FFFFFF !important;
+        {% else %}
+          background: #FF3B30 !important;
+          color: #FFFFFF !important;
+      {% endcase %}
+    }
+    
+    {% unless section.settings.mobile_nav_show_labels %}
+      .mobile-nav__text {
+        display: none !important;
+      }
+      .mobile-nav__link {
+        padding: 8px !important;
+        min-height: 40px !important;
+      }
+    {% endunless %}
         {% else %}
           color: rgb(var(--color-accent)) !important;
           background: rgba(var(--color-accent), 0.1) !important;
