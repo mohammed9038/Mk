@@ -4,13 +4,14 @@
   bottom: 0;
   left: 0;
   right: 0;
-  z-index: 1000;
-  background: rgba(var(--color-foreground), 0.95);
+  z-index: 9999; /* Higher z-index to ensure it's above all content */
+  background: rgba(255, 255, 255, 0.95);
   backdrop-filter: blur(10px);
-  border-top: 1px solid rgba(var(--color-border), 0.2);
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
   padding: 8px 0 max(8px, env(safe-area-inset-bottom));
   display: none; /* Hidden by default, shown only on mobile */
   box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+  height: 70px; /* Fixed height to prevent overlapping */
 }
 
 /* Mobile Navigation Styling Variables - Customize these for different styles */
@@ -89,20 +90,21 @@
   align-items: center;
   list-style: none;
   margin: 0;
-  padding: 0 8px;
+  padding: 0 16px; /* Increased padding for better spacing */
   max-width: 100%;
   width: 100%;
   box-sizing: border-box;
-  height: 100%;
+  height: 70px; /* Fixed height to match mobile nav */
 }
 
 .mobile-nav__item {
   display: flex;
   justify-content: center;
   text-align: center;
-  max-width: 80px;
-  min-width: 60px;
+  max-width: 90px; /* Slightly larger for better touch targets */
+  min-width: 70px;
   margin: 0 auto;
+  position: relative; /* For badge positioning */
 }
 
 .mobile-nav__link {
@@ -110,18 +112,20 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 8px 2px;
+  padding: 6px 4px; /* Reduced padding to prevent overflow */
   text-decoration: none;
-  color: rgb(var(--color-foreground));
+  color: #333333; /* Fixed color for better visibility */
   transition: all 0.2s ease;
   position: relative;
-  min-height: 48px;
+  min-height: 58px; /* Fixed height to fit in mobile nav */
+  max-height: 58px;
   border: none;
   background: none;
   cursor: pointer;
   font-family: inherit;
   width: 100%;
   box-sizing: border-box;
+  overflow: hidden; /* Prevent text overflow */
 }
 
 .mobile-nav__link:hover,
@@ -135,12 +139,13 @@
 }
 
 .mobile-nav__icon {
-  width: 24px;
-  height: 24px;
-  margin-bottom: 4px;
+  width: 22px;
+  height: 22px;
+  margin-bottom: 2px; /* Reduced margin to save space */
   display: flex;
   align-items: center;
   justify-content: center;
+  flex-shrink: 0; /* Prevent icon from shrinking */
 }
 
 .mobile-nav__icon svg {
@@ -151,14 +156,15 @@
 }
 
 .mobile-nav__text {
-  font-size: 0.75rem;
+  font-size: 0.7rem; /* Smaller text to prevent overflow */
   font-weight: 500;
   line-height: 1;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
   max-width: 100%;
-  margin-top: 2px;
+  margin-top: 1px; /* Minimal margin */
+  color: inherit;
 }
 
 /* Cart badge */
@@ -167,18 +173,19 @@
   top: 2px;
   right: 50%;
   transform: translateX(50%);
-  background: rgb(var(--color-button));
-  color: rgb(var(--color-button-text));
+  background: #FF3B30; /* Fixed red color for badge */
+  color: #FFFFFF;
   border-radius: 50%;
-  min-width: 18px;
-  height: 18px;
-  font-size: 0.8rem;
+  min-width: 16px;
+  height: 16px;
+  font-size: 0.7rem;
   font-weight: 700;
   display: flex;
   align-items: center;
   justify-content: center;
   line-height: 1;
-  z-index: 1;
+  z-index: 2;
+  border: 1px solid #FFFFFF; /* White border for better visibility */
 }
 
 .mobile-nav__badge:empty {
@@ -191,14 +198,39 @@
     display: block;
   }
   
-  /* Hide header cart on mobile when mobile nav is present */
-  .header__cart--desktop {
+  /* Hide ALL header cart elements on mobile when mobile nav is present */
+  .header__icon--cart,
+  .header__cart,
+  .header__cart--desktop,
+  #cart-icon-bubble {
+    display: none !important;
+  }
+  
+  /* Hide account icon in header on mobile */
+  .header__icon--account {
     display: none !important;
   }
   
   /* Add bottom padding to body to prevent content being hidden behind nav */
   body {
-    padding-bottom: 80px;
+    padding-bottom: 80px !important;
+  }
+  
+  /* Ensure content doesn't overlap */
+  .page-width,
+  .container,
+  main,
+  .main-content {
+    margin-bottom: 80px;
+  }
+  
+  /* Fix z-index issues */
+  .slideshow,
+  .collection-hero,
+  .banner,
+  .hero {
+    position: relative;
+    z-index: 1;
   }
 }
 
@@ -209,12 +241,28 @@
   }
   
   body {
-    padding-bottom: 0;
+    padding-bottom: 0 !important;
   }
   
   /* Show header cart on desktop */
-  .header__cart--desktop {
+  .header__icon--cart,
+  .header__cart,
+  .header__cart--desktop,
+  #cart-icon-bubble {
     display: flex !important;
+  }
+  
+  /* Show account icon on desktop */
+  .header__icon--account {
+    display: flex !important;
+  }
+  
+  /* Remove extra bottom margin on desktop */
+  .page-width,
+  .container,
+  main,
+  .main-content {
+    margin-bottom: 0;
   }
 }
 

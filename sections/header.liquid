@@ -574,6 +574,25 @@
         .header__icon--search {
           display: none !important;
         }
+        
+        /* Hide ALL cart elements in header on mobile to prevent duplicates */
+        .header__icon--cart,
+        .header__cart,
+        .header__cart--desktop,
+        #cart-icon-bubble,
+        .cart-count-bubble {
+          display: none !important;
+        }
+        
+        /* Hide account icon in header on mobile */
+        .header__icon--account {
+          display: none !important;
+        }
+        
+        /* Ensure proper spacing for content */
+        body {
+          padding-bottom: 80px !important;
+        }
       }
     {% endif %}
   {% endif %}
