@@ -83,19 +83,26 @@
 }
 
 .mobile-nav__list {
-  display: flex;
-  justify-content: space-around;
+  display: grid;
+  grid-template-columns: repeat(var(--nav-item-count, 4), 1fr);
+  gap: 0;
   align-items: center;
   list-style: none;
   margin: 0;
-  padding: 0;
-  max-width: 500px;
-  margin: 0 auto;
+  padding: 0 8px;
+  max-width: 100%;
+  width: 100%;
+  box-sizing: border-box;
+  height: 100%;
 }
 
 .mobile-nav__item {
-  flex: 1;
+  display: flex;
+  justify-content: center;
   text-align: center;
+  max-width: 80px;
+  min-width: 60px;
+  margin: 0 auto;
 }
 
 .mobile-nav__link {
@@ -103,7 +110,7 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 8px 4px;
+  padding: 8px 2px;
   text-decoration: none;
   color: rgb(var(--color-foreground));
   transition: all 0.2s ease;
@@ -113,6 +120,8 @@
   background: none;
   cursor: pointer;
   font-family: inherit;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .mobile-nav__link:hover,
@@ -142,13 +151,14 @@
 }
 
 .mobile-nav__text {
-  font-size: 1rem;
+  font-size: 0.75rem;
   font-weight: 500;
   line-height: 1;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  max-width: 60px;
+  max-width: 100%;
+  margin-top: 2px;
 }
 
 /* Cart badge */

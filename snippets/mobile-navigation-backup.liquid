@@ -10,25 +10,12 @@
 {% assign nav_style = sections.header.settings.mobile_nav_style | default: 'default' %}
 {% assign nav_height = sections.header.settings.mobile_nav_height | default: 'normal' %}
 {% assign show_labels = sections.header.settings.mobile_nav_show_labels | default: true %}
-{% assign show_home = sections.header.settings.mobile_nav_show_home | default: true %}
-{% assign show_search = sections.header.settings.mobile_nav_show_search | default: true %}
-{% assign show_cart = sections.header.settings.mobile_nav_show_cart | default: true %}
-{% assign show_account = sections.header.settings.mobile_nav_show_account | default: true %}
 
-{% comment %} Count active navigation items for proper grid layout {% endcomment %}
-{% assign nav_item_count = 0 %}
-{% if show_home %}{% assign nav_item_count = nav_item_count | plus: 1 %}{% endif %}
-{% if show_search %}{% assign nav_item_count = nav_item_count | plus: 1 %}{% endif %}
-{% if show_cart %}{% assign nav_item_count = nav_item_count | plus: 1 %}{% endif %}
-{% if show_account %}{% assign nav_item_count = nav_item_count | plus: 1 %}{% endif %}
-
-{% if nav_enabled and nav_item_count > 0 %}
+{% if nav_enabled %}
 <nav class="mobile-nav mobile-nav--{{ nav_style }} mobile-nav--{{ nav_height }}" 
      role="navigation" 
-     aria-label="{{ 'general.navigation.mobile_menu' | t }}"
-     style="--nav-item-count: {{ nav_item_count }};">
+     aria-label="{{ 'general.navigation.mobile_menu' | t }}">
   <ul class="mobile-nav__list">
-    {% if show_home %}
     <!-- Home -->
     <li class="mobile-nav__item">
       <a href="{{ routes.root_url }}" 
@@ -43,9 +30,7 @@
         {% endif %}
       </a>
     </li>
-    {% endif %}
 
-    {% if show_search %}
     <!-- Search -->
     <li class="mobile-nav__item">
       <button type="button" 
@@ -73,9 +58,7 @@
         {% endif %}
       </button>
     </li>
-    {% endif %}
 
-    {% if show_cart %}
     <!-- Cart -->
     <li class="mobile-nav__item">
       <a href="{{ routes.cart_url }}" 
@@ -99,9 +82,7 @@
         {% endif %}
       </a>
     </li>
-    {% endif %}
 
-    {% if show_account %}
     <!-- Account -->
     <li class="mobile-nav__item">
       <a href="{{ routes.account_url }}" 
@@ -122,7 +103,67 @@
         {% endif %}
       </a>
     </li>
-    {% endif %}
   </ul>
 </nav>
 {% endif %}
+
+<!-- Mobile Search Overlay -->
+<div class="mobile-search-overlay" role="dialog" aria-modal="true" aria-label="{{ 'general.search.search' | t }}">
+  <button class="mobile-search-overlay__close" 
+          type="button" 
+          aria-label="{{ 'general.common.close' | t | default: 'Close' }}">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <line x1="18" y1="6" x2="6" y2="18"/>
+      <line x1="6" y1="6" x2="18" y2="18"/>
+    </svg>
+  </button>
+  
+  <div class="mobile-search-overlay__content">
+    <form action="{{ routes.search_url }}" method="get" role="search">
+      <input type="search" 
+             name="q" 
+             class="mobile-search-overlay__input"
+             placeholder="{{ 'general.search.placeholder' | t | default: 'Search products...' }}"
+             aria-label="{{ 'general.search.search' | t }}"
+             autocomplete="off"
+             autocorrect="off"
+             autocapitalize="off"
+             spellcheck="false">
+      <input type="hidden" name="type" value="product">
+    </form>
+  </div>
+</div>
+
+{% comment %}
+  Add structured data for mobile navigation
+{% endcomment %}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SiteNavigationElement",
+  "name": "Mobile Navigation",
+  "description": "Bottom navigation for mobile devices",
+  "hasPart": [
+    {
+      "@type": "SiteNavigationElement",
+      "name": "Home",
+      "url": "{{ routes.root_url | prepend: request.origin }}"
+    },
+    {
+      "@type": "SiteNavigationElement", 
+      "name": "Search",
+      "url": "{{ routes.search_url | prepend: request.origin }}"
+    },
+    {
+      "@type": "SiteNavigationElement",
+      "name": "Cart", 
+      "url": "{{ routes.cart_url | prepend: request.origin }}"
+    },
+    {
+      "@type": "SiteNavigationElement",
+      "name": "Account",
+      "url": "{{ routes.account_url | prepend: request.origin }}"
+    }
+  ]
+}
+</script>
