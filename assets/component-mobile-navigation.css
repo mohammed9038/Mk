@@ -11,7 +11,7 @@
   padding: 8px 0 max(8px, env(safe-area-inset-bottom));
   display: none; /* Hidden by default, shown only on mobile */
   box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
-  height: 70px; /* Fixed height to prevent overlapping */
+  height: 84px; /* Increased height to accommodate larger icons and text */
 }
 
 /* Mobile Navigation Styling Variables - Customize these for different styles */
@@ -112,20 +112,20 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 6px 4px; /* Reduced padding to prevent overflow */
+  padding: 8px 4px; /* Increased padding for better icon display */
   text-decoration: none;
   color: #333333; /* Fixed color for better visibility */
   transition: all 0.2s ease;
   position: relative;
-  min-height: 58px; /* Fixed height to fit in mobile nav */
-  max-height: 58px;
+  min-height: 64px; /* Increased height to accommodate larger icons */
+  max-height: 64px;
   border: none;
   background: none;
   cursor: pointer;
   font-family: inherit;
   width: 100%;
   box-sizing: border-box;
-  overflow: hidden; /* Prevent text overflow */
+  overflow: visible; /* Allow icons to display properly */
 }
 
 .mobile-nav__link:hover,
@@ -139,13 +139,14 @@
 }
 
 .mobile-nav__icon {
-  width: 22px;
-  height: 22px;
-  margin-bottom: 2px; /* Reduced margin to save space */
+  width: 24px;
+  height: 24px;
+  margin-bottom: 4px;
   display: flex;
   align-items: center;
   justify-content: center;
   flex-shrink: 0; /* Prevent icon from shrinking */
+  overflow: visible; /* Ensure icons aren't cut off */
 }
 
 .mobile-nav__icon svg {
@@ -156,14 +157,14 @@
 }
 
 .mobile-nav__text {
-  font-size: 0.7rem; /* Smaller text to prevent overflow */
+  font-size: 0.75rem; /* Slightly larger text for better readability */
   font-weight: 500;
-  line-height: 1;
+  line-height: 1.2;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
   max-width: 100%;
-  margin-top: 1px; /* Minimal margin */
+  margin-top: 2px;
   color: inherit;
 }
 
@@ -213,7 +214,7 @@
   
   /* Add bottom padding to body to prevent content being hidden behind nav */
   body {
-    padding-bottom: 80px !important;
+    padding-bottom: 94px !important;
   }
   
   /* Ensure content doesn't overlap */
@@ -221,7 +222,7 @@
   .container,
   main,
   .main-content {
-    margin-bottom: 80px;
+    margin-bottom: 94px;
   }
   
   /* Fix z-index issues */
