@@ -4,7 +4,9 @@
 <link rel="stylesheet" href="{{ 'component-menu-drawer.css' | asset_url }}" media="print" onload="this.media='all'">
 <link rel="stylesheet" href="{{ 'component-cart-notification.css' | asset_url }}" media="print" onload="this.media='all'">
 <link rel="stylesheet" href="{{ 'component-cart-items.css' | asset_url }}" media="print" onload="this.media='all'">
-<link rel="stylesheet" href="{{ 'component-mobile-navigation.css' | asset_url }}" media="print" onload="this.media='all'">
+{%- if section.settings.enable_mobile_navigation -%}
+  <link rel="stylesheet" href="{{ 'component-mobile-navigation.css' | asset_url }}" media="print" onload="this.media='all'">
+{%- endif -%}
 {%- if settings.predictive_search_enabled -%}
   <link rel="stylesheet" href="{{ 'component-price.css' | asset_url }}" media="print" onload="this.media='all'">
 {%- endif -%}
@@ -27,7 +29,9 @@
 <noscript>{{ 'component-menu-drawer.css' | asset_url | stylesheet_tag }}</noscript>
 <noscript>{{ 'component-cart-notification.css' | asset_url | stylesheet_tag }}</noscript>
 <noscript>{{ 'component-cart-items.css' | asset_url | stylesheet_tag }}</noscript>
-<noscript>{{ 'component-mobile-navigation.css' | asset_url | stylesheet_tag }}</noscript>
+{%- if section.settings.enable_mobile_navigation -%}
+  <noscript>{{ 'component-mobile-navigation.css' | asset_url | stylesheet_tag }}</noscript>
+{%- endif -%}
 
 <style>
   header-drawer {
@@ -552,35 +556,10 @@
       }
     }
     
-    /* TEMPORARY: Show mobile navigation on desktop for testing */
-    /* Remove this section after testing is complete */
+    /* Ensure mobile navigation is hidden on desktop and tablet */
     @media screen and (min-width: 750px) {
       .mobile-nav {
-        display: block !important;
-        position: fixed !important;
-        bottom: 20px !important;
-        right: 20px !important;
-        left: auto !important;
-        width: 300px !important;
-        border-radius: 15px !important;
-        box-shadow: 0 4px 20px rgba(0,0,0,0.3) !important;
-        z-index: 9999 !important;
-      }
-      
-      .mobile-nav::before {
-        content: "🧪 TESTING MODE" !important;
-        display: block !important;
-        text-align: center !important;
-        font-size: 10px !important;
-        padding: 4px !important;
-        background: #ff9800 !important;
-        color: white !important;
-        border-radius: 15px 15px 0 0 !important;
-        margin: 0 !important;
-      }
-      
-      .mobile-nav__list {
-        border-radius: 0 0 15px 15px !important;
+        display: none !important;
       }
     }
       
@@ -887,7 +866,9 @@
 {%- endif -%}
 
 {%- comment -%} Mobile Bottom Navigation {%- endcomment -%}
-{% render 'mobile-navigation' %}
+{%- if section.settings.enable_mobile_navigation -%}
+  {% render 'mobile-navigation' %}
+{%- endif -%}
 
 {% javascript %}
   class StickyHeader extends HTMLElement {
