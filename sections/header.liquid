@@ -1,8 +1,10 @@
 <link rel="stylesheet" href="{{ 'component-list-menu.css' | asset_url }}" media="print" onload="this.media='all'">
 <link rel="stylesheet" href="{{ 'component-search.css' | asset_url }}" media="print" onload="this.media='all'">
+<link rel="stylesheet" href="{{ 'component-search-bar.css' | asset_url }}" media="print" onload="this.media='all'">
 <link rel="stylesheet" href="{{ 'component-menu-drawer.css' | asset_url }}" media="print" onload="this.media='all'">
 <link rel="stylesheet" href="{{ 'component-cart-notification.css' | asset_url }}" media="print" onload="this.media='all'">
 <link rel="stylesheet" href="{{ 'component-cart-items.css' | asset_url }}" media="print" onload="this.media='all'">
+<link rel="stylesheet" href="{{ 'component-mobile-navigation.css' | asset_url }}" media="print" onload="this.media='all'">
 {%- if settings.predictive_search_enabled -%}
   <link rel="stylesheet" href="{{ 'component-price.css' | asset_url }}" media="print" onload="this.media='all'">
 {%- endif -%}
@@ -21,9 +23,11 @@
 
 <noscript>{{ 'component-list-menu.css' | asset_url | stylesheet_tag }}</noscript>
 <noscript>{{ 'component-search.css' | asset_url | stylesheet_tag }}</noscript>
+<noscript>{{ 'component-search-bar.css' | asset_url | stylesheet_tag }}</noscript>
 <noscript>{{ 'component-menu-drawer.css' | asset_url | stylesheet_tag }}</noscript>
 <noscript>{{ 'component-cart-notification.css' | asset_url | stylesheet_tag }}</noscript>
 <noscript>{{ 'component-cart-items.css' | asset_url | stylesheet_tag }}</noscript>
+<noscript>{{ 'component-mobile-navigation.css' | asset_url | stylesheet_tag }}</noscript>
 
 <style>
   header-drawer {
@@ -50,299 +54,44 @@
   }
 
   /* Top Navigation Styles */
-  .top-navigation-wrapper {
+  .top-nav-wrapper {
     border-bottom: 1px solid rgba(var(--color-foreground), 0.08);
-    padding: {{ section.settings.top_nav_padding | default: 12 }}px 0;
-    background: {% if section.settings.top_nav_background == 'transparent' %}transparent{% elsif section.settings.top_nav_background == 'primary' %}rgb(var(--color-button)){% else %}rgba(var(--color-base-background-1), 0.95){% endif %};
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
+    padding: 0.5rem 0;
   }
 
-  .top-navigation__list {
+  .top-nav__list {
     display: flex;
-    justify-content: {{ section.settings.top_nav_alignment | default: 'center' }};
-    align-items: center;
-    gap: {{ section.settings.top_nav_spacing | default: 30 }}px;
+    justify-content: center;
+    gap: 2rem;
     margin: 0;
     padding: 0;
     list-style: none;
-    flex-wrap: wrap;
   }
 
-  .top-navigation__item {
-    margin: 0;
-  }
-
-  .top-navigation__link {
-    font-size: {{ section.settings.top_nav_font_size | default: 14 }}px;
+  .top-nav__link {
+    font-size: 1.3rem;
     text-decoration: none;
-    color: {% if section.settings.top_nav_background == 'primary' %}rgb(var(--color-button-text)){% else %}rgba(var(--color-foreground), 0.75){% endif %};
-    transition: all var(--duration-short) ease;
-    font-weight: {{ section.settings.top_nav_font_weight | default: 400 }};
-    letter-spacing: 0.02em;
-    padding: {{ section.settings.top_nav_link_padding | default: 8 }}px {{ section.settings.top_nav_link_padding | default: 8 | times: 1.5 }}px;
-    border-radius: {{ section.settings.top_nav_border_radius | default: 4 }}px;
-    {% if section.settings.top_nav_style == 'underline' %}
-      border-bottom: 2px solid transparent;
-    {% elsif section.settings.top_nav_style == 'button' %}
-      background: rgba(var(--color-foreground), 0.05);
-      border: 1px solid rgba(var(--color-foreground), 0.1);
-    {% endif %}
+    color: rgba(var(--color-foreground), 0.7);
+    transition: color var(--duration-short) ease;
   }
 
-  .top-navigation__link:hover,
-  .top-navigation__link--active {
-    {% if section.settings.top_nav_style == 'underline' %}
-      color: rgb(var(--color-foreground));
-      border-bottom-color: rgb(var(--color-foreground));
-    {% elsif section.settings.top_nav_style == 'button' %}
-      background: rgba(var(--color-foreground), 0.1);
-      color: rgb(var(--color-foreground));
-      transform: translateY(-1px);
-      box-shadow: 0 2px 8px rgba(var(--color-foreground), 0.15);
-    {% else %}
-      color: rgb(var(--color-foreground));
-      background: rgba(var(--color-foreground), 0.05);
-    {% endif %}
+  .top-nav__link:hover,
+  .top-nav__link--active {
+    color: rgba(var(--color-foreground), 1);
   }
 
   @media screen and (max-width: 749px) {
-    .top-navigation-wrapper {
-      {% if section.settings.top_nav_mobile_hide %}display: none;{% else %}display: block;{% endif %}
-      padding: {{ section.settings.top_nav_padding | default: 12 | divided_by: 1.5 }}px 0;
-    }
-    
-    .top-navigation__list {
-      gap: {{ section.settings.top_nav_spacing | default: 30 | divided_by: 1.5 }}px;
-      justify-content: center;
-    }
-    
-    .top-navigation__link {
-      font-size: {{ section.settings.top_nav_font_size | default: 14 | minus: 2 }}px;
-      padding: {{ section.settings.top_nav_link_padding | default: 8 | divided_by: 1.2 }}px;
-    }
-  }
-
-  /* Search Bar Positioning Styles */
-  .header__search-bar {
-    display: flex;
-    align-items: center;
-    position: relative;
-    width: 100%;
-    padding-left: {{ section.settings.search_bar_horizontal_padding | default: 20 }}px;
-    padding-right: {{ section.settings.search_bar_horizontal_padding | default: 20 }}px;
-    min-width: 250px;
-  }
-
-  .header__search-bar--left {
-    grid-area: search-left;
-    justify-self: start;
-    margin-right: 2rem;
-    max-width: {{ section.settings.search_bar_max_width | default: 400 }}px;
-  }
-
-  .header__search-bar--center {
-    grid-area: search-center;
-    justify-self: center;
-    align-self: center;
-    width: 100%;
-    max-width: {{ section.settings.search_bar_max_width | default: 600 }}px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-
-  /* Ensure the search form fills the container properly */
-  .header__search-bar--center .header__search-form {
-    width: 100%;
-    display: flex;
-    justify-content: center;
-  }
-
-  .header__search-bar--center .header__search-field {
-    width: 100%;
-  }
-
-  .header__search-bar--right {
-    grid-area: search-right;
-    justify-self: end;
-    margin-left: 2rem;
-    max-width: {{ section.settings.search_bar_max_width | default: 400 }}px;
-  }
-
-  /* Hide search bar on mobile */
-  @media screen and (max-width: 749px) {
-    .header__search-bar {
+    .top-nav-wrapper {
       display: none;
     }
-    
-    /* Show search icon on mobile instead */
-    .header--has-search-left .header__search,
-    .header--has-search-center .header__search,
-    .header--has-search-right .header__search {
-      display: block !important;
-    }
-    
-    /* Simplify mobile grid */
-    .header--has-search-left,
-    .header--has-search-center,
-    .header--has-search-right {
-      grid-template-areas: "heading icons" !important;
-      grid-template-columns: 1fr auto !important;
-    }
   }
 
-  /* Tablet adjustments */
-  @media screen and (max-width: 989px) and (min-width: 750px) {
-    .header__search-bar--center {
-      max-width: 350px;
-      margin: 0 1rem;
-    }
-    
-    .header__search-bar .header__search-input {
-      font-size: 13px;
-      padding: 10px 15px;
-    }
-  }
-
-  /* Search Bar Form Styling */
-  .header__search-bar {
-    width: 100%;
-  }
-
-  .header__search-bar .header__search-form {
-    width: 100%;
-    display: flex;
-    align-items: center;
-    position: relative;
-  }
-
-  .header__search-bar .header__search-field {
-    width: 100%;
-    margin: 0;
-    position: relative;
-  }
-
-  .header__search-bar .header__search-input {
-    width: 100%;
-    height: {{ section.settings.search_bar_height | default: 44 }}px;
-    padding: {{ section.settings.search_bar_padding | default: 12 }}px {{ section.settings.search_button_padding | default: 8 | times: 2 | plus: section.settings.search_icon_size | default: 16 | plus: 12 }}px {{ section.settings.search_bar_padding | default: 12 }}px {{ section.settings.search_bar_padding | default: 12 | times: 1.5 }}px;
-    border: {{ section.settings.search_bar_border_width | default: 1 }}px solid {% if section.settings.search_bar_border_color == 'accent' %}rgb(var(--color-button)){% else %}rgba(var(--color-foreground), 0.2){% endif %};
-    border-radius: {{ section.settings.search_bar_border_radius | default: 25 }}px;
-    background: {% if section.settings.search_bar_background == 'transparent' %}transparent{% elsif section.settings.search_bar_background == 'accent' %}rgba(var(--color-button), 0.1){% elsif section.settings.search_bar_background == 'white' %}rgba(255, 255, 255, 0.95){% elsif section.settings.search_bar_background == 'dark' %}rgba(0, 0, 0, 0.1){% else %}rgba(var(--color-base-background-1), 0.95){% endif %};
-    font-size: {{ section.settings.search_bar_font_size | default: 14 }}px;
-    color: {% if section.settings.search_bar_background == 'dark' %}rgba(255, 255, 255, 0.9){% elsif section.settings.search_bar_background == 'white' %}rgba(0, 0, 0, 0.8){% else %}rgb(var(--color-foreground)){% endif %};
-    transition: all var(--duration-short) ease;
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    box-shadow: {% if section.settings.search_bar_background == 'white' %}0 2px 10px rgba(0, 0, 0, 0.1){% else %}none{% endif %};
-  }
-
-  .header__search-bar .header__search-input:focus {
-    outline: none;
-    border-color: rgb(var(--color-button));
-    box-shadow: 0 0 0 {{ section.settings.search_bar_focus_width | default: 2 }}px rgba(var(--color-button), 0.2);
-    {% if section.settings.search_bar_focus_effect == 'glow' %}
-      box-shadow: 0 0 0 {{ section.settings.search_bar_focus_width | default: 2 }}px rgba(var(--color-button), 0.2), 
-                  0 0 20px rgba(var(--color-button), 0.1);
-    {% elsif section.settings.search_bar_focus_effect == 'scale' %}
-      transform: scale(1.02);
-    {% endif %}
-  }
-
-  .header__search-bar .header__search-input::placeholder {
-    color: {% if section.settings.search_bar_background == 'dark' %}rgba(255, 255, 255, 0.6){% elsif section.settings.search_bar_background == 'white' %}rgba(0, 0, 0, 0.5){% else %}rgba(var(--color-foreground), 0.6){% endif %};
-    font-style: {% if section.settings.search_placeholder_italic %}italic{% else %}normal{% endif %};
-  }
-
-  .header__search-bar .header__search-button {
+  /* Language selector positioning */
+  .header__left-localization {
     position: absolute;
-    right: {{ section.settings.search_bar_padding | default: 12 | divided_by: 2 }}px;
+    left: 0;
     top: 50%;
     transform: translateY(-50%);
-    background: {% if section.settings.search_button_style == 'filled' %}rgb(var(--color-button)){% elsif section.settings.search_button_style == 'outline' %}transparent{% else %}rgba(var(--color-button), 0.1){% endif %};
-    color: {% if section.settings.search_button_style == 'filled' %}rgb(var(--color-button-text)){% else %}rgb(var(--color-button)){% endif %};
-    border: {% if section.settings.search_button_style == 'outline' %}1px solid rgb(var(--color-button)){% else %}none{% endif %};
-    border-radius: {{ section.settings.search_button_border_radius | default: 20 }}px;
-    padding: {{ section.settings.search_button_padding | default: 8 }}px;
-    cursor: pointer;
-    transition: all var(--duration-short) ease;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  .header__search-bar .header__search-button:hover {
-    {% if section.settings.search_button_style == 'filled' %}
-      background: rgba(var(--color-button), 0.9);
-      transform: translateY(-50%) scale(1.05);
-    {% elsif section.settings.search_button_style == 'outline' %}
-      background: rgb(var(--color-button));
-      color: rgb(var(--color-button-text));
-    {% else %}
-      background: rgba(var(--color-button), 0.2);
-    {% endif %}
-  }
-
-  .header__search-bar .header__search-button svg {
-    width: {{ section.settings.search_icon_size | default: 16 }}px;
-    height: {{ section.settings.search_icon_size | default: 16 }}px;
-  }
-
-  /* Hide search field label */
-  .header__search-bar .field__label {
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    padding: 0;
-    margin: -1px;
-    overflow: hidden;
-    clip: rect(0, 0, 0, 0);
-    white-space: nowrap;
-    border: 0;
-  }
-
-  /* Hide search icon when search bar is shown on desktop */
-  @media screen and (min-width: 750px) {
-    .header--has-search-left .header__search,
-    .header--has-search-center .header__search,
-    .header--has-search-right .header__search {
-      display: none;
-    }
-  }
-
-  /* Header Grid Layout Updates for Search Bar */
-  .header--has-search-left {
-    grid-template-areas: "search-left heading navigation icons";
-    grid-template-columns: auto 1fr auto auto;
-  }
-
-  .header--has-search-center {
-    grid-template-areas: "heading search-center icons";
-    grid-template-columns: auto 1fr auto;
-    align-items: center;
-  }
-
-  .header--has-search-center .header__search-bar--center {
-    justify-self: center;
-    align-self: center;
-    width: 100%;
-    max-width: {{ section.settings.search_bar_max_width | default: 600 }}px;
-  }
-
-  .header--has-search-right {
-    grid-template-areas: "heading navigation search-right icons";
-    grid-template-columns: auto 1fr auto auto;
-  }
-
-  /* Responsive adjustments */
-  @media screen and (max-width: 989px) {
-    .header--has-search-left,
-    .header--has-search-center,
-    .header--has-search-right {
-      grid-template-areas: "heading icons";
-      grid-template-columns: 1fr auto;
-    }
   }
 
   .list-menu {
@@ -379,40 +128,6 @@
       padding-top: 0.5rem;
     }
   }
-
-  /* Mobile Navigation Dynamic Styles */
-  {% if section.settings.enable_mobile_navigation %}
-    {% if section.settings.mobile_nav_style == 'custom' %}
-      .mobile-nav--custom {
-        background: {{ section.settings.mobile_nav_background | color_modify: 'alpha', section.settings.mobile_nav_transparency | divided_by: 100.0 }} !important;
-        border-radius: {{ section.settings.mobile_nav_border_radius }}px {{ section.settings.mobile_nav_border_radius }}px 0 0;
-        border-top: 1px solid {{ section.settings.mobile_nav_background | color_darken: 10 }};
-      }
-      
-      .mobile-nav--custom .mobile-nav__link {
-        color: {{ section.settings.mobile_nav_text_color }} !important;
-      }
-      
-      .mobile-nav--custom .mobile-nav__link.active {
-        color: {{ section.settings.mobile_nav_active_color }} !important;
-      }
-      
-      .mobile-nav--custom .mobile-nav__badge {
-        background: {{ section.settings.mobile_nav_badge_color }} !important;
-        color: {{ section.settings.mobile_nav_badge_color | color_contrast: '#FFFFFF' }} !important;
-      }
-    {% endif %}
-  {% else %}
-    .mobile-nav {
-      display: none !important;
-    }
-    
-    @media screen and (max-width: 749px) {
-      body {
-        padding-bottom: 0 !important;
-      }
-    }
-  {% endif %}
 </style>
 
 {%- style -%}
@@ -437,6 +152,383 @@
       padding-bottom: {{ section.settings.padding_bottom }}px;
     }
   }
+
+  /* Search positioning styles */
+  .header__search--left {
+    order: 1;
+    margin-right: 1rem;
+  }
+  
+  .header__search--center {
+    display: flex;
+    justify-content: center;
+    flex: 1;
+    margin: 0 1rem;
+  }
+  
+  @media screen and (max-width: 749px) {
+    .header__search--left,
+    .header__search--center {
+      display: none;
+    }
+  }
+
+  /* Header Layout Styles */
+  .header__top-nav {
+    border-bottom: 1px solid rgba(var(--color-foreground), 0.08);
+    padding: 0.5rem 0;
+    text-align: center;
+  }
+
+  .header__top-navigation .list-menu {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .header__main-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    gap: 1rem;
+  }
+
+  .header__left-section {
+    display: flex;
+    align-items: center;
+    flex: 0 0 auto;
+  }
+
+  .header__center-section {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex: 1 1 auto;
+    max-width: 500px;
+    margin: 0 2rem;
+  }
+
+  .header__right-section {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    flex: 0 0 auto;
+  }
+
+  .header__search-bar {
+    width: 100%;
+    max-width: 400px;
+  }
+
+  .header__search--mobile-only {
+    display: none;
+  }
+
+  .header__localization {
+    display: flex;
+    align-items: center;
+  }
+
+  /* Desktop: Hide mobile search when search bar is shown */
+  @media screen and (min-width: 990px) {
+    .header__search--mobile-only {
+      display: none !important;
+    }
+  }
+
+  /* Mobile responsive adjustments */
+  @media screen and (max-width: 989px) {
+    .header__top-nav {
+      display: none;
+    }
+    
+    .header__center-section {
+      display: none;
+    }
+    
+    .header__search-bar {
+      display: none;
+    }
+
+    .header__search--mobile-only {
+      display: block;
+    }
+
+    .header__main-row {
+      justify-content: space-between;
+    }
+  }
+
+  @media screen and (max-width: 749px) {
+    .header__right-section .header__localization {
+      display: none;
+    }
+  }
+
+  /* ========================================
+     DYNAMIC SEARCH BAR STYLING - Uses Admin Settings
+     This CSS is generated from your section settings
+     Fixed selectors to match actual HTML structure
+     ======================================== */
+  
+  /* Search form container */
+  .header__search-form {
+    width: 100%;
+    max-width: {{ section.settings.search_width | default: 400 }}px;
+    position: relative;
+    display: flex;
+    align-items: center;
+  }
+
+  /* Search input - Target the actual classes used in HTML */
+  .header__search-form .search__input.field__input.header__search-input,
+  .header__search-form input.search__input.field__input,
+  .header__search-form .header__search-input {
+    /* Size and spacing */
+    width: 100% !important;
+    height: 45px !important;
+    padding: 0 50px 0 20px !important;
+    margin: 0 !important;
+    
+    /* Colors from admin settings */
+    background-color: {{ section.settings.search_background | default: '#ffffff' }} !important;
+    color: {{ section.settings.search_text | default: '#333333' }} !important;
+    border: 2px solid {{ section.settings.search_border | default: '#e0e0e0' }} !important;
+    
+    /* Visual design */
+    border-radius: 25px !important;
+    font-size: 14px !important;
+    font-weight: 400 !important;
+    transition: all 0.3s ease !important;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1) !important;
+    backdrop-filter: blur(10px) !important;
+    
+    /* Override theme defaults */
+    -webkit-appearance: none !important;
+    appearance: none !important;
+    top: auto !important;
+    left: auto !important;
+    right: auto !important;
+    bottom: auto !important;
+    flex-grow: unset !important;
+    text-align: left !important;
+  }
+
+  /* Focus state with admin colors */
+  .header__search-form .search__input.field__input.header__search-input:focus,
+  .header__search-form input.search__input.field__input:focus,
+  .header__search-form .header__search-input:focus {
+    background-color: {{ section.settings.search_background | default: '#ffffff' }} !important;
+    border-color: {{ section.settings.search_border | default: '#e0e0e0' }} !important;
+    box-shadow: 0 0 0 3px {{ section.settings.search_border | default: '#e0e0e0' | color_modify: 'alpha', 0.3 }} !important;
+    outline: none !important;
+  }
+
+  /* Placeholder styling */
+  .header__search-form .search__input.field__input.header__search-input::placeholder,
+  .header__search-form input.search__input.field__input::placeholder,
+  .header__search-form .header__search-input::placeholder {
+    color: {{ section.settings.search_text | default: '#333333' | color_modify: 'alpha', 0.6 }} !important;
+    font-style: normal !important;
+    opacity: 1 !important;
+  }
+
+  /* Search button styling */
+  .header__search-form .search__button.field__button.header__search-button,
+  .header__search-form .header__search-button {
+    position: absolute !important;
+    right: 8px !important;
+    top: 50% !important;
+    transform: translateY(-50%) !important;
+    background: {{ section.settings.search_border | default: '#e0e0e0' }} !important;
+    color: {{ section.settings.search_text | default: '#333333' }} !important;
+    border: none !important;
+    border-radius: 50% !important;
+    width: 32px !important;
+    height: 32px !important;
+    padding: 6px !important;
+    cursor: pointer !important;
+    transition: all 0.3s ease !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    z-index: 2 !important;
+  }
+
+  /* Search button hover */
+  .header__search-form .search__button.field__button.header__search-button:hover,
+  .header__search-form .header__search-button:hover {
+    background: {{ section.settings.search_border | default: '#e0e0e0' | color_modify: 'brightness', -0.1 }} !important;
+    transform: translateY(-50%) scale(1.05) !important;
+  }
+
+  /* Search icon styling */
+  .header__search-form .search__button.field__button.header__search-button .icon,
+  .header__search-form .header__search-button .icon,
+  .header__search-form .search__button.field__button.header__search-button svg,
+  .header__search-form .header__search-button svg {
+    width: 16px !important;
+    height: 16px !important;
+    fill: currentColor !important;
+  /* Hide search field label */
+  .header__search-form .field__label {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+
+  /* Override any conflicting component styles */
+  .header__search-form input.search__input.field__input {
+    padding-right: 50px !important; /* Override component-search.css */
+  }
+
+  /* Ensure proper positioning for the search form */
+  .header__search--left .header__search-form,
+  .header__search--center .header__search-form,
+  .header__search--right .header__search-form {
+    max-width: {{ section.settings.search_width | default: 400 }}px;
+  }
+  .header__search-form .header__search-field:before,
+  .header__search-form .header__search-field:after {
+    display: none !important;
+  }
+
+  /* Responsive width */
+  @media screen and (max-width: 990px) {
+    .header__search-form {
+      max-width: {{ section.settings.search_width | default: 400 | divided_by: 1.3 }}px;
+    }
+  }
+
+  @media screen and (max-width: 749px) {
+    .header__search-form {
+      max-width: {{ section.settings.search_width | default: 400 | divided_by: 1.6 }}px;
+    }
+  }
+
+  /* ========================================
+     MOBILE NAVIGATION DYNAMIC STYLING
+     Uses theme customizer settings
+     ======================================== */
+  
+  {% if section.settings.enable_mobile_navigation %}
+    .mobile-nav {
+      {% case section.settings.mobile_nav_style %}
+        {% when 'ios' %}
+          background: rgba(255, 255, 255, {{ section.settings.mobile_nav_transparency | default: 90 | divided_by: 100.0 }}) !important;
+          backdrop-filter: blur(20px) !important;
+          border-top: 1px solid rgba(0, 0, 0, 0.1) !important;
+        {% when 'android' %}
+          background: rgba(255, 255, 255, {{ section.settings.mobile_nav_transparency | default: 95 | divided_by: 100.0 }}) !important;
+          box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.15) !important;
+          border-top: none !important;
+          border-radius: 0 !important;
+        {% when 'dark' %}
+          background: rgba(26, 26, 26, {{ section.settings.mobile_nav_transparency | default: 90 | divided_by: 100.0 }}) !important;
+          border-top: 1px solid #333 !important;
+        {% when 'gradient' %}
+          background: linear-gradient(135deg, 
+            rgba(102, 126, 234, {{ section.settings.mobile_nav_transparency | default: 90 | divided_by: 100.0 }}), 
+            rgba(118, 75, 162, {{ section.settings.mobile_nav_transparency | default: 90 | divided_by: 100.0 }})) !important;
+          border-top: none !important;
+        {% when 'custom' %}
+          background: {{ section.settings.mobile_nav_background_color | default: '#FFFFFF' | color_modify: 'alpha', section.settings.mobile_nav_transparency | default: 95 | divided_by: 100.0 }} !important;
+          border-top: 1px solid {{ section.settings.mobile_nav_border_color | default: '#E5E5E5' }} !important;
+        {% else %}
+          background: rgba(var(--color-background), {{ section.settings.mobile_nav_transparency | default: 95 | divided_by: 100.0 }}) !important;
+          border-top: 1px solid rgba(var(--color-border), 0.2) !important;
+      {% endcase %}
+      
+      {% case section.settings.mobile_nav_height %}
+        {% when 'compact' %}
+          padding: 8px 0 calc(8px + env(safe-area-inset-bottom)) 0 !important;
+        {% when 'tall' %}
+          padding: 20px 0 calc(20px + env(safe-area-inset-bottom)) 0 !important;
+        {% else %}
+          padding: 12px 0 calc(12px + env(safe-area-inset-bottom)) 0 !important;
+      {% endcase %}
+      
+      border-radius: {{ section.settings.mobile_nav_border_radius | default: 0 }}px {{ section.settings.mobile_nav_border_radius | default: 0 }}px 0 0 !important;
+    }
+    
+    .mobile-nav__link {
+      {% case section.settings.mobile_nav_style %}
+        {% when 'ios' %}
+          color: #007AFF !important;
+        {% when 'android' %}
+          color: #6200EA !important;
+        {% when 'dark' %}
+          color: #FFFFFF !important;
+        {% when 'gradient' %}
+          color: #FFFFFF !important;
+        {% when 'custom' %}
+          color: {{ section.settings.mobile_nav_text_color | default: '#000000' }} !important;
+        {% else %}
+          color: rgb(var(--color-foreground)) !important;
+      {% endcase %}
+    }
+    
+    .mobile-nav__link.mobile-nav__link--active {
+      {% case section.settings.mobile_nav_style %}
+        {% when 'ios' %}
+          color: #007AFF !important;
+          background: rgba(0, 122, 255, 0.1) !important;
+        {% when 'android' %}
+          color: #6200EA !important;
+          background: rgba(98, 0, 234, 0.1) !important;
+        {% when 'dark' %}
+          color: #60A5FA !important;
+          background: rgba(96, 165, 250, 0.1) !important;
+        {% when 'gradient' %}
+          color: #FFFFFF !important;
+          background: rgba(255, 255, 255, 0.2) !important;
+        {% when 'custom' %}
+          color: {{ section.settings.mobile_nav_active_color | default: '#007AFF' }} !important;
+          background: {{ section.settings.mobile_nav_active_color | default: '#007AFF' | color_modify: 'alpha', 0.1 }} !important;
+        {% else %}
+          color: rgb(var(--color-accent)) !important;
+          background: rgba(var(--color-accent), 0.1) !important;
+      {% endcase %}
+      border-radius: {{ section.settings.mobile_nav_border_radius | default: 8 }}px !important;
+    }
+    
+    .mobile-nav__cart-badge {
+      {% case section.settings.mobile_nav_style %}
+        {% when 'custom' %}
+          background: {{ section.settings.mobile_nav_cart_badge_color | default: '#FF4444' }} !important;
+        {% else %}
+          background: #FF4444 !important;
+      {% endcase %}
+      color: #FFFFFF !important;
+    }
+    
+    {% unless section.settings.mobile_nav_show_labels %}
+      .mobile-nav__text {
+        display: none !important;
+      }
+      .mobile-nav__link {
+        padding: 8px !important;
+        min-height: 40px !important;
+      }
+    {% endunless %}
+    
+    /* Show mobile navigation only on mobile devices */
+    @media screen and (max-width: 749px) {
+      .mobile-nav {
+        display: block !important;
+      }
+    }
+  {% endif %}
 {%- endstyle -%}
 
 <script src="{{ 'details-disclosure.js' | asset_url }}" defer="defer"></script>
@@ -461,6 +553,20 @@
   <symbol id="icon-close" class="icon icon-close" fill="none" viewBox="0 0 18 17">
     <path d="M.865 15.978a.5.5 0 00.707.707l7.433-7.431 7.579 7.282a.501.501 0 00.846-.37.5.5 0 00-.153-.351L9.712 8.546l7.417-7.416a.5.5 0 10-.707-.708L8.991 7.853 1.413.573a.5.5 0 10-.693.72l7.563 7.268-7.418 7.417z" fill="currentColor">
   </symbol>
+
+  <symbol id="icon-account" viewBox="0 0 18 19" fill="none">
+    <path fill-rule="evenodd" clip-rule="evenodd" d="M6 4.5a3 3 0 116 0 3 3 0 01-6 0zm3-4a4 4 0 100 8 4 4 0 000-8zm5.58 12.15c1.12.82 1.83 2.24 1.91 4.85H1.51c.08-2.6.79-4.03 1.9-4.85C4.66 11.75 6.5 11.5 9 11.5s4.35.26 5.58 1.15zM9 10.5c-2.5 0-4.65.24-6.17 1.35C1.27 12.98.5 14.93.5 18v.5h17V18c0-3.07-.77-5.02-2.33-6.15-1.52-1.1-3.67-1.35-6.17-1.35z" fill="currentColor"/>
+  </symbol>
+
+  <symbol id="icon-cart" class="icon icon-cart" fill="none" viewBox="0 0 18 19">
+    <path fill-rule="evenodd" clip-rule="evenodd" d="M1 1.5A.5.5 0 011.5 1h1.379c.484 0 .962.268 1.196.716l.348.661C4.692 2.808 5.17 3.076 5.654 3.076H16.5a.5.5 0 01.487.613l-1.5 8A.5.5 0 0115 12H6.146l-.348.661A1.5 1.5 0 004.602 13.5H3.5a.5.5 0 010-1h1.102a.5.5 0 00.399-.197l.348-.661c.234-.448.712-.716 1.196-.716H14.37l1.25-7H5.654a1.5 1.5 0 01-1.196-.716l-.348-.661A.5.5 0 013.879 2H1.5a.5.5 0 01-.5-.5z" fill="currentColor"/>
+    <path fill-rule="evenodd" clip-rule="evenodd" d="M6 16.5a1.5 1.5 0 113 0 1.5 1.5 0 01-3 0zM7.5 15a1.5 1.5 0 100 3 1.5 1.5 0 000-3z" fill="currentColor"/>
+    <path fill-rule="evenodd" clip-rule="evenodd" d="M13 16.5a1.5 1.5 0 113 0 1.5 1.5 0 01-3 0zM14.5 15a1.5 1.5 0 100 3 1.5 1.5 0 000-3z" fill="currentColor"/>
+  </symbol>
+
+  <symbol id="icon-cart-empty" class="icon icon-cart-empty" fill="none" viewBox="0 0 18 19">
+    <path fill-rule="evenodd" clip-rule="evenodd" d="M1 1.5A.5.5 0 011.5 1h1.379c.484 0 .962.268 1.196.716l.348.661C4.692 2.808 5.17 3.076 5.654 3.076H16.5a.5.5 0 01.487.613l-1.5 8A.5.5 0 0115 12H6.146l-.348.661A1.5 1.5 0 004.602 13.5H3.5a.5.5 0 010-1h1.102a.5.5 0 00.399-.197l.348-.661c.234-.448.712-.716 1.196-.716H14.37l1.25-7H5.654a1.5 1.5 0 01-1.196-.716l-.348-.661A.5.5 0 013.879 2H1.5a.5.5 0 01-.5-.5z" fill="currentColor"/>
+  </symbol>
 </svg>
 
 {%- liquid
@@ -472,6 +578,24 @@
 -%}
 
 <{% if section.settings.sticky_header_type != 'none' %}sticky-header data-sticky-type="{{ section.settings.sticky_header_type }}"{% else %}div{% endif %} class="header-wrapper color-{{ section.settings.color_scheme }} gradient{% if section.settings.show_line_separator %} header-wrapper--border-bottom{% endif %}">
+  
+  {%- comment -%} Top Navigation Bar {%- endcomment -%}
+  {%- if section.settings.show_top_menu and section.settings.menu != blank -%}
+    <div class="top-nav-wrapper page-width">
+      <nav class="top-nav" role="navigation" aria-label="Top navigation">
+        <ul class="top-nav__list list-unstyled" role="list">
+          {%- for link in linklists[section.settings.menu].links -%}
+            <li class="top-nav__item">
+              <a href="{{ link.url }}" class="top-nav__link link link--text{% if link.current %} top-nav__link--active{% endif %}">
+                {{ link.title | escape }}
+              </a>
+            </li>
+          {%- endfor -%}
+        </ul>
+      </nav>
+    </div>
+  {%- endif -%}
+
   {%- liquid
     assign social_links = false
     assign localization_forms = false
@@ -484,228 +608,207 @@
       assign localization_forms = true
     endif
   -%}
-
-  {%- comment -%} Top Navigation Bar {%- endcomment -%}
-  {%- if section.settings.show_top_navigation and section.settings.menu != blank -%}
-    <div class="top-navigation-wrapper">
-      <nav class="top-navigation page-width" role="navigation" aria-label="Top navigation">
-        <ul class="top-navigation__list" role="list">
-          {%- for link in linklists[section.settings.menu].links -%}
-            <li class="top-navigation__item">
-              <a href="{{ link.url }}" class="top-navigation__link{% if link.current %} top-navigation__link--active{% endif %}">
-                {{ link.title | escape }}
-              </a>
-            </li>
-          {%- endfor -%}
-        </ul>
-      </nav>
-    </div>
-  {%- endif -%}
-  <header class="header header--{{ section.settings.logo_position }} header--mobile-{{ section.settings.mobile_logo_position }}{% if section.settings.search_bar_type != 'icon' %} header--has-search-{{ section.settings.search_bar_position }}{% endif %} page-width{% if section.settings.menu_type_desktop == 'drawer' %} drawer-menu{% endif %}{% if section.settings.menu != blank %} header--has-menu{% endif %}{% if has_app_block %} header--has-app{% endif %}{% if social_links %} header--has-social{% endif %}{% if shop.customer_accounts_enabled %} header--has-account{% endif %}{% if localization_forms %} header--has-localizations{% endif %}">
-    {%- liquid
-      if section.settings.menu != blank
-        render 'header-drawer'
-      endif
-
-      if section.settings.logo_position == 'top-center' or section.settings.menu == blank
-        render 'header-search', input_id: 'Search-In-Modal-1'
-      endif
-    -%}
-
-    {%- comment -%} Search Bar - Left Position {%- endcomment -%}
-    {%- if section.settings.search_bar_type == 'bar' and section.settings.search_bar_position == 'left' -%}
-      <div class="header__search-bar header__search-bar--left">
-        {% render 'header-search-bar', input_id: 'HeaderSearchLeft' %}
-      </div>
+  <header class="header header--{{ section.settings.logo_position }} header--mobile-{{ section.settings.mobile_logo_position }} page-width{% if section.settings.menu_type_desktop == 'drawer' %} drawer-menu{% endif %}{% if section.settings.menu != blank %} header--has-menu{% endif %}{% if has_app_block %} header--has-app{% endif %}{% if social_links %} header--has-social{% endif %}{% if shop.customer_accounts_enabled %} header--has-account{% endif %}{% if localization_forms %} header--has-localizations{% endif %}">
+    
+    {%- comment -%} Mobile Menu Drawer {%- endcomment -%}
+    {%- if section.settings.menu != blank -%}
+      {% render 'header-drawer' %}
     {%- endif -%}
 
-    {%- if section.settings.logo_position != 'middle-center' -%}
-      {%- if request.page_type == 'index' -%}
-        <h1 class="header__heading">
-      {%- endif -%}
-          <a href="{{ routes.root_url }}" class="header__heading-link link link--text focus-inset">
-            {%- if settings.logo != blank -%}
-              <div class="header__heading-logo-wrapper">
-                {%- assign logo_alt = settings.logo.alt | default: shop.name | escape -%}
-                {%- assign logo_height = settings.logo_width | divided_by: settings.logo.aspect_ratio -%}
-                {% capture sizes %}(max-width: {{ settings.logo_width | times: 2 }}px) 50vw, {{ settings.logo_width }}px{% endcapture %}
-                {% capture widths %}{{ settings.logo_width }}, {{ settings.logo_width | times: 1.5 | round }}, {{ settings.logo_width | times: 2 }}{% endcapture %}
-                {{ settings.logo | image_url: width: 600 | image_tag:
-                  class: 'header__heading-logo motion-reduce',
-                  widths: widths,
-                  height: logo_height,
-                  width: settings.logo_width,
-                  alt: logo_alt,
-                  sizes: sizes,
-                  preload: true
-                }}
-              </div>
-            {%- else -%}
-              <span class="h2">{{ shop.name }}</span>
-            {%- endif -%}
-          </a>
-      {%- if request.page_type == 'index' -%}
-        </h1>
-      {%- endif -%}
-    {%- endif -%}
-
-    {%- liquid
-      if section.settings.menu != blank and section.settings.show_top_navigation == false
-        if section.settings.menu_type_desktop == 'dropdown'
-          render 'header-dropdown-menu'
-        elsif section.settings.menu_type_desktop != 'drawer'
-          render 'header-mega-menu'
-        endif
-      endif
-    %}
-
-    {%- comment -%} Search Bar - Center Position {%- endcomment -%}
-    {%- if section.settings.search_bar_type == 'bar' and section.settings.search_bar_position == 'center' -%}
-      <div class="header__search-bar header__search-bar--center">
-        {% render 'header-search-bar', input_id: 'HeaderSearchCenter' %}
-      </div>
-    {%- endif -%}
-
-    {%- if section.settings.logo_position == 'middle-center' -%}
-      {%- if request.page_type == 'index' -%}
-        <h1 class="header__heading">
-      {%- endif -%}
-          <a href="{{ routes.root_url }}" class="header__heading-link link link--text focus-inset">
-            {%- if settings.logo != blank -%}
-              <div class="header__heading-logo-wrapper">
-                {%- assign logo_alt = settings.logo.alt | default: shop.name | escape -%}
-                {%- assign logo_height = settings.logo_width | divided_by: settings.logo.aspect_ratio -%}
-                {% capture sizes %}(min-width: 750px) {{ settings.logo_width }}px, 50vw{% endcapture %}
-                {% capture widths %}{{ settings.logo_width }}, {{ settings.logo_width | times: 1.5 | round }}, {{ settings.logo_width | times: 2 }}{% endcapture %}
-                {{ settings.logo | image_url: width: 600 | image_tag:
-                  class: 'header__heading-logo',
-                  widths: widths,
-                  height: logo_height,
-                  width: settings.logo_width,
-                  alt: logo_alt,
-                  sizes: sizes,
-                  preload: true
-                }}
-              </div>
-            {%- else -%}
-              <span class="h2">{{ shop.name }}</span>
-            {%- endif -%}
-          </a>
-      {%- if request.page_type == 'index' -%}
-        </h1>
-      {%- endif -%}
-    {%- endif -%}
-
-    <div class="header__icons{% if section.settings.enable_country_selector or section.settings.enable_language_selector %} header__icons--localization header-localization{% endif %}">
-      {%- comment -%} Search Bar - Right Position {%- endcomment -%}
-      {%- if section.settings.search_bar_type == 'bar' and section.settings.search_bar_position == 'right' -%}
-        <div class="header__search-bar header__search-bar--right">
-          {% render 'header-search-bar', input_id: 'HeaderSearchRight' %}
-        </div>
-      {%- endif -%}
+    {%- comment -%} Main Header Row {%- endcomment -%}
+    <div class="header__main-row">
       
-      <div class="desktop-localization-wrapper">
-        {%- if section.settings.enable_country_selector and localization.available_countries.size > 1 -%}
-          <noscript class="small-hide medium-hide">
-            {%- form 'localization', id: 'HeaderCountryMobileFormNoScript', class: 'localization-form' -%}
-              <div class="localization-form__select">
-                <h2 class="visually-hidden" id="HeaderCountryMobileLabelNoScript">{{ 'localization.country_label' | t }}</h2>
-                <select class="localization-selector link" name="country_code" aria-labelledby="HeaderCountryMobileLabelNoScript">
-                  {%- for country in localization.available_countries -%}
-                    <option value="{{ country.iso_code }}" {%- if country.iso_code == localization.country.iso_code %} selected{% endif %}>
-                      {{ country.name }} ({{ country.currency.iso_code }} {{ country.currency.symbol }})
-                    </option>
-                  {%- endfor -%}
-                </select>
-                {% render 'icon-caret' %}
-              </div>
-              <button class="button button--tertiary">{{ 'localization.update_country' | t }}</button>
-            {%- endform -%}
-          </noscript>
-
-          <localization-form class="small-hide medium-hide no-js-hidden" data-prevent-hide>
-            {%- form 'localization', id: 'HeaderCountryForm', class: 'localization-form' -%}
-              <div>
-                <h2 class="visually-hidden" id="HeaderCountryLabel">{{ 'localization.country_label' | t }}</h2>
-                {%- render 'country-localization', localPosition: 'HeaderCountry' -%}
-              </div>
-            {%- endform -%}
-          </localization-form>
-        {% endif %}
-
-        {%- if section.settings.enable_language_selector and localization.available_languages.size > 1 -%}
-          <noscript class="small-hide medium-hide">
-            {%- form 'localization', id: 'HeaderLanguageMobileFormNoScript', class: 'localization-form' -%}
-              <div class="localization-form__select">
-                <h2 class="visually-hidden" id="HeaderLanguageMobileLabelNoScript">{{ 'localization.language_label' | t }}</h2>
-                <select class="localization-selector link" name="locale_code" aria-labelledby="HeaderLanguageMobileLabelNoScript">
-                  {%- for language in localization.available_languages -%}
-                    <option value="{{ language.iso_code }}" lang="{{ language.iso_code }}" {%- if language.iso_code == localization.language.iso_code %} selected{% endif %}>
-                      {{ language.endonym_name | capitalize }}
-                    </option>
-                  {%- endfor -%}
-                </select>
-                {% render 'icon-caret' %}
-              </div>
-              <button class="button button--tertiary">{{ 'localization.update_language' | t }}</button>
-            {%- endform -%}
-          </noscript>
-
-          <localization-form class="small-hide medium-hide no-js-hidden" data-prevent-hide>
-            {%- form 'localization', id: 'HeaderLanguageForm', class: 'localization-form' -%}
-              <div>
-                <h2 class="visually-hidden" id="HeaderLanguageLabel">{{ 'localization.language_label' | t }}</h2>
-                {%- render 'language-localization', localPosition: 'HeaderLanguage' -%}
-              </div>
-            {%- endform -%}
-          </localization-form>
-        {%- endif -%}
-      </div>
-      {%- comment -%} Search Icon - Only show when search_bar_type is "icon" {%- endcomment -%}
-      {%- if section.settings.search_bar_type == 'icon' -%}
-        {% render 'header-search', input_id: 'Search-In-Modal' %}
-      {%- endif -%}
-
-      {%- if shop.customer_accounts_enabled -%}
-        <a href="{%- if customer -%}{{ routes.account_url }}{%- else -%}{{ routes.account_login_url }}{%- endif -%}" class="header__icon header__icon--account link focus-inset{% if section.settings.menu != blank %} small-hide{% endif %}">
-          {% render 'icon-account' %}
-          <span class="visually-hidden">
-            {%- liquid
-              if customer
-                echo 'customer.account_fallback' | t
-              else
-                echo 'customer.log_in' | t
-              endif
-            -%}
-          </span>
-        </a>
-      {%- endif -%}
-
-      {%- for block in section.blocks -%}
-        {%- case block.type -%}
-          {%- when '@app' -%}
-            {% render block %}
-        {%- endcase -%}
-      {%- endfor -%}
-
-      <a href="{{ routes.cart_url }}" class="header__icon header__icon--cart link focus-inset header__cart--desktop" id="cart-icon-bubble">
-        {%- liquid
-          if cart == empty
-            render 'icon-cart-empty'
-          else
-            render 'icon-cart'
-          endif
-        -%}
-        <span class="visually-hidden">{{ 'templates.cart.cart' | t }}</span>
-        {%- if cart != empty -%}
-          <div class="cart-count-bubble">
-            {%- if cart.item_count < 100 -%}
-              <span aria-hidden="true">{{ cart.item_count }}</span>
-            {%- endif -%}
-            <span class="visually-hidden">{{ 'sections.header.cart_count' | t: count: cart.item_count }}</span>
+      {%- comment -%} Left Section {%- endcomment -%}
+      <div class="header__left-section">
+        {%- comment -%} Search in left position {%- endcomment -%}
+        {%- if section.settings.show_search_bar and section.settings.search_position == 'left' -%}
+          <div class="header__search-bar header__search-bar--left">
+            {% render 'header-search-bar', input_id: 'Search-In-Header-Left' %}
           </div>
         {%- endif -%}
-      </a>
+        
+        {%- comment -%} Logo {%- endcomment -%}
+        {%- if request.page_type == 'index' -%}
+          <h1 class="header__heading">
+        {%- endif -%}
+            <a href="{{ routes.root_url }}" class="header__heading-link link link--text focus-inset">
+              {%- if settings.logo != blank -%}
+                <div class="header__heading-logo-wrapper">
+                  {%- assign logo_alt = settings.logo.alt | default: shop.name | escape -%}
+                  {%- assign logo_height = settings.logo_width | divided_by: settings.logo.aspect_ratio -%}
+                  {% capture sizes %}(max-width: {{ settings.logo_width | times: 2 }}px) 50vw, {{ settings.logo_width }}px{% endcapture %}
+                  {% capture widths %}{{ settings.logo_width }}, {{ settings.logo_width | times: 1.5 | round }}, {{ settings.logo_width | times: 2 }}{% endcapture %}
+                  {{ settings.logo | image_url: width: 600 | image_tag:
+                    class: 'header__heading-logo motion-reduce',
+                    widths: widths,
+                    height: logo_height,
+                    width: settings.logo_width,
+                    alt: logo_alt,
+                    sizes: sizes,
+                    preload: true
+                  }}
+                </div>
+              {%- else -%}
+                <span class="h2">{{ shop.name }}</span>
+              {%- endif -%}
+            </a>
+        {%- if request.page_type == 'index' -%}
+          </h1>
+        {%- endif -%}
+      </div>
+
+      {%- comment -%} Center Section {%- endcomment -%}
+      <div class="header__center-section">
+        {%- comment -%} Search in center position {%- endcomment -%}
+        {%- if section.settings.show_search_bar and section.settings.search_position == 'center' -%}
+          <div class="header__search-bar header__search-bar--center">
+            {% render 'header-search-bar', input_id: 'Search-In-Header-Center' %}
+          </div>
+        {%- endif -%}
+      </div>
+
+      {%- comment -%} Right Section - Account, Cart, Language {%- endcomment -%}
+      <div class="header__right-section">
+        
+        {%- comment -%} Search in right position {%- endcomment -%}
+        {%- if section.settings.show_search_bar and section.settings.search_position == 'right' -%}
+          <div class="header__search-bar header__search-bar--right">
+            {% render 'header-search-bar', input_id: 'Search-In-Header-Right' %}
+          </div>
+        {%- endif -%}
+        
+        {%- comment -%} Search icon fallback or mobile {%- endcomment -%}
+        {%- if section.settings.show_search_icon and section.settings.show_search_bar == false -%}
+          <details-modal class="header__search">
+            <details>
+              <summary class="header__icon header__icon--search header__icon--summary link focus-inset modal__toggle" aria-haspopup="dialog" aria-label="{{ 'general.search.search' | t }}">
+                <span>
+                  <svg class="modal__toggle-open icon icon-search" aria-hidden="true" focusable="false">
+                    <use href="#icon-search">
+                  </svg>
+                  <svg class="modal__toggle-close icon icon-close" aria-hidden="true" focusable="false">
+                    <use href="#icon-close">
+                  </svg>
+                </span>
+              </summary>
+              <div class="search-modal modal__content gradient" role="dialog" aria-modal="true" aria-label="{{ 'general.search.search' | t }}">
+                <div class="modal-overlay"></div>
+                <div class="search-modal__content search-modal__content-bottom" tabindex="-1">
+                  {% render 'header-search', input_id: 'Search-In-Modal' %}
+                </div>
+              </div>
+            </details>
+          </details-modal>
+        {%- elsif section.settings.show_search_bar -%}
+          {%- comment -%} Mobile-only search icon when search bar is enabled {%- endcomment -%}
+          <details-modal class="header__search header__search--mobile-only">
+            <details>
+              <summary class="header__icon header__icon--search header__icon--summary link focus-inset modal__toggle" aria-haspopup="dialog" aria-label="{{ 'general.search.search' | t }}">
+                <span>
+                  <svg class="modal__toggle-open icon icon-search" aria-hidden="true" focusable="false">
+                    <use href="#icon-search">
+                  </svg>
+                  <svg class="modal__toggle-close icon icon-close" aria-hidden="true" focusable="false">
+                    <use href="#icon-close">
+                  </svg>
+                </span>
+              </summary>
+              <div class="search-modal modal__content gradient" role="dialog" aria-modal="true" aria-label="{{ 'general.search.search' | t }}">
+                <div class="modal-overlay"></div>
+                <div class="search-modal__content search-modal__content-bottom" tabindex="-1">
+                  {% render 'header-search', input_id: 'Search-In-Mobile-Modal' %}
+                </div>
+              </div>
+            </details>
+          </details-modal>
+        {%- endif -%}
+        
+        {%- comment -%} Language Selector {%- endcomment -%}
+        {%- if section.settings.enable_language_selector and localization.available_languages.size > 1 -%}
+          <div class="header__localization">
+            <localization-form class="small-hide medium-hide no-js-hidden" data-prevent-hide>
+              {%- form 'localization', id: 'HeaderLanguageForm', class: 'localization-form' -%}
+                <div>
+                  <h2 class="visually-hidden" id="HeaderLanguageLabel">{{ 'localization.language_label' | t }}</h2>
+                  {%- render 'language-localization', localPosition: 'HeaderLanguage' -%}
+                </div>
+              {%- endform -%}
+            </localization-form>
+          </div>
+        {%- endif -%}
+
+        {%- comment -%} Country Selector {%- endcomment -%}
+        {%- if section.settings.enable_country_selector and localization.available_countries.size > 1 -%}
+          <div class="header__localization">
+            <localization-form class="small-hide medium-hide no-js-hidden" data-prevent-hide>
+              {%- form 'localization', id: 'HeaderCountryForm', class: 'localization-form' -%}
+                <div>
+                  <h2 class="visually-hidden" id="HeaderCountryLabel">{{ 'localization.country_label' | t }}</h2>
+                  {%- render 'country-localization', localPosition: 'HeaderCountry' -%}
+                </div>
+              {%- endform -%}
+            </localization-form>
+          </div>
+        {%- endif -%}
+
+        {%- comment -%} Account Link {%- endcomment -%}
+        {%- if shop.customer_accounts_enabled -%}
+          <a href="{%- if customer -%}{{ routes.account_url }}{%- else -%}{{ routes.account_login_url }}{%- endif -%}" class="header__icon header__icon--account link focus-inset{% if section.settings.menu != blank %} small-hide{% endif %}">
+            {%- if section.settings.enable_customer_avatar -%}
+              <account-icon>
+                {%- if customer and customer.has_avatar? -%}
+                  {{ customer | avatar }}
+                {%- else -%}
+                  <svg class="icon icon-account" aria-hidden="true" focusable="false">
+                    <use href="#icon-account">
+                  </svg>
+                {%- endif -%}
+              </account-icon>
+            {%- else -%}
+              <svg class="icon icon-account" aria-hidden="true" focusable="false">
+                <use href="#icon-account">
+              </svg>
+            {%- endif -%}
+            <span class="visually-hidden">
+              {%- liquid
+                if customer
+                  echo 'customer.account_fallback' | t
+                else
+                  echo 'customer.log_in' | t
+                endif
+              -%}
+            </span>
+          </a>
+        {%- endif -%}
+
+        {%- comment -%} Cart Link {%- endcomment -%}
+        <a href="{{ routes.cart_url }}" class="header__icon header__icon--cart link focus-inset" id="cart-icon-bubble">
+          {%- liquid
+            if cart == empty
+              render 'icon-cart-empty'
+            else
+              render 'icon-cart'
+            endif
+          -%}
+          <span class="visually-hidden">{{ 'templates.cart.cart' | t }}</span>
+          {%- if cart != empty -%}
+            <div class="cart-count-bubble">
+              {%- if cart.item_count < 100 -%}
+                <span aria-hidden="true">{{ cart.item_count }}</span>
+              {%- endif -%}
+              <span class="visually-hidden">{{ 'sections.header.cart_count' | t: count: cart.item_count }}</span>
+            </div>
+          {%- endif -%}
+        </a>
+
+        {%- comment -%} App Blocks {%- endcomment -%}
+        {%- for block in section.blocks -%}
+          {%- case block.type -%}
+            {%- when '@app' -%}
+              {% render block %}
+          {%- endcase -%}
+        {%- endfor -%}
+      </div>
     </div>
   </header>
 </{% if section.settings.sticky_header_type != 'none' %}sticky-header{% else %}div{% endif %}>
@@ -713,6 +816,9 @@
 {%- if settings.cart_type == "notification" -%}
   {%- render 'cart-notification', color_scheme: section.settings.color_scheme, desktop_menu_type: section.settings.menu_type_desktop -%}
 {%- endif -%}
+
+{%- comment -%} Mobile Bottom Navigation {%- endcomment -%}
+{% render 'mobile-navigation' %}
 
 {% javascript %}
   class StickyHeader extends HTMLElement {
@@ -964,7 +1070,7 @@
       "label": "t:sections.all.colors.label",
       "default": "scheme-1"
     },
-      {
+    {
       "type": "color_scheme",
       "id": "menu_color_scheme",
       "label": "t:sections.header.settings.menu_color_scheme.label",
@@ -994,392 +1100,87 @@
     },
     {
       "type": "header",
-      "content": "Navigation & Search Settings"
+      "content": "🔍 Search Bar Settings"
     },
     {
       "type": "checkbox",
-      "id": "show_top_navigation",
-      "default": false,
-      "label": "Show navigation on top"
-    },
-    {
-      "type": "select",
-      "id": "search_bar_type",
-      "options": [
-        {
-          "value": "icon",
-          "label": "Search Icon Only"
-        },
-        {
-          "value": "bar",
-          "label": "Search Bar"
-        }
-      ],
-      "default": "icon",
-      "label": "Search Type"
-    },
-    {
-      "type": "select",
-      "id": "search_bar_position",
-      "options": [
-        {
-          "value": "left",
-          "label": "Left"
-        },
-        {
-          "value": "center",
-          "label": "Center"
-        },
-        {
-          "value": "right",
-          "label": "Right"
-        }
-      ],
-      "default": "right",
-      "label": "Search Bar Position"
-    },
-    {
-      "type": "header",
-      "content": "Top Navigation Styling"
-    },
-    {
-      "type": "select",
-      "id": "top_nav_alignment",
-      "options": [
-        {
-          "value": "flex-start",
-          "label": "Left"
-        },
-        {
-          "value": "center",
-          "label": "Center"
-        },
-        {
-          "value": "flex-end",
-          "label": "Right"
-        }
-      ],
-      "default": "center",
-      "label": "Navigation Alignment"
-    },
-    {
-      "type": "select",
-      "id": "top_nav_style",
-      "options": [
-        {
-          "value": "simple",
-          "label": "Simple"
-        },
-        {
-          "value": "underline",
-          "label": "Underline"
-        },
-        {
-          "value": "button",
-          "label": "Button Style"
-        }
-      ],
-      "default": "underline",
-      "label": "Navigation Style"
-    },
-    {
-      "type": "select",
-      "id": "top_nav_background",
-      "options": [
-        {
-          "value": "default",
-          "label": "Default"
-        },
-        {
-          "value": "transparent",
-          "label": "Transparent"
-        },
-        {
-          "value": "primary",
-          "label": "Primary Color"
-        }
-      ],
-      "default": "default",
-      "label": "Navigation Background"
-    },
-    {
-      "type": "range",
-      "id": "top_nav_font_size",
-      "min": 12,
-      "max": 20,
-      "step": 1,
-      "unit": "px",
-      "label": "Font Size",
-      "default": 14
-    },
-    {
-      "type": "range",
-      "id": "top_nav_font_weight",
-      "min": 300,
-      "max": 700,
-      "step": 100,
-      "label": "Font Weight",
-      "default": 400
-    },
-    {
-      "type": "range",
-      "id": "top_nav_spacing",
-      "min": 10,
-      "max": 60,
-      "step": 5,
-      "unit": "px",
-      "label": "Item Spacing",
-      "default": 30
-    },
-    {
-      "type": "range",
-      "id": "top_nav_padding",
-      "min": 5,
-      "max": 25,
-      "step": 1,
-      "unit": "px",
-      "label": "Top/Bottom Padding",
-      "default": 12
-    },
-    {
-      "type": "range",
-      "id": "top_nav_link_padding",
-      "min": 4,
-      "max": 16,
-      "step": 1,
-      "unit": "px",
-      "label": "Link Padding",
-      "default": 8
-    },
-    {
-      "type": "range",
-      "id": "top_nav_border_radius",
-      "min": 0,
-      "max": 20,
-      "step": 1,
-      "unit": "px",
-      "label": "Border Radius",
-      "default": 4
-    },
-    {
-      "type": "checkbox",
-      "id": "top_nav_mobile_hide",
+      "id": "show_search_bar",
       "default": true,
-      "label": "Hide on Mobile"
+      "label": "Show search bar",
+      "info": "Display a full search bar in the header center. When enabled, search icon only appears on mobile."
     },
     {
-      "type": "header",
-      "content": "Search Bar Styling"
-    },
-    {
-      "type": "range",
-      "id": "search_bar_max_width",
-      "min": 300,
-      "max": 800,
-      "step": 20,
-      "unit": "px",
-      "label": "Search Bar Maximum Width",
-      "info": "Maximum width of the search bar container",
-      "default": 600
-    },
-    {
-      "type": "range",
-      "id": "search_bar_horizontal_padding",
-      "min": 0,
-      "max": 100,
-      "step": 5,
-      "unit": "px",
-      "label": "Search Bar Side Padding",
-      "info": "Padding on left and right sides - reduces effective search bar width",
-      "default": 20
-    },
-    {
-      "type": "range",
-      "id": "search_bar_height",
-      "min": 32,
-      "max": 60,
-      "step": 2,
-      "unit": "px",
-      "label": "Search Bar Height",
-      "info": "Overall height of the search input field",
-      "default": 44
-    },
-    {
-      "type": "select",
-      "id": "search_bar_background",
-      "options": [
-        {
-          "value": "default",
-          "label": "Default"
-        },
-        {
-          "value": "transparent",
-          "label": "Transparent"
-        },
-        {
-          "value": "white",
-          "label": "White"
-        },
-        {
-          "value": "dark",
-          "label": "Dark"
-        },
-        {
-          "value": "accent",
-          "label": "Accent Color"
-        }
-      ],
-      "default": "default",
-      "label": "Search Background"
-    },
-    {
-      "type": "select",
-      "id": "search_bar_border_color",
-      "options": [
-        {
-          "value": "default",
-          "label": "Default"
-        },
-        {
-          "value": "accent",
-          "label": "Accent Color"
-        }
-      ],
-      "default": "default",
-      "label": "Border Color"
-    },
-    {
-      "type": "range",
-      "id": "search_bar_border_radius",
-      "min": 0,
-      "max": 50,
-      "step": 1,
-      "unit": "px",
-      "label": "Border Radius",
-      "default": 25
-    },
-    {
-      "type": "range",
-      "id": "search_bar_border_width",
-      "min": 0,
-      "max": 4,
-      "step": 1,
-      "unit": "px",
-      "label": "Border Width",
-      "default": 1
-    },
-    {
-      "type": "range",
-      "id": "search_bar_padding",
-      "min": 8,
-      "max": 20,
-      "step": 1,
-      "unit": "px",
-      "label": "Input Padding",
-      "default": 12
-    },
-    {
-      "type": "range",
-      "id": "search_bar_font_size",
-      "min": 12,
-      "max": 18,
-      "step": 1,
-      "unit": "px",
-      "label": "Font Size",
-      "default": 14
+      "type": "checkbox",
+      "id": "show_search_icon",
+      "default": false,
+      "label": "Show search icon only",
+      "info": "Display only a search icon (opens modal when clicked). Use this instead of the search bar for a minimal design."
     },
     {
       "type": "text",
       "id": "search_placeholder",
-      "label": "Search Placeholder Text",
       "default": "Search products...",
-      "info": "Text shown in the search bar when empty"
+      "label": "🔤 Search placeholder text",
+      "info": "Custom text shown inside the search bar when empty"
+    },
+    {
+      "type": "select",
+      "id": "search_position",
+      "options": [
+        {
+          "value": "center",
+          "label": "Center"
+        },
+        {
+          "value": "left",
+          "label": "Left side"
+        },
+        {
+          "value": "right",
+          "label": "Right side"
+        }
+      ],
+      "default": "center",
+      "label": "📍 Search bar position"
+    },
+    {
+      "type": "color",
+      "id": "search_background",
+      "label": "🎨 Search background color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "search_border",
+      "label": "🖌️ Search border color",
+      "default": "#e0e0e0"
+    },
+    {
+      "type": "color",
+      "id": "search_text",
+      "label": "📝 Search text color",
+      "default": "#333333"
+    },
+    {
+      "type": "range",
+      "id": "search_width",
+      "min": 200,
+      "max": 600,
+      "step": 20,
+      "unit": "px",
+      "label": "📐 Search bar width",
+      "default": 400
+    },
+    {
+      "type": "header",
+      "content": "📍 Top Navigation"
     },
     {
       "type": "checkbox",
-      "id": "search_placeholder_italic",
-      "label": "Italic Placeholder Text",
-      "default": false
-    },
-    {
-      "type": "select",
-      "id": "search_bar_focus_effect",
-      "options": [
-        {
-          "value": "simple",
-          "label": "Simple"
-        },
-        {
-          "value": "glow",
-          "label": "Glow Effect"
-        },
-        {
-          "value": "scale",
-          "label": "Scale Effect"
-        }
-      ],
-      "default": "simple",
-      "label": "Focus Effect"
-    },
-    {
-      "type": "range",
-      "id": "search_bar_focus_width",
-      "min": 1,
-      "max": 4,
-      "step": 1,
-      "unit": "px",
-      "label": "Focus Ring Width",
-      "default": 2
-    },
-    {
-      "type": "select",
-      "id": "search_button_style",
-      "options": [
-        {
-          "value": "filled",
-          "label": "Filled"
-        },
-        {
-          "value": "outline",
-          "label": "Outline"
-        },
-        {
-          "value": "subtle",
-          "label": "Subtle"
-        }
-      ],
-      "default": "filled",
-      "label": "Search Button Style"
-    },
-    {
-      "type": "range",
-      "id": "search_button_padding",
-      "min": 4,
-      "max": 16,
-      "step": 1,
-      "unit": "px",
-      "label": "Button Padding",
-      "default": 8
-    },
-    {
-      "type": "range",
-      "id": "search_button_border_radius",
-      "min": 0,
-      "max": 30,
-      "step": 1,
-      "unit": "px",
-      "label": "Button Border Radius",
-      "default": 20
-    },
-    {
-      "type": "range",
-      "id": "search_icon_size",
-      "min": 12,
-      "max": 24,
-      "step": 1,
-      "unit": "px",
-      "label": "Search Icon Size",
-      "default": 16
+      "id": "show_top_menu",
+      "default": true,
+      "label": "Show navigation at top",
+      "info": "Display the main navigation menu above the header"
     },
     {
       "type": "header",
@@ -1438,126 +1239,6 @@
       "unit": "px",
       "label": "t:sections.all.padding.padding_bottom",
       "default": 20
-    },
-    {
-      "type": "header",
-      "content": "Mobile Navigation Settings"
-    },
-    {
-      "type": "checkbox",
-      "id": "enable_mobile_navigation",
-      "label": "Enable Mobile Bottom Navigation",
-      "default": true,
-      "info": "Show app-style bottom navigation on mobile devices"
-    },
-    {
-      "type": "select",
-      "id": "mobile_nav_style",
-      "options": [
-        {
-          "value": "default",
-          "label": "Default Theme Style"
-        },
-        {
-          "value": "ios",
-          "label": "iOS Style (Blurred)"
-        },
-        {
-          "value": "android",
-          "label": "Android Material"
-        },
-        {
-          "value": "dark",
-          "label": "Dark Theme"
-        },
-        {
-          "value": "gradient",
-          "label": "Colorful Gradient"
-        },
-        {
-          "value": "custom",
-          "label": "Custom Colors"
-        }
-      ],
-      "default": "default",
-      "label": "Mobile Navigation Style"
-    },
-    {
-      "type": "select",
-      "id": "mobile_nav_height",
-      "options": [
-        {
-          "value": "compact",
-          "label": "Compact (40px)"
-        },
-        {
-          "value": "normal",
-          "label": "Normal (56px)"
-        },
-        {
-          "value": "tall",
-          "label": "Tall (72px)"
-        }
-      ],
-      "default": "normal",
-      "label": "Navigation Height"
-    },
-    {
-      "type": "checkbox",
-      "id": "mobile_nav_show_labels",
-      "label": "Show Text Labels",
-      "default": true,
-      "info": "Show text below icons (Home, Cart, etc.)"
-    },
-    {
-      "type": "color",
-      "id": "mobile_nav_background",
-      "label": "Background Color (Custom Style)",
-      "default": "#ffffff",
-      "info": "Only applies when Custom Colors style is selected"
-    },
-    {
-      "type": "color",
-      "id": "mobile_nav_text_color",
-      "label": "Icon & Text Color (Custom Style)",
-      "default": "#000000",
-      "info": "Only applies when Custom Colors style is selected"
-    },
-    {
-      "type": "color",
-      "id": "mobile_nav_active_color",
-      "label": "Active Icon Color (Custom Style)",
-      "default": "#007AFF",
-      "info": "Color for the current page icon"
-    },
-    {
-      "type": "color",
-      "id": "mobile_nav_badge_color",
-      "label": "Cart Badge Color (Custom Style)",
-      "default": "#FF3B30",
-      "info": "Background color for cart item count badge"
-    },
-    {
-      "type": "range",
-      "id": "mobile_nav_border_radius",
-      "min": 0,
-      "max": 30,
-      "step": 2,
-      "unit": "px",
-      "label": "Border Radius (Custom Style)",
-      "default": 0,
-      "info": "Rounded corners for navigation bar"
-    },
-    {
-      "type": "range",
-      "id": "mobile_nav_transparency",
-      "min": 70,
-      "max": 100,
-      "step": 5,
-      "unit": "%",
-      "label": "Background Opacity",
-      "default": 95,
-      "info": "Background transparency level"
     }
   ],
   "blocks": [
