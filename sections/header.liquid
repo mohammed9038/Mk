@@ -276,7 +276,10 @@
      ======================================== */
   
   /* Search form container */
-  .header__search-form {
+  /* Search form container - unified targeting */
+  .header__search-form,
+  .header__search-form__form,
+  .header__search-bar .header__search-form {
     width: 100%;
     max-width: {{ section.settings.search_width | default: 400 }}px;
     position: relative;
@@ -284,10 +287,12 @@
     align-items: center;
   }
 
-  /* Search input - Target the actual classes used in HTML */
-  .header__search-form .search__input.field__input.header__search-input,
-  .header__search-form input.search__input.field__input,
-  .header__search-form .header__search-input {
+  /* Search input - improved targeting with priority */
+  .header__search-form .search__input.field__input,
+  .header__search-form input[type="search"],
+  .header__search-form .header__search-input,
+  .header__search-bar input.search__input,
+  .header__search-bar .field__input {
     /* Size and spacing */
     width: 100% !important;
     height: 45px !important;
@@ -310,36 +315,43 @@
     /* Override theme defaults */
     -webkit-appearance: none !important;
     appearance: none !important;
+    position: relative !important;
     top: auto !important;
     left: auto !important;
     right: auto !important;
     bottom: auto !important;
-    flex-grow: unset !important;
+    flex-grow: 1 !important;
     text-align: left !important;
   }
 
-  /* Focus state with admin colors */
-  .header__search-form .search__input.field__input.header__search-input:focus,
-  .header__search-form input.search__input.field__input:focus,
-  .header__search-form .header__search-input:focus {
+  /* Focus state with admin colors - improved targeting */
+  .header__search-form .search__input.field__input:focus,
+  .header__search-form input[type="search"]:focus,
+  .header__search-form .header__search-input:focus,
+  .header__search-bar input.search__input:focus,
+  .header__search-bar .field__input:focus {
     background-color: {{ section.settings.search_background | default: '#ffffff' }} !important;
     border-color: {{ section.settings.search_border | default: '#e0e0e0' }} !important;
     box-shadow: 0 0 0 3px {{ section.settings.search_border | default: '#e0e0e0' | color_modify: 'alpha', 0.3 }} !important;
     outline: none !important;
   }
 
-  /* Placeholder styling */
-  .header__search-form .search__input.field__input.header__search-input::placeholder,
-  .header__search-form input.search__input.field__input::placeholder,
-  .header__search-form .header__search-input::placeholder {
+  /* Placeholder styling - improved targeting */
+  .header__search-form .search__input.field__input::placeholder,
+  .header__search-form input[type="search"]::placeholder,
+  .header__search-form .header__search-input::placeholder,
+  .header__search-bar input.search__input::placeholder,
+  .header__search-bar .field__input::placeholder {
     color: {{ section.settings.search_text | default: '#333333' | color_modify: 'alpha', 0.6 }} !important;
     font-style: normal !important;
     opacity: 1 !important;
   }
 
-  /* Search button styling */
-  .header__search-form .search__button.field__button.header__search-button,
-  .header__search-form .header__search-button {
+  /* Search button styling - improved targeting */
+  .header__search-form .search__button.field__button,
+  .header__search-form .header__search-button,
+  .header__search-bar .search__button,
+  .header__search-bar .field__button {
     position: absolute !important;
     right: 8px !important;
     top: 50% !important;
@@ -574,6 +586,11 @@
     {% if section.settings.enable_mobile_navigation %}
       @media screen and (max-width: 749px) {
         .header__search--mobile-only {
+          display: none !important;
+        }
+        
+        /* Ensure no duplicate search icons in header on mobile */
+        .header__icon--search {
           display: none !important;
         }
       }

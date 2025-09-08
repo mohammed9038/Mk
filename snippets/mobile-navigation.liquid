@@ -36,7 +36,19 @@
       <button type="button" 
               class="mobile-nav__link" 
               data-action="search"
-              onclick="document.querySelector('.header__search summary')?.click();"
+              onclick="
+                const searchModal = document.querySelector('.header__search details');
+                if (searchModal) {
+                  searchModal.open = true;
+                  const searchInput = searchModal.querySelector('input[type=search], .search__input');
+                  if (searchInput) {
+                    setTimeout(() => searchInput.focus(), 100);
+                  }
+                } else {
+                  const searchBar = document.querySelector('.header__search-bar input');
+                  if (searchBar) searchBar.focus();
+                }
+              "
               aria-label="{{ 'general.search.search' | t }}">
         <div class="mobile-nav__icon">
           {% render 'icon-search' %}
