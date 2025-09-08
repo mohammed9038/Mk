@@ -536,6 +536,39 @@
       .mobile-nav {
         display: block !important;
       }
+    }
+    
+    /* TEMPORARY: Show mobile navigation on desktop for testing */
+    /* Remove this section after testing is complete */
+    @media screen and (min-width: 750px) {
+      .mobile-nav {
+        display: block !important;
+        position: fixed !important;
+        bottom: 20px !important;
+        right: 20px !important;
+        left: auto !important;
+        width: 300px !important;
+        border-radius: 15px !important;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.3) !important;
+        z-index: 9999 !important;
+      }
+      
+      .mobile-nav::before {
+        content: "🧪 TESTING MODE" !important;
+        display: block !important;
+        text-align: center !important;
+        font-size: 10px !important;
+        padding: 4px !important;
+        background: #ff9800 !important;
+        color: white !important;
+        border-radius: 15px 15px 0 0 !important;
+        margin: 0 !important;
+      }
+      
+      .mobile-nav__list {
+        border-radius: 0 0 15px 15px !important;
+      }
+    }
       
     /* Hide header search icon when mobile navigation is enabled */
     {% if section.settings.enable_mobile_navigation %}
@@ -545,7 +578,6 @@
         }
       }
     {% endif %}
-    }
   {% endif %}
 {%- endstyle -%}
 
