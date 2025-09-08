@@ -33,17 +33,18 @@
 
     <!-- Search -->
     <li class="mobile-nav__item">
-      <a href="#" 
-         class="mobile-nav__link" 
-         data-action="search"
-         aria-label="{{ 'general.search.search' | t }}">
+      <button type="button" 
+              class="mobile-nav__link" 
+              data-action="search"
+              onclick="document.querySelector('.header__search summary')?.click();"
+              aria-label="{{ 'general.search.search' | t }}">
         <div class="mobile-nav__icon">
           {% render 'icon-search' %}
         </div>
         {% if show_labels %}
           <span class="mobile-nav__text">{{ 'general.search.search' | t | default: 'Search' }}</span>
         {% endif %}
-      </a>
+      </button>
     </li>
 
     <!-- Cart -->

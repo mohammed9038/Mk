@@ -109,6 +109,10 @@
   transition: all 0.2s ease;
   position: relative;
   min-height: 48px;
+  border: none;
+  background: none;
+  cursor: pointer;
+  font-family: inherit;
 }
 
 .mobile-nav__link:hover,

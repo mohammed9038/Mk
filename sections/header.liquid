@@ -527,6 +527,15 @@
       .mobile-nav {
         display: block !important;
       }
+      
+    /* Hide header search icon when mobile navigation is enabled */
+    {% if section.settings.enable_mobile_navigation %}
+      @media screen and (max-width: 749px) {
+        .header__search--mobile-only {
+          display: none !important;
+        }
+      }
+    {% endif %}
     }
   {% endif %}
 {%- endstyle -%}
@@ -1181,6 +1190,128 @@
       "default": true,
       "label": "Show navigation at top",
       "info": "Display the main navigation menu above the header"
+    },
+    {
+      "type": "header",
+      "content": "📱 Mobile Navigation Settings"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_mobile_navigation",
+      "default": true,
+      "label": "Enable Mobile Bottom Navigation",
+      "info": "Show a bottom navigation bar on mobile devices with Home, Search, Cart, and Account links"
+    },
+    {
+      "type": "select",
+      "id": "mobile_nav_style",
+      "options": [
+        {
+          "value": "default",
+          "label": "Default Theme Style"
+        },
+        {
+          "value": "ios",
+          "label": "iOS Style (Blurred)"
+        },
+        {
+          "value": "android",
+          "label": "Android Material"
+        },
+        {
+          "value": "dark",
+          "label": "Dark Theme"
+        },
+        {
+          "value": "gradient",
+          "label": "Colorful Gradient"
+        },
+        {
+          "value": "custom",
+          "label": "Custom Colors"
+        }
+      ],
+      "default": "default",
+      "label": "Navigation Style",
+      "info": "Choose a pre-built style or use custom colors"
+    },
+    {
+      "type": "select",
+      "id": "mobile_nav_height",
+      "options": [
+        {
+          "value": "compact",
+          "label": "Compact (40px)"
+        },
+        {
+          "value": "normal",
+          "label": "Normal (56px)"
+        },
+        {
+          "value": "tall",
+          "label": "Tall (72px)"
+        }
+      ],
+      "default": "normal",
+      "label": "Navigation Height",
+      "info": "Choose the size of the bottom navigation bar"
+    },
+    {
+      "type": "checkbox",
+      "id": "mobile_nav_show_labels",
+      "default": true,
+      "label": "Show Text Labels",
+      "info": "Display text under icons (disable for icon-only navigation)"
+    },
+    {
+      "type": "color",
+      "id": "mobile_nav_background_color",
+      "label": "Background Color",
+      "default": "#FFFFFF",
+      "info": "Only applies when 'Custom Colors' style is selected"
+    },
+    {
+      "type": "color",
+      "id": "mobile_nav_text_color",
+      "label": "Icon & Text Color",
+      "default": "#000000",
+      "info": "Only applies when 'Custom Colors' style is selected"
+    },
+    {
+      "type": "color",
+      "id": "mobile_nav_active_color",
+      "label": "Active Icon Color",
+      "default": "#007AFF",
+      "info": "Color for the current page highlight"
+    },
+    {
+      "type": "color",
+      "id": "mobile_nav_cart_badge_color",
+      "label": "Cart Badge Color",
+      "default": "#FF3B30",
+      "info": "Color for the cart item count bubble"
+    },
+    {
+      "type": "range",
+      "id": "mobile_nav_border_radius",
+      "min": 0,
+      "max": 30,
+      "step": 2,
+      "unit": "px",
+      "label": "Border Radius",
+      "default": 0,
+      "info": "Rounded corners for the navigation bar"
+    },
+    {
+      "type": "range",
+      "id": "mobile_nav_transparency",
+      "min": 70,
+      "max": 100,
+      "step": 5,
+      "unit": "%",
+      "label": "Background Opacity",
+      "default": 95,
+      "info": "Transparency level of the background"
     },
     {
       "type": "header",
