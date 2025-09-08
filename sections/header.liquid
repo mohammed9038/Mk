@@ -530,32 +530,6 @@
         min-height: 40px !important;
       }
     {% endunless %}
-        {% else %}
-          color: rgb(var(--color-accent)) !important;
-          background: rgba(var(--color-accent), 0.1) !important;
-      {% endcase %}
-      border-radius: {{ section.settings.mobile_nav_border_radius | default: 8 }}px !important;
-    }
-    
-    .mobile-nav__cart-badge {
-      {% case section.settings.mobile_nav_style %}
-        {% when 'custom' %}
-          background: {{ section.settings.mobile_nav_cart_badge_color | default: '#FF4444' }} !important;
-        {% else %}
-          background: #FF4444 !important;
-      {% endcase %}
-      color: #FFFFFF !important;
-    }
-    
-    {% unless section.settings.mobile_nav_show_labels %}
-      .mobile-nav__text {
-        display: none !important;
-      }
-      .mobile-nav__link {
-        padding: 8px !important;
-        min-height: 40px !important;
-      }
-    {% endunless %}
     
     /* Show mobile navigation only on mobile devices */
     @media screen and (max-width: 749px) {
