@@ -8,6 +8,61 @@
       .card--card.gradient, .card__inner.gradient {
       height: inherit !important;
       }
+      
+      /* CRITICAL MOBILE WHITE SPACE FIXES */
+      @media screen and (max-width: 749px) {
+        /* Eliminate all top margins and padding */
+        body, html {
+          margin: 0 !important;
+          padding: 0 !important;
+        }
+        
+        /* Header immediate fixes */
+        .header {
+          margin: 0 !important;
+          padding-top: 8px !important;
+          padding-bottom: 8px !important;
+        }
+        
+        /* Section spacing elimination */
+        .section:first-child,
+        .shopify-section:first-child,
+        .main-content .section:first-child {
+          margin-top: 0 !important;
+          padding-top: 0 !important;
+        }
+        
+        /* Page wrapper fixes */
+        .page-wrapper,
+        #MainContent,
+        .main-content {
+          margin-top: 0 !important;
+          padding-top: 0 !important;
+        }
+        
+        /* Container spacing */
+        .container,
+        .page-width {
+          margin-top: 0 !important;
+          padding-top: 0 !important;
+        }
+        
+        /* Mobile navigation fixes */
+        .mobile-nav {
+          display: block !important;
+          position: fixed !important;
+          bottom: 0 !important;
+          z-index: 9999 !important;
+          background: rgba(255, 255, 255, 0.95) !important;
+          height: 88px !important;
+          border-top: 1px solid #e0e0e0 !important;
+        }
+        
+        /* Add padding to prevent overlap */
+        body {
+          padding-bottom: 98px !important;
+        }
+      }
     </style>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">

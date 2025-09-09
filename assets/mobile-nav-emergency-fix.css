@@ -1,0 +1,182 @@
+/* EMERGENCY MOBILE NAVIGATION FIXES */
+
+/* Force mobile navigation to display properly */
+@media screen and (max-width: 749px) {
+  
+  /* Mobile navigation container - force display */
+  .mobile-nav,
+  .mobile-navigation,
+  [class*="mobile-nav"] {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    position: fixed !important;
+    bottom: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    z-index: 10000 !important;
+    background: rgba(255, 255, 255, 0.95) !important;
+    backdrop-filter: blur(10px) !important;
+    border-top: 1px solid rgba(0, 0, 0, 0.1) !important;
+    height: 88px !important;
+    padding: 8px 0 calc(8px + env(safe-area-inset-bottom)) !important;
+    box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1) !important;
+  }
+  
+  /* Navigation list layout */
+  .mobile-nav__list,
+  .mobile-nav-list,
+  .mobile-navigation__list {
+    display: flex !important;
+    justify-content: space-around !important;
+    align-items: center !important;
+    list-style: none !important;
+    margin: 0 !important;
+    padding: 0 16px !important;
+    height: 72px !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+  }
+  
+  /* Navigation items */
+  .mobile-nav__item,
+  .mobile-nav-item,
+  .mobile-navigation__item {
+    display: flex !important;
+    flex: 1 !important;
+    max-width: 80px !important;
+    justify-content: center !important;
+  }
+  
+  /* Navigation links */
+  .mobile-nav__link,
+  .mobile-nav-link,
+  .mobile-navigation__link {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+    text-decoration: none !important;
+    color: #333 !important;
+    padding: 8px 4px !important;
+    width: 100% !important;
+    height: 64px !important;
+    overflow: visible !important;
+  }
+  
+  /* Navigation icons */
+  .mobile-nav__icon,
+  .mobile-nav-icon,
+  .mobile-navigation__icon {
+    width: 32px !important;
+    height: 32px !important;
+    margin-bottom: 4px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    overflow: visible !important;
+  }
+  
+  /* Navigation icon SVGs */
+  .mobile-nav__icon svg,
+  .mobile-nav-icon svg,
+  .mobile-navigation__icon svg {
+    width: 28px !important;
+    height: 28px !important;
+    stroke: currentColor !important;
+    fill: none !important;
+    stroke-width: 1.5 !important;
+    overflow: visible !important;
+  }
+  
+  /* Navigation text */
+  .mobile-nav__text,
+  .mobile-nav-text,
+  .mobile-navigation__text {
+    font-size: 11px !important;
+    font-weight: 500 !important;
+    line-height: 1.2 !important;
+    text-align: center !important;
+    color: inherit !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    max-width: 100% !important;
+  }
+  
+  /* Cart badge */
+  .mobile-nav__badge,
+  .mobile-nav-badge {
+    position: absolute !important;
+    top: 2px !important;
+    right: 50% !important;
+    transform: translateX(50%) !important;
+    background: #FF3B30 !important;
+    color: #FFFFFF !important;
+    border-radius: 50% !important;
+    min-width: 16px !important;
+    height: 16px !important;
+    font-size: 10px !important;
+    font-weight: 700 !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    line-height: 1 !important;
+    z-index: 2 !important;
+    border: 1px solid #FFFFFF !important;
+  }
+  
+  /* Hide header cart/account icons when mobile nav is active */
+  .header__icon--cart,
+  .header__icon--account {
+    display: none !important;
+  }
+  
+  /* Body padding for mobile nav */
+  body {
+    padding-bottom: 98px !important;
+  }
+  
+  /* Prevent content overlap */
+  .page-wrapper,
+  .container,
+  main,
+  .main-content,
+  #MainContent {
+    margin-bottom: 98px !important;
+    padding-bottom: 20px !important;
+  }
+  
+  /* Footer adjustment */
+  .footer {
+    margin-bottom: 98px !important;
+  }
+}
+
+/* Home icon specific fix */
+.icon-home,
+.home-icon {
+  width: 28px !important;
+  height: 28px !important;
+}
+
+/* Search icon specific fix */
+.icon-search,
+.search-icon {
+  width: 28px !important;
+  height: 28px !important;
+}
+
+/* Cart icon specific fix */
+.icon-cart,
+.cart-icon {
+  width: 28px !important;
+  height: 28px !important;
+}
+
+/* Account icon specific fix */
+.icon-account,
+.account-icon {
+  width: 28px !important;
+  height: 28px !important;
+}

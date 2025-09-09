@@ -1,0 +1,245 @@
+/* ===== COMPREHENSIVE MOBILE OPTIMIZATION ===== */
+
+/* CRITICAL: Header and Top Spacing Fixes */
+@media screen and (max-width: 749px) {
+  /* Header padding reduction - eliminate excessive top space */
+  .header {
+    padding-top: 8px !important;
+    padding-bottom: 8px !important;
+    margin-bottom: 0 !important;
+  }
+  
+  .header__wrapper {
+    padding: 0 1rem !important;
+    margin: 0 !important;
+  }
+  
+  /* Logo and branding optimization */
+  .header__heading,
+  .header__heading-link {
+    margin: 0 !important;
+    padding: 4px 0 !important;
+  }
+  
+  /* Navigation and menu button spacing */
+  .header__icons {
+    gap: 8px !important;
+    margin: 0 !important;
+  }
+  
+  /* Section spacing optimization */
+  .section {
+    margin-top: 0 !important;
+    margin-bottom: 1rem !important;
+  }
+  
+  .section:first-child {
+    margin-top: 0 !important;
+    padding-top: 0 !important;
+  }
+  
+  /* Page wrapper and main content */
+  .page-wrapper,
+  .main-content,
+  #MainContent {
+    margin-top: 0 !important;
+    padding-top: 0 !important;
+  }
+  
+  /* Container and grid spacing */
+  .container {
+    padding-left: 1rem !important;
+    padding-right: 1rem !important;
+    margin-top: 0 !important;
+  }
+  
+  /* ===== BUTTON AND TOUCH TARGET OPTIMIZATION ===== */
+  
+  /* Standard button improvements */
+  .btn,
+  .button,
+  button,
+  input[type="submit"],
+  input[type="button"],
+  .header__icon {
+    min-height: 44px !important;
+    min-width: 44px !important;
+    padding: 12px 16px !important;
+    font-size: 16px !important;
+    line-height: 1.2 !important;
+    touch-action: manipulation !important;
+  }
+  
+  /* Cart and navigation buttons */
+  .cart-count-bubble,
+  .header__icon--cart,
+  .header__icon--search,
+  .header__icon--menu {
+    width: 44px !important;
+    height: 44px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+  }
+  
+  /* ===== FORM AND INPUT OPTIMIZATION ===== */
+  
+  /* Form inputs - prevent iOS zoom */
+  input[type="text"],
+  input[type="email"],
+  input[type="password"],
+  input[type="tel"],
+  input[type="url"],
+  input[type="search"],
+  textarea,
+  select {
+    font-size: 16px !important;
+    padding: 12px !important;
+    border-radius: 4px !important;
+    min-height: 44px !important;
+  }
+  
+  /* Search form specific */
+  .search__form {
+    margin: 0 !important;
+  }
+  
+  .search__input {
+    font-size: 16px !important;
+    padding: 12px 16px !important;
+  }
+  
+  /* ===== TYPOGRAPHY AND CONTENT ===== */
+  
+  /* Heading optimization */
+  h1, h2, h3, h4, h5, h6 {
+    line-height: 1.3 !important;
+    margin-bottom: 0.5em !important;
+    margin-top: 0 !important;
+  }
+  
+  /* Text content spacing */
+  p, .text-content {
+    margin-bottom: 1rem !important;
+    line-height: 1.5 !important;
+  }
+  
+  /* ===== SPECIFIC COMPONENT FIXES ===== */
+  
+  /* Slideshow and hero sections */
+  .slideshow,
+  .hero-section,
+  .banner {
+    margin-top: 0 !important;
+    margin-bottom: 1rem !important;
+  }
+  
+  /* Collection and product grids */
+  .collection-grid,
+  .product-grid {
+    gap: 1rem !important;
+    padding: 0 1rem !important;
+  }
+  
+  /* Footer spacing */
+  .footer {
+    margin-top: 2rem !important;
+  }
+  
+  /* ===== NAVIGATION BAR FIXES ===== */
+  
+  /* Mobile navigation bar positioning */
+  .mobile-nav-bar,
+  .mobile-navigation {
+    position: fixed !important;
+    bottom: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    z-index: 1000 !important;
+    background: white !important;
+    border-top: 1px solid #e0e0e0 !important;
+    padding: 8px 0 calc(8px + env(safe-area-inset-bottom)) !important;
+    box-shadow: 0 -2px 10px rgba(0,0,0,0.1) !important;
+  }
+  
+  /* Navigation items layout */
+  .mobile-nav-items {
+    display: flex !important;
+    justify-content: space-around !important;
+    align-items: center !important;
+    max-width: 100% !important;
+    margin: 0 auto !important;
+  }
+  
+  /* Individual navigation links */
+  .mobile-nav-item {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    text-decoration: none !important;
+    color: #333 !important;
+    padding: 8px 4px !important;
+    min-width: 60px !important;
+    flex: 1 !important;
+    max-width: 80px !important;
+  }
+  
+  /* Navigation icons */
+  .mobile-nav-icon {
+    width: 32px !important;
+    height: 32px !important;
+    margin-bottom: 4px !important;
+    display: block !important;
+  }
+  
+  /* Navigation text labels */
+  .mobile-nav-text {
+    font-size: 11px !important;
+    text-align: center !important;
+    line-height: 1.2 !important;
+    font-weight: 400 !important;
+  }
+  
+  /* Add bottom padding to content to prevent overlap with mobile nav */
+  body {
+    padding-bottom: 90px !important;
+  }
+  
+  /* ===== RESPONSIVE UTILITIES ===== */
+  
+  /* Hide desktop-only elements */
+  .hide-mobile {
+    display: none !important;
+  }
+  
+  /* Show mobile-only elements */
+  .show-mobile {
+    display: block !important;
+  }
+  
+  /* Overflow and scrolling fixes */
+  body {
+    overflow-x: hidden !important;
+  }
+  
+  .container,
+  .page-wrapper {
+    overflow-x: hidden !important;
+  }
+}
+
+/* ===== LANDSCAPE MOBILE OPTIMIZATION ===== */
+@media screen and (max-width: 949px) and (orientation: landscape) {
+  .header {
+    padding-top: 4px !important;
+    padding-bottom: 4px !important;
+  }
+  
+  .mobile-nav-bar {
+    padding: 4px 0 4px !important;
+  }
+  
+  body {
+    padding-bottom: 70px !important;
+  }
+}
