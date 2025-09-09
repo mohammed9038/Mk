@@ -22,11 +22,14 @@
 {% if show_cart %}{% assign nav_item_count = nav_item_count | plus: 1 %}{% endif %}
 {% if show_account %}{% assign nav_item_count = nav_item_count | plus: 1 %}{% endif %}
 
-{% if nav_enabled and nav_item_count > 0 %}
+{% comment %} Force mobile navigation to always render - minimum 4 items {% endcomment %}
+{% if nav_item_count == 0 %}{% assign nav_item_count = 4 %}{% endif %}
+
 <nav class="mobile-nav mobile-nav--{{ nav_style }} mobile-nav--{{ nav_height }}" 
      role="navigation" 
      aria-label="{{ 'general.navigation.mobile_menu' | t }}"
-     style="--nav-item-count: {{ nav_item_count }};">
+     style="--nav-item-count: {{ nav_item_count }};"
+     data-forced-render="true">
   <ul class="mobile-nav__list">
     {% if show_home %}
     <!-- Home -->
@@ -125,4 +128,33 @@
     {% endif %}
   </ul>
 </nav>
-{% endif %}
+
+<script>
+// Ensure mobile navigation is visible and functional
+(function() {
+  'use strict';
+  
+  // Wait for DOM to be ready
+  function initMobileNav() {
+    const mobileNav = document.querySelector('.mobile-nav');
+    if (mobileNav) {
+      // Force visibility
+      mobileNav.style.display = 'block';
+      mobileNav.style.visibility = 'visible';
+      mobileNav.style.opacity = '1';
+      
+      // Add forced render class
+      mobileNav.classList.add('mobile-nav--forced');
+      
+      console.log('Mobile navigation forced to display');
+    }
+  }
+  
+  // Run immediately and on DOM ready
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initMobileNav);
+  } else {
+    initMobileNav();
+  }
+})();
+</script>

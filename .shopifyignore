@@ -1,0 +1,6 @@
+# Ignore generated assets that conflict with Shopify
+assets/constants.js
+assets/global.js
+
+# Ignore other generated files
+config/settings_data.json

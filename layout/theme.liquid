@@ -9,45 +9,80 @@
       height: inherit !important;
       }
       
-      /* CRITICAL MOBILE WHITE SPACE FIXES - IMMEDIATE APPLICATION */
+      /* EMERGENCY MOBILE FIXES - IMMEDIATE APPLICATION */
       @media screen and (max-width: 749px) {
-        /* Eliminate excessive white space immediately */
+        /* CRITICAL: Eliminate ALL white space immediately */
+        * {
+          margin-top: 0 !important;
+          padding-top: 0 !important;
+        }
+        
         body, html {
           margin: 0 !important;
           padding: 0 !important;
+          overflow-x: hidden !important;
         }
         
-        /* Header immediate fixes */
-        .header {
+        /* CRITICAL: Header must be compact */
+        .header,
+        .header-wrapper,
+        .header__wrapper {
           margin: 0 !important;
           padding: 8px 1rem !important;
+          min-height: auto !important;
         }
         
-        /* Critical section spacing fixes */
-        .section:first-child,
-        .shopify-section:first-child,
-        .main-content .section:first-child,
-        #MainContent .section:first-child,
-        #MainContent .shopify-section:first-child {
-          margin-top: 0 !important;
+        /* CRITICAL: All sections start immediately */
+        .section,
+        .shopify-section,
+        .main-content .section,
+        #MainContent .section,
+        #MainContent .shopify-section {
+          margin: 0 !important;
           padding-top: 0 !important;
+          margin-top: 0 !important;
         }
         
-        /* Page wrapper critical fixes */
-        .page-wrapper,
+        /* CRITICAL: Main content areas */
         #MainContent,
-        .main-content {
+        .main-content,
+        .content-for-layout,
+        .page-wrapper {
+          margin: 0 !important;
+          padding: 0 !important;
           margin-top: 0 !important;
           padding-top: 0 !important;
         }
         
-        /* Container spacing immediate fixes */
-        .container,
-        .page-width {
+        /* CRITICAL: Containers */
+        .page-width,
+        .container {
+          margin: 0 auto !important;
+          padding: 0 1rem !important;
           margin-top: 0 !important;
           padding-top: 0 !important;
-          padding-left: 1rem !important;
-          padding-right: 1rem !important;
+          width: 100% !important;
+          box-sizing: border-box !important;
+        }
+        
+        /* CRITICAL: Emergency mobile navigation space */
+        body {
+          padding-bottom: 98px !important;
+        }
+        
+        /* CRITICAL: Hide header icons */
+        .header__icon--cart,
+        .header__icon--search,
+        .header__icon--account {
+          display: none !important;
+        }
+        
+        /* CRITICAL: Force emergency mobile nav to show */
+        .emergency-mobile-nav {
+          display: block !important;
+          position: fixed !important;
+          bottom: 0 !important;
+          z-index: 10002 !important;
         }
       }
     </style>
@@ -81,6 +116,7 @@
     <script src="{{ 'constants.js' | asset_url }}" defer="defer"></script>
     <script src="{{ 'pubsub.js' | asset_url }}" defer="defer"></script>
     <script src="{{ 'global.js' | asset_url }}" defer="defer"></script>
+    <script src="{{ 'mobile-nav-debug.js' | asset_url }}" defer="defer"></script>
     {%- if settings.animations_reveal_on_scroll -%}
       <script src="{{ 'animations.js' | asset_url }}" defer="defer"></script>
     {%- endif -%}
@@ -340,9 +376,11 @@
       }
     {% endstyle %}
 
+    {{ 'mobile-ultimate-fix.css' | asset_url | stylesheet_tag: preload: true }}
     {{ 'base.css' | asset_url | stylesheet_tag }}
     {{ 'mobile-optimization.css' | asset_url | stylesheet_tag }}
     {{ 'component-mobile-navigation.css' | asset_url | stylesheet_tag }}
+    {{ 'emergency-mobile-fix.css' | asset_url | stylesheet_tag }}
 
     {%- unless settings.type_body_font.system? -%}
       <link rel="preload" as="font" href="{{ settings.type_body_font | font_url }}" type="font/woff2" crossorigin>

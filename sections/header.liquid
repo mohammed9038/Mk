@@ -4,11 +4,9 @@
 <link rel="stylesheet" href="{{ 'component-menu-drawer.css' | asset_url }}" media="print" onload="this.media='all'">
 <link rel="stylesheet" href="{{ 'component-cart-notification.css' | asset_url }}" media="print" onload="this.media='all'">
 <link rel="stylesheet" href="{{ 'component-cart-items.css' | asset_url }}" media="print" onload="this.media='all'">
-{%- if section.settings.enable_mobile_navigation -%}
-  <link rel="stylesheet" href="{{ 'component-mobile-navigation.css' | asset_url }}" media="print" onload="this.media='all'">
-  <link rel="stylesheet" href="{{ 'search-icon-fix.css' | asset_url }}" media="print" onload="this.media='all'">
-  <link rel="stylesheet" href="{{ 'mobile-nav-emergency-fix.css' | asset_url }}" media="print" onload="this.media='all'">
-{%- endif -%}
+<link rel="stylesheet" href="{{ 'component-mobile-navigation.css' | asset_url }}" media="print" onload="this.media='all'">
+<link rel="stylesheet" href="{{ 'search-icon-fix.css' | asset_url }}" media="print" onload="this.media='all'">
+<link rel="stylesheet" href="{{ 'mobile-nav-emergency-fix.css' | asset_url }}" media="print" onload="this.media='all'">
 {%- if settings.predictive_search_enabled -%}
   <link rel="stylesheet" href="{{ 'component-price.css' | asset_url }}" media="print" onload="this.media='all'">
 {%- endif -%}
@@ -886,10 +884,11 @@
   {%- render 'cart-notification', color_scheme: section.settings.color_scheme, desktop_menu_type: section.settings.menu_type_desktop -%}
 {%- endif -%}
 
-{%- comment -%} Mobile Bottom Navigation {%- endcomment -%}
-{%- if section.settings.enable_mobile_navigation -%}
-  {% render 'mobile-navigation' %}
-{%- endif -%}
+{%- comment -%} Mobile Bottom Navigation - FORCE RENDER {%- endcomment -%}
+{% render 'mobile-navigation' %}
+
+{%- comment -%} Emergency Mobile Navigation Fallback {%- endcomment -%}
+{% render 'emergency-mobile-navigation' %}
 
 {% javascript %}
   class StickyHeader extends HTMLElement {
