@@ -9,9 +9,9 @@
       height: inherit !important;
       }
       
-      /* CRITICAL MOBILE WHITE SPACE FIXES */
+      /* CRITICAL MOBILE WHITE SPACE FIXES - IMMEDIATE APPLICATION */
       @media screen and (max-width: 749px) {
-        /* Eliminate all top margins and padding */
+        /* Eliminate excessive white space immediately */
         body, html {
           margin: 0 !important;
           padding: 0 !important;
@@ -20,19 +20,20 @@
         /* Header immediate fixes */
         .header {
           margin: 0 !important;
-          padding-top: 8px !important;
-          padding-bottom: 8px !important;
+          padding: 8px 1rem !important;
         }
         
-        /* Section spacing elimination */
+        /* Critical section spacing fixes */
         .section:first-child,
         .shopify-section:first-child,
-        .main-content .section:first-child {
+        .main-content .section:first-child,
+        #MainContent .section:first-child,
+        #MainContent .shopify-section:first-child {
           margin-top: 0 !important;
           padding-top: 0 !important;
         }
         
-        /* Page wrapper fixes */
+        /* Page wrapper critical fixes */
         .page-wrapper,
         #MainContent,
         .main-content {
@@ -40,27 +41,13 @@
           padding-top: 0 !important;
         }
         
-        /* Container spacing */
+        /* Container spacing immediate fixes */
         .container,
         .page-width {
           margin-top: 0 !important;
           padding-top: 0 !important;
-        }
-        
-        /* Mobile navigation fixes */
-        .mobile-nav {
-          display: block !important;
-          position: fixed !important;
-          bottom: 0 !important;
-          z-index: 9999 !important;
-          background: rgba(255, 255, 255, 0.95) !important;
-          height: 88px !important;
-          border-top: 1px solid #e0e0e0 !important;
-        }
-        
-        /* Add padding to prevent overlap */
-        body {
-          padding-bottom: 98px !important;
+          padding-left: 1rem !important;
+          padding-right: 1rem !important;
         }
       }
     </style>
@@ -417,8 +404,6 @@
     </main>
 
     {% sections 'footer-group' %}
-
-    {%- render 'mobile-navigation' -%}
 
     <ul hidden>
       <li id="a11y-refresh-page-message">{{ 'accessibility.refresh_page' | t }}</li>

@@ -1,4 +1,4 @@
-/* ===== MOBILE BOTTOM NAVIGATION - FIXED VERSION ===== */
+/* ===== MOBILE BOTTOM NAVIGATION - COMPLETE REBUILD ===== */
 
 /* Mobile Navigation Container */
 .mobile-nav {
@@ -13,27 +13,8 @@
   padding: 8px 0 max(8px, env(safe-area-inset-bottom));
   display: none; /* Hidden by default, shown only on mobile */
   box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
-  height: 88px !important;
-  overflow: visible !important;
-}
-
-/* Add bottom padding to body to prevent content being hidden behind nav */
-body {
-  padding-bottom: 98px !important;
-}
-
-/* Ensure content doesn't overlap */
-.page-width,
-.container,
-main,
-.main-content {
-  margin-bottom: 98px;
-}
-
-/* Mobile Navigation Styling Variables */
-.mobile-nav {
-  /* Default white background with transparency */
-  background: rgba(255, 255, 255, 0.95);
+  height: 88px;
+  overflow: visible;
 }
 
 /* Theme Style Classes */
@@ -74,6 +55,277 @@ main,
 
 .mobile-nav--dark .mobile-nav__link.active {
   color: #00D4AA !important;
+}
+
+.mobile-nav--gradient {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+  border-top: none;
+}
+
+.mobile-nav--gradient .mobile-nav__link {
+  color: #FFFFFF !important;
+}
+
+.mobile-nav--gradient .mobile-nav__badge {
+  background: #FF6B6B !important;
+  color: #FFFFFF !important;
+}
+
+/* Navigation List Layout */
+.mobile-nav__list {
+  display: grid;
+  grid-template-columns: repeat(var(--nav-item-count, 4), 1fr);
+  gap: 0;
+  align-items: center;
+  list-style: none;
+  margin: 0;
+  padding: 0 16px;
+  max-width: 100%;
+  width: 100%;
+  box-sizing: border-box;
+  height: 72px;
+}
+
+/* Navigation Items */
+.mobile-nav__item {
+  display: flex;
+  justify-content: center;
+  text-align: center;
+  max-width: 80px;
+  min-width: 60px;
+  margin: 0 auto;
+  position: relative;
+}
+
+/* Navigation Links */
+.mobile-nav__link {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 4px;
+  text-decoration: none;
+  color: #333333;
+  transition: all 0.2s ease;
+  position: relative;
+  min-height: 64px;
+  max-height: 64px;
+  border: none;
+  background: none;
+  cursor: pointer;
+  font-family: inherit;
+  width: 100%;
+  box-sizing: border-box;
+  overflow: visible;
+}
+
+.mobile-nav__link:hover,
+.mobile-nav__link:focus {
+  color: rgb(var(--color-link));
+  transform: translateY(-2px);
+}
+
+.mobile-nav__link.active {
+  color: rgb(var(--color-link));
+}
+
+/* Navigation Icons */
+.mobile-nav__icon {
+  width: 32px;
+  height: 32px;
+  margin-bottom: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  overflow: visible;
+}
+
+.mobile-nav__icon svg {
+  width: 28px;
+  height: 28px;
+  stroke: currentColor;
+  fill: none;
+  stroke-width: 1.5;
+  overflow: visible;
+}
+
+/* Navigation Text */
+.mobile-nav__text {
+  font-size: 0.75rem;
+  font-weight: 500;
+  line-height: 1.2;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+  margin-top: 2px;
+  color: inherit;
+}
+
+/* Cart Badge */
+.mobile-nav__badge {
+  position: absolute;
+  top: 2px;
+  right: 50%;
+  transform: translateX(50%);
+  background: #FF3B30;
+  color: #FFFFFF;
+  border-radius: 50%;
+  min-width: 16px;
+  height: 16px;
+  font-size: 0.7rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+  z-index: 2;
+  border: 1px solid #FFFFFF;
+}
+
+.mobile-nav__badge:empty {
+  display: none;
+}
+
+/* Show on mobile only */
+@media screen and (max-width: 749px) {
+  .mobile-nav {
+    display: block;
+  }
+  
+  /* Hide ALL header cart elements on mobile when mobile nav is present */
+  .header__icon--cart,
+  .header__cart,
+  .header__cart--desktop,
+  #cart-icon-bubble {
+    display: none !important;
+  }
+  
+  /* Hide account icon in header on mobile */
+  .header__icon--account {
+    display: none !important;
+  }
+  
+  /* Hide search icon in header on mobile */
+  .header__icon--search {
+    display: none !important;
+  }
+  
+  /* Add bottom padding to body to prevent content overlap */
+  body {
+    padding-bottom: 98px !important;
+  }
+  
+  /* Ensure content doesn't overlap */
+  .page-width,
+  .container,
+  main,
+  .main-content {
+    margin-bottom: 98px;
+  }
+}
+
+/* Hide on tablet and desktop */
+@media screen and (min-width: 750px) {
+  .mobile-nav {
+    display: none !important;
+  }
+  
+  /* Remove body padding on larger screens */
+  body {
+    padding-bottom: 0 !important;
+  }
+}
+
+/* Height variations */
+.mobile-nav--compact {
+  height: 70px !important;
+}
+
+.mobile-nav--compact .mobile-nav__list {
+  height: 60px !important;
+}
+
+.mobile-nav--compact .mobile-nav__link {
+  min-height: 52px !important;
+  max-height: 52px !important;
+}
+
+.mobile-nav--tall {
+  height: 100px !important;
+}
+
+.mobile-nav--tall .mobile-nav__list {
+  height: 84px !important;
+}
+
+.mobile-nav--tall .mobile-nav__link {
+  min-height: 76px !important;
+  max-height: 76px !important;
+}
+
+/* Active state indicators */
+.mobile-nav__link.active::before {
+  content: '';
+  position: absolute;
+  top: -1px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 20px;
+  height: 3px;
+  background: currentColor;
+  border-radius: 0 0 2px 2px;
+}
+
+/* Search overlay styles (if using overlay search) */
+.mobile-search-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.8);
+  z-index: 10001;
+  display: none;
+  align-items: flex-start;
+  padding-top: 100px;
+}
+
+.mobile-search-overlay.active {
+  display: flex;
+}
+
+.mobile-search-overlay__content {
+  background: white;
+  margin: 0 20px;
+  border-radius: 8px;
+  padding: 20px;
+  width: calc(100% - 40px);
+}
+
+.mobile-search-overlay__close {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background: rgba(255, 255, 255, 0.9);
+  border: none;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.mobile-search-overlay__input {
+  width: 100%;
+  padding: 15px;
+  font-size: 16px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  margin-bottom: 20px;
 }
 
 .mobile-nav--gradient {
