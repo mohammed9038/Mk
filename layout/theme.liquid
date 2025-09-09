@@ -113,9 +113,7 @@
 
     {% render 'meta-tags' %}
 
-    <script src="{{ 'constants.js' | asset_url }}" defer="defer"></script>
     <script src="{{ 'pubsub.js' | asset_url }}" defer="defer"></script>
-    <script src="{{ 'global.js' | asset_url }}" defer="defer"></script>
     <script src="{{ 'mobile-nav-debug.js' | asset_url }}" defer="defer"></script>
     {%- if settings.animations_reveal_on_scroll -%}
       <script src="{{ 'animations.js' | asset_url }}" defer="defer"></script>
@@ -175,6 +173,7 @@
         }
       }
 
+      {% assign scheme_classes = '' %}
       {% for scheme in settings.color_schemes -%}
         {% assign scheme_classes = scheme_classes | append: ', .color-' | append: scheme.id %}
         {% if forloop.index == 1 -%}
@@ -409,7 +408,7 @@
         document.documentElement.classList.add('shopify-design-mode');
       }
     </script>
- <script type="text/javascript" src="https://firebasestorage.googleapis.com/v0/b/vajro/o/app_install_popup_href_v2.js?alt=media"></script> 
+ <script type="text/javascript" src="https://firebasestorage.googleapis.com/v0/b/vajro/o/app_install_popup_href_v2.js?alt=media" async></script> 
 <script> 
     VJR_BANNER.init({ 
         "title": "Al Shariqah", // Title of the app 
