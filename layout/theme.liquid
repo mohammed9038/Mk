@@ -58,6 +58,45 @@
       {{ body_font_bold_italic | font_face: font_display: 'swap' }}
       {{ settings.type_header_font | font_face: font_display: 'swap' }}
 
+      /* CRITICAL MOBILE FIXES */
+      @media screen and (max-width: 749px) {
+        /* Fix excessive mobile spacing */
+        :root {
+          --spacing-sections-mobile: 1rem !important;
+          --grid-mobile-vertical-spacing: 0.5rem !important;
+          --grid-mobile-horizontal-spacing: 0.5rem !important;
+        }
+        
+        /* Remove white space from main layout */
+        body {
+          margin: 0 !important;
+          padding: 0 !important;
+        }
+        
+        #MainContent {
+          margin-top: 0 !important;
+          padding-top: 0 !important;
+        }
+        
+        /* Optimize page containers */
+        .page-width {
+          padding-left: 1rem !important;
+          padding-right: 1rem !important;
+          margin: 0 auto !important;
+        }
+        
+        /* Fix section spacing */
+        .section {
+          margin-bottom: 1.5rem !important;
+          padding-top: 0 !important;
+        }
+        
+        .section:first-child {
+          margin-top: 0 !important;
+          padding-top: 0 !important;
+        }
+      }
+
       {% for scheme in settings.color_schemes -%}
         {% assign scheme_classes = scheme_classes | append: ', .color-' | append: scheme.id %}
         {% if forloop.index == 1 -%}
@@ -260,6 +299,7 @@
     {% endstyle %}
 
     {{ 'base.css' | asset_url | stylesheet_tag }}
+    {{ 'mobile-optimization.css' | asset_url | stylesheet_tag }}
     {{ 'component-mobile-navigation.css' | asset_url | stylesheet_tag }}
 
     {%- unless settings.type_body_font.system? -%}
