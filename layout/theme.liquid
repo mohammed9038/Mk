@@ -270,11 +270,11 @@
     {%- comment -%} Professional Drawer Styles {%- endcomment -%}
     {{ 'component-professional-drawer-clean.css' | asset_url | stylesheet_tag }}
     
-    {%- comment -%} Desktop Navigation Dropdown Styles {%- endcomment -%}
-    {{ 'desktop-navigation-dropdown.css' | asset_url | stylesheet_tag }}
+    {%- comment -%} Desktop Navigation Dropdown Styles - Universal Solution {%- endcomment -%}
+    {{ 'desktop-navigation-dropdown-universal.css' | asset_url | stylesheet_tag }}
     
-    {%- comment -%} Desktop Navigation Dropdown JavaScript {%- endcomment -%}
-    <script src="{{ 'desktop-navigation-dropdown.js' | asset_url }}" defer></script>
+    {%- comment -%} Desktop Navigation Dropdown JavaScript - Universal Solution {%- endcomment -%}
+    <script src="{{ 'desktop-navigation-dropdown-universal.js' | asset_url }}" defer></script>
 
     {%- unless settings.type_body_font.system? -%}
       <link rel="preload" as="font" href="{{ settings.type_body_font | font_url }}" type="font/woff2" crossorigin>
