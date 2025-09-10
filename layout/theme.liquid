@@ -66,23 +66,32 @@
         }
         
         /* CRITICAL: Emergency mobile navigation space */
-        body {
-          padding-bottom: 98px !important;
+        @media screen and (max-width: 749px) {
+          body {
+            padding-bottom: 98px !important;
+          }
+          
+          /* CRITICAL: Hide header icons */
+          .header__icon--cart,
+          .header__icon--search,
+          .header__icon--account {
+            display: none !important;
+          }
+          
+          /* CRITICAL: Force emergency mobile nav to show on mobile only */
+          .emergency-mobile-nav {
+            display: block !important;
+            position: fixed !important;
+            bottom: 0 !important;
+            z-index: 10002 !important;
+          }
         }
         
-        /* CRITICAL: Hide header icons */
-        .header__icon--cart,
-        .header__icon--search,
-        .header__icon--account {
-          display: none !important;
-        }
-        
-        /* CRITICAL: Force emergency mobile nav to show */
-        .emergency-mobile-nav {
-          display: block !important;
-          position: fixed !important;
-          bottom: 0 !important;
-          z-index: 10002 !important;
+        /* CRITICAL: Hide emergency mobile nav on desktop */
+        @media screen and (min-width: 750px) {
+          .emergency-mobile-nav {
+            display: none !important;
+          }
         }
       }
     </style>
