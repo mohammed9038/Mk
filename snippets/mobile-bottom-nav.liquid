@@ -125,7 +125,15 @@
       .header__search-icon,
       .header__account-icon,
       .header__cart-icon,
-      .header__right-section {
+      .header__right-section,
+      .header__search,
+      .header__search--mobile-only {
+        display: none !important;
+      }
+      
+      /* Hide any existing search modals that might conflict */
+      details-modal.header__search,
+      .search-modal.modal__content {
         display: none !important;
       }
       
@@ -136,22 +144,45 @@
       
       /* Search modal styles */
       #mobile-search-modal {
-        position: fixed;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        background-color: rgba(0, 0, 0, 0.5);
-        z-index: 1000;
+        position: fixed !important;
+        top: 0 !important;
+        left: 0 !important;
+        right: 0 !important;
+        bottom: 0 !important;
+        width: 100vw !important;
+        height: 100vh !important;
+        background-color: rgba(0, 0, 0, 0.7) !important;
+        z-index: 99999 !important;
         opacity: 0;
         visibility: hidden;
         transition: opacity 0.3s ease, visibility 0.3s ease;
         backdrop-filter: blur(4px);
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
       }
       
       #mobile-search-modal.is-open {
-        opacity: 1;
-        visibility: visible;
+        opacity: 1 !important;
+        visibility: visible !important;
+      }
+      
+      #mobile-search-modal .search-modal-container {
+        background-color: #ffffff;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        animation: slideInFromTop 0.3s ease;
+      }
+      
+      @keyframes slideInFromTop {
+        from {
+          transform: translateY(-100%);
+        }
+        to {
+          transform: translateY(0);
+        }
       }
       
       #mobile-search-modal .search-header {
@@ -162,6 +193,7 @@
         align-items: center;
         box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+        flex-shrink: 0;
       }
       
       #mobile-search-modal .search-title {
@@ -178,9 +210,15 @@
         color: #666;
         border-radius: 6px;
         transition: all 0.2s ease;
+        width: 40px;
+        height: 40px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
       }
       
-      #mobile-search-modal .search-close:hover {
+      #mobile-search-modal .search-close:hover,
+      #mobile-search-modal .search-close:active {
         background-color: rgba(0, 0, 0, 0.1);
         color: #333;
       }
@@ -188,7 +226,8 @@
       #mobile-search-modal .search-content {
         background-color: #ffffff;
         padding: 20px;
-        min-height: 200px;
+        flex: 1;
+        overflow-y: auto;
       }
       
       #mobile-search-modal .search-form {
@@ -309,26 +348,28 @@
 
 <!-- Search Modal -->
 <div id="mobile-search-modal">
-  <div class="search-header">
-    <div class="search-title">Search</div>
-    <button class="search-close" onclick="closeMobileSearch()">
-      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
-      </svg>
-    </button>
-  </div>
-  <div class="search-content">
-    <form action="{{ routes.search_url }}" method="get" role="search" class="search-form">
-      <input type="search"
-             name="q"
-             placeholder="Search products..."
-             class="search-input"
-             aria-label="Search"
-             autocomplete="off">
-      <button type="submit" class="search-submit">
-        Search
+  <div class="search-modal-container">
+    <div class="search-header">
+      <div class="search-title">Search</div>
+      <button class="search-close" onclick="closeMobileSearch()">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+        </svg>
       </button>
-    </form>
+    </div>
+    <div class="search-content">
+      <form action="{{ routes.search_url }}" method="get" role="search" class="search-form">
+        <input type="search"
+               name="q"
+               placeholder="Search products..."
+               class="search-input"
+               aria-label="Search"
+               autocomplete="off">
+        <button type="submit" class="search-submit">
+          Search
+        </button>
+      </form>
+    </div>
   </div>
 </div>
 
@@ -337,33 +378,59 @@
     const searchModal = document.getElementById('mobile-search-modal');
     const searchInput = searchModal.querySelector('.search-input');
     
-    searchModal.classList.add('is-open');
+    // Prevent body scroll
     document.body.style.overflow = 'hidden';
+    document.body.style.position = 'fixed';
+    document.body.style.width = '100%';
+    
+    // Show modal
+    searchModal.classList.add('is-open');
     
     // Focus the input after a small delay to ensure the modal is visible
     setTimeout(() => {
-      if (searchInput) searchInput.focus();
+      if (searchInput) {
+        searchInput.focus();
+        searchInput.value = '';
+      }
     }, 100);
   }
   
   function closeMobileSearch() {
     const searchModal = document.getElementById('mobile-search-modal');
+    
+    // Remove modal
     searchModal.classList.remove('is-open');
+    
+    // Restore body scroll
     document.body.style.overflow = '';
+    document.body.style.position = '';
+    document.body.style.width = '';
   }
   
-  // Close modal when clicking outside
+  // Close modal when clicking outside the modal container
   document.addEventListener('click', function(e) {
     const searchModal = document.getElementById('mobile-search-modal');
-    if (e.target === searchModal) {
+    const modalContainer = searchModal.querySelector('.search-modal-container');
+    
+    if (e.target === searchModal && !modalContainer.contains(e.target)) {
       closeMobileSearch();
     }
   });
   
   // Close modal with escape key
   document.addEventListener('keydown', function(e) {
-    if (e.key === 'Escape') {
+    const searchModal = document.getElementById('mobile-search-modal');
+    
+    if (e.key === 'Escape' && searchModal.classList.contains('is-open')) {
       closeMobileSearch();
+    }
+  });
+  
+  // Prevent modal from opening if it already exists
+  document.addEventListener('DOMContentLoaded', function() {
+    const existingModal = document.getElementById('mobile-search-modal');
+    if (existingModal && !existingModal.classList.contains('is-open')) {
+      existingModal.classList.remove('is-open');
     }
   });
 </script>
