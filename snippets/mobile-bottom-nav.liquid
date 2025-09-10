@@ -1,9 +1,9 @@
 {%- comment -%}
   Mobile Bottom Navigation Bar
-  Renders a fixed bottom navigation for mobile devices with inline styles
+  Renders a fixed bottom navigation for mobile devices
 {%- endcomment -%}
 
-<div id="mobile-bottom-nav" class="mobile-bottom-nav">
+<div id="mobile-bottom-nav" class="mobile-bottom-nav" style="display: none;">
   <style>
     @media screen and (max-width: 749px) {
       #mobile-bottom-nav {
@@ -16,16 +16,14 @@
         background-color: #ffffff;
         box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
         padding-bottom: env(safe-area-inset-bottom, 0);
-        border-top: 1px solid rgba(0, 0, 0, 0.06);
       }
       
       #mobile-bottom-nav .nav-inner {
         display: flex;
         align-items: center;
         justify-content: space-around;
-        height: 60px;
+        height: 56px;
         padding: 0 8px;
-        max-width: 100%;
       }
       
       #mobile-bottom-nav .nav-item {
@@ -35,66 +33,44 @@
         justify-content: center;
         flex: 1;
         height: 100%;
-        padding: 6px 4px;
+        padding: 4px;
         text-decoration: none;
         color: #666666;
         background: none;
         border: none;
         cursor: pointer;
         position: relative;
-        transition: all 0.2s ease;
+        transition: color 0.2s ease;
         -webkit-tap-highlight-color: transparent;
         font-family: inherit;
-        border-radius: 8px;
-        margin: 0 2px;
       }
       
       #mobile-bottom-nav .nav-item:active {
-        background-color: rgba(0, 0, 0, 0.08);
-        transform: scale(0.98);
-      }
-      
-      #mobile-bottom-nav .nav-item:hover {
-        background-color: rgba(0, 0, 0, 0.04);
+        background-color: rgba(0, 0, 0, 0.05);
       }
       
       #mobile-bottom-nav .nav-item.active {
         color: #1a365d;
-        background-color: rgba(26, 54, 93, 0.04);
       }
       
       #mobile-bottom-nav .nav-icon {
         width: 24px;
         height: 24px;
-        margin-bottom: 4px;
-        transition: transform 0.2s ease;
-      }
-      
-      #mobile-bottom-nav .nav-item:active .nav-icon {
-        transform: scale(0.9);
-      }
-      
-      #mobile-bottom-nav .nav-item.active .nav-icon {
-        transform: scale(1.05);
+        margin-bottom: 2px;
       }
       
       #mobile-bottom-nav .nav-label {
         font-size: 10px;
         font-weight: 500;
-        line-height: 1.2;
+        line-height: 1;
         letter-spacing: 0.02em;
-        text-align: center;
-        max-width: 100%;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        white-space: nowrap;
       }
       
       #mobile-bottom-nav .cart-badge {
         position: absolute;
-        top: 6px;
+        top: 4px;
         right: 50%;
-        transform: translateX(16px);
+        transform: translateX(14px);
         min-width: 18px;
         height: 18px;
         padding: 0 4px;
@@ -105,168 +81,48 @@
         line-height: 18px;
         text-align: center;
         border-radius: 9px;
-        border: 2px solid #ffffff;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-        animation: badge-pop 0.3s ease;
       }
       
-      @keyframes badge-pop {
-        0% { transform: translateX(16px) scale(0); }
-        50% { transform: translateX(16px) scale(1.2); }
-        100% { transform: translateX(16px) scale(1); }
+      /* Responsive adjustment for smaller screens */
+      @media screen and (max-width: 360px) {
+        #mobile-bottom-nav .nav-inner {
+          height: 52px;
+        }
+        
+        #mobile-bottom-nav .nav-icon {
+          width: 22px;
+          height: 22px;
+        }
+        
+        #mobile-bottom-nav .nav-label {
+          font-size: 9px;
+        }
       }
       
-      /* Adjust body padding for bottom nav */
       body {
-        padding-bottom: calc(60px + env(safe-area-inset-bottom, 0)) !important;
+        padding-bottom: calc(56px + env(safe-area-inset-bottom, 0)) !important;
       }
       
-      /* Hide duplicate icons in header when bottom nav is active */
+      /* Hide duplicate icons in header on mobile */
       .header__search-icon,
       .header__account-icon,
       .header__cart-icon,
-      .header__right-section,
-      .header__search,
-      .header__search--mobile-only {
+      .header__right-section {
         display: none !important;
       }
       
-      /* Hide any existing search modals that might conflict */
-      details-modal.header__search,
-      .search-modal.modal__content {
-        display: none !important;
+      /* Keep the header search but hide the icon */
+      .header__search {
+        display: block !important;
       }
       
-      /* Better center the logo when right section is hidden */
-      .header__center-section {
-        padding-right: 44px; /* Balance the hamburger menu width */
-      }
-      
-      /* Search modal styles */
-      #mobile-search-modal {
-        position: fixed !important;
-        top: 0 !important;
-        left: 0 !important;
-        right: 0 !important;
-        bottom: 0 !important;
-        width: 100vw !important;
-        height: 100vh !important;
-        background-color: rgba(0, 0, 0, 0.7) !important;
-        z-index: 99999 !important;
-        opacity: 0;
-        visibility: hidden;
-        transition: opacity 0.3s ease, visibility 0.3s ease;
-        backdrop-filter: blur(4px);
-        overflow: hidden;
-        display: flex;
-        flex-direction: column;
-      }
-      
-      #mobile-search-modal.is-open {
-        opacity: 1 !important;
-        visibility: visible !important;
-      }
-      
-      #mobile-search-modal .search-modal-container {
-        background-color: #ffffff;
-        width: 100%;
-        height: 100%;
-        display: flex;
-        flex-direction: column;
-        animation: slideInFromTop 0.3s ease;
-      }
-      
-      @keyframes slideInFromTop {
-        from {
-          transform: translateY(-100%);
+      /* Hide the header logo on mobile to avoid duplication */
+      @media screen and (max-width: 749px) {
+        .header__center-section {
+          flex: 1;
+          justify-content: center;
+          padding: 0 48px;
         }
-        to {
-          transform: translateY(0);
-        }
-      }
-      
-      #mobile-search-modal .search-header {
-        background-color: #ffffff;
-        padding: 16px 20px;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-        border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-        flex-shrink: 0;
-      }
-      
-      #mobile-search-modal .search-title {
-        font-size: 18px;
-        font-weight: 600;
-        color: #333;
-      }
-      
-      #mobile-search-modal .search-close {
-        background: none;
-        border: none;
-        padding: 8px;
-        cursor: pointer;
-        color: #666;
-        border-radius: 6px;
-        transition: all 0.2s ease;
-        width: 40px;
-        height: 40px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-      }
-      
-      #mobile-search-modal .search-close:hover,
-      #mobile-search-modal .search-close:active {
-        background-color: rgba(0, 0, 0, 0.1);
-        color: #333;
-      }
-      
-      #mobile-search-modal .search-content {
-        background-color: #ffffff;
-        padding: 20px;
-        flex: 1;
-        overflow-y: auto;
-      }
-      
-      #mobile-search-modal .search-form {
-        display: flex;
-        gap: 12px;
-      }
-      
-      #mobile-search-modal .search-input {
-        flex: 1;
-        padding: 16px 20px;
-        font-size: 16px;
-        border: 2px solid rgba(0, 0, 0, 0.1);
-        border-radius: 12px;
-        outline: none;
-        background-color: #ffffff;
-        color: #333;
-        transition: border-color 0.2s ease;
-      }
-      
-      #mobile-search-modal .search-input:focus {
-        border-color: #1a365d;
-        box-shadow: 0 0 0 3px rgba(26, 54, 93, 0.1);
-      }
-      
-      #mobile-search-modal .search-submit {
-        padding: 16px 24px;
-        background-color: #1a365d;
-        color: white;
-        border: none;
-        border-radius: 12px;
-        font-weight: 600;
-        cursor: pointer;
-        transition: all 0.2s ease;
-        white-space: nowrap;
-      }
-      
-      #mobile-search-modal .search-submit:hover {
-        background-color: rgba(26, 54, 93, 0.9);
-        transform: translateY(-1px);
       }
     }
     
@@ -277,32 +133,6 @@
       
       body {
         padding-bottom: 0 !important;
-      }
-    }
-    
-    /* Responsive adjustments for very small screens */
-    @media screen and (max-width: 360px) {
-      #mobile-bottom-nav .nav-inner {
-        height: 56px;
-        padding: 0 4px;
-      }
-      
-      #mobile-bottom-nav .nav-item {
-        padding: 4px 2px;
-        margin: 0 1px;
-      }
-      
-      #mobile-bottom-nav .nav-icon {
-        width: 22px;
-        height: 22px;
-      }
-      
-      #mobile-bottom-nav .nav-label {
-        font-size: 9px;
-      }
-      
-      body {
-        padding-bottom: calc(56px + env(safe-area-inset-bottom, 0)) !important;
       }
     }
   </style>
@@ -317,7 +147,7 @@
     </a>
     
     <!-- Search -->
-    <button class="nav-item" onclick="openMobileSearch()">
+    <button class="nav-item" onclick="triggerHeaderSearch()">
       <svg class="nav-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
       </svg>
@@ -346,91 +176,27 @@
   </div>
 </div>
 
-<!-- Search Modal -->
-<div id="mobile-search-modal">
-  <div class="search-modal-container">
-    <div class="search-header">
-      <div class="search-title">Search</div>
-      <button class="search-close" onclick="closeMobileSearch()">
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
-        </svg>
-      </button>
-    </div>
-    <div class="search-content">
-      <form action="{{ routes.search_url }}" method="get" role="search" class="search-form">
-        <input type="search"
-               name="q"
-               placeholder="Search products..."
-               class="search-input"
-               aria-label="Search"
-               autocomplete="off">
-        <button type="submit" class="search-submit">
-          Search
-        </button>
-      </form>
-    </div>
-  </div>
-</div>
-
 <script>
-  function openMobileSearch() {
-    const searchModal = document.getElementById('mobile-search-modal');
-    const searchInput = searchModal.querySelector('.search-input');
-    
-    // Prevent body scroll
-    document.body.style.overflow = 'hidden';
-    document.body.style.position = 'fixed';
-    document.body.style.width = '100%';
-    
-    // Show modal
-    searchModal.classList.add('is-open');
-    
-    // Focus the input after a small delay to ensure the modal is visible
-    setTimeout(() => {
-      if (searchInput) {
-        searchInput.focus();
-        searchInput.value = '';
+  function triggerHeaderSearch() {
+    // First, try to find the header search input and focus it
+    const headerSearchInput = document.querySelector('.header__search input[type="search"], .search-modal__form input[type="search"], input[name="q"]');
+    if (headerSearchInput) {
+      headerSearchInput.focus();
+      // Scroll to top to make sure search is visible
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      
+      // Try to open any search modal that might exist
+      const searchModal = document.querySelector('details-modal.header__search');
+      if (searchModal) {
+        searchModal.open = true;
       }
-    }, 100);
+      
+      // Also try predictive search
+      const predictiveSearch = document.querySelector('predictive-search');
+      if (predictiveSearch) {
+        const input = predictiveSearch.querySelector('input[type="search"]');
+        if (input) input.focus();
+      }
+    }
   }
-  
-  function closeMobileSearch() {
-    const searchModal = document.getElementById('mobile-search-modal');
-    
-    // Remove modal
-    searchModal.classList.remove('is-open');
-    
-    // Restore body scroll
-    document.body.style.overflow = '';
-    document.body.style.position = '';
-    document.body.style.width = '';
-  }
-  
-  // Close modal when clicking outside the modal container
-  document.addEventListener('click', function(e) {
-    const searchModal = document.getElementById('mobile-search-modal');
-    const modalContainer = searchModal.querySelector('.search-modal-container');
-    
-    if (e.target === searchModal && !modalContainer.contains(e.target)) {
-      closeMobileSearch();
-    }
-  });
-  
-  // Close modal with escape key
-  document.addEventListener('keydown', function(e) {
-    const searchModal = document.getElementById('mobile-search-modal');
-    
-    if (e.key === 'Escape' && searchModal.classList.contains('is-open')) {
-      closeMobileSearch();
-    }
-  });
-  
-  // Prevent modal from opening if it already exists
-  document.addEventListener('DOMContentLoaded', function() {
-    const existingModal = document.getElementById('mobile-search-modal');
-    if (existingModal && !existingModal.classList.contains('is-open')) {
-      existingModal.classList.remove('is-open');
-    }
-  });
 </script>
