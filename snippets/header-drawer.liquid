@@ -48,7 +48,6 @@
                         <div class="professional-submenu__header">
                           <button class="professional-submenu__back" onclick="this.closest('details').removeAttribute('open')">
                             {% render 'icon-arrow' %}
-                            <span>Back to Menu</span>
                           </button>
                           <h3 class="professional-submenu__title">{{ link.title | escape }}</h3>
                         </div>
@@ -105,7 +104,19 @@
                 {{ 'localization.language_label' | t }}
               </h3>
               <div class="professional-language-selector">
-                <div class="gtranslate_wrapper professional-gtranslate"></div>
+                {%- form 'localization', id: 'HeaderLanguageFormMobile' -%}
+                  <div class="localization-form__select">
+                    <select name="locale_code" aria-labelledby="HeaderLanguageMobileLabel" class="localization-selector">
+                      {%- for language in localization.available_languages -%}
+                        <option value="{{ language.iso_code }}" {% if language.iso_code == localization.language.iso_code %}selected{% endif %}>
+                          {{ language.endonym_name | capitalize }}
+                        </option>
+                      {%- endfor -%}
+                    </select>
+                    {% render 'icon-caret' %}
+                  </div>
+                  <button type="submit" class="visually-hidden">{{ 'localization.update_language' | t }}</button>
+                {%- endform -%}
               </div>
             </div>
           {%- endif -%}

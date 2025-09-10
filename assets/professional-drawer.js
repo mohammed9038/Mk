@@ -20,6 +20,14 @@ class ProfessionalDrawer {
   }
 
   setupEventListeners() {
+    // Language selector change handler
+    const languageSelector = this.drawer.querySelector('.localization-selector');
+    if (languageSelector) {
+      languageSelector.addEventListener('change', (e) => {
+        e.target.closest('form').submit();
+      });
+    }
+
     // Close drawer when clicking outside
     document.addEventListener('click', (e) => {
       if (this.drawerContainer.hasAttribute('open') && 
