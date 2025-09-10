@@ -1,24 +1,49 @@
-/* Professional Drawer Styles */
-.professional-drawer {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100vh;
-  background: var(--gradient-base-background-1);
-  z-index: 999;
-  transform: translateX(-100%);
-  transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-  overflow-y: auto;
-  -webkit-overflow-scrolling: touch;
+/* Professional Drawer Styles - High Priority Override */
+#menu-drawer.professional-drawer {
+  position: fixed !important;
+  top: 0 !important;
+  left: 0 !important;
+  width: 100% !important;
+  height: 100vh !important;
+  background: rgb(var(--color-background)) !important;
+  z-index: 999 !important;
+  transform: translateX(-100%) !important;
+  transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94) !important;
+  overflow-y: auto !important;
+  -webkit-overflow-scrolling: touch !important;
+  filter: none !important;
+  border: none !important;
+  visibility: visible !important;
+  padding: 0 !important;
 }
 
-.menu-drawer-container[open] .professional-drawer {
-  transform: translateX(0);
+.menu-drawer-container[open] #menu-drawer.professional-drawer {
+  transform: translateX(0) !important;
+}
+
+/* Reset original drawer styles when using professional class */
+#menu-drawer.professional-drawer .menu-drawer__inner-container,
+#menu-drawer.professional-drawer .menu-drawer__navigation-container,
+#menu-drawer.professional-drawer .menu-drawer__navigation,
+#menu-drawer.professional-drawer .menu-drawer__utility-links {
+  all: unset !important;
+  display: block !important;
 }
 
 /* Professional Drawer Header */
-.drawer-header {
+#menu-drawer.professional-drawer .drawer-header {
+  position: sticky;
+  top: 0;
+  background: rgba(var(--color-background), 0.95);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(var(--color-border), 0.2);
+  z-index: 10;
+  padding: 0;
+  display: block;
+}
+
+/* Professional Drawer Header */
+.menu-drawer.professional-drawer .drawer-header {
   position: sticky;
   top: 0;
   background: rgba(var(--color-background), 0.95);
@@ -28,7 +53,18 @@
   padding: 0;
 }
 
-.drawer-header__content {
+/* Override original menu-drawer inner container */
+.menu-drawer.professional-drawer .menu-drawer__inner-container,
+.menu-drawer.professional-drawer .menu-drawer__navigation-container {
+  display: block !important;
+  grid-template-rows: none !important;
+  align-content: normal !important;
+  overflow-y: visible !important;
+  height: auto !important;
+  padding: 0 !important;
+}
+
+#menu-drawer.professional-drawer .drawer-header__content {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -36,7 +72,7 @@
   min-height: 6rem;
 }
 
-.drawer-header__title {
+#menu-drawer.professional-drawer .drawer-header__title {
   margin: 0;
   font-size: 1.8rem;
   font-weight: 600;
@@ -44,7 +80,7 @@
   letter-spacing: -0.02em;
 }
 
-.drawer-header__close {
+#menu-drawer.professional-drawer .drawer-header__close {
   background: none;
   border: none;
   padding: 0.8rem;
@@ -57,18 +93,18 @@
   color: rgb(var(--color-foreground));
 }
 
-.drawer-header__close:hover {
+#menu-drawer.professional-drawer .drawer-header__close:hover {
   background: rgba(var(--color-foreground), 0.1);
   transform: scale(1.05);
 }
 
-.drawer-header__close svg {
+#menu-drawer.professional-drawer .drawer-header__close svg {
   width: 2rem;
   height: 2rem;
 }
 
 /* Professional Drawer Content */
-.professional-drawer__content {
+#menu-drawer.professional-drawer .professional-drawer__content {
   padding: 0;
   display: flex;
   flex-direction: column;
@@ -76,37 +112,37 @@
 }
 
 /* Drawer Sections */
-.drawer-section {
+#menu-drawer.professional-drawer .drawer-section {
   padding: 0;
 }
 
-.drawer-section--navigation {
+#menu-drawer.professional-drawer .drawer-section--navigation {
   flex: 1;
   padding: 2rem 0;
   border-bottom: 1px solid rgba(var(--color-border), 0.15);
 }
 
-.drawer-section--utilities {
+#menu-drawer.professional-drawer .drawer-section--utilities {
   padding: 2rem 0 3rem;
   background: rgba(var(--color-background), 0.3);
 }
 
 /* Professional Navigation */
-.professional-navigation {
+#menu-drawer.professional-drawer .professional-navigation {
   padding: 0 2rem;
 }
 
-.professional-menu {
+#menu-drawer.professional-drawer .professional-menu {
   list-style: none;
   margin: 0;
   padding: 0;
 }
 
-.professional-menu__item {
+#menu-drawer.professional-drawer .professional-menu__item {
   margin-bottom: 0.5rem;
 }
 
-.professional-menu__link {
+#menu-drawer.professional-drawer .professional-menu__link {
   display: flex;
   align-items: center;
   justify-content: space-between;
