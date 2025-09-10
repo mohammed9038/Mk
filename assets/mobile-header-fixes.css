@@ -1,0 +1,103 @@
+/* Mobile Header Layout Fixes
+   This file specifically addresses spacing and alignment issues in the mobile header
+   for the Al Shariqah Shopify theme.
+*/
+
+@media screen and (max-width: 749px) {
+  /* General header container fixes */
+  .header {
+    padding: 0.5rem 1rem !important;
+    min-height: 60px;
+    display: flex;
+    align-items: center;
+  }
+
+  /* Mobile header flex layout */
+  .header__main-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    padding: 0;
+  }
+
+  /* Logo positioning and sizing */
+  .header__heading-logo-wrapper {
+    max-width: 120px;
+    margin: 0 auto;
+  }
+
+  .header__heading-logo {
+    max-width: 100%;
+    height: auto;
+    max-height: 40px;
+  }
+
+  /* Menu icon positioning */
+  header-drawer {
+    margin-left: 0 !important;
+    margin-right: 0;
+    flex: 0 0 auto;
+  }
+
+  /* Cart icon positioning */
+  .header__icon--cart {
+    padding: 10px;
+    margin-right: 0;
+  }
+
+  /* Ensure proper right section spacing */
+  .header__right-section {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    flex: 0 0 auto;
+    justify-content: flex-end;
+  }
+
+  /* Ensure the left section has proper spacing */
+  .header__left-section {
+    display: flex;
+    align-items: center;
+    flex: 0 0 auto;
+  }
+
+  /* Center section should take most space but stay centered */
+  .header__center-section {
+    flex: 1 1 auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+  }
+
+  /* Fix hamburger menu icon */
+  .header__icon--menu {
+    padding-left: 0;
+  }
+
+  /* Fix cart count bubble positioning */
+  .cart-count-bubble {
+    position: absolute;
+    top: 0;
+    right: 0;
+    transform: translate(25%, -25%);
+  }
+
+  /* Fix menu and cart icon sizing for better tappability */
+  .header__icon--menu svg,
+  .header__icon--cart svg {
+    width: 24px;
+    height: 24px;
+  }
+  
+  /* Fix for menu drawer toggle positioning */
+  .menu-drawer-container {
+    justify-self: start;
+  }
+
+  /* Fix drawer icons positioning */
+  .header__icon--summary {
+    padding: 8px;
+  }
+}
