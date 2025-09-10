@@ -96,11 +96,37 @@
     let hoverTimeout = null;
     
     menuItems.forEach(function(details) {
-      const summary = details.querySelector('summary');
-      const submenu = details.querySelector('.header__submenu');
+      // Try multiple possible selectors for summary and submenu
+      const summary = details.querySelector('summary') || 
+                     details.querySelector('.pro-nav-link--parent') ||
+                     details.previousElementSibling;
+      
+      const submenu = details.querySelector('.header__submenu') || 
+                     details.querySelector('.pro-submenu-content') ||
+                     details.querySelector('.pro-submenu-list') ||
+                     details.querySelector('ul') ||
+                     details.querySelector('div');
+      
+      console.log('[Dropdown Debug] Element analysis:', {
+        hasSummary: !!summary,
+        hasSubmenu: !!submenu,
+        detailsHTML: details.outerHTML.substring(0, 200) + '...',
+        summaryType: summary ? summary.tagName + '.' + summary.className : 'None',
+        submenuType: submenu ? submenu.tagName + '.' + submenu.className : 'None'
+      });
       
       if (!summary || !submenu) {
         console.warn('[Dropdown Debug] Missing summary or submenu for:', details);
+        console.log('[Dropdown Debug] Will try to use parent element as trigger');
+        
+        // Try to use the parent element as the hover trigger
+        const parentTrigger = details.parentElement;
+        const parentLink = parentTrigger ? parentTrigger.querySelector('a') : null;
+        
+        if (parentTrigger && parentLink && submenu) {
+          console.log('[Dropdown Debug] Using parent element as trigger for:', parentLink.textContent.trim());
+          this.setupParentTrigger(parentTrigger, parentLink, details, submenu);
+        }
         return;
       }
       
@@ -139,6 +165,7 @@
         submenu.style.setProperty('opacity', '1', 'important');
         submenu.style.setProperty('visibility', 'visible', 'important');
         submenu.style.setProperty('pointer-events', 'auto', 'important');
+        submenu.style.setProperty('display', 'block', 'important');
       });
       
       // Mouse leave from parent
@@ -154,6 +181,7 @@
           submenu.style.removeProperty('opacity');
           submenu.style.removeProperty('visibility');
           submenu.style.removeProperty('pointer-events');
+          submenu.style.removeProperty('display');
           
           if (currentOpenDropdown === details) {
             currentOpenDropdown = null;
@@ -180,13 +208,87 @@
           submenu.style.removeProperty('opacity');
           submenu.style.removeProperty('visibility');
           submenu.style.removeProperty('pointer-events');
+          submenu.style.removeProperty('display');
           
           if (currentOpenDropdown === details) {
             currentOpenDropdown = null;
           }
         }, 300);
       });
-    });
+    }.bind(this));
+    
+    // Method to setup parent element as trigger
+    this.setupParentTrigger = function(parentElement, triggerLink, details, submenu) {
+      let hoverTimeout = null;
+      
+      console.log('[Dropdown Debug] Setting up parent trigger for:', triggerLink.textContent.trim());
+      
+      // Prevent default click behavior on the link
+      triggerLink.addEventListener('click', function(e) {
+        if (window.innerWidth >= 990) {
+          e.preventDefault();
+          e.stopPropagation();
+        }
+      });
+      
+      // Mouse enter on parent
+      parentElement.addEventListener('mouseenter', function() {
+        console.log('[Dropdown Debug] Mouse entered parent:', triggerLink.textContent.trim());
+        
+        // Clear any pending close timeout
+        if (hoverTimeout) {
+          clearTimeout(hoverTimeout);
+          hoverTimeout = null;
+        }
+        
+        // Open this dropdown
+        details.setAttribute('open', '');
+        details.classList.add('hover-active');
+        
+        // Force visibility
+        submenu.style.setProperty('opacity', '1', 'important');
+        submenu.style.setProperty('visibility', 'visible', 'important');
+        submenu.style.setProperty('pointer-events', 'auto', 'important');
+        submenu.style.setProperty('display', 'block', 'important');
+      });
+      
+      // Mouse leave from parent
+      parentElement.addEventListener('mouseleave', function() {
+        console.log('[Dropdown Debug] Mouse left parent:', triggerLink.textContent.trim());
+        
+        // Delay closing to allow moving to submenu
+        hoverTimeout = setTimeout(function() {
+          details.removeAttribute('open');
+          details.classList.remove('hover-active');
+          
+          // Reset styles
+          submenu.style.removeProperty('opacity');
+          submenu.style.removeProperty('visibility');
+          submenu.style.removeProperty('pointer-events');
+          submenu.style.removeProperty('display');
+        }, 300);
+      });
+      
+      // Keep dropdown open when hovering submenu
+      submenu.addEventListener('mouseenter', function() {
+        if (hoverTimeout) {
+          clearTimeout(hoverTimeout);
+          hoverTimeout = null;
+        }
+      });
+      
+      submenu.addEventListener('mouseleave', function() {
+        hoverTimeout = setTimeout(function() {
+          details.removeAttribute('open');
+          details.classList.remove('hover-active');
+          
+          submenu.style.removeProperty('opacity');
+          submenu.style.removeProperty('visibility');
+          submenu.style.removeProperty('pointer-events');
+          submenu.style.removeProperty('display');
+        }, 300);
+      });
+    };
     
     // Close dropdowns when clicking outside
     document.addEventListener('click', function(e) {
