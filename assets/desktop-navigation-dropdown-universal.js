@@ -9,48 +9,84 @@
   document.addEventListener('DOMContentLoaded', function() {
     console.log('[Dropdown Debug] Script initialized');
     
-    // Debug current menu structure
-    const headerInlineMenu = document.querySelector('.header__inline-menu');
-    console.log('[Dropdown Debug] Header inline menu found:', !!headerInlineMenu);
+    // Debug ALL possible navigation selectors
+    const possibleSelectors = [
+      '.header__inline-menu',
+      '.header__navigation',
+      '.list-menu--inline',
+      'nav[role="navigation"]',
+      '.header nav',
+      '.header .list-menu'
+    ];
     
-    if (headerInlineMenu) {
-      const allMenuItems = headerInlineMenu.querySelectorAll('li');
-      console.log('[Dropdown Debug] Total menu items (li elements):', allMenuItems.length);
-      
-      allMenuItems.forEach((li, index) => {
-        const link = li.querySelector('a');
-        const headerMenu = li.querySelector('header-menu');
-        const details = li.querySelector('details');
-        const submenu = li.querySelector('.header__submenu');
-        
-        console.log(`[Dropdown Debug] Menu item ${index + 1}:`, {
-          text: link ? link.textContent.trim() : 'No link',
-          hasHeaderMenu: !!headerMenu,
-          hasDetails: !!details,
-          hasSubmenu: !!submenu,
-          innerHTML: li.innerHTML.substring(0, 100) + '...'
-        });
-      });
+    let foundNavigation = null;
+    let navigationSelector = '';
+    
+    possibleSelectors.forEach(selector => {
+      const element = document.querySelector(selector);
+      console.log(`[Dropdown Debug] Checking selector "${selector}":`, !!element);
+      if (element && !foundNavigation) {
+        foundNavigation = element;
+        navigationSelector = selector;
+        console.log(`[Dropdown Debug] Found navigation with selector: ${selector}`);
+        console.log(`[Dropdown Debug] Navigation HTML:`, element.outerHTML.substring(0, 500) + '...');
+      }
+    });
+    
+    if (!foundNavigation) {
+      console.error('[Dropdown Debug] No navigation found with any selector!');
+      // Log the entire header structure for debugging
+      const header = document.querySelector('.header, header');
+      if (header) {
+        console.log('[Dropdown Debug] Header HTML:', header.outerHTML.substring(0, 1000) + '...');
+      }
+      return;
     }
     
-    // Find all dropdown triggers
-    const menuItems = document.querySelectorAll('.header__inline-menu details');
+    // Find all possible dropdown structures
+    const dropdownSelectors = [
+      `${navigationSelector} details`,
+      `${navigationSelector} .header-menu details`,
+      `${navigationSelector} header-menu details`,
+      `${navigationSelector} li details`
+    ];
+    
+    let menuItems = [];
+    let workingSelector = '';
+    
+    dropdownSelectors.forEach(selector => {
+      const items = document.querySelectorAll(selector);
+      console.log(`[Dropdown Debug] Checking dropdown selector "${selector}": found ${items.length} items`);
+      if (items.length > 0 && menuItems.length === 0) {
+        menuItems = items;
+        workingSelector = selector;
+      }
+    });
+    
+    console.log(`[Dropdown Debug] Using selector: ${workingSelector}`);
     console.log('[Dropdown Debug] Found dropdown menu items:', menuItems.length);
     
     if (menuItems.length === 0) {
-      console.warn('[Dropdown Debug] No dropdown menu items found!');
-      console.log('[Dropdown Debug] This means your menu items don\'t have submenus configured.');
-      console.log('[Dropdown Debug] To add dropdown menus:');
-      console.log('[Dropdown Debug] 1. Go to Shopify Admin > Online Store > Navigation');
-      console.log('[Dropdown Debug] 2. Click on your main menu');
-      console.log('[Dropdown Debug] 3. Click "Add menu item" under existing items to create submenus');
-      console.log('[Dropdown Debug] 4. Save the menu');
+      console.warn('[Dropdown Debug] No dropdown menu items found with any selector!');
       
-      // Show current menu structure for debugging
-      const navigation = document.querySelector('.header__inline-menu, .header__navigation');
-      if (navigation) {
-        console.log('[Dropdown Debug] Current navigation HTML:', navigation.outerHTML);
-      }
+      // Debug all menu items to see their structure
+      const allMenuItems = foundNavigation.querySelectorAll('li, a');
+      console.log(`[Dropdown Debug] Found ${allMenuItems.length} total menu items`);
+      
+      allMenuItems.forEach((item, index) => {
+        const text = item.textContent ? item.textContent.trim().substring(0, 30) : 'No text';
+        const hasDetails = !!item.querySelector('details');
+        const hasHeaderMenu = !!item.querySelector('header-menu');
+        const hasSubmenu = !!item.querySelector('.header__submenu');
+        
+        console.log(`[Dropdown Debug] Item ${index + 1}: "${text}"`, {
+          tagName: item.tagName,
+          hasDetails,
+          hasHeaderMenu,
+          hasSubmenu,
+          innerHTML: item.innerHTML.substring(0, 100) + '...'
+        });
+      });
       
       return;
     }
