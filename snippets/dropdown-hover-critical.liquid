@@ -1,0 +1,28 @@
+{%- comment -%}
+  Critical inline CSS for dropdown hover functionality
+  This ensures the styles are loaded immediately
+{%- endcomment -%}
+
+<style>
+  @media screen and (min-width: 990px) {
+    /* Critical dropdown hover styles */
+    .header__inline-menu details[open] .header__submenu,
+    .header__inline-menu details.hover-active .header__submenu,
+    .header__inline-menu details:hover .header__submenu {
+      opacity: 1 !important;
+      visibility: visible !important;
+      pointer-events: auto !important;
+    }
+    
+    .dropdown-hover-enabled .header__inline-menu details {
+      position: relative !important;
+    }
+    
+    .dropdown-hover-enabled .header__inline-menu details .header__submenu {
+      position: absolute !important;
+      top: 100% !important;
+      left: 0 !important;
+      transition: opacity 0.3s ease, visibility 0.3s ease !important;
+    }
+  }
+</style>

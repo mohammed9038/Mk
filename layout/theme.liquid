@@ -273,6 +273,9 @@
     {%- comment -%} Desktop Navigation Dropdown Styles - Universal Solution {%- endcomment -%}
     {{ 'desktop-navigation-dropdown-universal.css' | asset_url | stylesheet_tag }}
     
+    {%- comment -%} Critical dropdown hover CSS {%- endcomment -%}
+    {%- render 'dropdown-hover-critical' -%}
+    
     {%- comment -%} Desktop Navigation Dropdown JavaScript - Universal Solution {%- endcomment -%}
     <script src="{{ 'desktop-navigation-dropdown-universal.js' | asset_url }}" defer></script>
 

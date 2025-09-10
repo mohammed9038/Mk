@@ -1,161 +1,131 @@
-// Desktop Navigation Dropdown - Enhanced Native Theme Support
-class DesktopNavigationDropdown {
-  constructor() {
-    console.log('DesktopNavigationDropdown: Initializing...');
-    this.init();
-  }
-
-  init() {
-    if (window.innerWidth < 990) {
-      console.log('DesktopNavigationDropdown: Window width < 990px, not initializing');
+// Desktop Navigation Dropdown - Universal JavaScript Enhancement
+(function() {
+  'use strict';
+  
+  // Only run on desktop
+  if (window.innerWidth < 990) return;
+  
+  // Wait for DOM to be ready
+  document.addEventListener('DOMContentLoaded', function() {
+    console.log('[Dropdown Debug] Script initialized');
+    
+    // Find all dropdown triggers
+    const menuItems = document.querySelectorAll('.header__inline-menu details');
+    console.log('[Dropdown Debug] Found menu items:', menuItems.length);
+    
+    if (menuItems.length === 0) {
+      console.warn('[Dropdown Debug] No dropdown menu items found!');
       return;
     }
     
-    console.log('DesktopNavigationDropdown: Setting up dropdowns...');
-    this.setupDropdowns();
+    // Track hover state
+    let currentOpenDropdown = null;
+    let hoverTimeout = null;
     
-    window.addEventListener('resize', () => {
-      if (window.innerWidth >= 990) {
-        this.setupDropdowns();
+    menuItems.forEach(function(details) {
+      const summary = details.querySelector('summary');
+      const submenu = details.querySelector('.header__submenu');
+      
+      if (!summary || !submenu) {
+        console.warn('[Dropdown Debug] Missing summary or submenu for:', details);
+        return;
+      }
+      
+      console.log('[Dropdown Debug] Setting up dropdown for:', summary.textContent.trim());
+      
+      // Prevent default click behavior
+      summary.addEventListener('click', function(e) {
+        if (window.innerWidth >= 990) {
+          e.preventDefault();
+          e.stopPropagation();
+        }
+      });
+      
+      // Mouse enter on parent
+      details.addEventListener('mouseenter', function() {
+        console.log('[Dropdown Debug] Mouse entered:', summary.textContent.trim());
+        
+        // Clear any pending close timeout
+        if (hoverTimeout) {
+          clearTimeout(hoverTimeout);
+          hoverTimeout = null;
+        }
+        
+        // Close other dropdowns
+        if (currentOpenDropdown && currentOpenDropdown !== details) {
+          currentOpenDropdown.removeAttribute('open');
+          currentOpenDropdown.classList.remove('hover-active');
+        }
+        
+        // Open this dropdown
+        details.setAttribute('open', '');
+        details.classList.add('hover-active');
+        currentOpenDropdown = details;
+        
+        // Force visibility
+        submenu.style.setProperty('opacity', '1', 'important');
+        submenu.style.setProperty('visibility', 'visible', 'important');
+        submenu.style.setProperty('pointer-events', 'auto', 'important');
+      });
+      
+      // Mouse leave from parent
+      details.addEventListener('mouseleave', function() {
+        console.log('[Dropdown Debug] Mouse left:', summary.textContent.trim());
+        
+        // Delay closing to allow moving to submenu
+        hoverTimeout = setTimeout(function() {
+          details.removeAttribute('open');
+          details.classList.remove('hover-active');
+          
+          // Reset styles
+          submenu.style.removeProperty('opacity');
+          submenu.style.removeProperty('visibility');
+          submenu.style.removeProperty('pointer-events');
+          
+          if (currentOpenDropdown === details) {
+            currentOpenDropdown = null;
+          }
+        }, 300);
+      });
+      
+      // Keep dropdown open when hovering submenu
+      submenu.addEventListener('mouseenter', function() {
+        console.log('[Dropdown Debug] Mouse entered submenu');
+        if (hoverTimeout) {
+          clearTimeout(hoverTimeout);
+          hoverTimeout = null;
+        }
+      });
+      
+      // Close when leaving submenu
+      submenu.addEventListener('mouseleave', function() {
+        console.log('[Dropdown Debug] Mouse left submenu');
+        hoverTimeout = setTimeout(function() {
+          details.removeAttribute('open');
+          details.classList.remove('hover-active');
+          
+          submenu.style.removeProperty('opacity');
+          submenu.style.removeProperty('visibility');
+          submenu.style.removeProperty('pointer-events');
+          
+          if (currentOpenDropdown === details) {
+            currentOpenDropdown = null;
+          }
+        }, 300);
+      });
+    });
+    
+    // Close dropdowns when clicking outside
+    document.addEventListener('click', function(e) {
+      if (currentOpenDropdown && !currentOpenDropdown.contains(e.target)) {
+        currentOpenDropdown.removeAttribute('open');
+        currentOpenDropdown.classList.remove('hover-active');
+        currentOpenDropdown = null;
       }
     });
-  }
-
-  setupDropdowns() {
-    // Target the theme's native dropdown structure: li > header-menu > details
-    const menuItems = document.querySelectorAll('.header__inline-menu li');
-    console.log('DesktopNavigationDropdown: Found', menuItems.length, 'menu items');
     
-    menuItems.forEach((li, index) => {
-      const headerMenu = li.querySelector('header-menu');
-      const details = headerMenu ? headerMenu.querySelector('details') : null;
-      const submenu = details ? details.querySelector('.header__submenu') : null;
-      
-      console.log(`Menu item ${index}:`, {
-        hasHeaderMenu: !!headerMenu,
-        hasDetails: !!details,
-        hasSubmenu: !!submenu
-      });
-      
-      if (!headerMenu || !details || !submenu) return;
-      
-      console.log('DesktopNavigationDropdown: Setting up menu item', index);
-      this.setupMenuItem(li, headerMenu, details, submenu);
-    });
-  }
-
-  setupMenuItem(li, headerMenu, details, submenu) {
-    const summary = details.querySelector('summary');
-    let hoverTimer = null;
-
-    // Prevent default click behavior - let hover control it
-    if (summary) {
-      summary.addEventListener('click', (e) => {
-        console.log('DesktopNavigationDropdown: Preventing default click');
-        e.preventDefault();
-        e.stopPropagation();
-        return false;
-      });
-    }
-
-    // Show on hover of the li element
-    li.addEventListener('mouseenter', () => {
-      console.log('DesktopNavigationDropdown: Mouse enter');
-      clearTimeout(hoverTimer);
-      this.showDropdown(details, submenu, li);
-    });
-
-    // Hide on mouse leave of the li element with delay
-    li.addEventListener('mouseleave', () => {
-      console.log('DesktopNavigationDropdown: Mouse leave');
-      hoverTimer = setTimeout(() => {
-        this.hideDropdown(details, submenu, li);
-      }, 150);
-    });
-
-    // Keep dropdown open when hovering over submenu
-    submenu.addEventListener('mouseenter', () => {
-      clearTimeout(hoverTimer);
-    });
-
-    submenu.addEventListener('mouseleave', () => {
-      hoverTimer = setTimeout(() => {
-        this.hideDropdown(details, submenu, li);
-      }, 150);
-    });
-
-    // Handle keyboard navigation
-    li.addEventListener('focusin', () => {
-      this.showDropdown(details, submenu, li);
-    });
-
-    li.addEventListener('focusout', (e) => {
-      setTimeout(() => {
-        if (!li.contains(document.activeElement)) {
-          this.hideDropdown(details, submenu, li);
-        }
-      }, 100);
-    });
-  }
-
-  showDropdown(details, submenu, li) {
-    console.log('DesktopNavigationDropdown: Showing dropdown');
-    // Don't actually open the details element, just show the submenu
-    submenu.style.setProperty('opacity', '1', 'important');
-    submenu.style.setProperty('transform', 'translateY(0)', 'important');
-    submenu.style.setProperty('visibility', 'visible', 'important');
-    submenu.style.setProperty('z-index', '1', 'important');
-    submenu.style.setProperty('display', 'block', 'important');
-    
-    // Rotate arrow
-    const arrow = li.querySelector('.icon-caret');
-    if (arrow) {
-      arrow.style.setProperty('transform', 'rotate(180deg)', 'important');
-    }
-    
-    // Add hover class for CSS targeting
-    li.classList.add('menu-hovered');
-  }
-
-  hideDropdown(details, submenu, li) {
-    console.log('DesktopNavigationDropdown: Hiding dropdown');
-    // Reset to theme defaults
-    submenu.style.removeProperty('opacity');
-    submenu.style.removeProperty('transform');
-    submenu.style.removeProperty('visibility');
-    submenu.style.removeProperty('z-index');
-    submenu.style.removeProperty('display');
-    
-    // Reset arrow
-    const arrow = li.querySelector('.icon-caret');
-    if (arrow) {
-      arrow.style.removeProperty('transform');
-    }
-    
-    // Remove hover class
-    li.classList.remove('menu-hovered');
-  }
-}
-
-// Initialize when DOM is loaded
-console.log('DesktopNavigationDropdown: Script loaded');
-
-if (document.readyState === 'loading') {
-  console.log('DesktopNavigationDropdown: Waiting for DOMContentLoaded');
-  document.addEventListener('DOMContentLoaded', () => {
-    console.log('DesktopNavigationDropdown: DOMContentLoaded fired');
-    new DesktopNavigationDropdown();
+    // Add custom CSS class to body for additional styling hooks
+    document.body.classList.add('dropdown-hover-enabled');
+    console.log('[Dropdown Debug] Dropdown hover functionality enabled');
   });
-} else {
-  console.log('DesktopNavigationDropdown: DOM already loaded, initializing immediately');
-  new DesktopNavigationDropdown();
-}
-
-// Also initialize after Shopify theme events
-document.addEventListener('shopify:section:load', () => {
-  console.log('DesktopNavigationDropdown: shopify:section:load fired');
-  new DesktopNavigationDropdown();
-});
-
-// Global fallback
-window.DesktopNavigationDropdown = DesktopNavigationDropdown;
+})();
