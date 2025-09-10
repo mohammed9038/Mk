@@ -27,6 +27,13 @@
 <noscript>{{ 'component-cart-notification.css' | asset_url | stylesheet_tag }}</noscript>
 <noscript>{{ 'component-cart-items.css' | asset_url | stylesheet_tag }}</noscript>
 
+{%- comment -%}
+  Extracted structural & search styling moved to header-structure.css for maintainability.
+  Dynamic values now injected via CSS custom properties below.
+{%- endcomment -%}
+<link rel="stylesheet" href="{{ 'header-structure.css' | asset_url }}" media="print" onload="this.media='all'">
+<noscript>{{ 'header-structure.css' | asset_url | stylesheet_tag }}</noscript>
+
 <style>
   header-drawer {
     justify-self: start;
@@ -129,288 +136,21 @@
 </style>
 
 {%- style -%}
-  .header {
-    padding: {{ section.settings.padding_top | times: 0.5 | round: 0 }}px 3rem {{ section.settings.padding_bottom | times: 0.5 | round: 0 }}px 3rem;
-  }
-
-  .section-header {
-    position: sticky; /* This is for fixing a Safari z-index issue. PR #2147 */
-    margin-bottom: {{ section.settings.margin_bottom | times: 0.75 | round: 0 }}px;
-  }
-
-  @media screen and (min-width: 750px) {
-    .section-header {
-      margin-bottom: {{ section.settings.margin_bottom }}px;
-    }
-  }
-
-  @media screen and (min-width: 990px) {
-    .header {
-      padding-top: {{ section.settings.padding_top }}px;
-      padding-bottom: {{ section.settings.padding_bottom }}px;
-    }
-  }
-
-  /* Search positioning styles */
-  .header__search--left {
-    order: 1;
-    margin-right: 1rem;
-  }
-  
-  .header__search--center {
-    display: flex;
-    justify-content: center;
-    flex: 1;
-    margin: 0 1rem;
-  }
-  
-  @media screen and (max-width: 749px) {
-    .header__search--left,
-    .header__search--center {
-      display: none;
-    }
-  }
-
-  /* Header Layout Styles */
-  .header__top-nav {
-    border-bottom: 1px solid rgba(var(--color-foreground), 0.08);
-    padding: 0.5rem 0;
-    text-align: center;
-  }
-
-  .header__top-navigation .list-menu {
-    display: flex;
-    justify-content: center;
-    gap: 2rem;
-    margin: 0;
-    padding: 0;
-    list-style: none;
-  }
-
-  .header__main-row {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    width: 100%;
-    gap: 1rem;
-  }
-
-  .header__left-section {
-    display: flex;
-    align-items: center;
-    flex: 0 0 auto;
-  }
-
-  .header__center-section {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex: 1 1 auto;
-    max-width: 500px;
-    margin: 0 2rem;
-  }
-
-  .header__right-section {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-    flex: 0 0 auto;
-  }
-
-  .header__search-bar {
-    width: 100%;
-    max-width: 400px;
-  }
-
-  .header__search--mobile-only {
-    display: none;
-  }
-
-  .header__localization {
-    display: flex;
-    align-items: center;
-  }
-
-  /* Desktop: Hide mobile search when search bar is shown */
-  @media screen and (min-width: 990px) {
-    .header__search--mobile-only {
-      display: none !important;
-    }
-  }
-
-  /* Mobile responsive adjustments */
-  @media screen and (max-width: 989px) {
-    .header__top-nav {
-      display: none;
-    }
-    
-    .header__center-section {
-      display: none;
-    }
-    
-    .header__search-bar {
-      display: none;
-    }
-
-    .header__search--mobile-only {
-      display: block;
-    }
-
-    .header__main-row {
-      justify-content: space-between;
-    }
-  }
-
-  @media screen and (max-width: 749px) {
-    .header__right-section .header__localization {
-      display: none;
-    }
-  }
-
-  /* ========================================
-     DYNAMIC SEARCH BAR STYLING - Uses Admin Settings
-     This CSS is generated from your section settings
-     ======================================== */
-  
-  /* Search form container */
-  .header__search-form {
-    width: 100%;
-    max-width: {{ section.settings.search_width | default: 400 }}px;
-    position: relative;
-    display: flex;
-    align-items: center;
-  }
-
-  /* Search input - All class combinations with admin colors */
-  .header__search-form .header__search-input,
-  .header__search-form input[type="search"].header__search-input,
-  .header__search-form .search__input.header__search-input,
-  .header__search-form .field__input.header__search-input {
-    /* Size and spacing */
-    width: 100% !important;
-    height: 45px !important;
-    padding: 0 50px 0 20px !important;
-    margin: 0 !important;
-    
-    /* Colors from admin settings */
-    background-color: {{ section.settings.search_background | default: 'rgba(255,255,255,0.15)' }} !important;
-    color: {{ section.settings.search_text | default: '#ffffff' }} !important;
-    border: 2px solid {{ section.settings.search_border | default: 'rgba(255,255,255,0.3)' }} !important;
-    
-    /* Visual design */
-    border-radius: 25px !important;
-    font-size: 14px !important;
-    font-weight: 400 !important;
-    transition: all 0.3s ease !important;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.1) !important;
-    backdrop-filter: blur(10px) !important;
-    
-    /* Override theme defaults */
-    -webkit-appearance: none !important;
-    appearance: none !important;
-    top: auto !important;
-    left: auto !important;
-    right: auto !important;
-    bottom: auto !important;
-    flex-grow: unset !important;
-    text-align: left !important;
-  }
-
-  /* Focus state with admin colors */
-  .header__search-form .header__search-input:focus,
-  .header__search-form input[type="search"].header__search-input:focus,
-  .header__search-form .search__input.header__search-input:focus,
-  .header__search-form .field__input.header__search-input:focus {
-    background-color: {{ section.settings.search_background | default: 'rgba(255,255,255,0.25)' }} !important;
-    color: {{ section.settings.search_text | default: '#ffffff' }} !important;
-    border-color: {{ section.settings.search_border | default: 'rgba(255,255,255,0.8)' }} !important;
-    border-radius: 25px !important;
-    outline: none !important;
-    box-shadow: 0 0 0 3px {{ section.settings.search_border | default: 'rgba(255,255,255,0.2)' | color_modify: 'alpha', 0.3 }}, 
-                0 8px 25px rgba(0,0,0,0.15) !important;
-    transform: translateY(-2px) !important;
-    
-    /* Override theme focus behavior */
-    padding: 0 50px 0 20px !important;
-    margin: 0 !important;
-  }
-
-  /* Placeholder text with admin colors */
-  .header__search-form .header__search-input::placeholder,
-  .header__search-form input[type="search"].header__search-input::placeholder,
-  .header__search-form .search__input.header__search-input::placeholder,
-  .header__search-form .field__input.header__search-input::placeholder {
-    color: {{ section.settings.search_text | default: '#ffffff' | color_modify: 'alpha', 0.7 }} !important;
-    opacity: 1 !important;
-    font-style: normal !important;
-    font-weight: 300 !important;
-  }
-
-  /* Search button */
-  .header__search-form .header__search-button,
-  .header__search-form .search__button.header__search-button,
-  .header__search-form .field__button.header__search-button {
-    position: absolute !important;
-    right: 8px !important;
-    top: 50% !important;
-    transform: translateY(-50%) !important;
-    width: 30px !important;
-    height: 30px !important;
-    background: {{ section.settings.search_button_bg | default: 'rgba(255,255,255,0.2)' }} !important;
-    border: none !important;
-    border-radius: 50% !important;
-    cursor: pointer !important;
-    transition: all 0.3s ease !important;
-    backdrop-filter: blur(10px) !important;
-    display: flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-    z-index: 2 !important;
-    padding: 0 !important;
-  }
-
-  .header__search-form .header__search-button:hover,
-  .header__search-form .search__button.header__search-button:hover,
-  .header__search-form .field__button.header__search-button:hover {
-    background: {{ section.settings.search_button_bg | default: 'rgba(255,255,255,0.3)' }} !important;
-    transform: translateY(-50%) scale(1.1) !important;
-  }
-
-  .header__search-form .header__search-button .icon,
-  .header__search-form .search__button.header__search-button .icon,
-  .header__search-form .field__button.header__search-button .icon {
-    width: 16px !important;
-    height: 16px !important;
-    color: {{ section.settings.search_button_icon | default: '#ffffff' }} !important;
-    fill: {{ section.settings.search_button_icon | default: '#ffffff' }} !important;
-  }
-
-  /* Hide field labels */
-  .header__search-form .header__search-field .field__label,
-  .header__search-form .field__label {
-    display: none !important;
-    position: absolute !important;
-    left: -9999px !important;
-    opacity: 0 !important;
-  }
-
-  /* Remove field wrapper styling */
-  .header__search-form .header__search-field:before,
-  .header__search-form .header__search-field:after {
-    display: none !important;
-  }
-
-  /* Responsive width */
-  @media screen and (max-width: 990px) {
-    .header__search-form {
-      max-width: {{ section.settings.search_width | default: 400 | divided_by: 1.3 }}px;
-    }
-  }
-
-  @media screen and (max-width: 749px) {
-    .header__search-form {
-      max-width: {{ section.settings.search_width | default: 400 | divided_by: 1.6 }}px;
-    }
+  .header { padding: {{ section.settings.padding_top | times: 0.5 | round: 0 }}px 3rem {{ section.settings.padding_bottom | times: 0.5 | round: 0 }}px 3rem; }
+  .section-header { position: sticky; margin-bottom: {{ section.settings.margin_bottom | times: 0.75 | round: 0 }}px; }
+  @media screen and (min-width:750px){ .section-header { margin-bottom: {{ section.settings.margin_bottom }}px; } }
+  @media screen and (min-width:990px){ .header { padding-top: {{ section.settings.padding_top }}px; padding-bottom: {{ section.settings.padding_bottom }}px; } }
+  /* Inject dynamic search vars */
+  :root, .header-wrapper { 
+    --search-width: {{ section.settings.search_width | default: 400 }}px;
+    --search-bg: {{ section.settings.search_background | default: '#ffffff' }};
+    --search-border: {{ section.settings.search_border | default: '#e0e0e0' }};
+    --search-border-focus: {{ section.settings.search_border | default: '#e0e0e0' }};
+    --search-text: {{ section.settings.search_text | default: '#333333' }};
+    --search-text-muted: {{ section.settings.search_text | default: '#333333' | color_modify: 'alpha', 0.6 }};
+    --search-button-bg: {{ section.settings.search_button_bg | default: 'rgba(0,0,0,0.08)' }};
+    --search-button-bg-hover: {{ section.settings.search_button_bg | default: 'rgba(0,0,0,0.15)' }};
+    --search-button-icon: {{ section.settings.search_button_icon | default: '#333333' }};
   }
 {%- endstyle -%}
 
