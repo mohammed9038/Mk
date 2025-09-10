@@ -363,20 +363,55 @@
       if (testSubmenu) {
         console.log('[Dropdown Debug] TESTING: Force opening first dropdown for 3 seconds');
         testDropdown.setAttribute('open', '');
+        testDropdown.classList.add('force-open-test');
+        
+        // Apply ultra-aggressive styles
         testSubmenu.style.setProperty('opacity', '1', 'important');
         testSubmenu.style.setProperty('visibility', 'visible', 'important');
         testSubmenu.style.setProperty('display', 'block', 'important');
         testSubmenu.style.setProperty('position', 'absolute', 'important');
-        testSubmenu.style.setProperty('z-index', '9999', 'important');
+        testSubmenu.style.setProperty('top', '100%', 'important');
+        testSubmenu.style.setProperty('left', '0', 'important');
+        testSubmenu.style.setProperty('z-index', '99999', 'important');
+        testSubmenu.style.setProperty('background', 'red', 'important'); // Red background to make it obvious
+        testSubmenu.style.setProperty('border', '3px solid blue', 'important');
+        testSubmenu.style.setProperty('min-width', '200px', 'important');
+        testSubmenu.style.setProperty('padding', '20px', 'important');
+        testSubmenu.style.setProperty('transform', 'none', 'important');
+        
+        // Log what we're trying to show
+        console.log('[Dropdown Debug] Applied test styles to:', testSubmenu);
+        console.log('[Dropdown Debug] Test submenu HTML:', testSubmenu.outerHTML);
         
         setTimeout(() => {
           testDropdown.removeAttribute('open');
+          testDropdown.classList.remove('force-open-test');
           testSubmenu.style.removeProperty('opacity');
           testSubmenu.style.removeProperty('visibility');
           testSubmenu.style.removeProperty('display');
           testSubmenu.style.removeProperty('position');
+          testSubmenu.style.removeProperty('top');
+          testSubmenu.style.removeProperty('left');
           testSubmenu.style.removeProperty('z-index');
-          console.log('[Dropdown Debug] Test dropdown closed');
+          testSubmenu.style.removeProperty('background');
+          testSubmenu.style.removeProperty('border');
+          testSubmenu.style.removeProperty('min-width');
+          testSubmenu.style.removeProperty('padding');
+          testSubmenu.style.removeProperty('transform');
+          console.log('[Dropdown Debug] Test dropdown closed and styles reset');
+          
+          // Log computed styles to see what's happening
+          const computedStyles = window.getComputedStyle(testSubmenu);
+          console.log('[Dropdown Debug] Computed styles after test:', {
+            opacity: computedStyles.opacity,
+            visibility: computedStyles.visibility,
+            display: computedStyles.display,
+            position: computedStyles.position,
+            top: computedStyles.top,
+            left: computedStyles.left,
+            zIndex: computedStyles.zIndex,
+            transform: computedStyles.transform
+          });
         }, 3000);
       }
     }
