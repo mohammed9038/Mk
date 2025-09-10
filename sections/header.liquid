@@ -241,15 +241,8 @@
     {%- comment -%} Main Header Row {%- endcomment -%}
     <div class="header__main-row">
       
-      {%- comment -%} Left Section {%- endcomment -%}
+      {%- comment -%} Left Section - Logo & Menu (if left-aligned) {%- endcomment -%}
       <div class="header__left-section">
-        {%- comment -%} Search in left position {%- endcomment -%}
-        {%- if section.settings.show_search_bar and section.settings.search_position == 'left' -%}
-          <div class="header__search-bar header__search-bar--left">
-            {% render 'header-search-bar', input_id: 'Search-In-Header-Left' %}
-          </div>
-        {%- endif -%}
-        
         {%- comment -%} Logo {%- endcomment -%}
         {%- if request.page_type == 'index' -%}
           <h1 class="header__heading">
@@ -278,10 +271,39 @@
         {%- if request.page_type == 'index' -%}
           </h1>
         {%- endif -%}
+
+        {%- comment -%} Left-aligned navigation menu {%- endcomment -%}
+        {%- if section.settings.menu != blank and section.settings.menu_type_desktop != 'drawer' and section.settings.menu_position == 'left' -%}
+          <div class="header__navigation header__navigation--left">
+            {%- if section.settings.menu_type_desktop == 'mega' -%}
+              {% render 'header-mega-menu' %}
+            {%- else -%}
+              {% render 'header-dropdown-menu' %}
+            {%- endif -%}
+          </div>
+        {%- endif -%}
+
+        {%- comment -%} Search in left position {%- endcomment -%}
+        {%- if section.settings.show_search_bar and section.settings.search_position == 'left' -%}
+          <div class="header__search-bar header__search-bar--left">
+            {% render 'header-search-bar', input_id: 'Search-In-Header-Left' %}
+          </div>
+        {%- endif -%}
       </div>
 
-      {%- comment -%} Center Section {%- endcomment -%}
+      {%- comment -%} Center Section - Navigation or Search {%- endcomment -%}
       <div class="header__center-section">
+        {%- comment -%} Center-aligned navigation menu {%- endcomment -%}
+        {%- if section.settings.menu != blank and section.settings.menu_type_desktop != 'drawer' and section.settings.menu_position == 'center' -%}
+          <div class="header__navigation header__navigation--center">
+            {%- if section.settings.menu_type_desktop == 'mega' -%}
+              {% render 'header-mega-menu' %}
+            {%- else -%}
+              {% render 'header-dropdown-menu' %}
+            {%- endif -%}
+          </div>
+        {%- endif -%}
+
         {%- comment -%} Search in center position {%- endcomment -%}
         {%- if section.settings.show_search_bar and section.settings.search_position == 'center' -%}
           <div class="header__search-bar header__search-bar--center">
@@ -290,9 +312,20 @@
         {%- endif -%}
       </div>
 
-      {%- comment -%} Right Section - Account, Cart, Language {%- endcomment -%}
+      {%- comment -%} Right Section - Navigation, Search, Account, Cart, Language {%- endcomment -%}
       <div class="header__right-section">
         
+        {%- comment -%} Right-aligned navigation menu {%- endcomment -%}
+        {%- if section.settings.menu != blank and section.settings.menu_type_desktop != 'drawer' and section.settings.menu_position == 'right' -%}
+          <div class="header__navigation header__navigation--right">
+            {%- if section.settings.menu_type_desktop == 'mega' -%}
+              {% render 'header-mega-menu' %}
+            {%- else -%}
+              {% render 'header-dropdown-menu' %}
+            {%- endif -%}
+          </div>
+        {%- endif -%}
+
         {%- comment -%} Search in right position {%- endcomment -%}
         {%- if section.settings.show_search_bar and section.settings.search_position == 'right' -%}
           <div class="header__search-bar header__search-bar--right">
@@ -307,10 +340,10 @@
               <summary class="header__icon header__icon--search header__icon--summary link focus-inset modal__toggle" aria-haspopup="dialog" aria-label="{{ 'general.search.search' | t }}">
                 <span>
                   <svg class="modal__toggle-open icon icon-search" aria-hidden="true" focusable="false">
-                    <use href="#icon-search">
+                    <use href="#icon-search"></use>
                   </svg>
                   <svg class="modal__toggle-close icon icon-close" aria-hidden="true" focusable="false">
-                    <use href="#icon-close">
+                    <use href="#icon-close"></use>
                   </svg>
                 </span>
               </summary>
@@ -329,10 +362,10 @@
               <summary class="header__icon header__icon--search header__icon--summary link focus-inset modal__toggle" aria-haspopup="dialog" aria-label="{{ 'general.search.search' | t }}">
                 <span>
                   <svg class="modal__toggle-open icon icon-search" aria-hidden="true" focusable="false">
-                    <use href="#icon-search">
+                    <use href="#icon-search"></use>
                   </svg>
                   <svg class="modal__toggle-close icon icon-close" aria-hidden="true" focusable="false">
-                    <use href="#icon-close">
+                    <use href="#icon-close"></use>
                   </svg>
                 </span>
               </summary>
@@ -346,8 +379,8 @@
           </details-modal>
         {%- endif -%}
         
-  {%- comment -%} GTranslate Language Selector {%- endcomment -%}
-  {%- if section.settings.enable_language_selector -%}
+        {%- comment -%} GTranslate Language Selector {%- endcomment -%}
+        {%- if section.settings.enable_language_selector -%}
           <div class="header__localization header__gtranslate">
             <!-- GTranslate inline instance for header -->
             <div class="gtranslate_wrapper header-gtranslate"></div>
@@ -377,13 +410,13 @@
                   {{ customer | avatar }}
                 {%- else -%}
                   <svg class="icon icon-account" aria-hidden="true" focusable="false">
-                    <use href="#icon-account">
+                    <use href="#icon-account"></use>
                   </svg>
                 {%- endif -%}
               </account-icon>
             {%- else -%}
               <svg class="icon icon-account" aria-hidden="true" focusable="false">
-                <use href="#icon-account">
+                <use href="#icon-account"></use>
               </svg>
             {%- endif -%}
             <span class="visually-hidden">
