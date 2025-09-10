@@ -9,89 +9,68 @@
       height: inherit !important;
       }
       
-      /* EMERGENCY MOBILE FIXES - IMMEDIATE APPLICATION */
+      /* CRITICAL MOBILE WHITE SPACE FIXES */
       @media screen and (max-width: 749px) {
-        /* CRITICAL: Eliminate ALL white space immediately */
-        * {
-          margin-top: 0 !important;
-          padding-top: 0 !important;
-        }
-        
+        /* Eliminate all top margins and padding */
         body, html {
           margin: 0 !important;
           padding: 0 !important;
-          overflow-x: hidden !important;
         }
         
-        /* CRITICAL: Header must be compact */
-        .header,
-        .header-wrapper,
-        .header__wrapper {
+        /* Header immediate fixes */
+        .header {
           margin: 0 !important;
-          padding: 8px 1rem !important;
-          min-height: auto !important;
+          padding-top: 8px !important;
+          padding-bottom: 8px !important;
         }
+      }
+      
+      /* DESKTOP: Hide mobile navigation completely */
+      @media screen and (min-width: 750px) {
+        .emergency-mobile-nav,
+        .mobile-nav,
+        #emergency-mobile-nav {
+          display: none !important;
+        }
+      }
         
-        /* CRITICAL: All sections start immediately */
-        .section,
-        .shopify-section,
-        .main-content .section,
-        #MainContent .section,
-        #MainContent .shopify-section {
-          margin: 0 !important;
-          padding-top: 0 !important;
+        /* Section spacing elimination */
+        .section:first-child,
+        .shopify-section:first-child,
+        .main-content .section:first-child {
           margin-top: 0 !important;
+          padding-top: 0 !important;
         }
         
-        /* CRITICAL: Main content areas */
+        /* Page wrapper fixes */
+        .page-wrapper,
         #MainContent,
-        .main-content,
-        .content-for-layout,
-        .page-wrapper {
-          margin: 0 !important;
-          padding: 0 !important;
+        .main-content {
           margin-top: 0 !important;
           padding-top: 0 !important;
         }
         
-        /* CRITICAL: Containers */
-        .page-width,
-        .container {
-          margin: 0 auto !important;
-          padding: 0 1rem !important;
+        /* Container spacing */
+        .container,
+        .page-width {
           margin-top: 0 !important;
           padding-top: 0 !important;
-          width: 100% !important;
-          box-sizing: border-box !important;
         }
         
-        /* CRITICAL: Emergency mobile navigation space */
-        @media screen and (max-width: 749px) {
-          body {
-            padding-bottom: 98px !important;
-          }
-          
-          /* CRITICAL: Hide header icons */
-          .header__icon--cart,
-          .header__icon--search,
-          .header__icon--account {
-            display: none !important;
-          }
-          
-          /* CRITICAL: Force emergency mobile nav to show on mobile only */
-          .emergency-mobile-nav {
-            display: block !important;
-            position: fixed !important;
-            bottom: 0 !important;
-            z-index: 10002 !important;
-          }
+        /* Mobile navigation fixes */
+        .mobile-nav {
+          display: block !important;
+          position: fixed !important;
+          bottom: 0 !important;
+          z-index: 9999 !important;
+          background: rgba(255, 255, 255, 0.95) !important;
+          height: 88px !important;
+          border-top: 1px solid #e0e0e0 !important;
         }
         
-        /* CRITICAL: Hide emergency mobile nav on desktop */
-        @media screen and (min-width: 750px) {
-          .emergency-mobile-nav {
-            display: none !important;
-          }
+        /* Add padding to prevent overlap */
+        body {
+          padding-bottom: 98px !important;
         }
       }
     </style>
@@ -122,7 +101,9 @@
 
     {% render 'meta-tags' %}
 
+    <script src="{{ 'constants.js' | asset_url }}" defer="defer"></script>
     <script src="{{ 'pubsub.js' | asset_url }}" defer="defer"></script>
+    <script src="{{ 'global.js' | asset_url }}" defer="defer"></script>
     {%- if settings.animations_reveal_on_scroll -%}
       <script src="{{ 'animations.js' | asset_url }}" defer="defer"></script>
     {%- endif -%}
@@ -181,7 +162,6 @@
         }
       }
 
-      {% assign scheme_classes = '' %}
       {% for scheme in settings.color_schemes -%}
         {% assign scheme_classes = scheme_classes | append: ', .color-' | append: scheme.id %}
         {% if forloop.index == 1 -%}
@@ -383,11 +363,9 @@
       }
     {% endstyle %}
 
-    {{ 'mobile-ultimate-fix.css' | asset_url | stylesheet_tag: preload: true }}
     {{ 'base.css' | asset_url | stylesheet_tag }}
     {{ 'mobile-optimization.css' | asset_url | stylesheet_tag }}
     {{ 'component-mobile-navigation.css' | asset_url | stylesheet_tag }}
-    {{ 'emergency-mobile-fix.css' | asset_url | stylesheet_tag }}
 
     {%- unless settings.type_body_font.system? -%}
       <link rel="preload" as="font" href="{{ settings.type_body_font | font_url }}" type="font/woff2" crossorigin>
@@ -416,7 +394,7 @@
         document.documentElement.classList.add('shopify-design-mode');
       }
     </script>
- <script type="text/javascript" src="https://firebasestorage.googleapis.com/v0/b/vajro/o/app_install_popup_href_v2.js?alt=media" async></script> 
+ <script type="text/javascript" src="https://firebasestorage.googleapis.com/v0/b/vajro/o/app_install_popup_href_v2.js?alt=media"></script> 
 <script> 
     VJR_BANNER.init({ 
         "title": "Al Shariqah", // Title of the app 
@@ -449,6 +427,8 @@
     </main>
 
     {% sections 'footer-group' %}
+
+    {%- render 'mobile-navigation' -%}
 
     <ul hidden>
       <li id="a11y-refresh-page-message">{{ 'accessibility.refresh_page' | t }}</li>
