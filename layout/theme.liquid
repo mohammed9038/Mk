@@ -267,6 +267,9 @@
 
     {{ 'base.css' | asset_url | stylesheet_tag }}
 
+    {%- comment -%} Professional Drawer Styles {%- endcomment -%}
+    {{ 'component-professional-drawer.css' | asset_url | stylesheet_tag }}
+
     {%- unless settings.type_body_font.system? -%}
       <link rel="preload" as="font" href="{{ settings.type_body_font | font_url }}" type="font/woff2" crossorigin>
     {%- endunless -%}
@@ -458,5 +461,8 @@
       });
     </script>
     <script src="https://cdn.gtranslate.net/widgets/latest/dropdown.js" defer></script>
+    
+    {%- comment -%} Professional Drawer JavaScript {%- endcomment -%}
+    <script src="{{ 'professional-drawer.js' | asset_url }}" defer></script>
   </body>
 </html>
