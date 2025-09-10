@@ -1,0 +1,85 @@
+/* Mobile Navigation Fixes
+   This file addresses the positioning of cart and language selector in mobile view
+   for Al Shariqah Shopify theme
+*/
+
+@media screen and (max-width: 989px) {
+  /* Fix alignment in the header for mobile */
+  .header__main-row {
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 10px;
+  }
+
+  /* Logo positioning */
+  .header__heading-logo-wrapper {
+    max-width: 100px;
+    display: flex;
+    align-items: center;
+  }
+
+  /* Right section positioning - ensure elements are properly aligned */
+  .header__right-section {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    justify-content: flex-end;
+    margin-left: auto;
+  }
+
+  /* Cart icon specific fixes */
+  .header__icon--cart {
+    padding: 10px;
+    margin-right: 5px;
+    position: relative;
+  }
+
+  /* Language selector positioning for mobile */
+  .header__localization {
+    position: relative;
+    margin-right: 8px;
+  }
+
+  /* Make sure the language selector is shown on mobile */
+  @media screen and (max-width: 749px) {
+    .header__right-section .header__localization {
+      display: flex;
+      align-items: center;
+    }
+    
+    /* Ensure small-hide class doesn't hide the language selector on mobile */
+    .header__localization .small-hide {
+      display: block !important;
+    }
+    
+    /* Fix language selector dropdown positioning */
+    .header__localization .disclosure__button {
+      padding: 8px;
+      font-size: 0.9rem;
+    }
+    
+    /* Ensure proper spacing between elements */
+    .header__icon {
+      padding: 0 5px;
+    }
+  }
+
+  /* Ensure clean vertical alignment of all header elements */
+  .header__left-section,
+  .header__right-section,
+  .header__icon,
+  .header__localization,
+  .localization-form {
+    display: flex;
+    align-items: center;
+  }
+}
+
+/* Fix dropdown positions for language and country selectors */
+@media screen and (max-width: 749px) {
+  .header .disclosure__list {
+    right: 0;
+    left: auto;
+    min-width: 150px;
+  }
+}
