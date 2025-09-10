@@ -83,6 +83,100 @@
         border-radius: 9px;
       }
       
+      /* Mobile Search Overlay */
+      .mobile-search-overlay {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: rgba(0, 0, 0, 0.5);
+        z-index: 9999;
+        animation: fadeIn 0.3s ease;
+      }
+      
+      .mobile-search-overlay.active {
+        display: block;
+      }
+      
+      .mobile-search-container {
+        background-color: white;
+        padding: 20px;
+        animation: slideDown 0.3s ease;
+      }
+      
+      .mobile-search-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 15px;
+      }
+      
+      .mobile-search-title {
+        font-size: 18px;
+        font-weight: 600;
+        color: #333;
+      }
+      
+      .mobile-search-close {
+        background: none;
+        border: none;
+        padding: 5px;
+        cursor: pointer;
+        color: #666;
+      }
+      
+      .mobile-search-close svg {
+        width: 24px;
+        height: 24px;
+      }
+      
+      .mobile-search-form {
+        display: flex;
+        gap: 10px;
+      }
+      
+      .mobile-search-input {
+        flex: 1;
+        padding: 12px 15px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        font-size: 16px;
+        outline: none;
+        transition: border-color 0.2s;
+      }
+      
+      .mobile-search-input:focus {
+        border-color: #1a365d;
+      }
+      
+      .mobile-search-submit {
+        padding: 12px 24px;
+        background-color: #1a365d;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        font-size: 16px;
+        font-weight: 500;
+        cursor: pointer;
+        transition: background-color 0.2s;
+      }
+      
+      .mobile-search-submit:hover {
+        background-color: #2c5282;
+      }
+      
+      @keyframes fadeIn {
+        from { opacity: 0; }
+        to { opacity: 1; }
+      }
+      
+      @keyframes slideDown {
+        from { transform: translateY(-20px); opacity: 0; }
+        to { transform: translateY(0); opacity: 1; }
+      }
+      
       /* Responsive adjustment for smaller screens */
       @media screen and (max-width: 360px) {
         #mobile-bottom-nav .nav-inner {
@@ -131,6 +225,10 @@
         display: none !important;
       }
       
+      .mobile-search-overlay {
+        display: none !important;
+      }
+      
       body {
         padding-bottom: 0 !important;
       }
@@ -147,7 +245,7 @@
     </a>
     
     <!-- Search -->
-    <button class="nav-item" onclick="triggerHeaderSearch()">
+    <button type="button" class="nav-item" onclick="openMobileSearch()">
       <svg class="nav-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
       </svg>
@@ -176,27 +274,71 @@
   </div>
 </div>
 
+<!-- Mobile Search Overlay -->
+<div id="mobile-search-overlay" class="mobile-search-overlay">
+  <div class="mobile-search-container">
+    <div class="mobile-search-header">
+      <h2 class="mobile-search-title">Search</h2>
+      <button type="button" class="mobile-search-close" onclick="closeMobileSearch()">
+        <svg fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+        </svg>
+      </button>
+    </div>
+    <form action="{{ routes.search_url }}" method="get" class="mobile-search-form">
+      <input type="search" 
+             name="q" 
+             class="mobile-search-input" 
+             placeholder="Search products..." 
+             autocomplete="off"
+             required>
+      <button type="submit" class="mobile-search-submit">Search</button>
+    </form>
+  </div>
+</div>
+
 <script>
-  function triggerHeaderSearch() {
-    // First, try to find the header search input and focus it
-    const headerSearchInput = document.querySelector('.header__search input[type="search"], .search-modal__form input[type="search"], input[name="q"]');
-    if (headerSearchInput) {
-      headerSearchInput.focus();
-      // Scroll to top to make sure search is visible
-      window.scrollTo({ top: 0, behavior: 'smooth' });
+  function openMobileSearch() {
+    const overlay = document.getElementById('mobile-search-overlay');
+    const input = overlay.querySelector('.mobile-search-input');
+    
+    if (overlay) {
+      overlay.classList.add('active');
+      document.body.style.overflow = 'hidden';
       
-      // Try to open any search modal that might exist
-      const searchModal = document.querySelector('details-modal.header__search');
-      if (searchModal) {
-        searchModal.open = true;
-      }
-      
-      // Also try predictive search
-      const predictiveSearch = document.querySelector('predictive-search');
-      if (predictiveSearch) {
-        const input = predictiveSearch.querySelector('input[type="search"]');
+      // Focus input after animation
+      setTimeout(() => {
         if (input) input.focus();
-      }
+      }, 100);
     }
   }
+  
+  function closeMobileSearch() {
+    const overlay = document.getElementById('mobile-search-overlay');
+    
+    if (overlay) {
+      overlay.classList.remove('active');
+      document.body.style.overflow = '';
+    }
+  }
+  
+  // Close on overlay click
+  document.addEventListener('DOMContentLoaded', function() {
+    const overlay = document.getElementById('mobile-search-overlay');
+    
+    if (overlay) {
+      overlay.addEventListener('click', function(e) {
+        if (e.target === overlay) {
+          closeMobileSearch();
+        }
+      });
+      
+      // Close on Escape key
+      document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape' && overlay.classList.contains('active')) {
+          closeMobileSearch();
+        }
+      });
+    }
+  });
 </script>
