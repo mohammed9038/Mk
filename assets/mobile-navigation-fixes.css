@@ -1,0 +1,103 @@
+/* Mobile Navigation Fixes
+   This file addresses issues with the mobile menu drawer, GTranslate integration,
+   and overall mobile navigation experience.
+*/
+
+/* Menu drawer improvements */
+@media screen and (max-width: 749px) {
+  /* Menu drawer container */
+  .menu-drawer-container {
+    position: relative;
+    z-index: 10;
+  }
+  
+  /* Menu drawer itself */
+  .menu-drawer {
+    max-width: 85vw; /* Prevent menu from taking full width */
+    padding: 1.5rem;
+    overflow-y: auto;
+  }
+  
+  /* Menu items spacing */
+  .menu-drawer__menu-item {
+    padding: 1rem;
+    font-size: 1.1rem;
+  }
+  
+  /* Submenu styles */
+  .menu-drawer__submenu {
+    padding: 1rem 0;
+  }
+  
+  /* Make close button more visible */
+  .menu-drawer__close-button {
+    padding: 1rem;
+    margin-bottom: 1rem;
+    border-bottom: 1px solid rgba(var(--color-foreground), 0.08);
+    width: 100%;
+    display: flex;
+    align-items: center;
+    font-size: 1.1rem;
+  }
+  
+  /* Improve GTranslate dropdown within menu drawer */
+  .menu-drawer__gtranslate {
+    padding: 1.5rem 1rem;
+    margin: 1rem 0;
+    background: rgba(var(--color-foreground), 0.03);
+    border-radius: 0.5rem;
+  }
+  
+  /* Style the GTranslate wrapper in mobile menu */
+  .menu-drawer__gtranslate .gtranslate_wrapper {
+    width: 100%;
+  }
+  
+  /* Make the language selector more prominent */
+  .menu-drawer__gtranslate-header {
+    margin-bottom: 1rem;
+    font-weight: 500;
+    font-size: 1rem;
+  }
+  
+  /* Style dropdown within menu */
+  .menu-drawer__gtranslate select,
+  .menu-drawer__gtranslate .gt_selector {
+    width: 100%;
+    padding: 0.75rem;
+    border-radius: 0.3rem;
+    background-color: rgba(var(--color-background), 1);
+    border: 1px solid rgba(var(--color-foreground), 0.1);
+    font-size: 1rem;
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 0.8rem center;
+    background-size: 1rem;
+    padding-right: 2.5rem;
+  }
+  
+  /* Better social icons in drawer */
+  .menu-drawer__utility-links .list-social {
+    justify-content: center;
+    margin-top: 1.5rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid rgba(var(--color-foreground), 0.08);
+  }
+  
+  /* Account button in drawer */
+  .menu-drawer__account {
+    display: flex;
+    align-items: center;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    border: 1px solid rgba(var(--color-foreground), 0.08);
+    border-radius: 0.3rem;
+    background: rgba(var(--color-foreground), 0.03);
+    justify-content: center;
+  }
+  
+  .menu-drawer__account svg {
+    margin-right: 0.5rem;
+  }
+}
