@@ -4,11 +4,6 @@
 <link rel="stylesheet" href="{{ 'component-menu-drawer.css' | asset_url }}" media="print" onload="this.media='all'">
 <link rel="stylesheet" href="{{ 'component-cart-notification.css' | asset_url }}" media="print" onload="this.media='all'">
 <link rel="stylesheet" href="{{ 'component-cart-items.css' | asset_url }}" media="print" onload="this.media='all'">
-<link rel="stylesheet" href="{{ 'component-mobile-navigation.css' | asset_url }}" media="all">
-<link rel="stylesheet" href="{{ 'mobile-layout-fix.css' | asset_url }}" media="all">
-<link rel="stylesheet" href="{{ 'gtranslate-integration.css' | asset_url }}" media="all">
-<link rel="stylesheet" href="{{ 'mobile-header-fixes.css' | asset_url }}" media="all">
-<link rel="stylesheet" href="{{ 'mobile-navigation-fixes.css' | asset_url }}" media="all">
 {%- if settings.predictive_search_enabled -%}
   <link rel="stylesheet" href="{{ 'component-price.css' | asset_url }}" media="print" onload="this.media='all'">
 {%- endif -%}
@@ -31,16 +26,6 @@
 <noscript>{{ 'component-menu-drawer.css' | asset_url | stylesheet_tag }}</noscript>
 <noscript>{{ 'component-cart-notification.css' | asset_url | stylesheet_tag }}</noscript>
 <noscript>{{ 'component-cart-items.css' | asset_url | stylesheet_tag }}</noscript>
-
-{%- comment -%} GTranslate Integration {%- endcomment -%}
-<script>
-window.gtranslateSettings = {
-  "default_language": "en",
-  "languages": ["en", "ar"],
-  "wrapper_selector": ".gtranslate_wrapper"
-}
-</script>
-<script src="https://cdn.gtranslate.net/widgets/latest/dropdown.js" defer></script>
 
 <style>
   header-drawer {
@@ -524,10 +509,7 @@ window.gtranslateSettings = {
             {% render 'header-search-bar', input_id: 'Search-In-Header-Left' %}
           </div>
         {%- endif -%}
-      </div>
         
-      {%- comment -%} Center Section with Logo {%- endcomment -%}
-      <div class="header__center-section">
         {%- comment -%} Logo {%- endcomment -%}
         {%- if request.page_type == 'index' -%}
           <h1 class="header__heading">
@@ -556,7 +538,10 @@ window.gtranslateSettings = {
         {%- if request.page_type == 'index' -%}
           </h1>
         {%- endif -%}
-        
+      </div>
+
+      {%- comment -%} Center Section {%- endcomment -%}
+      <div class="header__center-section">
         {%- comment -%} Search in center position {%- endcomment -%}
         {%- if section.settings.show_search_bar and section.settings.search_position == 'center' -%}
           <div class="header__search-bar header__search-bar--center">
@@ -621,10 +606,19 @@ window.gtranslateSettings = {
           </details-modal>
         {%- endif -%}
         
-        {%- comment -%} GTranslate Language Selector {%- endcomment -%}
-        <div class="header__localization header__gtranslate">
-          <div class="gtranslate_wrapper"></div>
-        </div>
+        {%- comment -%} Language Selector {%- endcomment -%}
+        {%- if section.settings.enable_language_selector and localization.available_languages.size > 1 -%}
+          <div class="header__localization">
+            <localization-form class="small-hide medium-hide no-js-hidden" data-prevent-hide>
+              {%- form 'localization', id: 'HeaderLanguageForm', class: 'localization-form' -%}
+                <div>
+                  <h2 class="visually-hidden" id="HeaderLanguageLabel">{{ 'localization.language_label' | t }}</h2>
+                  {%- render 'language-localization', localPosition: 'HeaderLanguage' -%}
+                </div>
+              {%- endform -%}
+            </localization-form>
+          </div>
+        {%- endif -%}
 
         {%- comment -%} Country Selector {%- endcomment -%}
         {%- if section.settings.enable_country_selector and localization.available_countries.size > 1 -%}
