@@ -8,10 +8,7 @@
   {% render 'header-search-bar', input_id: 'HeaderSearch' %}
 {% endcomment %}
 
-{%- assign search_placeholder = 'general.search.search' | t -%}
-{%- if section.settings.search_placeholder and section.settings.search_placeholder != blank -%}
-  {%- assign search_placeholder = section.settings.search_placeholder -%}
-{%- endif -%}
+{%- assign search_placeholder = section.settings.search_placeholder | default: 'Search products...' -%}
 
 {%- if settings.predictive_search_enabled -%}
   <predictive-search class="header__search-form" data-loading-text="{{ 'accessibility.loading' | t }}">

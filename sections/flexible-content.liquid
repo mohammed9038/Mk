@@ -18,7 +18,7 @@
       background-color: {{ section.settings.background_color }};
     {% endif %}
     {% if section.settings.background_image != blank %}
-      background-image: url({{ section.settings.background_image | image_url: width: 1920 }});
+      background-image: url({{ section.settings.background_image | img_url: '1920x' }});
       background-size: cover;
       background-position: center;
       background-repeat: no-repeat;

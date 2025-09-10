@@ -4,9 +4,6 @@
 <link rel="stylesheet" href="{{ 'component-menu-drawer.css' | asset_url }}" media="print" onload="this.media='all'">
 <link rel="stylesheet" href="{{ 'component-cart-notification.css' | asset_url }}" media="print" onload="this.media='all'">
 <link rel="stylesheet" href="{{ 'component-cart-items.css' | asset_url }}" media="print" onload="this.media='all'">
-<link rel="stylesheet" href="{{ 'component-mobile-navigation.css' | asset_url }}" media="print" onload="this.media='all'">
-<link rel="stylesheet" href="{{ 'search-icon-fix.css' | asset_url }}" media="print" onload="this.media='all'">
-<link rel="stylesheet" href="{{ 'mobile-nav-emergency-fix.css' | asset_url }}" media="print" onload="this.media='all'">
 {%- if settings.predictive_search_enabled -%}
   <link rel="stylesheet" href="{{ 'component-price.css' | asset_url }}" media="print" onload="this.media='all'">
 {%- endif -%}
@@ -29,9 +26,6 @@
 <noscript>{{ 'component-menu-drawer.css' | asset_url | stylesheet_tag }}</noscript>
 <noscript>{{ 'component-cart-notification.css' | asset_url | stylesheet_tag }}</noscript>
 <noscript>{{ 'component-cart-items.css' | asset_url | stylesheet_tag }}</noscript>
-{%- if section.settings.enable_mobile_navigation -%}
-  <noscript>{{ 'component-mobile-navigation.css' | asset_url | stylesheet_tag }}</nos
-{%- endif -%}
 
 <style>
   header-drawer {
@@ -276,14 +270,10 @@
   /* ========================================
      DYNAMIC SEARCH BAR STYLING - Uses Admin Settings
      This CSS is generated from your section settings
-     Fixed selectors to match actual HTML structure
      ======================================== */
   
   /* Search form container */
-  /* Search form container - unified targeting */
-  .header__search-form,
-  .header__search-form__form,
-  .header__search-bar .header__search-form {
+  .header__search-form {
     width: 100%;
     max-width: {{ section.settings.search_width | default: 400 }}px;
     position: relative;
@@ -291,12 +281,11 @@
     align-items: center;
   }
 
-  /* Search input - improved targeting with priority */
-  .header__search-form .search__input.field__input,
-  .header__search-form input[type="search"],
+  /* Search input - All class combinations with admin colors */
   .header__search-form .header__search-input,
-  .header__search-bar input.search__input,
-  .header__search-bar .field__input {
+  .header__search-form input[type="search"].header__search-input,
+  .header__search-form .search__input.header__search-input,
+  .header__search-form .field__input.header__search-input {
     /* Size and spacing */
     width: 100% !important;
     height: 45px !important;
@@ -304,9 +293,9 @@
     margin: 0 !important;
     
     /* Colors from admin settings */
-    background-color: {{ section.settings.search_background | default: '#ffffff' }} !important;
-    color: {{ section.settings.search_text | default: '#333333' }} !important;
-    border: 2px solid {{ section.settings.search_border | default: '#e0e0e0' }} !important;
+    background-color: {{ section.settings.search_background | default: 'rgba(255,255,255,0.15)' }} !important;
+    color: {{ section.settings.search_text | default: '#ffffff' }} !important;
+    border: 2px solid {{ section.settings.search_border | default: 'rgba(255,255,255,0.3)' }} !important;
     
     /* Visual design */
     border-radius: 25px !important;
@@ -319,103 +308,93 @@
     /* Override theme defaults */
     -webkit-appearance: none !important;
     appearance: none !important;
-    position: relative !important;
     top: auto !important;
     left: auto !important;
     right: auto !important;
     bottom: auto !important;
-    flex-grow: 1 !important;
+    flex-grow: unset !important;
     text-align: left !important;
   }
 
-  /* Focus state with admin colors - improved targeting */
-  .header__search-form .search__input.field__input:focus,
-  .header__search-form input[type="search"]:focus,
+  /* Focus state with admin colors */
   .header__search-form .header__search-input:focus,
-  .header__search-bar input.search__input:focus,
-  .header__search-bar .field__input:focus {
-    background-color: {{ section.settings.search_background | default: '#ffffff' }} !important;
-    border-color: {{ section.settings.search_border | default: '#e0e0e0' }} !important;
-    box-shadow: 0 0 0 3px {{ section.settings.search_border | default: '#e0e0e0' | color_modify: 'alpha', 0.3 }} !important;
+  .header__search-form input[type="search"].header__search-input:focus,
+  .header__search-form .search__input.header__search-input:focus,
+  .header__search-form .field__input.header__search-input:focus {
+    background-color: {{ section.settings.search_background | default: 'rgba(255,255,255,0.25)' }} !important;
+    color: {{ section.settings.search_text | default: '#ffffff' }} !important;
+    border-color: {{ section.settings.search_border | default: 'rgba(255,255,255,0.8)' }} !important;
+    border-radius: 25px !important;
     outline: none !important;
+    box-shadow: 0 0 0 3px {{ section.settings.search_border | default: 'rgba(255,255,255,0.2)' | color_modify: 'alpha', 0.3 }}, 
+                0 8px 25px rgba(0,0,0,0.15) !important;
+    transform: translateY(-2px) !important;
+    
+    /* Override theme focus behavior */
+    padding: 0 50px 0 20px !important;
+    margin: 0 !important;
   }
 
-  /* Placeholder styling - improved targeting */
-  .header__search-form .search__input.field__input::placeholder,
-  .header__search-form input[type="search"]::placeholder,
+  /* Placeholder text with admin colors */
   .header__search-form .header__search-input::placeholder,
-  .header__search-bar input.search__input::placeholder,
-  .header__search-bar .field__input::placeholder {
-    color: {{ section.settings.search_text | default: '#333333' | color_modify: 'alpha', 0.6 }} !important;
-    font-style: normal !important;
+  .header__search-form input[type="search"].header__search-input::placeholder,
+  .header__search-form .search__input.header__search-input::placeholder,
+  .header__search-form .field__input.header__search-input::placeholder {
+    color: {{ section.settings.search_text | default: '#ffffff' | color_modify: 'alpha', 0.7 }} !important;
     opacity: 1 !important;
+    font-style: normal !important;
+    font-weight: 300 !important;
   }
 
-  /* Search button styling - improved targeting */
-  .header__search-form .search__button.field__button,
+  /* Search button */
   .header__search-form .header__search-button,
-  .header__search-bar .search__button,
-  .header__search-bar .field__button {
+  .header__search-form .search__button.header__search-button,
+  .header__search-form .field__button.header__search-button {
     position: absolute !important;
     right: 8px !important;
     top: 50% !important;
     transform: translateY(-50%) !important;
-    background: {{ section.settings.search_border | default: '#e0e0e0' }} !important;
-    color: {{ section.settings.search_text | default: '#333333' }} !important;
+    width: 30px !important;
+    height: 30px !important;
+    background: {{ section.settings.search_button_bg | default: 'rgba(255,255,255,0.2)' }} !important;
     border: none !important;
     border-radius: 50% !important;
-    width: 32px !important;
-    height: 32px !important;
-    padding: 6px !important;
     cursor: pointer !important;
     transition: all 0.3s ease !important;
+    backdrop-filter: blur(10px) !important;
     display: flex !important;
     align-items: center !important;
     justify-content: center !important;
     z-index: 2 !important;
+    padding: 0 !important;
   }
 
-  /* Search button hover */
-  .header__search-form .search__button.field__button.header__search-button:hover,
-  .header__search-form .header__search-button:hover {
-    background: {{ section.settings.search_border | default: '#e0e0e0' | color_modify: 'brightness', -0.1 }} !important;
-    transform: translateY(-50%) scale(1.05) !important;
+  .header__search-form .header__search-button:hover,
+  .header__search-form .search__button.header__search-button:hover,
+  .header__search-form .field__button.header__search-button:hover {
+    background: {{ section.settings.search_button_bg | default: 'rgba(255,255,255,0.3)' }} !important;
+    transform: translateY(-50%) scale(1.1) !important;
   }
 
-  /* Search icon styling */
-  .header__search-form .search__button.field__button .icon,
   .header__search-form .header__search-button .icon,
-  .header__search-form .search__button.field__button svg,
-  .header__search-form .header__search-button svg {
+  .header__search-form .search__button.header__search-button .icon,
+  .header__search-form .field__button.header__search-button .icon {
     width: 16px !important;
     height: 16px !important;
-    fill: currentColor !important;
+    color: {{ section.settings.search_button_icon | default: '#ffffff' }} !important;
+    fill: {{ section.settings.search_button_icon | default: '#ffffff' }} !important;
   }
 
-  /* Hide search field label */
+  /* Hide field labels */
+  .header__search-form .header__search-field .field__label,
   .header__search-form .field__label {
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    padding: 0;
-    margin: -1px;
-    overflow: hidden;
-    clip: rect(0, 0, 0, 0);
-    white-space: nowrap;
-    border: 0;
+    display: none !important;
+    position: absolute !important;
+    left: -9999px !important;
+    opacity: 0 !important;
   }
 
-  /* Override any conflicting component styles */
-  .header__search-form input.search__input.field__input {
-    padding-right: 50px !important; /* Override component-search.css */
-  }
-
-  /* Ensure proper positioning for the search form */
-  .header__search--left .header__search-form,
-  .header__search--center .header__search-form,
-  .header__search--right .header__search-form {
-    max-width: {{ section.settings.search_width | default: 400 }}px;
-  }
+  /* Remove field wrapper styling */
   .header__search-form .header__search-field:before,
   .header__search-form .header__search-field:after {
     display: none !important;
@@ -433,169 +412,6 @@
       max-width: {{ section.settings.search_width | default: 400 | divided_by: 1.6 }}px;
     }
   }
-
-  /* ========================================
-     MOBILE NAVIGATION DYNAMIC STYLING
-     Uses theme customizer settings - FIXED VERSION
-     ======================================== */
-  
-  {% if section.settings.enable_mobile_navigation %}
-    .mobile-nav {
-      display: none !important; /* Hidden by default, shown on mobile */
-      
-      {% case section.settings.mobile_nav_style %}
-        {% when 'ios' %}
-          background: rgba(255, 255, 255, {{ section.settings.mobile_nav_transparency | default: 90 | divided_by: 100.0 }}) !important;
-          backdrop-filter: blur(20px) !important;
-          border-top: 1px solid rgba(0, 0, 0, 0.1) !important;
-        {% when 'android' %}
-          background: rgba(255, 255, 255, {{ section.settings.mobile_nav_transparency | default: 95 | divided_by: 100.0 }}) !important;
-          box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.15) !important;
-          border-top: none !important;
-          border-radius: 0 !important;
-        {% when 'dark' %}
-          background: rgba(26, 26, 26, {{ section.settings.mobile_nav_transparency | default: 90 | divided_by: 100.0 }}) !important;
-          border-top: 1px solid #333 !important;
-        {% when 'gradient' %}
-          background: linear-gradient(135deg, 
-            rgba(102, 126, 234, {{ section.settings.mobile_nav_transparency | default: 90 | divided_by: 100.0 }}), 
-            rgba(118, 75, 162, {{ section.settings.mobile_nav_transparency | default: 90 | divided_by: 100.0 }})) !important;
-          border-top: none !important;
-        {% when 'custom' %}
-          {% assign bg_color = section.settings.mobile_nav_background_color | default: '#FFFFFF' %}
-          {% assign transparency = section.settings.mobile_nav_transparency | default: 95 | divided_by: 100.0 %}
-          background: {{ bg_color | color_modify: 'alpha', transparency }} !important;
-          border-top: 1px solid {{ section.settings.mobile_nav_text_color | default: '#E5E5E5' | color_modify: 'alpha', 0.3 }} !important;
-        {% else %}
-          background: rgba(var(--color-background), {{ section.settings.mobile_nav_transparency | default: 95 | divided_by: 100.0 }}) !important;
-          border-top: 1px solid rgba(var(--color-border), 0.2) !important;
-      {% endcase %}
-      
-      {% case section.settings.mobile_nav_height %}
-        {% when 'compact' %}
-          padding: 6px 0 calc(6px + env(safe-area-inset-bottom)) 0 !important;
-          min-height: 40px !important;
-        {% when 'tall' %}
-          padding: 16px 0 calc(16px + env(safe-area-inset-bottom)) 0 !important;
-          min-height: 72px !important;
-        {% else %}
-          padding: 10px 0 calc(10px + env(safe-area-inset-bottom)) 0 !important;
-          min-height: 56px !important;
-      {% endcase %}
-      
-      border-radius: {{ section.settings.mobile_nav_border_radius | default: 0 }}px {{ section.settings.mobile_nav_border_radius | default: 0 }}px 0 0 !important;
-    }
-    
-    .mobile-nav__link {
-      {% case section.settings.mobile_nav_style %}
-        {% when 'ios' %}
-          color: #007AFF !important;
-        {% when 'android' %}
-          color: #6200EA !important;
-        {% when 'dark' %}
-          color: #FFFFFF !important;
-        {% when 'gradient' %}
-          color: #FFFFFF !important;
-        {% when 'custom' %}
-          color: {{ section.settings.mobile_nav_text_color | default: '#000000' }} !important;
-        {% else %}
-          color: rgb(var(--color-foreground)) !important;
-      {% endcase %}
-    }
-    
-    .mobile-nav__link.active,
-    .mobile-nav__link:hover {
-      {% case section.settings.mobile_nav_style %}
-        {% when 'ios' %}
-          color: #007AFF !important;
-          background: rgba(0, 122, 255, 0.1) !important;
-        {% when 'android' %}
-          color: #6200EA !important;
-          background: rgba(98, 0, 234, 0.1) !important;
-        {% when 'dark' %}
-          color: #60A5FA !important;
-          background: rgba(96, 165, 250, 0.1) !important;
-        {% when 'gradient' %}
-          color: #FFFFFF !important;
-          background: rgba(255, 255, 255, 0.2) !important;
-        {% when 'custom' %}
-          color: {{ section.settings.mobile_nav_active_color | default: '#007AFF' }} !important;
-          background: {{ section.settings.mobile_nav_active_color | default: '#007AFF' | color_modify: 'alpha', 0.15 }} !important;
-        {% else %}
-          color: rgb(var(--color-accent)) !important;
-          background: rgba(var(--color-accent), 0.1) !important;
-      {% endcase %}
-      border-radius: {{ section.settings.mobile_nav_border_radius | default: 8 | divided_by: 2 }}px !important;
-    }
-    
-    .mobile-nav__badge {
-      {% case section.settings.mobile_nav_style %}
-        {% when 'custom' %}
-          background: {{ section.settings.mobile_nav_cart_badge_color | default: '#FF3B30' }} !important;
-          color: #FFFFFF !important;
-        {% else %}
-          background: #FF3B30 !important;
-          color: #FFFFFF !important;
-      {% endcase %}
-    }
-    
-    {% unless section.settings.mobile_nav_show_labels %}
-      .mobile-nav__text {
-        display: none !important;
-      }
-      .mobile-nav__link {
-        padding: 8px !important;
-        min-height: 40px !important;
-      }
-    {% endunless %}
-    
-    /* Show mobile navigation only on mobile devices */
-    @media screen and (max-width: 749px) {
-      .mobile-nav {
-        display: block !important;
-      }
-    }
-    
-    /* Ensure mobile navigation is hidden on desktop and tablet */
-    @media screen and (min-width: 750px) {
-      .mobile-nav {
-        display: none !important;
-      }
-    }
-      
-    /* Hide header search icon when mobile navigation is enabled */
-    {% if section.settings.enable_mobile_navigation %}
-      @media screen and (max-width: 749px) {
-        .header__search--mobile-only {
-          display: none !important;
-        }
-        
-        /* Ensure no duplicate search icons in header on mobile */
-        .header__icon--search {
-          display: none !important;
-        }
-        
-        /* Hide ALL cart elements in header on mobile to prevent duplicates */
-        .header__icon--cart,
-        .header__cart,
-        .header__cart--desktop,
-        #cart-icon-bubble,
-        .cart-count-bubble {
-          display: none !important;
-        }
-        
-        /* Hide account icon in header on mobile */
-        .header__icon--account {
-          display: none !important;
-        }
-        
-        /* Ensure proper spacing for content */
-        body {
-          padding-bottom: 80px !important;
-        }
-      }
-    {% endif %}
-  {% endif %}
 {%- endstyle -%}
 
 <script src="{{ 'details-disclosure.js' | asset_url }}" defer="defer"></script>
@@ -884,8 +700,6 @@
   {%- render 'cart-notification', color_scheme: section.settings.color_scheme, desktop_menu_type: section.settings.menu_type_desktop -%}
 {%- endif -%}
 
-{%- comment -%} Mobile navigation is now rendered in layout/theme.liquid for consistency {%- endcomment -%}
-
 {% javascript %}
   class StickyHeader extends HTMLElement {
     constructor() {
@@ -1036,18 +850,6 @@
       "url": {{ request.origin | append: page.url | json }}
     }
   </script>
-{%- endif -%}
-
-{%- if section.settings.enable_mobile_navigation -%}
-  {%- render 'mobile-navigation',
-      nav_style: section.settings.mobile_nav_style,
-      nav_height: section.settings.mobile_nav_height,
-      show_labels: section.settings.mobile_nav_show_labels,
-      show_home: section.settings.mobile_nav_show_home,
-      show_search: section.settings.mobile_nav_show_search,
-      show_cart: section.settings.mobile_nav_show_cart,
-      show_account: section.settings.mobile_nav_show_account
-  -%}
 {%- endif -%}
 
 {% schema %}
@@ -1259,160 +1061,6 @@
       "default": true,
       "label": "Show navigation at top",
       "info": "Display the main navigation menu above the header"
-    },
-    {
-      "type": "header",
-      "content": "📱 Mobile Navigation Settings"
-    },
-    {
-      "type": "checkbox",
-      "id": "enable_mobile_navigation",
-      "default": true,
-      "label": "Enable Mobile Bottom Navigation",
-      "info": "Show a bottom navigation bar on mobile devices with Home, Search, Cart, and Account links"
-    },
-    {
-      "type": "select",
-      "id": "mobile_nav_style",
-      "options": [
-        {
-          "value": "default",
-          "label": "Default Theme Style"
-        },
-        {
-          "value": "ios",
-          "label": "iOS Style (Blurred)"
-        },
-        {
-          "value": "android",
-          "label": "Android Material"
-        },
-        {
-          "value": "dark",
-          "label": "Dark Theme"
-        },
-        {
-          "value": "gradient",
-          "label": "Colorful Gradient"
-        },
-        {
-          "value": "custom",
-          "label": "Custom Colors"
-        }
-      ],
-      "default": "default",
-      "label": "Navigation Style",
-      "info": "Choose a pre-built style or use custom colors"
-    },
-    {
-      "type": "select",
-      "id": "mobile_nav_height",
-      "options": [
-        {
-          "value": "compact",
-          "label": "Compact (40px)"
-        },
-        {
-          "value": "normal",
-          "label": "Normal (56px)"
-        },
-        {
-          "value": "tall",
-          "label": "Tall (72px)"
-        }
-      ],
-      "default": "normal",
-      "label": "Navigation Height",
-      "info": "Choose the size of the bottom navigation bar"
-    },
-    {
-      "type": "checkbox",
-      "id": "mobile_nav_show_labels",
-      "default": true,
-      "label": "Show Text Labels",
-      "info": "Display text under icons (disable for icon-only navigation)"
-    },
-    {
-      "type": "color",
-      "id": "mobile_nav_background_color",
-      "label": "Background Color",
-      "default": "#FFFFFF",
-      "info": "Only applies when 'Custom Colors' style is selected"
-    },
-    {
-      "type": "color",
-      "id": "mobile_nav_text_color",
-      "label": "Icon & Text Color",
-      "default": "#000000",
-      "info": "Only applies when 'Custom Colors' style is selected"
-    },
-    {
-      "type": "color",
-      "id": "mobile_nav_active_color",
-      "label": "Active Icon Color",
-      "default": "#007AFF",
-      "info": "Color for the current page highlight"
-    },
-    {
-      "type": "color",
-      "id": "mobile_nav_cart_badge_color",
-      "label": "Cart Badge Color",
-      "default": "#FF3B30",
-      "info": "Color for the cart item count bubble"
-    },
-    {
-      "type": "range",
-      "id": "mobile_nav_border_radius",
-      "min": 0,
-      "max": 30,
-      "step": 2,
-      "unit": "px",
-      "label": "Border Radius",
-      "default": 0,
-      "info": "Rounded corners for the navigation bar"
-    },
-    {
-      "type": "range",
-      "id": "mobile_nav_transparency",
-      "min": 70,
-      "max": 100,
-      "step": 5,
-      "unit": "%",
-      "label": "Background Opacity",
-      "default": 95,
-      "info": "Transparency level of the background"
-    },
-    {
-      "type": "header",
-      "content": "Navigation Items"
-    },
-    {
-      "type": "checkbox",
-      "id": "mobile_nav_show_home",
-      "default": true,
-      "label": "Show Home Button",
-      "info": "Display home icon in mobile navigation"
-    },
-    {
-      "type": "checkbox",
-      "id": "mobile_nav_show_search",
-      "default": true,
-      "label": "Show Search Button",
-      "info": "Display search icon in mobile navigation"
-    },
-    {
-      "type": "checkbox",
-      "id": "mobile_nav_show_cart",
-      "default": true,
-      "label": "Show Cart Button",
-      "info": "Display cart icon with item count in mobile navigation"
-    },
-    {
-      "type": "checkbox",
-      "id": "mobile_nav_show_account",
-      "default": true,
-      "label": "Show Account Button",
-      "info": "Display account/login icon in mobile navigation"
     },
     {
       "type": "header",
