@@ -5,15 +5,16 @@ body > .gtranslate_wrapper {
   display: none !important;
 }
 
-/* Style the header language selector */
+/* Style the header language selector (container stays within flex flow) */
 .header__gtranslate {
   display: flex;
   align-items: center;
+  position: relative;
+  margin-left: 1rem;
 }
 
 .header__gtranslate .gtranslate_wrapper {
   display: inline-block;
-  margin-right: 10px;
   z-index: 5;
   position: relative;
 }
@@ -63,10 +64,10 @@ body > .gtranslate_wrapper {
 /* Positioning for the language selector in header */
 @media screen and (min-width: 990px) {
   .header__gtranslate {
-    position: absolute;
-    right: 10px;
-    top: 50%;
-    transform: translateY(-50%);
+    position: relative; /* keep in normal flow */
+    top: auto;
+    right: auto;
+    transform: none;
   }
 }
 
@@ -110,4 +111,51 @@ body > .gtranslate_wrapper {
 .gt_dropdown .gt_option img {
   margin-right: 8px;
   vertical-align: middle;
+}
+
+/* Fallback plain <select> styling (free plan / script not loaded) */
+.header__gtranslate select {
+  appearance: none;
+  -webkit-appearance: none;
+  border: 1px solid rgba(255,255,255,0.25);
+  background: rgba(255,255,255,0.15);
+  color: #ffffff;
+  padding: 6px 30px 6px 12px;
+  font-size: 13px;
+  line-height: 1.2;
+  border-radius: 4px;
+  cursor: pointer;
+  backdrop-filter: blur(6px);
+  min-height: 34px;
+}
+
+.header__gtranslate select:focus {
+  outline: 0;
+  border-color: rgba(255,255,255,0.55);
+  box-shadow: 0 0 0 2px rgba(255,255,255,0.25);
+}
+
+/* Custom arrow for plain select */
+.header__gtranslate:after {
+  content: '';
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  width: 8px;
+  height: 8px;
+  pointer-events: none;
+  background: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='8' height='8' fill='white'><path d='M0 2l4 4 4-4z'/></svg>") center/8px 8px no-repeat;
+  transform: translateY(-50%);
+  opacity: 0.8;
+}
+
+/* Prevent duplicate arrow when GT widget enhances */
+.header__gtranslate .gt_dropdown + select,
+.header__gtranslate .gt_dropdown ~ select { display:none; }
+
+/* Dark header contrast improvements */
+.color-scheme-1 .header__gtranslate select { color: #fff; }
+
+@media (max-width: 749px) {
+  .header__gtranslate { margin-left: 0; }
 }
