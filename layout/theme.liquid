@@ -309,6 +309,27 @@
         "days": 1 //number of days Cookie should be stored 
     }); 
 </script>
+
+{%- comment -%} Mobile Bottom Navigation CSS and Scripts {%- endcomment -%}
+{%- if sections['mobile-bottom-navigation'].settings.enable_bottom_nav -%}
+  <link rel="stylesheet" href="{{ 'mobile-bottom-navigation.css' | asset_url }}" media="print" onload="this.media='all'">
+  <noscript>{{ 'mobile-bottom-navigation.css' | asset_url | stylesheet_tag }}</noscript>
+  
+  <style>
+    :root {
+      --mobile-nav-bg: {{ sections['mobile-bottom-navigation'].settings.background_color | default: '#ffffff' }};
+      --mobile-nav-text: {{ sections['mobile-bottom-navigation'].settings.text_color | default: '#666666' }};
+      --mobile-nav-active: {{ sections['mobile-bottom-navigation'].settings.active_color | default: '#1a365d' }};
+      --mobile-nav-badge: {{ sections['mobile-bottom-navigation'].settings.badge_color | default: '#ef4444' }};
+    }
+  </style>
+  
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      document.body.classList.add('has-mobile-bottom-nav');
+    });
+  </script>
+{%- endif -%}
   </head>
 
   <body class="gradient{% if settings.animations_hover_elements != 'none' %} animate--hover-{{ settings.animations_hover_elements }}{% endif %}">
@@ -321,6 +342,9 @@
     {%- endif -%}
 
     {% sections 'header-group' %}
+
+    {%- comment -%} Mobile Bottom Navigation {%- endcomment -%}
+    {%- section 'mobile-bottom-navigation' -%}
 
     <main id="MainContent" class="content-for-layout focus-none" role="main" tabindex="-1">
       {{ content_for_layout }}

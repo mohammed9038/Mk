@@ -406,4 +406,22 @@
     isolation: isolate;
   }
   
+  /* ===== HIDE RIGHT SECTION WHEN BOTTOM NAV IS ENABLED ===== */
+  
+  /* When mobile bottom navigation is enabled, hide all right section icons */
+  body.has-mobile-bottom-nav .header__right-section {
+    display: none !important;
+  }
+  
+  /* Adjust header layout when bottom nav is active */
+  body.has-mobile-bottom-nav .header__main-row {
+    grid-template-columns: auto 1fr;
+    grid-template-areas: "left center";
+  }
+  
+  /* Better center the logo when right section is hidden */
+  body.has-mobile-bottom-nav .header__center-section {
+    padding-right: 44px; /* Balance the hamburger menu width */
+  }
+  
 }
