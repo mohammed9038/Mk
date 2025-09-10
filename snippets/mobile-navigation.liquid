@@ -130,23 +130,27 @@
 </nav>
 
 <script>
-// Ensure mobile navigation is visible and functional
+// Mobile navigation functionality - RESPECTS CSS MEDIA QUERIES
 (function() {
   'use strict';
   
-  // Wait for DOM to be ready
   function initMobileNav() {
     const mobileNav = document.querySelector('.mobile-nav');
     if (mobileNav) {
-      // Force visibility
-      mobileNav.style.display = 'block';
-      mobileNav.style.visibility = 'visible';
-      mobileNav.style.opacity = '1';
+      // DO NOT force display - let CSS media queries handle it
+      // Only ensure the navigation is functional, not forced visible
       
-      // Add forced render class
-      mobileNav.classList.add('mobile-nav--forced');
+      // Add functional class without overriding display
+      mobileNav.classList.add('mobile-nav--initialized');
       
-      console.log('Mobile navigation forced to display');
+      console.log('Mobile navigation initialized (responsive)');
+      
+      // Check if we're on mobile and log for debugging
+      if (window.innerWidth <= 749) {
+        console.log('Mobile viewport detected - navigation should be visible');
+      } else {
+        console.log('Desktop viewport detected - navigation should be hidden');
+      }
     }
   }
   
@@ -156,5 +160,16 @@
   } else {
     initMobileNav();
   }
-})();
-</script>
+  
+  // Listen for window resize to log viewport changes
+  window.addEventListener('resize', function() {
+    const mobileNav = document.querySelector('.mobile-nav');
+    if (mobileNav) {
+      if (window.innerWidth <= 749) {
+        console.log('Switched to mobile viewport - navigation should be visible');
+      } else {
+        console.log('Switched to desktop viewport - navigation should be hidden');
+      }
+    }
+  });
+})();</script>
