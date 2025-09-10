@@ -5,11 +5,14 @@
   /* This enhances the existing theme dropdown functionality */
   
   /* Improve the native dropdown positioning */
+  .header__inline-menu li,
+  .header__inline-menu header-menu,
   .header__inline-menu header-menu > details {
     position: relative !important;
   }
   
   /* Add hover states to the existing theme dropdown structure */
+  .header__inline-menu li:hover header-menu > details:not([open]) > .header__submenu,
   .header__inline-menu header-menu:hover > details:not([open]) > .header__submenu {
     opacity: 1 !important;
     transform: translateY(0) !important;
@@ -29,12 +32,8 @@
     visibility: hidden !important;
   }
   
-  /* Prevent default click behavior when hovering */
-  .header__inline-menu header-menu:hover > details > summary {
-    pointer-events: auto !important;
-  }
-  
   /* Keep submenu visible when hovering over it */
+  .header__inline-menu li:hover .header__submenu:hover,
   .header__inline-menu header-menu > details:not([open]) > .header__submenu:hover {
     opacity: 1 !important;
     transform: translateY(0) !important;
@@ -42,6 +41,7 @@
   }
   
   /* Enhanced focus states for accessibility */
+  .header__inline-menu li:focus-within header-menu > details:not([open]) > .header__submenu,
   .header__inline-menu header-menu:focus-within > details:not([open]) > .header__submenu {
     opacity: 1 !important;
     transform: translateY(0) !important;
@@ -52,6 +52,7 @@
   }
   
   /* Ensure arrows rotate on hover */
+  .header__inline-menu li:hover .icon-caret,
   .header__inline-menu header-menu:hover .icon-caret {
     transform: rotate(180deg) !important;
     transition: transform 0.2s ease !important;
@@ -81,5 +82,10 @@
     opacity: 1 !important;
     transform: translateY(0) !important;
     visibility: visible !important;
+  }
+  
+  /* Prevent text selection on hover */
+  .header__inline-menu .header__menu-item {
+    user-select: none !important;
   }
 }

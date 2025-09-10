@@ -1,13 +1,19 @@
 // Desktop Navigation Dropdown - Enhanced Native Theme Support
 class DesktopNavigationDropdown {
   constructor() {
+    console.log('DesktopNavigationDropdown: Initializing...');
     this.init();
   }
 
   init() {
-    if (window.innerWidth < 990) return;
+    if (window.innerWidth < 990) {
+      console.log('DesktopNavigationDropdown: Window width < 990px, not initializing');
+      return;
+    }
     
+    console.log('DesktopNavigationDropdown: Setting up dropdowns...');
     this.setupDropdowns();
+    
     window.addEventListener('resize', () => {
       if (window.innerWidth >= 990) {
         this.setupDropdowns();
@@ -16,42 +22,54 @@ class DesktopNavigationDropdown {
   }
 
   setupDropdowns() {
-    // Target the theme's native dropdown structure
-    const headerMenus = document.querySelectorAll('.header__inline-menu header-menu');
+    // Target the theme's native dropdown structure: li > header-menu > details
+    const menuItems = document.querySelectorAll('.header__inline-menu li');
+    console.log('DesktopNavigationDropdown: Found', menuItems.length, 'menu items');
     
-    headerMenus.forEach(headerMenu => {
-      const details = headerMenu.querySelector('details');
-      const submenu = headerMenu.querySelector('.header__submenu');
+    menuItems.forEach((li, index) => {
+      const headerMenu = li.querySelector('header-menu');
+      const details = headerMenu ? headerMenu.querySelector('details') : null;
+      const submenu = details ? details.querySelector('.header__submenu') : null;
       
-      if (!details || !submenu) return;
+      console.log(`Menu item ${index}:`, {
+        hasHeaderMenu: !!headerMenu,
+        hasDetails: !!details,
+        hasSubmenu: !!submenu
+      });
       
-      this.setupMenuItem(headerMenu, details, submenu);
+      if (!headerMenu || !details || !submenu) return;
+      
+      console.log('DesktopNavigationDropdown: Setting up menu item', index);
+      this.setupMenuItem(li, headerMenu, details, submenu);
     });
   }
 
-  setupMenuItem(headerMenu, details, submenu) {
+  setupMenuItem(li, headerMenu, details, submenu) {
     const summary = details.querySelector('summary');
     let hoverTimer = null;
 
     // Prevent default click behavior - let hover control it
     if (summary) {
       summary.addEventListener('click', (e) => {
+        console.log('DesktopNavigationDropdown: Preventing default click');
         e.preventDefault();
         e.stopPropagation();
         return false;
       });
     }
 
-    // Show on hover
-    headerMenu.addEventListener('mouseenter', () => {
+    // Show on hover of the li element
+    li.addEventListener('mouseenter', () => {
+      console.log('DesktopNavigationDropdown: Mouse enter');
       clearTimeout(hoverTimer);
-      this.showDropdown(details, submenu, headerMenu);
+      this.showDropdown(details, submenu, li);
     });
 
-    // Hide on mouse leave with delay
-    headerMenu.addEventListener('mouseleave', () => {
+    // Hide on mouse leave of the li element with delay
+    li.addEventListener('mouseleave', () => {
+      console.log('DesktopNavigationDropdown: Mouse leave');
       hoverTimer = setTimeout(() => {
-        this.hideDropdown(details, submenu, headerMenu);
+        this.hideDropdown(details, submenu, li);
       }, 150);
     });
 
@@ -62,70 +80,80 @@ class DesktopNavigationDropdown {
 
     submenu.addEventListener('mouseleave', () => {
       hoverTimer = setTimeout(() => {
-        this.hideDropdown(details, submenu, headerMenu);
+        this.hideDropdown(details, submenu, li);
       }, 150);
     });
 
     // Handle keyboard navigation
-    headerMenu.addEventListener('focusin', () => {
-      this.showDropdown(details, submenu, headerMenu);
+    li.addEventListener('focusin', () => {
+      this.showDropdown(details, submenu, li);
     });
 
-    headerMenu.addEventListener('focusout', (e) => {
+    li.addEventListener('focusout', (e) => {
       setTimeout(() => {
-        if (!headerMenu.contains(document.activeElement)) {
-          this.hideDropdown(details, submenu, headerMenu);
+        if (!li.contains(document.activeElement)) {
+          this.hideDropdown(details, submenu, li);
         }
       }, 100);
     });
   }
 
-  showDropdown(details, submenu, headerMenu) {
+  showDropdown(details, submenu, li) {
+    console.log('DesktopNavigationDropdown: Showing dropdown');
     // Don't actually open the details element, just show the submenu
     submenu.style.setProperty('opacity', '1', 'important');
     submenu.style.setProperty('transform', 'translateY(0)', 'important');
     submenu.style.setProperty('visibility', 'visible', 'important');
     submenu.style.setProperty('z-index', '1', 'important');
+    submenu.style.setProperty('display', 'block', 'important');
     
     // Rotate arrow
-    const arrow = headerMenu.querySelector('.icon-caret');
+    const arrow = li.querySelector('.icon-caret');
     if (arrow) {
       arrow.style.setProperty('transform', 'rotate(180deg)', 'important');
     }
     
     // Add hover class for CSS targeting
-    headerMenu.classList.add('menu-hovered');
+    li.classList.add('menu-hovered');
   }
 
-  hideDropdown(details, submenu, headerMenu) {
+  hideDropdown(details, submenu, li) {
+    console.log('DesktopNavigationDropdown: Hiding dropdown');
     // Reset to theme defaults
     submenu.style.removeProperty('opacity');
     submenu.style.removeProperty('transform');
     submenu.style.removeProperty('visibility');
     submenu.style.removeProperty('z-index');
+    submenu.style.removeProperty('display');
     
     // Reset arrow
-    const arrow = headerMenu.querySelector('.icon-caret');
+    const arrow = li.querySelector('.icon-caret');
     if (arrow) {
       arrow.style.removeProperty('transform');
     }
     
     // Remove hover class
-    headerMenu.classList.remove('menu-hovered');
+    li.classList.remove('menu-hovered');
   }
 }
 
 // Initialize when DOM is loaded
+console.log('DesktopNavigationDropdown: Script loaded');
+
 if (document.readyState === 'loading') {
+  console.log('DesktopNavigationDropdown: Waiting for DOMContentLoaded');
   document.addEventListener('DOMContentLoaded', () => {
+    console.log('DesktopNavigationDropdown: DOMContentLoaded fired');
     new DesktopNavigationDropdown();
   });
 } else {
+  console.log('DesktopNavigationDropdown: DOM already loaded, initializing immediately');
   new DesktopNavigationDropdown();
 }
 
 // Also initialize after Shopify theme events
 document.addEventListener('shopify:section:load', () => {
+  console.log('DesktopNavigationDropdown: shopify:section:load fired');
   new DesktopNavigationDropdown();
 });
 
