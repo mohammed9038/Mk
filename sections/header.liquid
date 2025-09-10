@@ -32,9 +32,7 @@
   Dynamic values now injected via CSS custom properties below.
 {%- endcomment -%}
 <link rel="stylesheet" href="{{ 'header-structure.css' | asset_url }}" media="print" onload="this.media='all'">
-<link rel="stylesheet" href="{{ 'header-mobile-professional.css' | asset_url }}" media="print" onload="this.media='all'">
 <noscript>{{ 'header-structure.css' | asset_url | stylesheet_tag }}</noscript>
-<noscript>{{ 'header-mobile-professional.css' | asset_url | stylesheet_tag }}</noscript>
 
 <style>
   header-drawer {
@@ -192,10 +190,6 @@
   <symbol id="icon-cart-empty" class="icon icon-cart-empty" fill="none" viewBox="0 0 18 19">
     <path fill-rule="evenodd" clip-rule="evenodd" d="M1 1.5A.5.5 0 011.5 1h1.379c.484 0 .962.268 1.196.716l.348.661C4.692 2.808 5.17 3.076 5.654 3.076H16.5a.5.5 0 01.487.613l-1.5 8A.5.5 0 0115 12H6.146l-.348.661A1.5 1.5 0 004.602 13.5H3.5a.5.5 0 010-1h1.102a.5.5 0 00.399-.197l.348-.661c.234-.448.712-.716 1.196-.716H14.37l1.25-7H5.654a1.5 1.5 0 01-1.196-.716l-.348-.661A.5.5 0 013.879 2H1.5a.5.5 0 01-.5-.5z" fill="currentColor"/>
   </symbol>
-
-  <symbol id="icon-hamburger" class="icon icon-hamburger" fill="none" viewBox="0 0 18 16">
-    <path d="M1 .5a.5.5 0 100 1h15.71a.5.5 0 000-1H1zM.5 8a.5.5 0 01.5-.5h15.71a.5.5 0 010 1H1A.5.5 0 01.5 8zm0 7a.5.5 0 01.5-.5h15.71a.5.5 0 010 1H1a.5.5 0 01-.5-.5z" fill="currentColor"/>
-  </symbol>
 </svg>
 
 {%- liquid
@@ -244,34 +238,16 @@
       {% render 'header-drawer' %}
     {%- endif -%}
 
-    {%- comment -%} Professional Mobile Header Structure {%- endcomment -%}
+    {%- comment -%} Main Header Row {%- endcomment -%}
     <div class="header__main-row">
       
-      {%- comment -%} Mobile Left Section - Hamburger Menu {%- endcomment -%}
+      {%- comment -%} Left Section - Logo & Menu (if left-aligned) {%- endcomment -%}
       <div class="header__left-section">
-        {%- if section.settings.menu != blank -%}
-          <div class="header__menu-drawer-container">
-            <button class="header__menu-drawer-button" 
-                    type="button" 
-                    aria-controls="menu-drawer" 
-                    aria-expanded="false"
-                    aria-label="{{ 'sections.header.menu' | t }}">
-              <svg class="icon icon-hamburger" aria-hidden="true" focusable="false">
-                <use href="#icon-hamburger"></use>
-              </svg>
-            </button>
-          </div>
-        {%- endif -%}
-      </div>
-
-      {%- comment -%} Mobile Center Section - Logo {%- endcomment -%}
-      <div class="header__center-section">
+        {%- comment -%} Logo {%- endcomment -%}
         {%- if request.page_type == 'index' -%}
           <h1 class="header__heading">
         {%- endif -%}
-            <a href="{{ routes.root_url }}" 
-               class="header__heading-link link link--text focus-inset"
-               aria-label="{{ 'general.header.home' | t }}">
+            <a href="{{ routes.root_url }}" class="header__heading-link link link--text focus-inset">
               {%- if settings.logo != blank -%}
                 <div class="header__heading-logo-wrapper">
                   {%- assign logo_alt = settings.logo.alt | default: shop.name | escape -%}
@@ -295,100 +271,10 @@
         {%- if request.page_type == 'index' -%}
           </h1>
         {%- endif -%}
-      </div>
 
-      {%- comment -%} Mobile Right Section - Search, Account, Cart, Language {%- endcomment -%}
-      <div class="header__right-section">
-        
-        {%- comment -%} Search Icon (Mobile) {%- endcomment -%}
-        {%- if section.settings.enable_search -%}
-          <div class="header__search-mobile">
-            <button type="button" 
-                    class="header__search-icon"
-                    aria-controls="Details-search-modal" 
-                    aria-expanded="false"
-                    aria-label="{{ 'general.search.search' | t }}">
-              <svg class="header__icon icon" aria-hidden="true" focusable="false">
-                <use href="#icon-search"></use>
-              </svg>
-            </button>
-          </div>
-        {%- endif -%}
-
-        {%- comment -%} Account Icon (Mobile) {%- endcomment -%}
-        {%- if shop.customer_accounts_enabled and section.settings.enable_customer_avatar -%}
-          <div class="header__account-mobile">
-            <a href="{%- if customer -%}{{ routes.account_url }}{%- else -%}{{ routes.account_login_url }}{%- endif -%}" 
-               class="header__account-icon"
-               aria-label="{%- if customer -%}{{ 'customer.account_fallback' | t }}{%- else -%}{{ 'customer.log_in' | t }}{%- endif -%}">
-              <svg class="header__icon icon" aria-hidden="true" focusable="false">
-                <use href="#icon-account"></use>
-              </svg>
-            </a>
-          </div>
-        {%- endif -%}
-
-        {%- comment -%} Cart Icon (Mobile) {%- endcomment -%}
-        <div class="header__cart-mobile">
-          <a href="{{ routes.cart_url }}" 
-             class="header__cart-icon"
-             id="cart-icon-bubble"
-             aria-label="{{ 'templates.cart.cart' | t }} ({{ cart.item_count }} {{ 'sections.header.cart_count' | t: count: cart.item_count }})">
-            <svg class="header__icon icon" aria-hidden="true" focusable="false">
-              {%- if cart.empty? -%}
-                <use href="#icon-cart-empty"></use>
-              {%- else -%}
-                <use href="#icon-cart"></use>
-              {%- endif -%}
-            </svg>
-            {%- if cart.item_count > 0 -%}
-              <div class="cart-count-bubble">
-                <span aria-hidden="true">{{ cart.item_count }}</span>
-                <span class="visually-hidden">{{ 'sections.header.cart_count' | t: count: cart.item_count }}</span>
-              </div>
-            {%- endif -%}
-          </a>
-        </div>
-
-        {%- comment -%} Language Selector (Mobile) {%- endcomment -%}
-        {%- if section.settings.enable_language_selector and localization.available_languages.size > 1 -%}
-          <div class="header__language-mobile">
-            {%- render 'localization-form', localPosition: 'HeaderLanguage', type: 'language' -%}
-          </div>
-        {%- endif -%}
-
-      </div>
-    </div>
-          {%- endif -%}
-              <a href="{{ routes.root_url }}" class="header__heading-link link link--text focus-inset small-hide medium-hide">
-                {%- if settings.logo != blank -%}
-                  <div class="header__heading-logo-wrapper">
-                    {%- assign logo_alt = settings.logo.alt | default: shop.name | escape -%}
-                    {%- assign logo_height = settings.logo_width | divided_by: settings.logo.aspect_ratio -%}
-                    {% capture sizes %}(max-width: {{ settings.logo_width | times: 2 }}px) 50vw, {{ settings.logo_width }}px{% endcapture %}
-                    {% capture widths %}{{ settings.logo_width }}, {{ settings.logo_width | times: 1.5 | round }}, {{ settings.logo_width | times: 2 }}{% endcapture %}
-                    {{ settings.logo | image_url: width: 600 | image_tag:
-                      class: 'header__heading-logo motion-reduce',
-                      widths: widths,
-                      height: logo_height,
-                      width: settings.logo_width,
-                      alt: logo_alt,
-                      sizes: sizes,
-                      preload: true
-                    }}
-                  </div>
-                {%- else -%}
-                  <span class="h2">{{ shop.name }}</span>
-                {%- endif -%}
-              </a>
-          {%- if request.page_type == 'index' -%}
-            </h1>
-          {%- endif -%}
-        {%- endif -%}
-
-        {%- comment -%} Center-aligned navigation menu (desktop) {%- endcomment -%}
-        {%- if section.settings.menu != blank and section.settings.menu_type_desktop != 'drawer' and section.settings.menu_position == 'center' -%}
-          <div class="header__navigation header__navigation--center small-hide medium-hide">
+        {%- comment -%} Left-aligned navigation menu {%- endcomment -%}
+        {%- if section.settings.menu != blank and section.settings.menu_type_desktop != 'drawer' and section.settings.menu_position == 'left' -%}
+          <div class="header__navigation header__navigation--left">
             {%- if section.settings.menu_type_desktop == 'mega' -%}
               {% render 'header-mega-menu' %}
             {%- else -%}
@@ -397,20 +283,41 @@
           </div>
         {%- endif -%}
 
-        {%- comment -%} Search in center position (desktop) {%- endcomment -%}
+        {%- comment -%} Search in left position {%- endcomment -%}
+        {%- if section.settings.show_search_bar and section.settings.search_position == 'left' -%}
+          <div class="header__search-bar header__search-bar--left">
+            {% render 'header-search-bar', input_id: 'Search-In-Header-Left' %}
+          </div>
+        {%- endif -%}
+      </div>
+
+      {%- comment -%} Center Section - Navigation or Search {%- endcomment -%}
+      <div class="header__center-section">
+        {%- comment -%} Center-aligned navigation menu {%- endcomment -%}
+        {%- if section.settings.menu != blank and section.settings.menu_type_desktop != 'drawer' and section.settings.menu_position == 'center' -%}
+          <div class="header__navigation header__navigation--center">
+            {%- if section.settings.menu_type_desktop == 'mega' -%}
+              {% render 'header-mega-menu' %}
+            {%- else -%}
+              {% render 'header-dropdown-menu' %}
+            {%- endif -%}
+          </div>
+        {%- endif -%}
+
+        {%- comment -%} Search in center position {%- endcomment -%}
         {%- if section.settings.show_search_bar and section.settings.search_position == 'center' -%}
-          <div class="header__search-bar header__search-bar--center small-hide medium-hide">
+          <div class="header__search-bar header__search-bar--center">
             {% render 'header-search-bar', input_id: 'Search-In-Header-Center' %}
           </div>
         {%- endif -%}
       </div>
 
-      {%- comment -%} Right Section - Search, Account, Cart, Language (Mobile & Desktop) {%- endcomment -%}
+      {%- comment -%} Right Section - Navigation, Search, Account, Cart, Language {%- endcomment -%}
       <div class="header__right-section">
         
-        {%- comment -%} Right-aligned navigation menu (desktop only) {%- endcomment -%}
+        {%- comment -%} Right-aligned navigation menu {%- endcomment -%}
         {%- if section.settings.menu != blank and section.settings.menu_type_desktop != 'drawer' and section.settings.menu_position == 'right' -%}
-          <div class="header__navigation header__navigation--right small-hide medium-hide">
+          <div class="header__navigation header__navigation--right">
             {%- if section.settings.menu_type_desktop == 'mega' -%}
               {% render 'header-mega-menu' %}
             {%- else -%}
@@ -419,14 +326,14 @@
           </div>
         {%- endif -%}
 
-        {%- comment -%} Search in right position (desktop only) {%- endcomment -%}
+        {%- comment -%} Search in right position {%- endcomment -%}
         {%- if section.settings.show_search_bar and section.settings.search_position == 'right' -%}
-          <div class="header__search-bar header__search-bar--right small-hide medium-hide">
+          <div class="header__search-bar header__search-bar--right">
             {% render 'header-search-bar', input_id: 'Search-In-Header-Right' %}
           </div>
         {%- endif -%}
         
-        {%- comment -%} Mobile & Desktop Search Icon {%- endcomment -%}
+        {%- comment -%} Search icon - only when search bar is disabled {%- endcomment -%}
         {%- if section.settings.show_search_icon and section.settings.show_search_bar == false -%}
           <details-modal class="header__search">
             <details>
@@ -451,28 +358,26 @@
         {%- endif -%}
 
         {%- comment -%} Mobile-only search icon when search bar is enabled {%- endcomment -%}
-        {%- if section.settings.mobile_show_search_icon -%}
-          <details-modal class="header__search header__search--mobile-only">
-            <details>
-              <summary class="header__icon header__icon--search header__icon--summary link focus-inset modal__toggle" aria-haspopup="dialog" aria-label="{{ 'general.search.search' | t }}">
-                <span>
-                  <svg class="modal__toggle-open icon icon-search" aria-hidden="true" focusable="false">
-                    <use href="#icon-search"></use>
-                  </svg>
-                  <svg class="modal__toggle-close icon icon-close" aria-hidden="true" focusable="false">
-                    <use href="#icon-close"></use>
-                  </svg>
-                </span>
-              </summary>
-              <div class="search-modal modal__content gradient" role="dialog" aria-modal="true" aria-label="{{ 'general.search.search' | t }}">
-                <div class="modal-overlay"></div>
-                <div class="search-modal__content search-modal__content-bottom" tabindex="-1">
-                  {% render 'header-search', input_id: 'Search-In-Mobile-Modal' %}
-                </div>
+        <details-modal class="header__search header__search--mobile-only">
+          <details>
+            <summary class="header__icon header__icon--search header__icon--summary link focus-inset modal__toggle" aria-haspopup="dialog" aria-label="{{ 'general.search.search' | t }}">
+              <span>
+                <svg class="modal__toggle-open icon icon-search" aria-hidden="true" focusable="false">
+                  <use href="#icon-search"></use>
+                </svg>
+                <svg class="modal__toggle-close icon icon-close" aria-hidden="true" focusable="false">
+                  <use href="#icon-close"></use>
+                </svg>
+              </span>
+            </summary>
+            <div class="search-modal modal__content gradient" role="dialog" aria-modal="true" aria-label="{{ 'general.search.search' | t }}">
+              <div class="modal-overlay"></div>
+              <div class="search-modal__content search-modal__content-bottom" tabindex="-1">
+                {% render 'header-search', input_id: 'Search-In-Mobile-Modal' %}
               </div>
-            </details>
-          </details-modal>
-        {%- endif -%}
+            </div>
+          </details>
+        </details-modal>
         
         {%- comment -%} GTranslate Language Selector {%- endcomment -%}
         {%- if section.settings.enable_language_selector -%}
@@ -482,10 +387,10 @@
           </div>
         {%- endif -%}
 
-        {%- comment -%} Country Selector (desktop only) {%- endcomment -%}
+        {%- comment -%} Country Selector {%- endcomment -%}
         {%- if section.settings.enable_country_selector and localization.available_countries.size > 1 -%}
-          <div class="header__localization small-hide medium-hide">
-            <localization-form class="no-js-hidden" data-prevent-hide>
+          <div class="header__localization">
+            <localization-form class="small-hide medium-hide no-js-hidden" data-prevent-hide>
               {%- form 'localization', id: 'HeaderCountryForm', class: 'localization-form' -%}
                 <div>
                   <h2 class="visually-hidden" id="HeaderCountryLabel">{{ 'localization.country_label' | t }}</h2>
@@ -497,8 +402,8 @@
         {%- endif -%}
 
         {%- comment -%} Account Link {%- endcomment -%}
-        {%- if shop.customer_accounts_enabled and section.settings.mobile_show_account_icon -%}
-          <a href="{%- if customer -%}{{ routes.account_url }}{%- else -%}{{ routes.account_login_url }}{%- endif -%}" class="header__icon header__icon--account link focus-inset{% if section.settings.menu != blank %} large-up-hide{% endif %}">
+        {%- if shop.customer_accounts_enabled -%}
+          <a href="{%- if customer -%}{{ routes.account_url }}{%- else -%}{{ routes.account_login_url }}{%- endif -%}" class="header__icon header__icon--account link focus-inset{% if section.settings.menu != blank %} small-hide{% endif %}">
             {%- if section.settings.enable_customer_avatar -%}
               <account-icon>
                 {%- if customer and customer.has_avatar? -%}
@@ -923,57 +828,6 @@
       "default": true,
       "label": "Show navigation at top",
       "info": "Display the main navigation menu above the header"
-    },
-    {
-      "type": "header",
-      "content": "📱 Mobile Layout Settings"
-    },
-    {
-      "type": "select",
-      "id": "mobile_logo_position",
-      "options": [
-        {
-          "value": "center",
-          "label": "Center"
-        },
-        {
-          "value": "left",
-          "label": "Left (next to menu)"
-        }
-      ],
-      "default": "center",
-      "label": "Mobile logo position"
-    },
-    {
-      "type": "checkbox",
-      "id": "mobile_show_search_icon",
-      "default": true,
-      "label": "Show search icon on mobile",
-      "info": "Display search icon in mobile header"
-    },
-    {
-      "type": "checkbox",
-      "id": "mobile_show_account_icon",
-      "default": true,
-      "label": "Show account icon on mobile",
-      "info": "Display account/login icon in mobile header"
-    },
-    {
-      "type": "checkbox",
-      "id": "mobile_sticky_header",
-      "default": true,
-      "label": "Enable mobile sticky header",
-      "info": "Header stays visible when scrolling on mobile"
-    },
-    {
-      "type": "range",
-      "id": "mobile_header_height",
-      "min": 50,
-      "max": 80,
-      "step": 2,
-      "unit": "px",
-      "label": "Mobile header height",
-      "default": 56
     },
     {
       "type": "header",
