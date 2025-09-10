@@ -344,7 +344,7 @@
     {% sections 'header-group' %}
 
     {%- comment -%} Mobile Bottom Navigation {%- endcomment -%}
-    {%- section 'mobile-bottom-navigation' -%}
+    {% render 'mobile-bottom-nav' %}
 
     <main id="MainContent" class="content-for-layout focus-none" role="main" tabindex="-1">
       {{ content_for_layout }}
