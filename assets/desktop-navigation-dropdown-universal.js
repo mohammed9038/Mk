@@ -9,45 +9,27 @@
   document.addEventListener('DOMContentLoaded', function() {
     console.log('[Dropdown Debug] Script initialized');
     
-    // Debug ALL possible navigation selectors
-    const possibleSelectors = [
-      '.header__inline-menu',
-      '.header__navigation',
-      '.list-menu--inline',
-      'nav[role="navigation"]',
-      '.header nav',
-      '.header .list-menu'
-    ];
-    
-    let foundNavigation = null;
-    let navigationSelector = '';
-    
-    possibleSelectors.forEach(selector => {
-      const element = document.querySelector(selector);
-      console.log(`[Dropdown Debug] Checking selector "${selector}":`, !!element);
-      if (element && !foundNavigation) {
-        foundNavigation = element;
-        navigationSelector = selector;
-        console.log(`[Dropdown Debug] Found navigation with selector: ${selector}`);
-        console.log(`[Dropdown Debug] Navigation HTML:`, element.outerHTML.substring(0, 500) + '...');
-      }
-    });
-    
-    if (!foundNavigation) {
-      console.error('[Dropdown Debug] No navigation found with any selector!');
-      // Log the entire header structure for debugging
-      const header = document.querySelector('.header, header');
-      if (header) {
-        console.log('[Dropdown Debug] Header HTML:', header.outerHTML.substring(0, 1000) + '...');
-      }
+    // Find the navigation menu
+    const navigation = document.querySelector('.header__inline-menu');
+    if (!navigation) {
+      console.error('[Dropdown Debug] No .header__inline-menu found!');
       return;
     }
     
-    // Find all possible dropdown structures
-    const dropdownSelectors = [
-      `${navigationSelector} details`,
-      `${navigationSelector} .header-menu details`,
-      `${navigationSelector} header-menu details`,
+    console.log('[Dropdown Debug] Navigation found:', navigation);
+    
+    // Find all dropdown menu items (header-menu elements containing details)
+    const menuItems = navigation.querySelectorAll('header-menu details');
+    console.log('[Dropdown Debug] Found dropdown menu items:', menuItems.length);
+    
+    if (menuItems.length === 0) {
+      console.warn('[Dropdown Debug] No dropdown menu items found!');
+      return;
+    }
+    
+    // Track hover state
+    let currentOpenDropdown = null;
+    let hoverTimeout = null;
       `${navigationSelector} li details`
     ];
     

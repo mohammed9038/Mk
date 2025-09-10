@@ -6,7 +6,8 @@
     position: relative !important;
   }
   
-  /* Hide dropdown by default but prepare for hover */
+  /* OVERRIDE base.css - Hide dropdown by default but prepare for hover */
+  .js .header__inline-menu details > .header__submenu,
   .header__inline-menu details .header__submenu {
     position: absolute !important;
     top: 100% !important;
@@ -27,7 +28,11 @@
     padding: 0.5rem 0 !important;
   }
   
-  /* Show dropdown on hover - multiple selectors for compatibility */
+  /* Show dropdown on hover - OVERRIDE base.css with more specific selectors */
+  .js .header__inline-menu details:hover > .header__submenu,
+  .js .header__inline-menu li:hover details .header__submenu,
+  .js .header__inline-menu header-menu:hover details .header__submenu,
+  .js .header__inline-menu details[open] > .header__submenu,
   .header__inline-menu details:hover .header__submenu,
   .header__inline-menu li:hover details .header__submenu,
   .header__inline-menu header-menu:hover details .header__submenu,
@@ -37,6 +42,7 @@
     visibility: visible !important;
     transform: translateY(0) !important;
     pointer-events: auto !important;
+    animation: none !important;
   }
   
   /* Keep dropdown open when hovering over the parent */
@@ -206,5 +212,33 @@
     height: 20px !important;
     background: transparent !important;
     z-index: 998 !important;
+  }
+}
+
+/* Additional aggressive overrides to ensure dropdown works */
+@media screen and (min-width: 990px) {
+  /* Force override the base.css rules that hide dropdowns */
+  .js .header__inline-menu header-menu details > .header__submenu {
+    opacity: 0 !important;
+    transform: translateY(-10px) !important;
+    visibility: hidden !important;
+    pointer-events: none !important;
+  }
+  
+  /* Show on hover with highest specificity */
+  .js .header__inline-menu header-menu:hover details > .header__submenu,
+  .js .header__inline-menu header-menu details[open] > .header__submenu,
+  .js .header__inline-menu header-menu details.hover-active > .header__submenu {
+    opacity: 1 !important;
+    visibility: visible !important;
+    transform: translateY(0) !important;
+    pointer-events: auto !important;
+    animation: none !important;
+  }
+  
+  /* Prevent details marker from showing */
+  .header__inline-menu details summary::-webkit-details-marker,
+  .header__inline-menu details summary::marker {
+    display: none !important;
   }
 }
