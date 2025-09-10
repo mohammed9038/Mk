@@ -24,11 +24,9 @@
     max-width: 74.1rem;
   }
 
-  /* Hide search bar on mobile when search has been performed */
-  @media screen and (max-width: 749px) {
-    .template-search:not(.template-search--empty) .template-search__search {
-      display: none;
-    }
+  /* Hide search bar when search has been performed and results are displayed */
+  .template-search:not(.template-search--empty) .template-search__search {
+    display: none;
   }
 
   .template-search__search .search {
