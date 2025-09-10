@@ -124,6 +124,19 @@
             </ul>
           </nav>
           <div class="menu-drawer__utility-links">
+            {%- comment -%} Language Selector - Moved before login {%- endcomment -%}
+            {%- if localization.available_languages and localization.available_languages.size > 1 -%}
+              <div class="menu-drawer__localization header-localization">
+                <div class="mobile-gtranslate-wrapper">
+                  <h2 class="drawer__heading" id="HeaderLanguageMobileLabel">
+                    {{ 'localization.language_label' | t }}
+                  </h2>
+                  <!-- GTranslate inline instance for mobile menu -->
+                  <div class="gtranslate_wrapper mobile-gtranslate"></div>
+                </div>
+              </div>
+            {%- endif -%}
+            
             {%- if shop.customer_accounts_enabled -%}
               <a
                 href="{%- if customer -%}{{ routes.account_url }}{%- else -%}{{ routes.account_login_url }}{%- endif -%}"
@@ -138,55 +151,6 @@
                   endif
                 -%}
               </a>
-            {%- endif -%}
-            {%- if localization.available_countries or localization.available_languages -%}
-              <div class="menu-drawer__localization header-localization">
-                {%- comment -%}
-                  Country/currency selector has been hidden as per request
-                {%- endcomment -%}
-
-                {%- if localization.available_languages and localization.available_languages.size > 1 -%}
-                  <noscript>
-                    {%- form 'localization',
-                      id: 'HeaderLanguageMobileFormNoScriptDrawer',
-                      class: 'localization-form'
-                    -%}
-                      <div class="localization-form__select">
-                        <h2 class="visually-hidden" id="HeaderLanguageMobileLabelNoScriptDrawer">
-                          {{ 'localization.language_label' | t }}
-                        </h2>
-                        <select
-                          class="localization-selector link"
-                          name="locale_code"
-                          aria-labelledby="HeaderLanguageMobileLabelNoScriptDrawer"
-                        >
-                          {%- for language in localization.available_languages -%}
-                            <option
-                              value="{{ language.iso_code }}"
-                              lang="{{ language.iso_code }}"
-                              {%- if language.iso_code == localization.language.iso_code %}
-                                selected
-                              {% endif %}
-                            >
-                              {{ language.endonym_name | capitalize }}
-                            </option>
-                          {%- endfor -%}
-                        </select>
-                        {% render 'icon-caret' %}
-                      </div>
-                      <button class="button button--tertiary">{{ 'localization.update_language' | t }}</button>
-                    {%- endform -%}
-                  </noscript>
-
-                  <div class="mobile-gtranslate-wrapper">
-                    <h2 class="drawer__heading" id="HeaderLanguageMobileLabel">
-                      {{ 'localization.language_label' | t }}
-                    </h2>
-                    <!-- GTranslate inline instance for mobile menu -->
-                    <div class="gtranslate_wrapper mobile-gtranslate"></div>
-                  </div>
-                {%- endif -%}
-              </div>
             {%- endif -%}
             <ul class="list list-social list-unstyled" role="list">
               {%- if settings.social_twitter_link != blank -%}
