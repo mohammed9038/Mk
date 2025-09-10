@@ -6,7 +6,7 @@
 <link rel="stylesheet" href="{{ 'component-cart-items.css' | asset_url }}" media="print" onload="this.media='all'">
 <link rel="stylesheet" href="{{ 'component-mobile-navigation.css' | asset_url }}" media="all">
 <link rel="stylesheet" href="{{ 'mobile-layout-fix.css' | asset_url }}" media="all">
-<link rel="stylesheet" href="{{ 'mobile-language-dropdown.css' | asset_url }}" media="all">
+<link rel="stylesheet" href="{{ 'gtranslate-integration.css' | asset_url }}" media="all">
 {%- if settings.predictive_search_enabled -%}
   <link rel="stylesheet" href="{{ 'component-price.css' | asset_url }}" media="print" onload="this.media='all'">
 {%- endif -%}
@@ -620,7 +620,7 @@ window.gtranslateSettings = {
         {%- endif -%}
         
         {%- comment -%} GTranslate Language Selector {%- endcomment -%}
-        <div class="header__localization">
+        <div class="header__localization header__gtranslate">
           <div class="gtranslate_wrapper"></div>
         </div>
 
