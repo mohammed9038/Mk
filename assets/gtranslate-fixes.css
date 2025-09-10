@@ -1,0 +1,47 @@
+/* Additional GTranslate styles to fix dropdown issues */
+.gt_dropdown .gt_selected:after {
+  margin-left: 8px;
+}
+
+.gt_dropdown_wrapper {
+  position: relative;
+}
+
+/* Language label in mobile menu */
+.drawer__heading {
+  font-size: 1.5rem;
+  margin-bottom: 10px;
+  font-weight: 500;
+}
+
+/* Ensure dropdowns don't get cut off */
+.header__gtranslate .gt_dropdown_wrapper {
+  position: static;
+}
+
+.header__gtranslate .gt_dropdown .gt_options {
+  width: max-content;
+  min-width: 100%;
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+/* Prevent header language dropdown from getting cut off on mobile */
+@media screen and (max-width: 749px) {
+  .header__gtranslate .gt_dropdown .gt_options {
+    left: auto !important;
+    right: 0 !important;
+  }
+}
+
+/* Match Al-Shariqah design style */
+.gt_dropdown .gt_selected {
+  border-color: #003366;
+  color: #003366;
+}
+
+/* Hide any unwanted UI elements */
+.gtranslate_wrapper:empty,
+.gt_dropdown:empty {
+  display: none;
+}

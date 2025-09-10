@@ -17,7 +17,9 @@
     
     <!-- GTranslate custom styling -->
     <link rel="stylesheet" href="{{ 'gtranslate-custom.css' | asset_url }}" media="print" onload="this.media='all'">
+    <link rel="stylesheet" href="{{ 'gtranslate-fixes.css' | asset_url }}" media="print" onload="this.media='all'">
     <noscript>{{ 'gtranslate-custom.css' | asset_url | stylesheet_tag }}</noscript>
+    <noscript>{{ 'gtranslate-fixes.css' | asset_url | stylesheet_tag }}</noscript>
 
     {%- if settings.favicon != blank -%}
       <link rel="icon" type="image/png" href="{{ settings.favicon | image_url: width: 32, height: 32 }}">
@@ -388,6 +390,8 @@
         "switcher_vertical_position": "bottom",
         "float_switcher_open_direction": "bottom",
         "flag_style": "3d",
+        "flags_size": 24,
+        "dropdown_text_color": "#003366",
         "alt_flags": {
           "en": "united-kingdom",
           "ar": "saudi-arabia"

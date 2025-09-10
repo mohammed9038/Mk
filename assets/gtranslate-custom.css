@@ -6,19 +6,38 @@ body > .gtranslate_wrapper {
 }
 
 /* Style the header language selector */
+.header__gtranslate {
+  display: flex;
+  align-items: center;
+}
+
 .header__gtranslate .gtranslate_wrapper {
   display: inline-block;
   margin-right: 10px;
+  z-index: 5;
+  position: relative;
 }
 
 /* Style the mobile menu language selector */
 .mobile-gtranslate-wrapper {
-  padding: 10px 0;
-  margin-top: 5px;
+  padding: 10px 20px;
+  margin-top: 10px;
+  border-top: 1px solid rgba(var(--color-foreground), 0.08);
 }
 
 .mobile-gtranslate-wrapper .gtranslate_wrapper {
   display: block;
+}
+
+/* Mobile header adjustments */
+@media screen and (max-width: 989px) {
+  .header__gtranslate {
+    position: absolute;
+    right: 60px;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 2;
+  }
 }
 
 /* Hide country selector elements everywhere */
@@ -41,6 +60,16 @@ body > .gtranslate_wrapper {
   margin-top: 10px;
 }
 
+/* Positioning for the language selector in header */
+@media screen and (min-width: 990px) {
+  .header__gtranslate {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+}
+
 /* Match the theme's dropdown style */
 .gt_dropdown .gt_selected {
   border-radius: 0;
@@ -50,6 +79,8 @@ body > .gtranslate_wrapper {
   padding: 8px 12px;
   font-size: 1.3rem;
   transition: color var(--duration-short) ease;
+  display: flex;
+  align-items: center;
 }
 
 .gt_dropdown .gt_selected:hover {
@@ -60,14 +91,23 @@ body > .gtranslate_wrapper {
   border-radius: 0;
   border: 1px solid rgba(var(--color-foreground), 0.1);
   box-shadow: 0 5px 15px rgba(var(--color-foreground), 0.1);
+  z-index: 10;
 }
 
 .gt_dropdown .gt_option {
   color: rgba(var(--color-foreground), 0.75);
   transition: color var(--duration-short) ease, background-color var(--duration-short) ease;
+  padding: 8px 12px;
 }
 
 .gt_dropdown .gt_option:hover {
   background-color: rgba(var(--color-foreground), 0.05);
   color: rgba(var(--color-foreground), 1);
+}
+
+/* Flag positioning */
+.gt_dropdown .gt_selected img, 
+.gt_dropdown .gt_option img {
+  margin-right: 8px;
+  vertical-align: middle;
 }
