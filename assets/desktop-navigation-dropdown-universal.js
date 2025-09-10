@@ -156,16 +156,32 @@
           currentOpenDropdown.classList.remove('hover-active');
         }
         
-        // Open this dropdown
+        // Open this dropdown - FORCE IT
         details.setAttribute('open', '');
         details.classList.add('hover-active');
         currentOpenDropdown = details;
         
-        // Force visibility
+        // Force visibility with multiple approaches
         submenu.style.setProperty('opacity', '1', 'important');
         submenu.style.setProperty('visibility', 'visible', 'important');
         submenu.style.setProperty('pointer-events', 'auto', 'important');
         submenu.style.setProperty('display', 'block', 'important');
+        submenu.style.setProperty('transform', 'translateY(0)', 'important');
+        submenu.style.setProperty('z-index', '9999', 'important');
+        submenu.style.setProperty('position', 'absolute', 'important');
+        
+        console.log('[Dropdown Debug] Forced dropdown styles applied');
+      });
+      
+      // Also add mouseover for extra coverage
+      details.addEventListener('mouseover', function() {
+        if (!details.hasAttribute('open')) {
+          details.setAttribute('open', '');
+          details.classList.add('hover-active');
+          submenu.style.setProperty('opacity', '1', 'important');
+          submenu.style.setProperty('visibility', 'visible', 'important');
+          submenu.style.setProperty('display', 'block', 'important');
+        }
       });
       
       // Mouse leave from parent
@@ -302,5 +318,67 @@
     // Add custom CSS class to body for additional styling hooks
     document.body.classList.add('dropdown-hover-enabled');
     console.log('[Dropdown Debug] Dropdown hover functionality enabled for', menuItems.length, 'menu items');
+    
+    // ADDITIONAL: Add CSS hover as backup
+    const style = document.createElement('style');
+    style.textContent = `
+      @media screen and (min-width: 990px) {
+        /* Force dropdown on any li hover */
+        nav[role="navigation"] li:hover details.pro-nav-submenu .pro-submenu-content,
+        nav[role="navigation"] li:hover .pro-submenu-content,
+        .top-nav__item:hover .pro-submenu-content,
+        details.pro-nav-submenu:hover .pro-submenu-content {
+          opacity: 1 !important;
+          visibility: visible !important;
+          pointer-events: auto !important;
+          display: block !important;
+          transform: translateY(0) !important;
+          z-index: 9999 !important;
+          position: absolute !important;
+          top: 100% !important;
+          left: 0 !important;
+          background: white !important;
+          border: 1px solid #ddd !important;
+          box-shadow: 0 4px 8px rgba(0,0,0,0.1) !important;
+          min-width: 200px !important;
+          padding: 10px 0 !important;
+        }
+        
+        /* Ensure parent positioning */
+        nav[role="navigation"] li,
+        .top-nav__item,
+        details.pro-nav-submenu {
+          position: relative !important;
+        }
+      }
+    `;
+    document.head.appendChild(style);
+    console.log('[Dropdown Debug] Backup CSS hover styles injected');
+    
+    // TEST: Force open first dropdown for 3 seconds to verify it can be opened
+    if (menuItems.length > 0) {
+      const testDropdown = menuItems[0];
+      const testSubmenu = testDropdown.querySelector('.pro-submenu-content') || testDropdown.querySelector('.header__submenu');
+      
+      if (testSubmenu) {
+        console.log('[Dropdown Debug] TESTING: Force opening first dropdown for 3 seconds');
+        testDropdown.setAttribute('open', '');
+        testSubmenu.style.setProperty('opacity', '1', 'important');
+        testSubmenu.style.setProperty('visibility', 'visible', 'important');
+        testSubmenu.style.setProperty('display', 'block', 'important');
+        testSubmenu.style.setProperty('position', 'absolute', 'important');
+        testSubmenu.style.setProperty('z-index', '9999', 'important');
+        
+        setTimeout(() => {
+          testDropdown.removeAttribute('open');
+          testSubmenu.style.removeProperty('opacity');
+          testSubmenu.style.removeProperty('visibility');
+          testSubmenu.style.removeProperty('display');
+          testSubmenu.style.removeProperty('position');
+          testSubmenu.style.removeProperty('z-index');
+          console.log('[Dropdown Debug] Test dropdown closed');
+        }, 3000);
+      }
+    }
   });
 })();
