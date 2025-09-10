@@ -34,7 +34,7 @@
       "settings": {
         "logo_position": "top-left",
         "menu": "new-manu",
-        "menu_type_desktop": "mega",
+        "menu_type_desktop": "dropdown",
         "sticky_header_type": "on-scroll-up",
         "show_line_separator": false,
         "color_scheme": "scheme-3",
@@ -52,7 +52,7 @@
         "utilities_bg": "#f8f9fa",
         "drawer_auto_expand": false,
         "nav_font_size": 16,
-        "nav_font_weight": "500",
+        "nav_font_weight": "600",
         "nav_text_color": "#333333",
         "nav_hover_color": "#007acc",
         "nav_active_color": "#007acc",
