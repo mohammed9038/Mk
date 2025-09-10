@@ -1,0 +1,123 @@
+/* Desktop Navigation Dropdown - Complete Override Solution */
+@media screen and (min-width: 990px) {
+  
+  /* CRITICAL: Override the base.css .js details > .header__submenu rule */
+  /* This rule in base.css is what's preventing hover from working */
+  .js .header__inline-menu details > .header__submenu {
+    opacity: 0 !important;
+    visibility: hidden !important;
+    transform: translateY(-1.5rem) !important;
+    transition: opacity 0.3s ease, visibility 0.3s ease, transform 0.3s ease !important;
+    pointer-events: none !important;
+    
+    /* Positioning */
+    position: absolute !important;
+    top: 100% !important;
+    left: 0 !important;
+    z-index: 999 !important;
+    
+    /* Styling */
+    background: rgb(var(--color-background)) !important;
+    border: 1px solid rgba(var(--color-foreground), 0.1) !important;
+    border-radius: 8px !important;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1) !important;
+    min-width: 200px !important;
+  }
+  
+  /* Show dropdown on hover - HIGHEST SPECIFICITY */
+  .js .header__inline-menu header-menu:hover details > .header__submenu,
+  .js .header__inline-menu header-menu details[open] > .header__submenu,
+  .js .header__inline-menu header-menu details.force-open > .header__submenu,
+  .dropdown-hover-enabled .header__inline-menu header-menu:hover details > .header__submenu {
+    opacity: 1 !important;
+    visibility: visible !important;
+    transform: translateY(0) !important;
+    pointer-events: auto !important;
+    animation: none !important;
+  }
+  
+  /* Ensure header-menu is positioned correctly */
+  .header__inline-menu header-menu {
+    position: relative !important;
+  }
+  
+  /* Create a hover bridge to prevent flickering */
+  .header__inline-menu header-menu::after {
+    content: '';
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    height: 10px;
+    background: transparent;
+    z-index: 998;
+  }
+  
+  /* Keep dropdown open when hovering the submenu itself */
+  .js .header__inline-menu .header__submenu:hover {
+    opacity: 1 !important;
+    visibility: visible !important;
+    transform: translateY(0) !important;
+    pointer-events: auto !important;
+  }
+  
+  /* Style submenu items */
+  .header__submenu .header__menu-item {
+    display: block !important;
+    padding: 0.75rem 1.5rem !important;
+    color: rgb(var(--color-foreground)) !important;
+    text-decoration: none !important;
+    transition: background-color 0.2s ease !important;
+    border-bottom: 1px solid rgba(var(--color-foreground), 0.05) !important;
+  }
+  
+  .header__submenu .header__menu-item:last-child {
+    border-bottom: none !important;
+  }
+  
+  .header__submenu .header__menu-item:hover {
+    background-color: rgba(var(--color-foreground), 0.05) !important;
+    text-decoration: none !important;
+  }
+  
+  /* Hide the default details marker */
+  .header__inline-menu details summary::-webkit-details-marker,
+  .header__inline-menu details summary::marker {
+    display: none !important;
+  }
+  
+  /* Rotate caret on hover */
+  .header__inline-menu header-menu:hover .icon-caret,
+  .header__inline-menu details[open] .icon-caret {
+    transform: rotate(180deg) !important;
+    transition: transform 0.2s ease !important;
+  }
+  
+  /* Multi-level dropdown support */
+  .header__submenu .header__submenu {
+    left: 100% !important;
+    top: 0 !important;
+    margin-left: 8px !important;
+  }
+  
+  /* Show nested dropdowns on hover */
+  .header__submenu li:hover > details > .header__submenu {
+    opacity: 1 !important;
+    visibility: visible !important;
+    transform: translateY(0) !important;
+    pointer-events: auto !important;
+  }
+  
+  /* Ensure proper z-index stacking */
+  .header__inline-menu {
+    z-index: 100 !important;
+  }
+  
+  .header__submenu {
+    z-index: 999 !important;
+  }
+  
+  .header__submenu .header__submenu {
+    z-index: 1000 !important;
+  }
+}

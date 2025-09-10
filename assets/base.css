@@ -2753,6 +2753,19 @@ details[open] > .header__icon--menu .icon-hamburger {
   transform: translateY(-1.5rem);
 }
 
+/* DROPDOWN HOVER FIX: Override for desktop navigation hover functionality */
+@media screen and (min-width: 990px) {
+  .js .header__inline-menu header-menu:hover details > .header__submenu,
+  .js .header__inline-menu header-menu details[open] > .header__submenu,
+  .js .header__inline-menu header-menu details.force-open > .header__submenu {
+    opacity: 1 !important;
+    visibility: visible !important;
+    transform: translateY(0) !important;
+    pointer-events: auto !important;
+    animation: none !important;
+  }
+}
+
 details[open] > .header__submenu {
   animation: animateMenuOpen var(--duration-default) ease;
   animation-fill-mode: forwards;
