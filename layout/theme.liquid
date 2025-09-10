@@ -428,7 +428,9 @@
 
     {% sections 'footer-group' %}
 
-    {%- render 'mobile-navigation' -%}
+    {%- if section.settings.enable_mobile_navigation -%}
+      {%- render 'mobile-navigation' -%}
+    {%- endif -%}
 
     <ul hidden>
       <li id="a11y-refresh-page-message">{{ 'accessibility.refresh_page' | t }}</li>

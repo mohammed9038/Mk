@@ -1,42 +1,47 @@
-{% comment %}
-  Mobile Bottom Navigation
-  Renders a fixed bottom navigation for mobile devices with Home, Cart, Search, and Account links
-  
-  Settings controlled from Theme Customizer → Header → Mobile Navigation Settings
-{% endcomment %}
+{%- comment -%}
+  Renders the mobile navigation bar with configurable items.
 
-{% comment %} Get settings from theme customizer {% endcomment %}
-{% assign nav_enabled = sections.header.settings.enable_mobile_navigation | default: true %}
-{% assign nav_style = sections.header.settings.mobile_nav_style | default: 'default' %}
-{% assign nav_height = sections.header.settings.mobile_nav_height | default: 'normal' %}
-{% assign show_labels = sections.header.settings.mobile_nav_show_labels | default: true %}
-{% assign show_home = sections.header.settings.mobile_nav_show_home | default: true %}
-{% assign show_search = sections.header.settings.mobile_nav_show_search | default: true %}
-{% assign show_cart = sections.header.settings.mobile_nav_show_cart | default: true %}
-{% assign show_account = sections.header.settings.mobile_nav_show_account | default: true %}
+  Accepts:
+  - nav_style: (string) 'bar' or 'floating'
+  - nav_height: (string) 'short', 'medium', 'tall'
+  - show_home: (boolean)
+  - show_search: (boolean)
+  - show_cart: (boolean)
+  - show_account: (boolean)
+  - show_labels: (boolean)
 
-{% comment %} Count active navigation items for proper grid layout {% endcomment %}
-{% assign nav_item_count = 0 %}
-{% if show_home %}{% assign nav_item_count = nav_item_count | plus: 1 %}{% endif %}
-{% if show_search %}{% assign nav_item_count = nav_item_count | plus: 1 %}{% endif %}
-{% if show_cart %}{% assign nav_item_count = nav_item_count | plus: 1 %}{% endif %}
-{% if show_account %}{% assign nav_item_count = nav_item_count | plus: 1 %}{% endif %}
+  Usage:
+  {% render 'mobile-navigation',
+     nav_style: section.settings.mobile_nav_style,
+     ...
+  %}
+{%- endcomment -%}
 
-{% comment %} Force mobile navigation to always render - minimum 4 items {% endcomment %}
-{% if nav_item_count == 0 %}{% assign nav_item_count = 4 %}{% endif %}
+{%- liquid
+  assign nav_item_count = 0
+  if show_home
+    assign nav_item_count = nav_item_count | plus: 1
+  endif
+  if show_search
+    assign nav_item_count = nav_item_count | plus: 1
+  endif
+  if show_cart
+    assign nav_item_count = nav_item_count | plus: 1
+  endif
+  if show_account
+    assign nav_item_count = nav_item_count | plus: 1
+  endif
+-%}
 
-<nav class="mobile-nav mobile-nav--{{ nav_style }} mobile-nav--{{ nav_height }}" 
-     role="navigation" 
+<nav class="mobile-nav mobile-nav--{{ nav_style }} mobile-nav--{{ nav_height }}"
+     role="navigation"
      aria-label="{{ 'general.navigation.mobile_menu' | t }}"
-     style="--nav-item-count: {{ nav_item_count }};"
-     data-forced-render="true">
+     style="--nav-item-count: {{ nav_item_count }};">
   <ul class="mobile-nav__list">
     {% if show_home %}
-    <!-- Home -->
-    <li class="mobile-nav__item">
-      <a href="{{ routes.root_url }}" 
-         class="mobile-nav__link" 
-         data-action="home"
+    <li class="mobile-nav__item" data-action="home">
+      <a href="{{ routes.root_url }}"
+         class="mobile-nav__link{% if request.page_type == 'index' %} mobile-nav__link--active{% endif %}"
          aria-label="{{ 'general.navigation.home' | t }}">
         <div class="mobile-nav__icon">
           {% render 'icon-home' %}
@@ -49,22 +54,19 @@
     {% endif %}
 
     {% if show_search %}
-    <!-- Search -->
-    <li class="mobile-nav__item">
-      <button type="button" 
-              class="mobile-nav__link" 
-              data-action="search"
+    <li class="mobile-nav__item" data-action="search">
+      <button type="button"
+              class="mobile-nav__link"
+              aria-controls="Details-Header-Search"
+              aria-expanded="false"
               onclick="
-                const searchModal = document.querySelector('.header__search details');
-                if (searchModal) {
-                  searchModal.open = true;
-                  const searchInput = searchModal.querySelector('input[type=search], .search__input');
-                  if (searchInput) {
-                    setTimeout(() => searchInput.focus(), 100);
-                  }
-                } else {
-                  const searchBar = document.querySelector('.header__search-bar input');
-                  if (searchBar) searchBar.focus();
+                const searchModalToggle = document.querySelector('details-modal.header__search summary');
+                if (searchModalToggle) {
+                  searchModalToggle.click();
+                  setTimeout(() => {
+                    const searchInput = document.querySelector('#Details-Header-Search input[type=\'search\']');
+                    if (searchInput) searchInput.focus();
+                  }, 100);
                 }
               "
               aria-label="{{ 'general.search.search' | t }}">
@@ -79,11 +81,9 @@
     {% endif %}
 
     {% if show_cart %}
-    <!-- Cart -->
-    <li class="mobile-nav__item">
-      <a href="{{ routes.cart_url }}" 
-         class="mobile-nav__link" 
-         data-action="cart"
+    <li class="mobile-nav__item" data-action="cart">
+      <a href="{{ routes.cart_url }}"
+         class="mobile-nav__link{% if request.page_type == 'cart' %} mobile-nav__link--active{% endif %}"
          aria-label="{{ 'sections.cart.title' | t }} ({{ cart.item_count }} {{ 'sections.cart.headings.product' | t }})">
         <div class="mobile-nav__icon">
           {% if cart.item_count == 0 %}
@@ -94,8 +94,6 @@
         </div>
         {% if cart.item_count > 0 %}
           <span class="mobile-nav__badge" aria-hidden="true">{{ cart.item_count }}</span>
-        {% else %}
-          <span class="mobile-nav__badge" aria-hidden="true"></span>
         {% endif %}
         {% if show_labels %}
           <span class="mobile-nav__text">{{ 'sections.cart.title' | t | default: 'Cart' }}</span>
@@ -105,11 +103,9 @@
     {% endif %}
 
     {% if show_account %}
-    <!-- Account -->
-    <li class="mobile-nav__item">
-      <a href="{{ routes.account_url }}" 
-         class="mobile-nav__link" 
-         data-action="account"
+    <li class="mobile-nav__item" data-action="account">
+      <a href="{%- if customer -%}{{ routes.account_url }}{%- else -%}{{ routes.account_login_url }}{%- endif -%}"
+         class="mobile-nav__link{% if request.page_type contains 'customers' %} mobile-nav__link--active{% endif %}"
          aria-label="{% if customer %}{{ 'customer.account.title' | t }}{% else %}{{ 'customer.log_in' | t }}{% endif %}">
         <div class="mobile-nav__icon">
           {% render 'icon-account' %}
@@ -130,46 +126,22 @@
 </nav>
 
 <script>
-// Mobile navigation functionality - RESPECTS CSS MEDIA QUERIES
+// This script is now much simpler and only adds an initialization class.
+// All show/hide logic is handled by CSS media queries.
 (function() {
   'use strict';
-  
+
   function initMobileNav() {
     const mobileNav = document.querySelector('.mobile-nav');
     if (mobileNav) {
-      // DO NOT force display - let CSS media queries handle it
-      // Only ensure the navigation is functional, not forced visible
-      
-      // Add functional class without overriding display
       mobileNav.classList.add('mobile-nav--initialized');
-      
-      console.log('Mobile navigation initialized (responsive)');
-      
-      // Check if we're on mobile and log for debugging
-      if (window.innerWidth <= 749) {
-        console.log('Mobile viewport detected - navigation should be visible');
-      } else {
-        console.log('Desktop viewport detected - navigation should be hidden');
-      }
     }
   }
-  
-  // Run immediately and on DOM ready
+
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', initMobileNav);
   } else {
     initMobileNav();
   }
-  
-  // Listen for window resize to log viewport changes
-  window.addEventListener('resize', function() {
-    const mobileNav = document.querySelector('.mobile-nav');
-    if (mobileNav) {
-      if (window.innerWidth <= 749) {
-        console.log('Switched to mobile viewport - navigation should be visible');
-      } else {
-        console.log('Switched to desktop viewport - navigation should be hidden');
-      }
-    }
-  });
-})();</script>
+})();
+</script>

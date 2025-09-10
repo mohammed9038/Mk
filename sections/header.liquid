@@ -884,11 +884,7 @@
   {%- render 'cart-notification', color_scheme: section.settings.color_scheme, desktop_menu_type: section.settings.menu_type_desktop -%}
 {%- endif -%}
 
-{%- comment -%} Mobile Bottom Navigation - FORCE RENDER {%- endcomment -%}
-{% render 'mobile-navigation' %}
-
-{%- comment -%} Emergency Mobile Navigation Fallback {%- endcomment -%}
-{% render 'emergency-mobile-navigation' %}
+{%- comment -%} Mobile navigation is now rendered in layout/theme.liquid for consistency {%- endcomment -%}
 
 {% javascript %}
   class StickyHeader extends HTMLElement {
