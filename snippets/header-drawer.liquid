@@ -216,16 +216,13 @@
                     {%- endform -%}
                   </noscript>
 
-                  <localization-form class="no-js-hidden">
-                    {%- form 'localization', id: 'HeaderLanguageMobileForm', class: 'localization-form' -%}
-                      <div>
-                        <h2 class="visually-hidden" id="HeaderLanguageMobileLabel">
-                          {{ 'localization.language_label' | t }}
-                        </h2>
-                        {%- render 'language-localization', localPosition: 'HeaderLanguageMobile' -%}
-                      </div>
-                    {%- endform -%}
-                  </localization-form>
+                  <div class="mobile-gtranslate-wrapper">
+                    <h2 class="visually-hidden" id="HeaderLanguageMobileLabel">
+                      {{ 'localization.language_label' | t }}
+                    </h2>
+                    <!-- GTranslate inline instance for mobile menu -->
+                    <div class="gtranslate_wrapper mobile-gtranslate"></div>
+                  </div>
                 {%- endif -%}
               </div>
             {%- endif -%}

@@ -322,14 +322,13 @@
           </noscript>
 
           <localization-form>
-            {%- form 'localization', id: 'FooterLanguageForm', class: 'localization-form' -%}
-              <div class="no-js-hidden">
-                <h2 class="caption-large text-body" id="FooterLanguageLabel">
-                  {{ 'localization.language_label' | t }}
-                </h2>
-                {%- render 'language-localization', localPosition: 'FooterLanguage' -%}
-              </div>
-            {%- endform -%}
+            <div class="footer-gtranslate-wrapper">
+              <h2 class="caption-large text-body" id="FooterLanguageLabel">
+                {{ 'localization.language_label' | t }}
+              </h2>
+              <!-- GTranslate inline instance for footer -->
+              <div class="gtranslate_wrapper footer-gtranslate"></div>
+            </div>
           </localization-form>
         {%- endif -%}
       </div>

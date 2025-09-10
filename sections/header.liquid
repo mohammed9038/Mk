@@ -606,17 +606,11 @@
           </details-modal>
         {%- endif -%}
         
-        {%- comment -%} Language Selector {%- endcomment -%}
-        {%- if section.settings.enable_language_selector and localization.available_languages.size > 1 -%}
-          <div class="header__localization">
-            <localization-form class="small-hide medium-hide no-js-hidden" data-prevent-hide>
-              {%- form 'localization', id: 'HeaderLanguageForm', class: 'localization-form' -%}
-                <div>
-                  <h2 class="visually-hidden" id="HeaderLanguageLabel">{{ 'localization.language_label' | t }}</h2>
-                  {%- render 'language-localization', localPosition: 'HeaderLanguage' -%}
-                </div>
-              {%- endform -%}
-            </localization-form>
+        {%- comment -%} GTranslate Language Selector {%- endcomment -%}
+        {%- if section.settings.enable_language_selector -%}
+          <div class="header__localization header__gtranslate">
+            <!-- GTranslate inline instance for header -->
+            <div class="gtranslate_wrapper header-gtranslate"></div>
           </div>
         {%- endif -%}
 
