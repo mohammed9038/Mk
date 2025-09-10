@@ -14,10 +14,21 @@ body > .gtranslate_wrapper {
 /* Style the mobile menu language selector */
 .mobile-gtranslate-wrapper {
   padding: 10px 0;
+  margin-top: 5px;
 }
 
 .mobile-gtranslate-wrapper .gtranslate_wrapper {
   display: block;
+}
+
+/* Hide country selector elements everywhere */
+#HeaderCountryMobileForm,
+#HeaderCountryMobileFormNoScriptDrawer,
+#HeaderCountryForm,
+[id*="HeaderCountry"],
+.country-localization,
+[id*="country-localization"] {
+  display: none !important;
 }
 
 /* Style the footer language selector */
