@@ -1,0 +1,324 @@
+/* Professional Mobile Header Styling */
+
+/* Mobile-first responsive design */
+.header-wrapper {
+  position: relative;
+}
+
+/* Mobile header structure */
+@media screen and (max-width: 989px) {
+  .header {
+    padding: 12px 16px;
+  }
+  
+  .header__main-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    gap: 12px;
+    min-height: 56px;
+  }
+  
+  /* Mobile left section - hamburger menu */
+  .header__left-section {
+    flex: 0 0 auto;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  
+  /* Mobile center section - logo */
+  .header__center-section {
+    flex: 1 1 auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  /* Mobile right section - search, account, cart, language */
+  .header__right-section {
+    flex: 0 0 auto;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  
+  /* Mobile logo positioning */
+  .header__heading {
+    margin: 0;
+    text-align: center;
+  }
+  
+  .header__heading-logo-wrapper {
+    max-width: 180px;
+    height: auto;
+  }
+  
+  .header__heading-logo {
+    max-height: 40px;
+    width: auto;
+  }
+  
+  /* Mobile hamburger menu button */
+  .header__menu-drawer-button {
+    background: transparent;
+    border: none;
+    color: rgba(var(--color-foreground), 1);
+    cursor: pointer;
+    padding: 8px;
+    border-radius: 6px;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .header__menu-drawer-button:hover {
+    background: rgba(var(--color-foreground), 0.1);
+  }
+  
+  .header__menu-drawer-button .icon {
+    width: 24px;
+    height: 24px;
+  }
+  
+  /* Mobile search icon */
+  .header__search--mobile-only {
+    display: flex;
+  }
+  
+  .header__icon--search {
+    padding: 8px;
+    border-radius: 6px;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .header__icon--search:hover {
+    background: rgba(var(--color-foreground), 0.1);
+  }
+  
+  .header__icon--search .icon {
+    width: 20px;
+    height: 20px;
+  }
+  
+  /* Mobile account icon */
+  .header__icon--account {
+    padding: 8px;
+    border-radius: 6px;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .header__icon--account:hover {
+    background: rgba(var(--color-foreground), 0.1);
+  }
+  
+  .header__icon--account .icon {
+    width: 20px;
+    height: 20px;
+  }
+  
+  /* Mobile cart icon with better badge positioning */
+  .header__icon--cart {
+    position: relative;
+    padding: 8px;
+    border-radius: 6px;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .header__icon--cart:hover {
+    background: rgba(var(--color-foreground), 0.1);
+  }
+  
+  .header__icon--cart .icon {
+    width: 20px;
+    height: 20px;
+  }
+  
+  .cart-count-bubble {
+    position: absolute;
+    top: 4px;
+    right: 4px;
+    background: rgba(var(--color-accent), 1);
+    color: rgba(var(--color-accent-contrast), 1);
+    border-radius: 50%;
+    min-width: 18px;
+    height: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+    font-weight: 600;
+    line-height: 1;
+    border: 2px solid rgba(var(--color-background), 1);
+  }
+  
+  /* Mobile language selector positioning */
+  .header__gtranslate {
+    margin-left: 0;
+    margin-right: 8px;
+  }
+  
+  .header__gtranslate .gt_selector,
+  .header-gtranslate .gt_selector {
+    min-width: 90px !important;
+    padding: 6px 10px !important;
+    font-size: 12px !important;
+    border-radius: 6px !important;
+  }
+  
+  .header__gtranslate .gt_flag,
+  .header-gtranslate .gt_flag {
+    width: 16px !important;
+    height: 12px !important;
+  }
+  
+  /* Hide desktop navigation on mobile */
+  .header__navigation--left,
+  .header__navigation--center,
+  .header__navigation--right {
+    display: none;
+  }
+  
+  /* Hide desktop search bar on mobile */
+  .header__search-bar {
+    display: none;
+  }
+  
+  /* Mobile-specific top navigation (if enabled) */
+  .top-nav-wrapper {
+    display: none;
+  }
+}
+
+/* Tablet adjustments */
+@media screen and (min-width: 750px) and (max-width: 989px) {
+  .header {
+    padding: 16px 24px;
+  }
+  
+  .header__main-row {
+    gap: 16px;
+    min-height: 60px;
+  }
+  
+  .header__right-section {
+    gap: 12px;
+  }
+  
+  .header__heading-logo {
+    max-height: 45px;
+  }
+  
+  .header__gtranslate .gt_selector,
+  .header-gtranslate .gt_selector {
+    min-width: 110px !important;
+    padding: 8px 12px !important;
+    font-size: 13px !important;
+  }
+  
+  .header__icon--search .icon,
+  .header__icon--account .icon,
+  .header__icon--cart .icon {
+    width: 22px;
+    height: 22px;
+  }
+}
+
+/* Mobile menu drawer button improvements */
+@media screen and (max-width: 989px) {
+  header-drawer {
+    margin-left: 0;
+  }
+  
+  .menu-drawer-container {
+    display: flex;
+    align-items: center;
+  }
+  
+  .header__menu-drawer-container {
+    display: flex;
+    align-items: center;
+  }
+}
+
+/* Ensure proper stacking order */
+.header-wrapper {
+  z-index: 100;
+  position: relative;
+}
+
+.header {
+  z-index: 101;
+  position: relative;
+}
+
+/* Mobile sticky header improvements */
+@media screen and (max-width: 989px) {
+  .shopify-section-header-sticky .header {
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .shopify-section-header-hidden {
+    transform: translateY(-100%);
+  }
+}
+
+/* Mobile search modal improvements */
+@media screen and (max-width: 989px) {
+  .search-modal__content {
+    padding: 20px 16px;
+  }
+  
+  .search-modal__content-bottom {
+    max-width: 100%;
+  }
+}
+
+/* Accessibility improvements for mobile */
+@media screen and (max-width: 989px) {
+  .header__icon {
+    min-width: 40px;
+    min-height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  /* Focus states for mobile */
+  .header__icon:focus,
+  .header__menu-drawer-button:focus {
+    outline: 2px solid rgba(var(--color-accent), 1);
+    outline-offset: 2px;
+  }
+  
+  /* Touch targets */
+  .header__icon,
+  .header__menu-drawer-button,
+  .header__heading-link {
+    min-width: 44px;
+    min-height: 44px;
+  }
+}
+
+/* Mobile performance optimizations */
+@media screen and (max-width: 989px) {
+  .header__main-row * {
+    will-change: auto;
+  }
+  
+  .header__icon,
+  .header__menu-drawer-button {
+    -webkit-tap-highlight-color: transparent;
+  }
+}
