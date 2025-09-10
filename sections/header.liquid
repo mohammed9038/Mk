@@ -30,7 +30,7 @@
 <noscript>{{ 'component-cart-notification.css' | asset_url | stylesheet_tag }}</noscript>
 <noscript>{{ 'component-cart-items.css' | asset_url | stylesheet_tag }}</noscript>
 {%- if section.settings.enable_mobile_navigation -%}
-  <noscript>{{ 'component-mobile-navigation.css' | asset_url | stylesheet_tag }}</noscript>
+  <noscript>{{ 'component-mobile-navigation.css' | asset_url | stylesheet_tag }}</nos
 {%- endif -%}
 
 <style>
@@ -1036,6 +1036,18 @@
       "url": {{ request.origin | append: page.url | json }}
     }
   </script>
+{%- endif -%}
+
+{%- if section.settings.enable_mobile_navigation -%}
+  {%- render 'mobile-navigation',
+      nav_style: section.settings.mobile_nav_style,
+      nav_height: section.settings.mobile_nav_height,
+      show_labels: section.settings.mobile_nav_show_labels,
+      show_home: section.settings.mobile_nav_show_home,
+      show_search: section.settings.mobile_nav_show_search,
+      show_cart: section.settings.mobile_nav_show_cart,
+      show_account: section.settings.mobile_nav_show_account
+  -%}
 {%- endif -%}
 
 {% schema %}
