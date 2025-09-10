@@ -39,6 +39,11 @@
   .header__search--mobile-only { display:block; }
   .header__navigation--left, .header__navigation--center, .header__navigation--right { display:none; }
 }
+
+/* Desktop: Always hide mobile search when search bar is enabled */
+@media screen and (min-width:990px) { 
+  .header__search--mobile-only { display:none !important; }
+}
 @media screen and (max-width:749px) { .header__right-section .header__localization { display:none; } }
 
 /* Top nav (existing) */
