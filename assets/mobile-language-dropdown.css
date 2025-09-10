@@ -1,0 +1,61 @@
+/* Mobile Language Selector Styles for Dropdown Menu */
+.menu-drawer__localization {
+  margin: 1rem 0;
+  border-top: 1px solid rgba(var(--color-foreground), 0.08);
+  padding-top: 1rem;
+}
+
+/* Enhanced styles for language selector in the drawer menu */
+.menu-drawer__localization .localization-form {
+  margin-bottom: 1rem;
+}
+
+.menu-drawer__localization .disclosure__button {
+  width: 100%;
+  text-align: left;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 1rem;
+  padding: 0.75rem 0;
+}
+
+.menu-drawer__localization .disclosure__list {
+  width: 100%;
+  border-radius: 0.25rem;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  margin-top: 0.5rem;
+  max-height: 60vh;
+  overflow-y: auto;
+}
+
+.menu-drawer__localization .disclosure__item {
+  padding: 0.5rem 1rem;
+}
+
+/* Style for localization headers in menu drawer */
+.menu-drawer__localization-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 0.5rem;
+  font-size: 0.9rem;
+  color: rgba(var(--color-foreground), 0.75);
+}
+
+.menu-drawer__localization-header svg {
+  margin-right: 0.5rem;
+  width: 16px;
+  height: 16px;
+}
+
+/* Hide language selector in header on mobile */
+@media screen and (max-width: 749px) {
+  .header__right-section .header__localization {
+    display: none !important;
+  }
+  
+  /* Make sure the language selector in the drawer is visible */
+  .menu-drawer__localization {
+    display: block !important;
+  }
+}
