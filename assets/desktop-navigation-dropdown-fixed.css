@@ -5,12 +5,7 @@
     position: relative;
   }
   
-  /* Ensure header-menu wrapper is positioned */
-  .header__inline-menu header-menu {
-    position: relative;
-  }
-  
-  /* Dropdown menu base styling */
+  /* Dropdown menu styling */
   .header__inline-menu .header__submenu {
     position: absolute !important;
     top: 100% !important;
@@ -21,45 +16,32 @@
     box-shadow: 0 0.4rem 2rem rgba(0, 0, 0, 0.1) !important;
     min-width: 22rem !important;
     max-width: 30rem !important;
+    opacity: 0 !important;
+    visibility: hidden !important;
+    transform: translateY(-1rem) !important;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
     z-index: 100 !important;
     padding: 0.8rem 0 !important;
     margin: 0 !important;
     overflow: hidden !important;
   }
   
-  /* Hide dropdown by default when details is closed */
-  .header__inline-menu header-menu details:not([open]) .header__submenu {
-    opacity: 0 !important;
-    visibility: hidden !important;
-    transform: translateY(-1rem) !important;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
-    pointer-events: none !important;
-  }
-  
-  /* Show dropdown when details is open */
-  .header__inline-menu header-menu details[open] .header__submenu {
+  /* Show dropdown on hover */
+  .header__inline-menu .list-menu--inline > li:hover .header__submenu,
+  .header__inline-menu .list-menu--inline > li:focus-within .header__submenu,
+  .header__inline-menu header-menu:hover .header__submenu,
+  .header__inline-menu header-menu:focus-within .header__submenu {
     opacity: 1 !important;
     visibility: visible !important;
     transform: translateY(0) !important;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
-    pointer-events: auto !important;
   }
   
-  /* Force show dropdown on hover even when details is closed */
-  .header__inline-menu header-menu:hover details:not([open]) .header__submenu {
+  /* Override details behavior for hover */
+  .header__inline-menu header-menu details:not([open]):hover .header__submenu,
+  .header__inline-menu header-menu details:focus-within .header__submenu {
     opacity: 1 !important;
     visibility: visible !important;
     transform: translateY(0) !important;
-    pointer-events: auto !important;
-    display: block !important;
-  }
-  
-  /* Also show on focus for accessibility */
-  .header__inline-menu header-menu:focus-within details:not([open]) .header__submenu {
-    opacity: 1 !important;
-    visibility: visible !important;
-    transform: translateY(0) !important;
-    pointer-events: auto !important;
     display: block !important;
   }
   
