@@ -9,12 +9,49 @@
   document.addEventListener('DOMContentLoaded', function() {
     console.log('[Dropdown Debug] Script initialized');
     
+    // Debug current menu structure
+    const headerInlineMenu = document.querySelector('.header__inline-menu');
+    console.log('[Dropdown Debug] Header inline menu found:', !!headerInlineMenu);
+    
+    if (headerInlineMenu) {
+      const allMenuItems = headerInlineMenu.querySelectorAll('li');
+      console.log('[Dropdown Debug] Total menu items (li elements):', allMenuItems.length);
+      
+      allMenuItems.forEach((li, index) => {
+        const link = li.querySelector('a');
+        const headerMenu = li.querySelector('header-menu');
+        const details = li.querySelector('details');
+        const submenu = li.querySelector('.header__submenu');
+        
+        console.log(`[Dropdown Debug] Menu item ${index + 1}:`, {
+          text: link ? link.textContent.trim() : 'No link',
+          hasHeaderMenu: !!headerMenu,
+          hasDetails: !!details,
+          hasSubmenu: !!submenu,
+          innerHTML: li.innerHTML.substring(0, 100) + '...'
+        });
+      });
+    }
+    
     // Find all dropdown triggers
     const menuItems = document.querySelectorAll('.header__inline-menu details');
-    console.log('[Dropdown Debug] Found menu items:', menuItems.length);
+    console.log('[Dropdown Debug] Found dropdown menu items:', menuItems.length);
     
     if (menuItems.length === 0) {
       console.warn('[Dropdown Debug] No dropdown menu items found!');
+      console.log('[Dropdown Debug] This means your menu items don\'t have submenus configured.');
+      console.log('[Dropdown Debug] To add dropdown menus:');
+      console.log('[Dropdown Debug] 1. Go to Shopify Admin > Online Store > Navigation');
+      console.log('[Dropdown Debug] 2. Click on your main menu');
+      console.log('[Dropdown Debug] 3. Click "Add menu item" under existing items to create submenus');
+      console.log('[Dropdown Debug] 4. Save the menu');
+      
+      // Show current menu structure for debugging
+      const navigation = document.querySelector('.header__inline-menu, .header__navigation');
+      if (navigation) {
+        console.log('[Dropdown Debug] Current navigation HTML:', navigation.outerHTML);
+      }
+      
       return;
     }
     
@@ -126,6 +163,6 @@
     
     // Add custom CSS class to body for additional styling hooks
     document.body.classList.add('dropdown-hover-enabled');
-    console.log('[Dropdown Debug] Dropdown hover functionality enabled');
+    console.log('[Dropdown Debug] Dropdown hover functionality enabled for', menuItems.length, 'menu items');
   });
 })();
