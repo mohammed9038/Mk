@@ -183,6 +183,57 @@
   color: rgba(var(--color-foreground), 0.5);
 }
 
+/* GTranslate Integration in Drawer */
+.pro-gtranslate-wrapper {
+  width: 100%;
+}
+
+.pro-gtranslate-wrapper .gtranslate_wrapper {
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+.pro-gtranslate-wrapper .gtranslate_wrapper select {
+  width: 100% !important;
+  background: none !important;
+  border: none !important;
+  font-size: 1.5rem !important;
+  font-weight: 500 !important;
+  color: rgb(var(--color-foreground)) !important;
+  cursor: pointer !important;
+  appearance: none !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+.pro-gtranslate-wrapper .gtranslate_wrapper select:focus {
+  outline: 2px solid rgb(var(--color-base-accent-1)) !important;
+  outline-offset: 2px !important;
+}
+
+/* Hide GTranslate branding in drawer */
+.pro-gtranslate-wrapper .gtranslate_wrapper .gt_copyright,
+.pro-gtranslate-wrapper .gtranslate_wrapper .gt_branding {
+  display: none !important;
+}
+
+/* Style GTranslate dropdown arrow */
+.pro-gtranslate-wrapper .gtranslate_wrapper::after {
+  content: '';
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 0;
+  height: 0;
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  border-top: 5px solid rgba(var(--color-foreground), 0.5);
+  pointer-events: none;
+}
+
 /* Separator */
 .pro-drawer__separator {
   height: 1px;

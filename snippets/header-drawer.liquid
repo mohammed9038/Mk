@@ -36,8 +36,8 @@
         {%- if section.settings.show_drawer_utilities -%}
         <div class="pro-drawer__utilities">
           
-          <!-- Language Selector -->
-          {%- if section.settings.show_language_selector and localization.available_languages.size > 1 -%}
+          <!-- GTranslate Language Selector -->
+          {%- if section.settings.show_language_selector -%}
           <div class="pro-utility">
             <div class="pro-utility__icon">
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
@@ -50,29 +50,9 @@
               </svg>
             </div>
             <div class="pro-utility__content">
-              <localization-form>
-                {%- form 'localization', id: 'DrawerLanguageForm', class: 'pro-language-form' -%}
-                  <select
-                    name="locale_code"
-                    class="pro-language-select"
-                    onchange="this.form.submit()"
-                    aria-label="{{ 'localization.language_label' | t }}"
-                  >
-                    {%- for language in localization.available_languages -%}
-                      <option
-                        value="{{ language.iso_code }}"
-                        lang="{{ language.iso_code }}"
-                        {% if language.iso_code == localization.language.iso_code %}selected{% endif %}
-                      >
-                        {{ language.endonym_name | capitalize }}
-                      </option>
-                    {%- endfor -%}
-                  </select>
-                  <div class="pro-language-arrow">
-                    {% render 'icon-caret' %}
-                  </div>
-                {%- endform -%}
-              </localization-form>
+              <div class="pro-gtranslate-wrapper">
+                <div class="gtranslate_wrapper gtranslate-drawer"></div>
+              </div>
             </div>
           </div>
           {%- endif -%}
@@ -101,42 +81,6 @@
               </svg>
             </div>
           </a>
-          {%- endif -%}
-
-          <!-- Country/Currency Selector -->
-          {%- if section.settings.show_country_selector and localization.available_countries.size > 1 -%}
-          <div class="pro-utility">
-            <div class="pro-utility__icon">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/>
-                <circle cx="12" cy="10" r="3"/>
-              </svg>
-            </div>
-            <div class="pro-utility__content">
-              <localization-form>
-                {%- form 'localization', id: 'DrawerCountryForm', class: 'pro-country-form' -%}
-                  <select
-                    name="country_code"
-                    class="pro-country-select"
-                    onchange="this.form.submit()"
-                    aria-label="{{ 'localization.country_label' | t }}"
-                  >
-                    {%- for country in localization.available_countries -%}
-                      <option
-                        value="{{ country.iso_code }}"
-                        {% if country.iso_code == localization.country.iso_code %}selected{% endif %}
-                      >
-                        {{ country.name }} ({{ country.currency.iso_code }} {{ country.currency.symbol }})
-                      </option>
-                    {%- endfor -%}
-                  </select>
-                  <div class="pro-country-arrow">
-                    {% render 'icon-caret' %}
-                  </div>
-                {%- endform -%}
-              </localization-form>
-            </div>
-          </div>
           {%- endif -%}
 
         </div>
@@ -262,6 +206,70 @@
     </div>
   </details>
 </header-drawer>
+
+<!-- Initialize GTranslate in Drawer -->
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  let drawerObserver;
+  let gtranslateInitialized = false;
+  
+  // Function to initialize GTranslate in drawer
+  function initGTranslateInDrawer() {
+    if (gtranslateInitialized) return;
+    
+    const drawerGTranslate = document.querySelector('.gtranslate-drawer');
+    if (drawerGTranslate && window.gtranslateSettings) {
+      try {
+        // Create GTranslate widget for drawer
+        const gtWidget = new window.GTranslateWidget({
+          ...window.gtranslateSettings,
+          wrapper_selector: '.gtranslate-drawer',
+          flag_style: 'text',
+          dropdown_open_position: 'below'
+        });
+        gtranslateInitialized = true;
+      } catch (e) {
+        console.log('GTranslate drawer init will retry...');
+        // Retry after a short delay
+        setTimeout(initGTranslateInDrawer, 500);
+      }
+    }
+  }
+  
+  // Initialize when drawer opens
+  const drawerContainer = document.getElementById('Details-menu-drawer-container');
+  if (drawerContainer) {
+    // Watch for drawer state changes
+    drawerObserver = new MutationObserver(function(mutations) {
+      mutations.forEach(function(mutation) {
+        if (mutation.type === 'attributes' && mutation.attributeName === 'open') {
+          if (drawerContainer.hasAttribute('open')) {
+            // Drawer opened - initialize GTranslate
+            setTimeout(initGTranslateInDrawer, 100);
+          }
+        }
+      });
+    });
+    
+    drawerObserver.observe(drawerContainer, {
+      attributes: true,
+      attributeFilter: ['open']
+    });
+    
+    // Also try to initialize if drawer is already open
+    if (drawerContainer.hasAttribute('open')) {
+      setTimeout(initGTranslateInDrawer, 100);
+    }
+  }
+  
+  // Cleanup on page unload
+  window.addEventListener('beforeunload', function() {
+    if (drawerObserver) {
+      drawerObserver.disconnect();
+    }
+  });
+});
+</script>
 
 <!-- Professional Drawer Styles -->
 <style>
