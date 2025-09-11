@@ -275,6 +275,8 @@
     
     {%- comment -%} Dropdown Hover Ultimate Fix - JavaScript {%- endcomment -%}
     <script src="{{ 'dropdown-hover-ultimate-fix.js' | asset_url }}" defer></script>
+  {%- comment -%} Dropdown Hover Self-Test (loads after fix; add ?dropdown_test=1 to URL for overlay) {%- endcomment -%}
+  <script src="{{ 'dropdown-hover-self-test.js' | asset_url }}" defer></script>
     
     {%- comment -%} Emergency dropdown styles with maximum priority {%- endcomment -%}
     <style id="dropdown-hover-emergency-override">
