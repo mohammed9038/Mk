@@ -18,6 +18,11 @@
     <!-- Professional Navigation CSS -->
     <link rel="stylesheet" href="{{ 'navigation-professional.css' | asset_url }}" media="print" onload="this.media='all'">
     <noscript>{{ 'navigation-professional.css' | asset_url | stylesheet_tag }}</noscript>
+    
+    <!-- GTranslate Professional Styling -->
+    <link rel="stylesheet" href="{{ 'gtranslate-professional.css' | asset_url }}" media="print" onload="this.media='all'">
+    <noscript>{{ 'gtranslate-professional.css' | asset_url | stylesheet_tag }}</noscript>
+  <script src="{{ 'gtranslate-enhancements.js' | asset_url }}" defer="defer"></script>
 
     {%- if settings.favicon != blank -%}
       <link rel="icon" type="image/png" href="{{ settings.favicon | image_url: width: 32, height: 32 }}">
@@ -301,7 +306,7 @@
         document.documentElement.classList.add('shopify-design-mode');
       }
     </script>
- <script type="text/javascript" src="https://firebasestorage.googleapis.com/v0/b/vajro/o/app_install_popup_href_v2.js?alt=media"></script> 
+ <script type="text/javascript" src="https://firebasestorage.googleapis.com/v0/b/vajro/o/app_install_popup_href_v2.js?alt=media" defer></script> 
 <script> 
     VJR_BANNER.init({ 
         "title": "Al Shariqah", // Title of the app 
@@ -421,25 +426,27 @@
         "switcher_vertical_position": "inline",
         "flag_style": "3d",
         "flags_size": 22,
-        "dropdown_text_color": "#1a365d",
-        "dropdown_hover_color": "#ffffff",
+        "dropdown_text_color": "#333333",
+        "dropdown_hover_color": "#f8f9fa",
         "dropdown_background": "#ffffff",
         "native_select_style": false,
         "add_new_line": true,
         "show_in_menu": true,
-        "switcher_text_color": "#ffffff",
-        "switcher_arrow_color": "#ffffff",
-        "switcher_border_color": "rgba(255,255,255,0.4)",
-        "switcher_background_color": "rgba(255,255,255,0.15)",
-        "switcher_background_shadow": "0 2px 8px rgba(0,0,0,0.1)",
-        "switcher_background_hover_color": "rgba(255,255,255,0.25)",
+        "switcher_text_color": "#333333",
+        "switcher_arrow_color": "#333333",
+        "switcher_border_color": "#e5e5e5",
+        "switcher_background_color": "#ffffff",
+        "switcher_background_shadow": "0 2px 8px rgba(0,0,0,0.15)",
+        "switcher_background_hover_color": "#f8f9fa",
         "detect_browser_language": false,
         "display_flags": true,
         "display_language_names": true,
         "alt_flags": {
           "en": "united-kingdom",
           "ar": "saudi-arabia"
-        }
+        },
+        "professional_style": true,
+        "match_header_design": true
       };
       
       // Improved GTranslate initialization with proper error handling

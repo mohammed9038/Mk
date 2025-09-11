@@ -110,13 +110,52 @@ class NavigationController {
    * Initialize dropdown menus
    */
   initDropdowns() {
-    const dropdowns = document.querySelectorAll(this.selectors.dropdownTrigger);
+    // Use more flexible selectors to catch any dropdown structure
+    const dropdownSelectors = [
+      'details[id^="Details-HeaderMenu-"]',
+      'details[id^="Details-HeaderLanguage-"]', 
+      'header-menu details',
+      '.header__inline-menu details',
+      'nav details'
+    ];
     
-    dropdowns.forEach((dropdown, index) => {
+    let allDropdowns = [];
+    dropdownSelectors.forEach(selector => {
+      const found = document.querySelectorAll(selector);
+      found.forEach(dropdown => {
+        if (!allDropdowns.includes(dropdown)) {
+          allDropdowns.push(dropdown);
+        }
+      });
+    });
+    
+    // Filter to only navigation-related dropdowns (not other details elements)
+    const navigationDropdowns = allDropdowns.filter(dropdown => {
+      return dropdown.closest('.header__inline-menu') || 
+             dropdown.closest('nav') ||
+             dropdown.id.includes('HeaderMenu') ||
+             dropdown.id.includes('HeaderLanguage') ||
+             dropdown.querySelector('.header__submenu');
+    });
+    
+    navigationDropdowns.forEach((dropdown, index) => {
       this.setupDropdown(dropdown, index);
     });
 
-    console.log(`[NavigationController] Initialized ${dropdowns.length} dropdown menus`);
+    console.log(`[NavigationController] Initialized ${navigationDropdowns.length} dropdown menus`);
+    
+    if (navigationDropdowns.length === 0) {
+      console.warn('[NavigationController] No dropdown menus found. This might indicate:');
+      console.warn('  - No menu is selected in theme settings');
+      console.warn('  - Selected menu has no dropdown items'); 
+      console.warn('  - Menu structure has changed');
+      
+      // Try to re-initialize after a short delay in case menus are loading dynamically
+      setTimeout(() => {
+        console.log('[NavigationController] Retrying dropdown initialization...');
+        this.initDropdowns();
+      }, 1000);
+    }
   }
 
   /**
@@ -613,6 +652,63 @@ class NavigationController {
     }
     
     return false;
+  }
+
+  /**
+   * Refresh/re-scan navigation elements
+   * Call this when menus might have changed dynamically
+   */
+  refreshNavigation() {
+    console.log('[NavigationController] Refreshing navigation...');
+    
+    // Clear existing state
+    this.state.activeDropdowns.clear();
+    
+    // Re-initialize dropdowns and language selectors
+    this.initDropdowns();
+    this.initLanguageSelector();
+    
+    console.log('[NavigationController] Navigation refresh complete');
+  }
+
+  /**
+   * Debug current navigation state
+   */
+  debugNavigation() {
+    console.log('[NavigationController] === DEBUG INFORMATION ===');
+    console.log('Initialized:', this.initialized);
+    console.log('Current breakpoint:', this.state.currentBreakpoint);
+    console.log('Touch device:', this.state.touchDevice);
+    console.log('Active dropdowns:', this.state.activeDropdowns.size);
+    
+    // Check for navigation elements
+    const navContainers = document.querySelectorAll('.header__inline-menu');
+    const allDetails = document.querySelectorAll('details');
+    const headerMenus = document.querySelectorAll('header-menu');
+    const gtWidgets = document.querySelectorAll('.gt-widget-dropdown, .gtranslate_wrapper');
+    
+    console.log('Navigation containers found:', navContainers.length);
+    console.log('Total details elements:', allDetails.length);
+    console.log('Header menu elements:', headerMenus.length);
+    console.log('GTranslate widgets:', gtWidgets.length);
+    
+    // Test selectors
+    const detectedDropdowns = document.querySelectorAll(this.selectors.dropdownTrigger);
+    console.log('Detected dropdown triggers:', detectedDropdowns.length);
+    
+    console.log('[NavigationController] === END DEBUG ===');
+    
+    return {
+      initialized: this.initialized,
+      breakpoint: this.state.currentBreakpoint,
+      touchDevice: this.state.touchDevice,
+      activeDropdowns: this.state.activeDropdowns.size,
+      navContainers: navContainers.length,
+      detailsElements: allDetails.length,
+      headerMenus: headerMenus.length,
+      gtWidgets: gtWidgets.length,
+      detectedDropdowns: detectedDropdowns.length
+    };
   }
 }
 

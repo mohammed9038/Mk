@@ -151,6 +151,12 @@
     --search-button-bg: {{ section.settings.search_button_bg | default: 'rgba(0,0,0,0.08)' }};
     --search-button-bg-hover: {{ section.settings.search_button_bg | default: 'rgba(0,0,0,0.15)' }};
     --search-button-icon: {{ section.settings.search_button_icon | default: '#333333' }};
+    
+    /* GTranslate theme settings */
+    --gtranslate-text-color: {{ section.settings.gtranslate_text_color | default: '#333333' }};
+    --gtranslate-bg-color: {{ section.settings.gtranslate_bg_color | default: '#ffffff' }};
+    --gtranslate-hover-bg: {{ section.settings.gtranslate_bg_color | default: '#ffffff' | color_modify: 'mix', '#f8f9fa', 50 }};
+    --gtranslate-border-color: {{ section.settings.gtranslate_bg_color | default: '#ffffff' | color_modify: 'mix', '#e5e5e5', 20 }};
   }
 {%- endstyle -%}
 
@@ -464,37 +470,6 @@
           <div class="header__localization header__gtranslate">
             <!-- GTranslate inline instance for header -->
             <div class="gtranslate_wrapper header-gtranslate"></div>
-            
-            {%- comment -%} Fallback Test Language Selector for Development {%- endcomment -%}
-            <details class="header__language-selector" id="Details-HeaderLanguage-1" style="margin-left: 10px;">
-              <summary class="header__menu-item list-menu__item link focus-inset" style="display: flex; align-items: center; padding: 8px 12px; cursor: pointer;">
-                <span class="language-flag" style="margin-right: 6px;">🌐</span>
-                <span>EN</span>
-                <svg style="margin-left: 6px; width: 12px; height: 12px; transform: rotate(0deg); transition: transform 0.2s;" viewBox="0 0 10 6">
-                  <path fill="currentColor" d="m1.04 0 4 4 4-4"/>
-                </svg>
-              </summary>
-              <ul class="header__submenu list-menu list-menu--disclosure" style="position: absolute; top: 100%; right: 0; background: white; border: 1px solid #ddd; border-radius: 8px; padding: 8px 0; min-width: 120px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); z-index: 1000;">
-                <li>
-                  <a href="#" onclick="switchLanguage('en'); return false;" class="header__menu-item list-menu__item link link--text focus-inset" style="display: flex; align-items: center; padding: 8px 16px; text-decoration: none; color: inherit;">
-                    <span style="margin-right: 8px;">🇺🇸</span>
-                    <span>English</span>
-                  </a>
-                </li>
-                <li>
-                  <a href="#" onclick="switchLanguage('ar'); return false;" class="header__menu-item list-menu__item link link--text focus-inset" style="display: flex; align-items: center; padding: 8px 16px; text-decoration: none; color: inherit;">
-                    <span style="margin-right: 8px;">🇸🇦</span>
-                    <span>العربية</span>
-                  </a>
-                </li>
-                <li>
-                  <a href="#" onclick="switchLanguage('fr'); return false;" class="header__menu-item list-menu__item link link--text focus-inset" style="display: flex; align-items: center; padding: 8px 16px; text-decoration: none; color: inherit;">
-                    <span style="margin-right: 8px;">🇫🇷</span>
-                    <span>Français</span>
-                  </a>
-                </li>
-              </ul>
-            </details>
           </div>
         {%- endif -%}
 
@@ -851,10 +826,55 @@
       "info": "t:sections.header.settings.header__6.info"
     },
     {
+      "type": "header",
+      "content": "🌍 Language Settings"
+    },
+    {
       "type": "checkbox",
       "id": "enable_language_selector",
       "default": true,
-      "label": "t:sections.header.settings.enable_language_selector.label"
+      "label": "Enable GTranslate language selector",
+      "info": "Show language translation widget in header"
+    },
+    {
+      "type": "select",
+      "id": "gtranslate_style",
+      "options": [
+        {
+          "value": "dropdown",
+          "label": "Dropdown (recommended)"
+        },
+        {
+          "value": "flags",
+          "label": "Flag icons"
+        },
+        {
+          "value": "text",
+          "label": "Text only"
+        }
+      ],
+      "default": "dropdown",
+      "label": "🎨 GTranslate style",
+      "info": "Choose how language selector appears"
+    },
+    {
+      "type": "checkbox",
+      "id": "gtranslate_show_flags",
+      "default": true,
+      "label": "Show country flags",
+      "info": "Display flag icons next to language names"
+    },
+    {
+      "type": "color",
+      "id": "gtranslate_text_color",
+      "label": "🎨 Language selector text color",
+      "default": "#333333"
+    },
+    {
+      "type": "color",
+      "id": "gtranslate_bg_color",
+      "label": "🎨 Language selector background",
+      "default": "#ffffff"
     },
     {
       "type": "header",
