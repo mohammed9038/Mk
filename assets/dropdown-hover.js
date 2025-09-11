@@ -1,9 +1,57 @@
- (function(){
+(function(){
   'use strict';
   const DESKTOP_WIDTH = 990;
   const TEST_PARAM = 'dropdown_test';
   const state = { initialized:false, menus:[], listeners:[] };
   const DEBUG = true; // set false to silence logs
+
+  // Add this at the beginning of the file to prevent slideshow conflicts
+if (typeof window.dropdownInitialized !== 'undefined') {
+  console.log('[dropdown-hover] Already initialized, skipping...');
+  return;
+}
+window.dropdownInitialized = true;
+
+// Fix for SlideShowComponent classList errors
+if (typeof window.SlideshowComponent !== 'undefined') {
+  const originalUpdate = window.SlideshowComponent.prototype.update;
+  
+  window.SlideshowComponent.prototype.update = function() {
+    try {
+      // Call original update with safety checks
+      originalUpdate.call(this);
+    } catch (error) {
+      console.warn('[dropdown-hover] SlideShow update error prevented:', error);
+      
+      // Safe fallback implementation
+      try {
+        this.sliderControlButtons = this.querySelectorAll('.slider-counter__link');
+        if (this.prevButton) this.prevButton.removeAttribute('disabled');
+        
+        if (this.sliderControlButtons.length > 0) {
+          this.sliderControlButtons.forEach((link) => {
+            if (link && link.classList) {
+              link.classList.remove('slider-counter__link--active');
+              link.removeAttribute('aria-current');
+            }
+          });
+          
+          const activeIndex = Math.max(0, Math.min(this.currentPage - 1, this.sliderControlButtons.length - 1));
+          const activeButton = this.sliderControlButtons[activeIndex];
+          if (activeButton && activeButton.classList) {
+            activeButton.classList.add('slider-counter__link--active');
+            activeButton.setAttribute('aria-current', true);
+          }
+        }
+        
+        if (this.nextButton) this.nextButton.removeAttribute('disabled');
+        if (this.setSlideVisibility) this.setSlideVisibility();
+      } catch (fallbackError) {
+        console.warn('[dropdown-hover] Fallback update also failed:', fallbackError);
+      }
+    }
+  };
+}
 
   function isDesktop(){
     return window.innerWidth >= DESKTOP_WIDTH && matchMedia('(pointer:fine)').matches;

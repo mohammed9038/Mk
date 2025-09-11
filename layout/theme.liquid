@@ -18,8 +18,11 @@
     <!-- GTranslate custom styling -->
     <link rel="stylesheet" href="{{ 'gtranslate-custom.css' | asset_url }}" media="print" onload="this.media='all'">
     <link rel="stylesheet" href="{{ 'gtranslate-fixes.css' | asset_url }}" media="print" onload="this.media='all'">
+    <!-- Dropdown and Language Menu Fix Styles -->
+    <link rel="stylesheet" href="{{ 'dropdown-language-menu-fix.css' | asset_url }}" media="print" onload="this.media='all'">
     <noscript>{{ 'gtranslate-custom.css' | asset_url | stylesheet_tag }}</noscript>
     <noscript>{{ 'gtranslate-fixes.css' | asset_url | stylesheet_tag }}</noscript>
+    <noscript>{{ 'dropdown-language-menu-fix.css' | asset_url | stylesheet_tag }}</noscript>
 
     {%- if settings.favicon != blank -%}
       <link rel="icon" type="image/png" href="{{ settings.favicon | image_url: width: 32, height: 32 }}">
@@ -44,6 +47,7 @@
 
     <script src="{{ 'constants.js' | asset_url }}" defer="defer"></script>
     <script src="{{ 'pubsub.js' | asset_url }}" defer="defer"></script>
+    <script src="{{ 'dropdown-language-menu-fix.js' | asset_url }}" defer="defer"></script>
     <script src="{{ 'global.js' | asset_url }}" defer="defer"></script>
     {%- if settings.animations_reveal_on_scroll -%}
       <script src="{{ 'animations.js' | asset_url }}" defer="defer"></script>
@@ -467,5 +471,28 @@
     
     {%- comment -%} Professional Drawer JavaScript {%- endcomment -%}
     <script src="{{ 'professional-drawer.js' | asset_url }}" defer></script>
+    
+    {%- comment -%} Additional Dropdown and Language Menu Fixes {%- endcomment -%}
+    <script>
+      // Ensure our fixes run after all other scripts
+      window.addEventListener('load', function() {
+        setTimeout(function() {
+          if (window.dropdownLanguageFixInitialized) {
+            console.log('[theme] Dropdown language fixes already applied');
+          } else {
+            console.log('[theme] Applying late-stage dropdown fixes');
+            
+            // Re-initialize dropdown fixes if needed
+            if (typeof window.initDropdownHoverFix === 'function') {
+              window.initDropdownHoverFix();
+            }
+            
+            if (typeof window.initGTranslateFix === 'function') {
+              window.initGTranslateFix();
+            }
+          }
+        }, 500);
+      });
+    </script>
   </body>
 </html>
