@@ -18,6 +18,10 @@
         .filter(Boolean);
       menuElems = detailsWithSub.map(d => d.closest('header-menu') || d); // may be header-menu or bare details
     }
+    // Additional fallback: any nav with class header__inline-menu then its direct details children
+    if(!menuElems.length){
+      menuElems = Array.from(document.querySelectorAll('nav.header__inline-menu details'));
+    }
     return menuElems.map(m=>{
       const details = m.tagName === 'DETAILS' ? m : m.querySelector('details');
       const summary = details ? details.querySelector('summary') : null;
@@ -47,7 +51,8 @@
     style.textContent = `@media screen and (min-width:${DESKTOP_WIDTH}px){
       /* Ensure open state always visible regardless of animations */
       .header__inline-menu header-menu details[open] > .header__submenu,
-      .dropdown-hover-active details[open] > .header__submenu {opacity:1!important;transform:translateY(0)!important;visibility:visible!important;pointer-events:auto!important;}
+  nav.header__inline-menu details[open] > .header__submenu,
+  .dropdown-hover-active details[open] > .header__submenu {opacity:1!important;transform:translateY(0)!important;visibility:visible!important;pointer-events:auto!important;}
     }`;
     document.head.appendChild(style);
   }
@@ -56,7 +61,14 @@
     injectCoreCSS();
   if(!isDesktop()){ teardown(); return; }
   state.menus = getMenus();
-  if(!state.menus.length){ log('no menus yet'); return; }
+    if(!state.menus.length){
+      log('no menus yet', {
+        inlineNavs: document.querySelectorAll('.header__inline-menu').length,
+        headerMenus: document.querySelectorAll('.header__inline-menu header-menu').length,
+        detailsWithSub: document.querySelectorAll('details > .header__submenu').length
+      });
+      return; 
+    }
     log('menus found', state.menus.length);
     state.menus.forEach(m=>{
       let leaveTimer=null;
@@ -94,6 +106,29 @@
   }
   if(document.readyState==='loading') document.addEventListener('DOMContentLoaded', attemptInit); else attemptInit();
   window.addEventListener('load', reinit);
+
+  // Continuous observer: capture late insertion beyond retry window
+  if(window.MutationObserver){
+    const observer = new MutationObserver(muts=>{
+      if(state.initialized) return;
+      let relevant = false;
+      for(const m of muts){
+        if(m.addedNodes){
+          m.addedNodes.forEach(n=>{
+            if(n.nodeType===1){
+              if(n.matches && (n.matches('.header__inline-menu, header-menu, details') )) relevant = true;
+              else if(n.querySelector && n.querySelector('.header__inline-menu, header-menu, details > .header__submenu')) relevant = true;
+            }
+          });
+        }
+      }
+      if(relevant){
+        log('mutation detected -> attempting init');
+        attemptInit();
+      }
+    });
+    observer.observe(document.documentElement || document.body, {childList:true, subtree:true});
+  }
   window.addEventListener('resize', ()=>{ cancelAnimationFrame(reinit._raf); reinit._raf=requestAnimationFrame(reinit); });
 
   // Integrated lightweight test via ?dropdown_test=1
