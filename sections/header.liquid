@@ -162,6 +162,53 @@
   <script src="{{ 'cart-drawer.js' | asset_url }}" defer="defer"></script>
 {%- endif -%}
 
+{%- comment -%} Initialize Navigation Controller after all header scripts {%- endcomment -%}
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    // Initialize navigation controller specifically for this header
+    setTimeout(function() {
+      console.log('[Header] Checking for navigation controller...');
+      
+      if (window.navigationController) {
+        console.log('[Header] Navigation controller found, validating setup');
+        
+        // Check for dropdowns
+        const shopifyDropdowns = document.querySelectorAll('details[id^="Details-HeaderMenu-"]');
+        const customDropdowns = document.querySelectorAll('details[data-dropdown]');
+        console.log(`[Header] Found ${shopifyDropdowns.length} Shopify dropdowns and ${customDropdowns.length} custom dropdowns`);
+        
+        // Force re-initialization to ensure all dropdowns are captured
+        window.navigationController.initDropdowns();
+        window.navigationController.initLanguageSelector();
+        
+        console.log('[Header] Navigation controller initialization complete');
+      } else {
+        console.warn('[Header] Navigation controller not found, creating fallback');
+        
+        // Simple fallback for dropdown functionality
+        const allDropdowns = document.querySelectorAll('details');
+        console.log(`[Header] Setting up fallback for ${allDropdowns.length} dropdown elements`);
+        
+        allDropdowns.forEach(dropdown => {
+          const summary = dropdown.querySelector('summary');
+          if (summary) {
+            summary.addEventListener('click', function(e) {
+              // Close other dropdowns when opening a new one
+              document.querySelectorAll('details[open]').forEach(other => {
+                if (other !== dropdown) {
+                  other.removeAttribute('open');
+                }
+              });
+            });
+          }
+        });
+        
+        console.log('[Header] Fallback dropdown setup complete');
+      }
+    }, 200);
+  });
+</script>
+
 <svg xmlns="http://www.w3.org/2000/svg" class="hidden">
   <symbol id="icon-search" viewbox="0 0 18 19" fill="none">
     <path fill-rule="evenodd" clip-rule="evenodd" d="M11.03 11.68A5.784 5.784 0 112.85 3.5a5.784 5.784 0 018.18 8.18zm.26 1.12a6.78 6.78 0 11.72-.7l5.4 5.4a.5.5 0 11-.71.7l-5.41-5.4z" fill="currentColor"/>

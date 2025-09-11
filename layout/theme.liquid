@@ -42,10 +42,11 @@
 
     <script src="{{ 'constants.js' | asset_url }}" defer="defer"></script>
     <script src="{{ 'pubsub.js' | asset_url }}" defer="defer"></script>
-    <!-- Professional Navigation JavaScript -->
+    <script src="{{ 'global.js' | asset_url }}" defer="defer"></script>
+    
+    {%- comment -%} Professional Navigation System - Load early {%- endcomment -%}
     <script src="{{ 'navigation-controller.js' | asset_url }}" defer="defer"></script>
     <script src="{{ 'slideshow-enhancer.js' | asset_url }}" defer="defer"></script>
-    <script src="{{ 'global.js' | asset_url }}" defer="defer"></script>
     {%- if settings.animations_reveal_on_scroll -%}
       <script src="{{ 'animations.js' | asset_url }}" defer="defer"></script>
     {%- endif -%}
