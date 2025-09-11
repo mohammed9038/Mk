@@ -288,17 +288,56 @@
 
 <{% if section.settings.sticky_header_type != 'none' %}sticky-header data-sticky-type="{{ section.settings.sticky_header_type }}"{% else %}div{% endif %} class="header-wrapper color-{{ section.settings.color_scheme }} gradient{% if section.settings.show_line_separator %} header-wrapper--border-bottom{% endif %}">
   
-  {%- comment -%} Top Navigation Bar {%- endcomment -%}
+  {%- comment -%} Top Navigation Bar with Dropdown Support {%- endcomment -%}
   {%- if section.settings.show_top_menu and section.settings.menu != blank -%}
     <div class="top-nav-wrapper page-width">
       <nav class="top-nav" role="navigation" aria-label="Top navigation">
-        <ul class="top-nav__list list-unstyled" role="list">
+        <ul class="top-nav__list list-unstyled header__inline-menu" role="list">
           {%- for link in linklists[section.settings.menu].links -%}
-            <li class="top-nav__item">
-              <a href="{{ link.url }}" class="top-nav__link link link--text{% if link.current %} top-nav__link--active{% endif %}">
-                {{ link.title | escape }}
-              </a>
-            </li>
+            {%- if link.links != blank -%}
+              {%- comment -%} Menu item with dropdown {%- endcomment -%}
+              <li class="top-nav__item">
+                <header-menu>
+                  <details id="Details-HeaderMenu-{{ forloop.index }}">
+                    <summary
+                      id="HeaderMenu-{{ link.handle }}"
+                      class="top-nav__link header__menu-item list-menu__item link focus-inset"
+                    >
+                      <span{% if link.child_active %} class="header__active-menu-item"{% endif %}>
+                        {{- link.title | escape -}}
+                      </span>
+                      {% render 'icon-caret' %}
+                    </summary>
+                    <ul
+                      id="HeaderMenu-MenuList-{{ forloop.index }}"
+                      class="header__submenu list-menu list-menu--disclosure color-{{ section.settings.menu_color_scheme }} gradient caption-large motion-reduce global-settings-popup"
+                      role="list"
+                      tabindex="-1"
+                    >
+                      {%- for childlink in link.links -%}
+                        <li>
+                          <a
+                            id="HeaderMenu-{{ link.handle }}-{{ childlink.handle }}"
+                            href="{{ childlink.url }}"
+                            class="header__menu-item list-menu__item link link--text focus-inset caption-large{% if childlink.current %} list-menu__item--active{% endif %}"
+                            {% if childlink.current %}aria-current="page"{% endif %}
+                          >
+                            {{ childlink.title | escape }}
+                          </a>
+                        </li>
+                      {%- endfor -%}
+                    </ul>
+                  </details>
+                </header-menu>
+              </li>
+            {%- else -%}
+              {%- comment -%} Regular menu item {%- endcomment -%}
+              <li class="top-nav__item">
+                <a href="{{ link.url }}" class="top-nav__link link link--text{% if link.current %} top-nav__link--active{% endif %}">
+                  {{ link.title | escape }}
+                </a>
+              </li>
+            {%- endif -%}
           {%- endfor -%}
         </ul>
       </nav>

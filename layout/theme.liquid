@@ -17,11 +17,11 @@
     
     <!-- Professional Navigation CSS -->
     <link rel="stylesheet" href="{{ 'navigation-professional.css' | asset_url }}" media="print" onload="this.media='all'">
-    <noscript>{{ 'navigation-professional.css' | asset_url | stylesheet_tag }}</noscript>
+    <script src="{{ 'navigation-controller.js' | asset_url }}" defer></script>
     
-    <!-- Navigation Dropdown Fix CSS -->
-    <link rel="stylesheet" href="{{ 'navigation-dropdown-fix.css' | asset_url }}" media="print" onload="this.media='all'">
-    <noscript>{{ 'navigation-dropdown-fix.css' | asset_url | stylesheet_tag }}</noscript>
+    <!-- Top Navigation Dropdown Fix -->
+    <link rel="stylesheet" href="{{ 'top-nav-dropdown-final.css' | asset_url }}" media="all">
+    <script src="{{ 'top-nav-dropdown-fix.js' | asset_url }}" defer></script>
     
     <!-- GTranslate Professional Styling -->
     <link rel="stylesheet" href="{{ 'gtranslate-professional.css' | asset_url }}" media="print" onload="this.media='all'">
