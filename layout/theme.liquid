@@ -411,7 +411,7 @@
     {%- endif -%}
     
     <!-- GTranslate: language translation widget -->
-    <div class="gtranslate_wrapper"></div>
+    <div class="gtranslate_wrapper" style="display: none;"></div>
     <script>
       window.gtranslateSettings = {
         "default_language": "en",
@@ -442,36 +442,56 @@
         }
       };
       
-      // Wait for DOM to be loaded
+      // Improved GTranslate initialization with proper error handling
       document.addEventListener('DOMContentLoaded', function() {
-        // Initialize all instances of GTranslate on the page
-        var gtInstances = [
-          '.header-gtranslate',
-          '.mobile-gtranslate',
-          '.footer-gtranslate'
-        ];
+        let initAttempts = 0;
+        const maxAttempts = 50; // 5 seconds total
         
-        // Function to initialize GTranslate widgets with retry logic
         function initializeGTranslate() {
-          if (window.gt_widget_script) {
-            gtInstances.forEach(function(selector) {
-              var elements = document.querySelectorAll(selector);
-              if(elements.length > 0) {
-                elements.forEach(function(element) {
-                  window.gt_widget_script.render(element);
-                });
+          initAttempts++;
+          
+          try {
+            if (window.gt_widget_script && typeof window.gt_widget_script.render === 'function') {
+              // Find all GTranslate containers
+              const containers = document.querySelectorAll('.header-gtranslate, .mobile-gtranslate, .footer-gtranslate');
+              let initialized = 0;
+              
+              containers.forEach(function(container) {
+                try {
+                  if (container && !container.dataset.gtInitialized) {
+                    window.gt_widget_script.render(container);
+                    container.dataset.gtInitialized = 'true';
+                    initialized++;
+                  }
+                } catch (error) {
+                  console.warn('[GTranslate] Failed to initialize container:', error);
+                }
+              });
+              
+              if (initialized > 0) {
+                console.log(`[GTranslate] Successfully initialized ${initialized} widgets`);
+                
+                // Notify navigation controller
+                if (window.navigationController && typeof window.navigationController.enhanceGTranslate === 'function') {
+                  window.navigationController.enhanceGTranslate();
+                }
+                return; // Success - stop trying
               }
-            });
-            console.log('[GTranslate] Widgets initialized successfully');
-          } else {
-            // Retry after a short delay if script not ready
-            console.log('[GTranslate] Script not ready, retrying...');
+            }
+          } catch (error) {
+            console.warn('[GTranslate] Initialization error:', error);
+          }
+          
+          // Retry if not successful and haven't exceeded max attempts
+          if (initAttempts < maxAttempts) {
             setTimeout(initializeGTranslate, 100);
+          } else {
+            console.warn('[GTranslate] Initialization failed after', maxAttempts, 'attempts');
           }
         }
         
-        // Initialize GTranslate widgets
-        initializeGTranslate();
+        // Start initialization
+        setTimeout(initializeGTranslate, 100);
       });
     </script>
     <script src="https://cdn.gtranslate.net/widgets/latest/dropdown.js" defer></script>
@@ -486,9 +506,11 @@
         // Navigation controller is loaded via head and auto-initializes
         console.log('[Theme] Professional navigation system loaded');
         
-        // Ensure GTranslate compatibility
-        if (window.navigationController && window.gt_widget_script) {
-          window.navigationController.validateGTranslateIntegration();
+        // Ensure GTranslate compatibility with enhanced validation
+        if (window.navigationController && typeof window.navigationController.validateGTranslateIntegration === 'function') {
+          setTimeout(function() {
+            window.navigationController.validateGTranslateIntegration();
+          }, 500);
         }
       });
     </script>

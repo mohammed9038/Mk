@@ -2764,6 +2764,18 @@ details[open] > .header__icon--menu .icon-hamburger {
     pointer-events: auto !important;
     animation: none !important;
   }
+  
+  /* ADDITIONAL FIX: Force positioning for dropdowns */
+  .header__inline-menu header-menu {
+    position: relative !important;
+  }
+  
+  .js .header__inline-menu details > .header__submenu {
+    position: absolute !important;
+    top: 100% !important;
+    left: 0 !important;
+    z-index: 1000 !important;
+  }
 }
 
 details[open] > .header__submenu {

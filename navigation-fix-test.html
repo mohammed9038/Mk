@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Navigation Fix Test</title>
+    <style>
+        /* Test the CSS fixes */
+        .js details > .header__submenu {
+            opacity: 0;
+            transform: translateY(-1.5rem);
+            transition: all 0.3s ease;
+        }
+
+        @media screen and (min-width: 990px) {
+            .js .header__inline-menu header-menu:hover details > .header__submenu,
+            .js .header__inline-menu header-menu details[open] > .header__submenu,
+            .js .header__inline-menu header-menu details.force-open > .header__submenu {
+                opacity: 1 !important;
+                visibility: visible !important;
+                transform: translateY(0) !important;
+                pointer-events: auto !important;
+                animation: none !important;
+            }
+            
+            .header__inline-menu header-menu {
+                position: relative !important;
+            }
+            
+            .js .header__inline-menu details > .header__submenu {
+                position: absolute !important;
+                top: 100% !important;
+                left: 0 !important;
+                z-index: 1000 !important;
+                background: white;
+                border: 1px solid #ddd;
+                border-radius: 4px;
+                padding: 8px 0;
+                min-width: 200px;
+            }
+        }
+
+        /* Basic styling for test */
+        .header__inline-menu ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+        }
+
+        header-menu {
+            position: relative;
+        }
+
+        summary {
+            cursor: pointer;
+            padding: 12px 16px;
+        }
+
+        .header__submenu li a {
+            display: block;
+            padding: 8px 16px;
+            text-decoration: none;
+            color: #333;
+        }
+
+        .header__submenu li a:hover {
+            background: #f5f5f5;
+        }
+    </style>
+</head>
+<body class="js">
+    <h1>Navigation Fix Test</h1>
+    
+    <nav class="header__inline-menu">
+        <ul>
+            <li>
+                <header-menu>
+                    <details id="Details-HeaderMenu-1">
+                        <summary>Products</summary>
+                        <ul class="header__submenu">
+                            <li><a href="#">Smartphones</a></li>
+                            <li><a href="#">Tablets</a></li>
+                            <li><a href="#">Accessories</a></li>
+                        </ul>
+                    </details>
+                </header-menu>
+            </li>
+            <li>
+                <header-menu>
+                    <details id="Details-HeaderMenu-2">
+                        <summary>Services</summary>
+                        <ul class="header__submenu">
+                            <li><a href="#">Support</a></li>
+                            <li><a href="#">Warranty</a></li>
+                            <li><a href="#">Repair</a></li>
+                        </ul>
+                    </details>
+                </header-menu>
+            </li>
+        </ul>
+    </nav>
+
+    <div style="margin-top: 50px;">
+        <h2>GTranslate Test</h2>
+        <div class="header-gtranslate" id="test-gtranslate">
+            <div class="gtranslate_wrapper"></div>
+        </div>
+        
+        <!-- Fallback language selector -->
+        <details class="header__language-selector" id="Details-HeaderLanguage-1" style="margin-top: 20px; display: inline-block;">
+            <summary style="display: flex; align-items: center; padding: 8px 12px; cursor: pointer; border: 1px solid #ddd; border-radius: 4px;">
+                <span class="language-flag" style="margin-right: 6px;">🌐</span>
+                <span>EN</span>
+                <svg style="margin-left: 6px; width: 12px; height: 12px;" viewBox="0 0 10 6">
+                    <path fill="currentColor" d="m1.04 0 4 4 4-4"/>
+                </svg>
+            </summary>
+            <ul class="header__submenu" style="position: absolute; background: white; border: 1px solid #ddd; border-radius: 4px; padding: 8px 0; min-width: 120px; list-style: none; margin: 0;">
+                <li><a href="#" onclick="switchLanguage('en'); return false;" style="display: flex; align-items: center; padding: 8px 16px; text-decoration: none; color: inherit;"><span style="margin-right: 8px;">🇺🇸</span>English</a></li>
+                <li><a href="#" onclick="switchLanguage('ar'); return false;" style="display: flex; align-items: center; padding: 8px 16px; text-decoration: none; color: inherit;"><span style="margin-right: 8px;">🇸🇦</span>العربية</a></li>
+            </ul>
+        </details>
+    </div>
+
+    <script>
+        console.log('=== Navigation Fix Test ===');
+        
+        // Test switchLanguage function
+        window.switchLanguage = function(lang) {
+            console.log('Language switched to:', lang);
+            const selector = document.querySelector('.header__language-selector summary span:last-child');
+            const flagMap = {
+                'en': { flag: '🇺🇸', name: 'EN' },
+                'ar': { flag: '🇸🇦', name: 'AR' }
+            };
+            
+            if (selector && flagMap[lang]) {
+                const flagElement = document.querySelector('.language-flag');
+                if (flagElement) flagElement.textContent = flagMap[lang].flag;
+                selector.textContent = flagMap[lang].name;
+            }
+            
+            // Close the dropdown
+            const details = document.querySelector('.header__language-selector');
+            if (details) details.removeAttribute('open');
+            
+            alert(`Language changed to: ${flagMap[lang]?.name || lang}`);
+        };
+
+        // Test dropdown functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('Testing dropdown functionality...');
+            
+            const dropdowns = document.querySelectorAll('details');
+            console.log(`Found ${dropdowns.length} dropdown elements`);
+            
+            dropdowns.forEach((dropdown, index) => {
+                const summary = dropdown.querySelector('summary');
+                if (summary) {
+                    console.log(`Dropdown ${index + 1}: ${summary.textContent.trim()}`);
+                    
+                    summary.addEventListener('click', function(e) {
+                        console.log(`Clicked: ${summary.textContent.trim()}`);
+                        
+                        // Close other dropdowns
+                        dropdowns.forEach(other => {
+                            if (other !== dropdown && other.hasAttribute('open')) {
+                                other.removeAttribute('open');
+                            }
+                        });
+                    });
+                }
+            });
+
+            // Test outside click to close
+            document.addEventListener('click', function(e) {
+                if (!e.target.closest('details')) {
+                    dropdowns.forEach(dropdown => {
+                        dropdown.removeAttribute('open');
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>

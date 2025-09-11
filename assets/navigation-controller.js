@@ -180,12 +180,8 @@ class NavigationController {
 
     const isOpen = dropdown.hasAttribute('open');
     
-    if (this.state.currentBreakpoint === 'desktop' && !this.state.touchDevice) {
-      // Desktop: prevent default click, use hover instead
-      return;
-    }
-
-    // Mobile or touch device: handle click
+    // FIXED: Allow clicks on desktop for proper dropdown functionality
+    // The hover functionality will still work, but clicks are now supported too
     if (isOpen) {
       this.closeDropdown(dropdown);
     } else {
@@ -202,14 +198,19 @@ class NavigationController {
     }
 
     if (action === 'enter') {
+      // Clear any pending close timeout
+      if (dropdown._closeTimeout) {
+        clearTimeout(dropdown._closeTimeout);
+        dropdown._closeTimeout = null;
+      }
       this.openDropdown(dropdown);
     } else if (action === 'leave') {
       // Add small delay to prevent accidental closes
-      setTimeout(() => {
+      dropdown._closeTimeout = setTimeout(() => {
         if (!dropdown.matches(':hover')) {
           this.closeDropdown(dropdown);
         }
-      }, 100);
+      }, 150); // Increased delay for better UX
     }
   }
 
@@ -401,15 +402,18 @@ class NavigationController {
       return;
     }
 
-    // Watch for GTranslate loading
+    // Watch for GTranslate loading with improved detection
     const observer = new MutationObserver((mutations) => {
       mutations.forEach((mutation) => {
         if (mutation.addedNodes) {
           mutation.addedNodes.forEach((node) => {
             if (node.nodeType === Node.ELEMENT_NODE) {
-              if (node.matches('.gtranslate_wrapper') || 
-                  node.querySelector('.gtranslate_wrapper')) {
+              if (node.matches('.gtranslate_wrapper, .gt-widget-dropdown') || 
+                  node.querySelector('.gtranslate_wrapper, .gt-widget-dropdown') ||
+                  (node.classList && node.classList.contains('gt-widget-dropdown'))) {
+                console.log('[NavigationController] GTranslate widget detected, enhancing...');
                 this.enhanceGTranslate();
+                observer.disconnect(); // Stop observing once found
               }
             }
           });
@@ -422,8 +426,23 @@ class NavigationController {
       subtree: true
     });
 
-    // Stop observing after 10 seconds
-    setTimeout(() => observer.disconnect(), 10000);
+    // Also check periodically for GTranslate script availability
+    let checkCount = 0;
+    const checkScript = () => {
+      checkCount++;
+      if (window.gt_widget_script || document.querySelector('.gt-widget-dropdown')) {
+        console.log('[NavigationController] GTranslate script detected via polling');
+        this.enhanceGTranslate();
+        observer.disconnect();
+      } else if (checkCount < 50) { // Check for 5 seconds
+        setTimeout(checkScript, 100);
+      } else {
+        observer.disconnect();
+        console.warn('[NavigationController] GTranslate initialization timeout after 5 seconds');
+      }
+    };
+    
+    setTimeout(checkScript, 100);
   }
 
   /**
@@ -431,8 +450,12 @@ class NavigationController {
    */
   enhanceGTranslate() {
     const wrappers = document.querySelectorAll(this.selectors.languageSelector);
+    const gtWidgets = document.querySelectorAll('.gt-widget-dropdown, .gtranslate_wrapper');
     
-    wrappers.forEach(wrapper => {
+    // Process both our selectors and actual GTranslate widgets
+    const allLanguageElements = [...wrappers, ...gtWidgets];
+    
+    allLanguageElements.forEach(wrapper => {
       if (wrapper.dataset.enhanced) return;
       wrapper.dataset.enhanced = 'true';
 
@@ -441,9 +464,23 @@ class NavigationController {
       
       // Ensure it closes when clicking outside
       wrapper.addEventListener('click', (e) => e.stopPropagation());
+      
+      // Add specific handling for GTranslate widgets
+      if (wrapper.classList.contains('gt-widget-dropdown')) {
+        wrapper.style.position = 'relative';
+        wrapper.style.zIndex = '1000';
+        
+        // Fix dropdown positioning issues
+        const dropdown = wrapper.querySelector('.gt-dropdown');
+        if (dropdown) {
+          dropdown.style.position = 'absolute';
+          dropdown.style.top = '100%';
+          dropdown.style.right = '0';
+        }
+      }
     });
 
-    console.log('[NavigationController] GTranslate enhanced');
+    console.log(`[NavigationController] Enhanced ${allLanguageElements.length} language selector elements`);
   }
 
   /**
@@ -554,6 +591,28 @@ class NavigationController {
       currentBreakpoint: this.state.currentBreakpoint,
       touchDevice: this.state.touchDevice
     };
+  }
+
+  /**
+   * Validate GTranslate integration
+   */
+  validateGTranslateIntegration() {
+    console.log('[NavigationController] Validating GTranslate integration...');
+    
+    const gtWidgets = document.querySelectorAll('.gt-widget-dropdown');
+    const wrappers = document.querySelectorAll('.gtranslate_wrapper');
+    const headerContainers = document.querySelectorAll('.header-gtranslate');
+    
+    console.log(`Found ${gtWidgets.length} GTranslate widgets`);
+    console.log(`Found ${wrappers.length} GTranslate wrappers`);
+    console.log(`Found ${headerContainers.length} header containers`);
+    
+    if (gtWidgets.length > 0) {
+      this.enhanceGTranslate();
+      return true;
+    }
+    
+    return false;
   }
 }
 
