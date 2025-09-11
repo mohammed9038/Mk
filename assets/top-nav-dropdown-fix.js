@@ -18,36 +18,31 @@
       return;
     }
     
-    const dropdowns = topNav.querySelectorAll('details, header-menu details');
-    console.log(`Found ${dropdowns.length} top nav dropdowns`);
+    // Handle main dropdown menus
+    const mainDropdowns = topNav.querySelectorAll('header-menu > details');
+    console.log(`Found ${mainDropdowns.length} main dropdowns`);
     
-    dropdowns.forEach((dropdown, index) => {
+    mainDropdowns.forEach((dropdown, index) => {
       const summary = dropdown.querySelector('summary');
-      const submenu = dropdown.querySelector('.header__submenu, ul.list-menu, .pro-nav-submenu');
+      const submenu = dropdown.querySelector('.header__submenu');
       
       if (summary && submenu) {
-        console.log(`Initializing dropdown ${index + 1}: ${summary.textContent.trim()}`);
+        console.log(`Initializing main dropdown ${index + 1}: ${summary.textContent.trim()}`);
         
-        // Ensure submenu has proper positioning
-        submenu.style.position = 'absolute';
-        submenu.style.top = '100%';
-        submenu.style.left = '0';
-        submenu.style.zIndex = '1000';
-        
-        // Handle click events
+        // Handle click events for main dropdown
         summary.addEventListener('click', (e) => {
           const isOpen = dropdown.hasAttribute('open');
-          console.log(`${summary.textContent.trim()} clicked - ${isOpen ? 'closing' : 'opening'}`);
+          console.log(`Main dropdown ${summary.textContent.trim()} clicked - ${isOpen ? 'closing' : 'opening'}`);
           
-          // Close other dropdowns
-          dropdowns.forEach(otherDropdown => {
+          // Close other main dropdowns
+          mainDropdowns.forEach(otherDropdown => {
             if (otherDropdown !== dropdown && otherDropdown.hasAttribute('open')) {
               otherDropdown.removeAttribute('open');
             }
           });
         });
         
-        // Desktop hover functionality
+        // Desktop hover functionality for main dropdown
         if (window.innerWidth >= 990) {
           dropdown.addEventListener('mouseenter', () => {
             dropdown.setAttribute('open', '');
@@ -55,16 +50,66 @@
           });
           
           dropdown.addEventListener('mouseleave', () => {
-            dropdown.removeAttribute('open');
-            console.log(`Hover closed: ${summary.textContent.trim()}`);
+            // Small delay to allow moving to submenu
+            setTimeout(() => {
+              if (!dropdown.matches(':hover')) {
+                dropdown.removeAttribute('open');
+                console.log(`Hover closed: ${summary.textContent.trim()}`);
+              }
+            }, 100);
           });
         }
+      }
+    });
+    
+    // Handle nested dropdown menus
+    const nestedDropdowns = topNav.querySelectorAll('.header__submenu-details');
+    console.log(`Found ${nestedDropdowns.length} nested dropdowns`);
+    
+    nestedDropdowns.forEach((nestedDropdown, index) => {
+      const summary = nestedDropdown.querySelector('summary');
+      const nestedSubmenu = nestedDropdown.querySelector('.header__submenu--nested');
+      
+      if (summary && nestedSubmenu) {
+        console.log(`Initializing nested dropdown ${index + 1}: ${summary.textContent.trim()}`);
         
-        // Close dropdown when clicking outside
-        document.addEventListener('click', (e) => {
-          if (!dropdown.contains(e.target) && dropdown.hasAttribute('open')) {
+        // Handle click events for nested dropdown
+        summary.addEventListener('click', (e) => {
+          e.stopPropagation(); // Prevent parent dropdown from closing
+          const isOpen = nestedDropdown.hasAttribute('open');
+          console.log(`Nested dropdown ${summary.textContent.trim()} clicked - ${isOpen ? 'closing' : 'opening'}`);
+        });
+        
+        // Desktop hover functionality for nested dropdown
+        if (window.innerWidth >= 990) {
+          nestedDropdown.addEventListener('mouseenter', () => {
+            nestedDropdown.setAttribute('open', '');
+            console.log(`Nested hover opened: ${summary.textContent.trim()}`);
+          });
+          
+          nestedDropdown.addEventListener('mouseleave', () => {
+            setTimeout(() => {
+              if (!nestedDropdown.matches(':hover')) {
+                nestedDropdown.removeAttribute('open');
+                console.log(`Nested hover closed: ${summary.textContent.trim()}`);
+              }
+            }, 100);
+          });
+        }
+      }
+    });
+    
+    // Close all dropdowns when clicking outside
+    document.addEventListener('click', (e) => {
+      if (!topNav.contains(e.target)) {
+        mainDropdowns.forEach(dropdown => {
+          if (dropdown.hasAttribute('open')) {
             dropdown.removeAttribute('open');
-            console.log(`Outside click closed: ${summary.textContent.trim()}`);
+          }
+        });
+        nestedDropdowns.forEach(dropdown => {
+          if (dropdown.hasAttribute('open')) {
+            dropdown.removeAttribute('open');
           }
         });
       }
@@ -72,7 +117,7 @@
     
     // Force visibility for any open dropdowns
     setTimeout(() => {
-      const openDropdowns = topNav.querySelectorAll('details[open] .header__submenu');
+      const openDropdowns = topNav.querySelectorAll('details[open] .header__submenu, .header__submenu-details[open] .header__submenu--nested');
       openDropdowns.forEach(submenu => {
         submenu.style.opacity = '1';
         submenu.style.visibility = 'visible';

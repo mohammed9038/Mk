@@ -98,11 +98,21 @@
   overflow-y: auto;
 }
 
+/* NESTED SUBMENU POSITIONING */
+.top-nav .header__submenu--nested {
+  position: absolute !important;
+  top: 0 !important;
+  left: 100% !important;
+  margin-left: 5px;
+  min-width: 200px;
+}
+
 /* SHOW DROPDOWN ON OPEN */
 .top-nav details[open] > .header__submenu,
 .top-nav details[open] > .pro-nav-submenu,
 .top-nav details.open > .header__submenu,
-.top-nav details.open > .pro-nav-submenu {
+.top-nav details.open > .pro-nav-submenu,
+.top-nav .header__submenu-details[open] > .header__submenu--nested {
   opacity: 1 !important;
   visibility: visible !important;
   transform: translateY(0) !important;
@@ -121,6 +131,25 @@
   transition: all 0.2s ease;
   font-size: 1rem;
   line-height: 1.4;
+  position: relative;
+}
+
+/* NESTED SUBMENU ITEM WITH ARROW */
+.top-nav .has-submenu > .header__submenu-details > summary {
+  position: relative;
+}
+
+.top-nav .has-submenu > .header__submenu-details > summary::after {
+  content: '▶';
+  position: absolute;
+  right: 1rem;
+  font-size: 0.75rem;
+  color: rgba(var(--color-foreground), 0.6);
+  transition: transform 0.2s ease;
+}
+
+.top-nav .has-submenu .header__submenu-details[open] > summary::after {
+  transform: rotate(90deg);
 }
 
 .top-nav .header__submenu .header__menu-item:hover,
