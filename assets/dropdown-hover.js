@@ -9,9 +9,21 @@
     return window.innerWidth >= DESKTOP_WIDTH && matchMedia('(pointer:fine)').matches;
   }
   function getMenus(){
-    return Array.from(document.querySelectorAll('.header__inline-menu header-menu'))
-      .map(m=>({root:m, details:m.querySelector('details'), summary:m.querySelector('summary'), submenu:m.querySelector('.header__submenu')}))
-      .filter(x=>x.details && x.summary && x.submenu);
+    // Primary pattern (Dawn style markup)
+    let menuElems = Array.from(document.querySelectorAll('.header__inline-menu header-menu'));
+    // Fallback: any details element containing a .header__submenu
+    if(!menuElems.length){
+      const detailsWithSub = Array.from(document.querySelectorAll('details > .header__submenu'))
+        .map(sm => sm.closest('details'))
+        .filter(Boolean);
+      menuElems = detailsWithSub.map(d => d.closest('header-menu') || d); // may be header-menu or bare details
+    }
+    return menuElems.map(m=>{
+      const details = m.tagName === 'DETAILS' ? m : m.querySelector('details');
+      const summary = details ? details.querySelector('summary') : null;
+      const submenu = details ? details.querySelector('.header__submenu') : null;
+      return {root: m, details, summary, submenu};
+    }).filter(x=>x.details && x.summary && x.submenu);
   }
   function offAll(){ state.listeners.forEach(fn=>fn()); state.listeners=[]; }
   function closeOthers(except){ state.menus.forEach(m=>{ if(m.details!==except) m.details.removeAttribute('open'); }); }
@@ -34,17 +46,17 @@
     style.id='dropdown-hover-core-css';
     style.textContent = `@media screen and (min-width:${DESKTOP_WIDTH}px){
       /* Ensure open state always visible regardless of animations */
-      .header__inline-menu header-menu details[open] > .header__submenu{opacity:1!important;transform:translateY(0)!important;visibility:visible!important;pointer-events:auto!important;}
-      /* Hidden initial state (rely on existing Dawn rule for .js details > .header__submenu) */
+      .header__inline-menu header-menu details[open] > .header__submenu,
+      .dropdown-hover-active details[open] > .header__submenu {opacity:1!important;transform:translateY(0)!important;visibility:visible!important;pointer-events:auto!important;}
     }`;
     document.head.appendChild(style);
   }
 
   function setup(){
     injectCoreCSS();
-    if(!isDesktop()){ teardown(); return; }
-    state.menus = getMenus();
-    if(!state.menus.length){ log('no menus yet'); return; }
+  if(!isDesktop()){ teardown(); return; }
+  state.menus = getMenus();
+  if(!state.menus.length){ log('no menus yet'); return; }
     log('menus found', state.menus.length);
     state.menus.forEach(m=>{
       let leaveTimer=null;
@@ -69,7 +81,18 @@
   function teardown(){ offAll(); state.menus=[]; state.initialized=false; document.documentElement.classList.remove('dropdown-hover-active'); }
   function reinit(){ teardown(); setup(); }
 
-  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded', setup); else setup();
+  // Retry mechanism if menus not yet present
+  let attempts = 0; const MAX_ATTEMPTS = 25; const INTERVAL = 200;
+  function attemptInit(){
+    if(state.initialized) return; 
+    setup();
+    if(!state.initialized && attempts < MAX_ATTEMPTS){
+      attempts++; setTimeout(attemptInit, INTERVAL);
+    } else if(!state.initialized){
+      log('giving up after attempts', attempts);
+    }
+  }
+  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded', attemptInit); else attemptInit();
   window.addEventListener('load', reinit);
   window.addEventListener('resize', ()=>{ cancelAnimationFrame(reinit._raf); reinit._raf=requestAnimationFrame(reinit); });
 
