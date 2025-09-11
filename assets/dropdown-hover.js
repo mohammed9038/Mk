@@ -1,8 +1,9 @@
-(function(){
+ (function(){
   'use strict';
   const DESKTOP_WIDTH = 990;
   const TEST_PARAM = 'dropdown_test';
   const state = { initialized:false, menus:[], listeners:[] };
+  const DEBUG = true; // set false to silence logs
 
   function isDesktop(){
     return window.innerWidth >= DESKTOP_WIDTH && matchMedia('(pointer:fine)').matches;
@@ -15,21 +16,51 @@
   function offAll(){ state.listeners.forEach(fn=>fn()); state.listeners=[]; }
   function closeOthers(except){ state.menus.forEach(m=>{ if(m.details!==except) m.details.removeAttribute('open'); }); }
   function add(el,ev,fn,opt){ el.addEventListener(ev,fn,opt); state.listeners.push(()=>el.removeEventListener(ev,fn,opt)); }
+  function log(){ if(DEBUG) console.log('[dropdown-hover]', ...arguments); }
+  function openMenu(m){
+    if(!isDesktop()) return; 
+    if(!m.details.hasAttribute('open')){ 
+      closeOthers(m.details); 
+      m.details.setAttribute('open','');
+      // Fallback: force reflow then ensure attribute still present
+      if(!m.details.hasAttribute('open')) m.details.setAttribute('open','');
+      log('open', m.summary && m.summary.textContent && m.summary.textContent.trim());
+    }
+  }
 
-  function openMenu(m){ if(!isDesktop()) return; if(!m.details.hasAttribute('open')){ closeOthers(m.details); m.details.setAttribute('open',''); } }
+  function injectCoreCSS(){
+    if(document.getElementById('dropdown-hover-core-css')) return;
+    const style=document.createElement('style');
+    style.id='dropdown-hover-core-css';
+    style.textContent = `@media screen and (min-width:${DESKTOP_WIDTH}px){
+      /* Ensure open state always visible regardless of animations */
+      .header__inline-menu header-menu details[open] > .header__submenu{opacity:1!important;transform:translateY(0)!important;visibility:visible!important;pointer-events:auto!important;}
+      /* Hidden initial state (rely on existing Dawn rule for .js details > .header__submenu) */
+    }`;
+    document.head.appendChild(style);
+  }
 
   function setup(){
+    injectCoreCSS();
     if(!isDesktop()){ teardown(); return; }
     state.menus = getMenus();
-    if(!state.menus.length) return;
+    if(!state.menus.length){ log('no menus yet'); return; }
+    log('menus found', state.menus.length);
     state.menus.forEach(m=>{
       let leaveTimer=null;
       function cancel(){ if(leaveTimer){ clearTimeout(leaveTimer); leaveTimer=null; } }
-      function scheduleClose(){ leaveTimer=setTimeout(()=>m.details.removeAttribute('open'),180); }
+      function scheduleClose(){ leaveTimer=setTimeout(()=>{ m.details.removeAttribute('open'); log('close', m.summary && m.summary.textContent && m.summary.textContent.trim()); },180); }
+
+      // Root hover
       add(m.root,'mouseenter',()=>{ cancel(); openMenu(m); });
       add(m.root,'mouseleave',()=>{ cancel(); scheduleClose(); });
+      // Details hover backup
+      add(m.details,'mouseenter',()=>{ cancel(); openMenu(m); });
+      add(m.details,'mouseleave',()=>{ cancel(); scheduleClose(); });
+      // Summary specific events
+      add(m.summary,'mouseenter',()=>{ cancel(); openMenu(m); });
       add(m.summary,'focusin',()=>openMenu(m));
-      add(m.summary,'keydown',e=>{ if(e.key==='Escape'){ m.details.removeAttribute('open'); m.summary.blur(); }});
+      add(m.summary,'keydown',e=>{ if(e.key==='Escape'){ m.details.removeAttribute('open'); m.summary.blur(); log('escape close'); }});
       add(m.summary,'click',e=>{ if(isDesktop()){ e.preventDefault(); openMenu(m); }});
     });
     state.initialized=true;
