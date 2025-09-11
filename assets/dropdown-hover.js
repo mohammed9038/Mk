@@ -59,10 +59,28 @@
     style.textContent = `@media screen and (min-width:${DESKTOP_WIDTH}px){
       /* Ensure open state always visible regardless of animations */
       .header__inline-menu header-menu details[open] > .header__submenu,
-  nav.header__inline-menu details[open] > .header__submenu,
-  .dropdown-hover-active details[open] > .header__submenu,
-  .dropdown-hover-active details[open] > ul {opacity:1!important;transform:translateY(0)!important;visibility:visible!important;pointer-events:auto!important;}
-  .dropdown-hover-active details > ul {transition:opacity .18s ease, transform .18s ease;}
+      nav.header__inline-menu details[open] > .header__submenu,
+      .dropdown-hover-active details[open] > .header__submenu,
+      .dropdown-hover-active details[open] > ul,
+      details[open] > .header__submenu,
+      details[open] > ul.list-menu--disclosure {
+        opacity:1!important;
+        transform:translateY(0)!important;
+        visibility:visible!important;
+        pointer-events:auto!important;
+        display:block!important;
+        position:absolute!important;
+        z-index:999999!important;
+        background:var(--color-background,#fff)!important;
+        border:1px solid rgba(var(--color-foreground),.1)!important;
+        box-shadow:0 4px 12px rgba(0,0,0,.15)!important;
+        min-width:200px!important;
+        top:100%!important;
+        left:0!important;
+      }
+      .dropdown-hover-active details > ul {transition:opacity .18s ease, transform .18s ease;}
+      /* Ensure parent positioning */
+      .dropdown-hover-active details, .dropdown-hover-active header-menu {position:relative!important;}
     }`;
     document.head.appendChild(style);
   }
