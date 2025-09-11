@@ -451,17 +451,27 @@
           '.footer-gtranslate'
         ];
         
-        // Make sure each selector has its own instance
-        gtInstances.forEach(function(selector) {
-          var elements = document.querySelectorAll(selector);
-          if(elements.length > 0) {
-            elements.forEach(function(element) {
-              if(window.gt_widget_script) {
-                window.gt_widget_script.render(element);
+        // Function to initialize GTranslate widgets with retry logic
+        function initializeGTranslate() {
+          if (window.gt_widget_script) {
+            gtInstances.forEach(function(selector) {
+              var elements = document.querySelectorAll(selector);
+              if(elements.length > 0) {
+                elements.forEach(function(element) {
+                  window.gt_widget_script.render(element);
+                });
               }
             });
+            console.log('[GTranslate] Widgets initialized successfully');
+          } else {
+            // Retry after a short delay if script not ready
+            console.log('[GTranslate] Script not ready, retrying...');
+            setTimeout(initializeGTranslate, 100);
           }
-        });
+        }
+        
+        // Initialize GTranslate widgets
+        initializeGTranslate();
       });
     </script>
     <script src="https://cdn.gtranslate.net/widgets/latest/dropdown.js" defer></script>
