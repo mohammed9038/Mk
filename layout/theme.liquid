@@ -270,50 +270,64 @@
     {%- comment -%} Professional Drawer Styles {%- endcomment -%}
     {{ 'component-professional-drawer-clean.css' | asset_url | stylesheet_tag }}
     
-    {%- comment -%} Desktop Navigation Dropdown Styles - Complete Fix {%- endcomment -%}
-    {{ 'dropdown-hover-fix.css' | asset_url | stylesheet_tag }}
+    {%- comment -%} Dropdown Hover Ultimate Fix - CSS {%- endcomment -%}
+    {{ 'dropdown-hover-aggressive.css' | asset_url | stylesheet_tag }}
     
-    {%- comment -%} Critical dropdown hover CSS override {%- endcomment -%}
-    <style>
-      @media screen and (min-width: 990px) {
-        /* Emergency override for base.css conflicts */
-        body.dropdown-hover-enabled .js .header__inline-menu header-menu:hover details > .header__submenu,
-        body.dropdown-hover-enabled .js .header__inline-menu header-menu details[open] > .header__submenu,
-        body.dropdown-hover-enabled .js .header__inline-menu header-menu details.force-open > .header__submenu {
-          opacity: 1 !important;
-          visibility: visible !important;
-          transform: translateY(0) !important;
-          pointer-events: auto !important;
-          animation: none !important;
-          display: block !important;
-          z-index: 9999 !important;
-          position: absolute !important;
-          top: 100% !important;
-          left: 0 !important;
-        }
-        
-        /* Force positioning */
-        body.dropdown-hover-enabled .header__inline-menu header-menu {
-          position: relative !important;
-        }
-        
-        /* Override base.css hidden state */
-        body.dropdown-hover-enabled .js .header__inline-menu details > .header__submenu {
-          position: absolute !important;
-          top: 100% !important;
-          left: 0 !important;
-          background: rgb(var(--color-background)) !important;
-          border: 1px solid rgba(var(--color-foreground), 0.1) !important;
-          border-radius: 8px !important;
-          box-shadow: 0 4px 12px rgba(0,0,0,0.1) !important;
-          min-width: 200px !important;
-          padding: 0.5rem 0 !important;
-        }
+    {%- comment -%} Dropdown Hover Ultimate Fix - JavaScript {%- endcomment -%}
+    <script src="{{ 'dropdown-hover-ultimate-fix.js' | asset_url }}" defer></script>
+    
+    {%- comment -%} Emergency dropdown styles with maximum priority {%- endcomment -%}
+    <style id="dropdown-hover-emergency-override">
+      /* Emergency override for dropdown hover */
+      header-menu details[open] > .header__submenu,
+      header-menu details[open] [id*="HeaderMenu-MenuList"],
+      .header__inline-menu details[open] > .header__submenu,
+      .header__inline-menu details[open] [id*="HeaderMenu-MenuList"] {
+        opacity: 1 !important;
+        visibility: visible !important;
+        transform: translateY(0) !important;
+        display: block !important;
+        pointer-events: auto !important;
+      }
+      
+      /* Ensure dropdowns are hidden by default */
+      header-menu details:not([open]) > .header__submenu,
+      header-menu details:not([open]) [id*="HeaderMenu-MenuList"],
+      .header__inline-menu details:not([open]) > .header__submenu,
+      .header__inline-menu details:not([open]) [id*="HeaderMenu-MenuList"] {
+        opacity: 0 !important;
+        visibility: hidden !important;
+        pointer-events: none !important;
+      }
+      
+      /* Remove all animations that might interfere */
+      header-menu details .header__submenu,
+      header-menu details [id*="HeaderMenu-MenuList"],
+      .header__inline-menu details .header__submenu,
+      .header__inline-menu details [id*="HeaderMenu-MenuList"] {
+        animation: none !important;
+        transition: opacity 0.2s ease, visibility 0.2s ease, transform 0.2s ease !important;
+      }
+      
+      /* Position dropdowns correctly */
+      header-menu .list-menu--inline > li,
+      .header__inline-menu .list-menu--inline > li {
+        position: relative !important;
+      }
+      
+      header-menu .header__submenu,
+      header-menu [id*="HeaderMenu-MenuList"],
+      .header__inline-menu .header__submenu,
+      .header__inline-menu [id*="HeaderMenu-MenuList"] {
+        position: absolute !important;
+        top: 100% !important;
+        left: 0 !important;
+        z-index: 999999 !important;
+        background: white !important;
+        min-width: 200px !important;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.1) !important;
       }
     </style>
-    
-    {%- comment -%} Desktop Navigation Dropdown JavaScript - Complete Fix {%- endcomment -%}
-    <script src="{{ 'dropdown-hover-fix.js' | asset_url }}" defer></script>
 
     {%- unless settings.type_body_font.system? -%}
       <link rel="preload" as="font" href="{{ settings.type_body_font | font_url }}" type="font/woff2" crossorigin>
