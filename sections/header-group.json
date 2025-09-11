@@ -13,27 +13,10 @@
   "sections": {
     "header": {
       "type": "header",
-      "blocks": {
-        "g_translate_app_block_dropdown_XbPTk4": {
-          "type": "shopify://apps/g-translate-shop-translator/blocks/app-block-dropdown/408a74ac-f92d-43cf-a1b1-a044341e66bd",
-          "disabled": true,
-          "settings": {
-            "horizontal_position": "inline",
-            "vertical_position": "bottom",
-            "select_language_label": "Select Language",
-            "native_language_names": true,
-            "wrapper_selector": "",
-            "custom_css": ""
-          }
-        }
-      },
-      "block_order": [
-        "g_translate_app_block_dropdown_XbPTk4"
-      ],
       "name": "Header",
       "settings": {
         "logo_position": "top-left",
-        "menu": "new-manu",
+        "menu": "menu",
         "menu_type_desktop": "dropdown",
         "sticky_header_type": "on-scroll-up",
         "show_line_separator": false,
