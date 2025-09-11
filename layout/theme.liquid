@@ -19,6 +19,10 @@
     <link rel="stylesheet" href="{{ 'navigation-professional.css' | asset_url }}" media="print" onload="this.media='all'">
     <noscript>{{ 'navigation-professional.css' | asset_url | stylesheet_tag }}</noscript>
     
+    <!-- Navigation Dropdown Fix CSS -->
+    <link rel="stylesheet" href="{{ 'navigation-dropdown-fix.css' | asset_url }}" media="print" onload="this.media='all'">
+    <noscript>{{ 'navigation-dropdown-fix.css' | asset_url | stylesheet_tag }}</noscript>
+    
     <!-- GTranslate Professional Styling -->
     <link rel="stylesheet" href="{{ 'gtranslate-professional.css' | asset_url }}" media="print" onload="this.media='all'">
     <noscript>{{ 'gtranslate-professional.css' | asset_url | stylesheet_tag }}</noscript>
@@ -51,6 +55,7 @@
     
     {%- comment -%} Professional Navigation System - Load early {%- endcomment -%}
     <script src="{{ 'navigation-controller.js' | asset_url }}" defer="defer"></script>
+    <script src="{{ 'navigation-dropdown-fix.js' | asset_url }}" defer="defer"></script>
     <script src="{{ 'slideshow-enhancer.js' | asset_url }}" defer="defer"></script>
     {%- if settings.animations_reveal_on_scroll -%}
       <script src="{{ 'animations.js' | asset_url }}" defer="defer"></script>

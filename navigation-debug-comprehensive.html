@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Navigation Dropdown Test</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background: #f5f5f5;
+        }
+        
+        .test-container {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .test-result {
+            padding: 10px;
+            margin: 5px 0;
+            border-radius: 4px;
+            font-weight: bold;
+        }
+        
+        .pass { background: #d4edda; color: #155724; }
+        .fail { background: #f8d7da; color: #721c24; }
+        .warning { background: #fff3cd; color: #856404; }
+        .info { background: #d1ecf1; color: #0c5460; }
+        
+        .dropdown-demo {
+            background: #fff;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+        
+        /* Simplified navigation styles for testing */
+        .test-nav {
+            display: flex;
+            gap: 20px;
+            padding: 10px;
+            background: #333;
+            border-radius: 4px;
+        }
+        
+        .test-nav header-menu {
+            position: relative;
+        }
+        
+        .test-nav details {
+            position: relative;
+        }
+        
+        .test-nav summary {
+            color: white;
+            padding: 10px 15px;
+            cursor: pointer;
+            list-style: none;
+            border-radius: 4px;
+            transition: background 0.2s;
+        }
+        
+        .test-nav summary:hover {
+            background: #555;
+        }
+        
+        .test-nav .header__submenu {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background: white;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            min-width: 200px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            
+            /* Initial hidden state */
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            pointer-events: none;
+            transition: all 0.2s ease;
+        }
+        
+        .test-nav details[open] > .header__submenu {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+            pointer-events: auto;
+        }
+        
+        .test-nav .header__submenu a {
+            display: block;
+            padding: 10px 15px;
+            color: #333;
+            text-decoration: none;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .test-nav .header__submenu a:hover {
+            background: #f5f5f5;
+        }
+        
+        .test-nav .header__submenu a:last-child {
+            border-bottom: none;
+        }
+        
+        pre {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 4px;
+            overflow-x: auto;
+            font-size: 12px;
+        }
+        
+        .debug-button {
+            background: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        
+        .debug-button:hover {
+            background: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <h1>🔍 Navigation Dropdown Debug Test</h1>
+    
+    <div class="test-container">
+        <h2>Live Navigation Test</h2>
+        <p>This simulates your Shopify navigation structure:</p>
+        
+        <nav class="test-nav">
+            <header-menu>
+                <details id="Details-HeaderMenu-1">
+                    <summary>Products</summary>
+                    <ul class="header__submenu">
+                        <li><a href="#">Category 1</a></li>
+                        <li><a href="#">Category 2</a></li>
+                        <li><a href="#">Category 3</a></li>
+                        <li><a href="#">View All</a></li>
+                    </ul>
+                </details>
+            </header-menu>
+            
+            <header-menu>
+                <details id="Details-HeaderMenu-2">
+                    <summary>Collections</summary>
+                    <ul class="header__submenu">
+                        <li><a href="#">New Arrivals</a></li>
+                        <li><a href="#">Best Sellers</a></li>
+                        <li><a href="#">Sale Items</a></li>
+                    </ul>
+                </details>
+            </header-menu>
+            
+            <header-menu>
+                <details id="Details-HeaderMenu-3">
+                    <summary>About</summary>
+                    <ul class="header__submenu">
+                        <li><a href="#">Our Story</a></li>
+                        <li><a href="#">Team</a></li>
+                        <li><a href="#">Contact</a></li>
+                    </ul>
+                </details>
+            </header-menu>
+        </nav>
+        
+        <p><strong>Try clicking or hovering over the menu items above.</strong></p>
+        
+        <div style="margin-top: 20px;">
+            <button class="debug-button" onclick="runDiagnostic()">🔍 Run Full Diagnostic</button>
+            <button class="debug-button" onclick="toggleDebugMode()">🐛 Toggle Debug Mode</button>
+            <button class="debug-button" onclick="forceShowDropdowns()">👁️ Force Show All Dropdowns</button>
+            <button class="debug-button" onclick="testNavController()">⚙️ Test NavigationController</button>
+        </div>
+    </div>
+    
+    <div class="test-container">
+        <h2>Diagnostic Results</h2>
+        <div id="diagnostic-results"></div>
+    </div>
+    
+    <div class="test-container">
+        <h2>Console Output</h2>
+        <pre id="console-output"></pre>
+    </div>
+
+    <script>
+        // Capture console output
+        const originalConsole = { ...console };
+        const consoleOutput = document.getElementById('console-output');
+        const resultsContainer = document.getElementById('diagnostic-results');
+        
+        function logToConsole(message, type = 'log') {
+            consoleOutput.textContent += `[${type.toUpperCase()}] ${message}\n`;
+            consoleOutput.scrollTop = consoleOutput.scrollHeight;
+            originalConsole[type](message);
+        }
+        
+        function addResult(message, type = 'info') {
+            const div = document.createElement('div');
+            div.className = `test-result ${type}`;
+            div.textContent = message;
+            resultsContainer.appendChild(div);
+        }
+        
+        // Override console methods
+        console.log = (msg) => logToConsole(msg, 'log');
+        console.warn = (msg) => logToConsole(msg, 'warn');
+        console.error = (msg) => logToConsole(msg, 'error');
+        console.info = (msg) => logToConsole(msg, 'info');
+        
+        let debugMode = false;
+        
+        function runDiagnostic() {
+            resultsContainer.innerHTML = '';
+            addResult('🔍 Running comprehensive navigation diagnostic...', 'info');
+            
+            // Test 1: Check for NavigationController
+            if (typeof NavigationController !== 'undefined') {
+                addResult('✅ NavigationController class found', 'pass');
+                
+                if (window.navigationController) {
+                    addResult('✅ NavigationController instance found', 'pass');
+                    addResult(`State: Initialized=${window.navigationController.initialized}`, 'info');
+                } else {
+                    addResult('⚠️ NavigationController not instantiated, creating...', 'warning');
+                    try {
+                        window.navigationController = new NavigationController();
+                        addResult('✅ NavigationController manually created', 'pass');
+                    } catch (error) {
+                        addResult(`❌ Failed to create NavigationController: ${error.message}`, 'fail');
+                    }
+                }
+            } else {
+                addResult('❌ NavigationController class not found', 'fail');
+            }
+            
+            // Test 2: Check dropdown elements
+            const dropdowns = document.querySelectorAll('details[id^="Details-HeaderMenu-"]');
+            if (dropdowns.length > 0) {
+                addResult(`✅ Found ${dropdowns.length} dropdown elements`, 'pass');
+                
+                dropdowns.forEach((dropdown, index) => {
+                    const summary = dropdown.querySelector('summary');
+                    const submenu = dropdown.querySelector('.header__submenu');
+                    const headerMenu = dropdown.closest('header-menu');
+                    
+                    let issues = [];
+                    if (!summary) issues.push('missing summary');
+                    if (!submenu) issues.push('missing submenu');
+                    if (!headerMenu) issues.push('not wrapped in header-menu');
+                    
+                    if (issues.length === 0) {
+                        addResult(`✅ Dropdown ${index + 1}: Structure OK`, 'pass');
+                    } else {
+                        addResult(`❌ Dropdown ${index + 1}: ${issues.join(', ')}`, 'fail');
+                    }
+                });
+            } else {
+                addResult('❌ No dropdown elements found', 'fail');
+            }
+            
+            // Test 3: Check CSS rules
+            const testDropdown = document.querySelector('details[id^="Details-HeaderMenu-"]');
+            if (testDropdown) {
+                const submenu = testDropdown.querySelector('.header__submenu');
+                if (submenu) {
+                    const computedStyles = window.getComputedStyle(submenu);
+                    const opacity = computedStyles.opacity;
+                    const visibility = computedStyles.visibility;
+                    const position = computedStyles.position;
+                    
+                    addResult(`CSS State: opacity=${opacity}, visibility=${visibility}, position=${position}`, 'info');
+                    
+                    if (opacity === '0' && visibility === 'hidden') {
+                        addResult('✅ Dropdown properly hidden by default', 'pass');
+                    } else {
+                        addResult('⚠️ Dropdown not properly hidden', 'warning');
+                    }
+                }
+            }
+            
+            // Test 4: Test dropdown functionality
+            setTimeout(() => {
+                if (testDropdown) {
+                    addResult('🧪 Testing dropdown toggle...', 'info');
+                    testDropdown.setAttribute('open', '');
+                    
+                    setTimeout(() => {
+                        const submenu = testDropdown.querySelector('.header__submenu');
+                        const computedStyles = window.getComputedStyle(submenu);
+                        const opacity = parseFloat(computedStyles.opacity);
+                        const visibility = computedStyles.visibility;
+                        
+                        if (opacity > 0 && visibility === 'visible') {
+                            addResult('✅ Dropdown opens correctly', 'pass');
+                        } else {
+                            addResult('❌ Dropdown does not become visible when opened', 'fail');
+                            addResult(`Open state: opacity=${opacity}, visibility=${visibility}`, 'info');
+                        }
+                        
+                        // Close it
+                        testDropdown.removeAttribute('open');
+                    }, 200);
+                }
+            }, 500);
+        }
+        
+        function toggleDebugMode() {
+            debugMode = !debugMode;
+            document.body.classList.toggle('dropdown-debug', debugMode);
+            addResult(debugMode ? '🐛 Debug mode ON' : '🐛 Debug mode OFF', 'info');
+        }
+        
+        function forceShowDropdowns() {
+            const dropdowns = document.querySelectorAll('.header__submenu');
+            dropdowns.forEach(submenu => {
+                submenu.style.opacity = '1';
+                submenu.style.visibility = 'visible';
+                submenu.style.transform = 'translateY(0)';
+                submenu.style.pointerEvents = 'auto';
+                submenu.style.background = 'yellow';
+                submenu.style.border = '2px solid red';
+            });
+            addResult('👁️ Forced all dropdowns visible with debug styling', 'info');
+        }
+        
+        function testNavController() {
+            if (window.navigationController) {
+                addResult('⚙️ Testing NavigationController methods...', 'info');
+                try {
+                    const status = window.navigationController.getDebugInfo();
+                    addResult(`Debug Info: ${JSON.stringify(status)}`, 'info');
+                    addResult('✅ NavigationController methods working', 'pass');
+                } catch (error) {
+                    addResult(`❌ NavigationController error: ${error.message}`, 'fail');
+                }
+            } else {
+                addResult('❌ NavigationController not available for testing', 'fail');
+            }
+        }
+        
+        // Initialize basic dropdown functionality for the test
+        document.addEventListener('DOMContentLoaded', () => {
+            const dropdowns = document.querySelectorAll('.test-nav details');
+            
+            dropdowns.forEach(dropdown => {
+                const summary = dropdown.querySelector('summary');
+                const headerMenu = dropdown.closest('header-menu');
+                
+                // Click functionality
+                summary.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    
+                    // Close other dropdowns
+                    dropdowns.forEach(other => {
+                        if (other !== dropdown) {
+                            other.removeAttribute('open');
+                        }
+                    });
+                    
+                    // Toggle this one
+                    if (dropdown.hasAttribute('open')) {
+                        dropdown.removeAttribute('open');
+                    } else {
+                        dropdown.setAttribute('open', '');
+                    }
+                });
+                
+                // Hover functionality for desktop
+                if (window.innerWidth >= 990) {
+                    headerMenu.addEventListener('mouseenter', () => {
+                        dropdown.setAttribute('open', '');
+                    });
+                    
+                    headerMenu.addEventListener('mouseleave', () => {
+                        setTimeout(() => {
+                            if (!headerMenu.matches(':hover')) {
+                                dropdown.removeAttribute('open');
+                            }
+                        }, 100);
+                    });
+                }
+            });
+            
+            logToConsole('Test navigation initialized');
+        });
+        
+        // Close dropdowns when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!e.target.closest('.test-nav')) {
+                const dropdowns = document.querySelectorAll('.test-nav details[open]');
+                dropdowns.forEach(dropdown => {
+                    dropdown.removeAttribute('open');
+                });
+            }
+        });
+        
+        logToConsole('Navigation debug test page loaded');
+    </script>
+</body>
+</html>
