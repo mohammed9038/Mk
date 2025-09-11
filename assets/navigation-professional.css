@@ -1,0 +1,377 @@
+/**
+ * Professional Navigation Styles
+ * Clean, accessible, and performant dropdown navigation
+ * 
+ * @version 2.0.0
+ * @author Professional Theme Development Team
+ */
+
+/* =============================================================================
+   Base Navigation Styles
+   ============================================================================= */
+
+.header__inline-menu {
+  position: relative;
+  z-index: 100;
+}
+
+.list-menu--inline {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.header__menu-item {
+  display: flex;
+  align-items: center;
+  position: relative;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+/* =============================================================================
+   Dropdown Structure
+   ============================================================================= */
+
+header-menu {
+  position: relative;
+  display: block;
+}
+
+header-menu details {
+  position: relative;
+}
+
+header-menu details > summary {
+  cursor: pointer;
+  list-style: none;
+  position: relative;
+  display: flex;
+  align-items: center;
+  padding: 1rem 1.5rem;
+  border: none;
+  background: none;
+  color: inherit;
+  font: inherit;
+  transition: all 0.2s ease;
+}
+
+/* Remove default details marker */
+header-menu details > summary::-webkit-details-marker {
+  display: none;
+}
+
+header-menu details > summary::marker {
+  display: none;
+}
+
+/* Caret icon styling */
+header-menu details > summary .icon-caret {
+  margin-left: 0.5rem;
+  transition: transform 0.2s ease;
+  width: 12px;
+  height: 12px;
+}
+
+header-menu details[open] > summary .icon-caret {
+  transform: rotate(180deg);
+}
+
+/* =============================================================================
+   Dropdown Menu Styles
+   ============================================================================= */
+
+.header__submenu {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  min-width: 220px;
+  max-width: 300px;
+  
+  /* Initial hidden state */
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-10px);
+  pointer-events: none;
+  
+  /* Styling */
+  background: rgb(var(--color-background));
+  border: 1px solid rgba(var(--color-foreground), 0.1);
+  border-radius: 8px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  
+  /* Animation */
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  
+  /* Layout */
+  z-index: 1000;
+  overflow: hidden;
+}
+
+/* Submenu visible state */
+header-menu details[open] > .header__submenu {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+/* Submenu list styling */
+.header__submenu .list-menu {
+  list-style: none;
+  margin: 0;
+  padding: 0.5rem 0;
+}
+
+.header__submenu .list-menu__item {
+  display: block;
+}
+
+.header__submenu .header__menu-item {
+  display: block;
+  padding: 0.75rem 1.5rem;
+  color: rgb(var(--color-foreground));
+  text-decoration: none;
+  border-bottom: none;
+  transition: all 0.15s ease;
+  position: relative;
+}
+
+.header__submenu .header__menu-item:hover,
+.header__submenu .header__menu-item:focus {
+  background-color: rgba(var(--color-foreground), 0.05);
+  color: rgb(var(--color-foreground));
+}
+
+.header__submenu .header__menu-item:focus {
+  outline: 2px solid rgba(var(--color-foreground), 0.3);
+  outline-offset: -2px;
+}
+
+/* Active menu item */
+.header__submenu .list-menu__item--active .header__menu-item {
+  background-color: rgba(var(--color-foreground), 0.08);
+  font-weight: 600;
+}
+
+/* =============================================================================
+   Multi-level Dropdown (Nested)
+   ============================================================================= */
+
+.header__submenu details {
+  position: relative;
+}
+
+.header__submenu details > summary {
+  padding: 0.75rem 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+  transition: background-color 0.15s ease;
+}
+
+.header__submenu details > summary:hover {
+  background-color: rgba(var(--color-foreground), 0.05);
+}
+
+.header__submenu details > .header__submenu {
+  left: 100%;
+  top: 0;
+}
+
+/* =============================================================================
+   Language Selector Styles
+   ============================================================================= */
+
+.gtranslate_wrapper {
+  position: relative;
+  display: inline-block;
+}
+
+.gtranslate_wrapper.active,
+.gtranslate_wrapper.open {
+  z-index: 1001;
+}
+
+/* Language selector trigger */
+.gtranslate-trigger,
+[data-gtranslate-trigger] {
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  padding: 1rem 1.5rem;
+  text-decoration: none;
+  transition: all 0.2s ease;
+  background: none;
+  border: none;
+  color: inherit;
+  font: inherit;
+}
+
+.gtranslate-trigger:hover,
+[data-gtranslate-trigger]:hover,
+.gtranslate-trigger:focus,
+[data-gtranslate-trigger]:focus {
+  background-color: rgba(var(--color-foreground), 0.05);
+}
+
+/* Language selector dropdown */
+.gtranslate_wrapper .gt-current-lang {
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.gtranslate_wrapper .gt-current-lang:hover {
+  opacity: 0.8;
+}
+
+/* =============================================================================
+   Desktop Specific Styles
+   ============================================================================= */
+
+@media screen and (min-width: 990px) {
+  
+  /* Enable hover on desktop */
+  .header__inline-menu header-menu:hover details > .header__submenu {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+    pointer-events: auto;
+  }
+  
+  /* Ensure parent positioning */
+  .header__inline-menu header-menu {
+    position: relative;
+  }
+  
+  /* Optimize for desktop hover */
+  .header__submenu {
+    transition-delay: 0ms;
+  }
+  
+  .header__inline-menu header-menu:hover .header__submenu {
+    transition-delay: 100ms;
+  }
+  
+  /* Right-aligned dropdowns for items near the right edge */
+  .header__inline-menu .list-menu__item:nth-last-child(-n+2) .header__submenu {
+    left: auto;
+    right: 0;
+  }
+  
+  /* Language selector positioning */
+  .gtranslate_wrapper .gt-lang-dropdown {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    min-width: 200px;
+    background: rgb(var(--color-background));
+    border: 1px solid rgba(var(--color-foreground), 0.1);
+    border-radius: 8px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+  }
+}
+
+/* =============================================================================
+   Mobile Specific Styles
+   ============================================================================= */
+
+@media screen and (max-width: 989px) {
+  
+  .header__submenu {
+    position: static;
+    opacity: 1;
+    visibility: visible;
+    transform: none;
+    pointer-events: auto;
+    box-shadow: none;
+    border: none;
+    border-radius: 0;
+    background: rgba(var(--color-foreground), 0.02);
+    margin-top: 0.5rem;
+  }
+  
+  .header__submenu .header__menu-item {
+    padding-left: 2rem;
+  }
+  
+  /* Mobile navigation adjustments */
+  .list-menu--inline {
+    flex-direction: column;
+  }
+  
+  .header__menu-item {
+    width: 100%;
+    justify-content: space-between;
+  }
+}
+
+/* =============================================================================
+   Focus and Accessibility Styles
+   ============================================================================= */
+
+.header__menu-item:focus,
+summary.header__menu-item:focus {
+  outline: 2px solid rgba(var(--color-foreground), 0.5);
+  outline-offset: 2px;
+  position: relative;
+  z-index: 1001;
+}
+
+/* Ensure focus is visible */
+.header__submenu .header__menu-item:focus-visible {
+  outline: 2px solid rgba(var(--color-foreground), 0.7);
+  outline-offset: -2px;
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  .header__submenu {
+    border: 2px solid;
+  }
+  
+  .header__submenu .header__menu-item:hover,
+  .header__submenu .header__menu-item:focus {
+    background-color: rgba(var(--color-foreground), 0.15);
+  }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  .header__submenu,
+  .icon-caret,
+  .header__menu-item {
+    transition: none;
+  }
+  
+  header-menu details[open] > .header__submenu {
+    transition: none;
+  }
+}
+
+/* =============================================================================
+   Dark mode support
+   ============================================================================= */
+
+@media (prefers-color-scheme: dark) {
+  .header__submenu {
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    border-color: rgba(var(--color-foreground), 0.2);
+  }
+}
+
+/* =============================================================================
+   Print styles
+   ============================================================================= */
+
+@media print {
+  .header__submenu,
+  .gtranslate_wrapper {
+    display: none !important;
+  }
+}
