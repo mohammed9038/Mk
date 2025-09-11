@@ -26,10 +26,10 @@ class NavigationController {
 
     this.selectors = {
       navigation: '.header__inline-menu',
-      dropdownTrigger: 'details[id^="Details-HeaderMenu-"]',
+      dropdownTrigger: 'details[id^="Details-HeaderMenu-"], details[id^="Details-HeaderLanguage-"]',
       dropdownMenu: '.header__submenu',
-      languageSelector: '.gtranslate_wrapper',
-      languageTrigger: '.gtranslate-trigger, [data-gtranslate-trigger]',
+      languageSelector: '.gtranslate_wrapper, .header__language-selector',
+      languageTrigger: '.gtranslate-trigger, [data-gtranslate-trigger], .header__language-selector summary',
       mobileMenu: '.menu-drawer'
     };
 

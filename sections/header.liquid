@@ -205,6 +205,39 @@
         
         console.log('[Header] Fallback dropdown setup complete');
       }
+      
+      // Add test language switching functionality
+      window.switchLanguage = function(lang) {
+        console.log('[Language] Switching to:', lang);
+        
+        // Update the language selector display
+        const languageSelector = document.querySelector('.header__language-selector summary span:last-child');
+        const flagMap = {
+          'en': { flag: '🇺🇸', name: 'EN' },
+          'ar': { flag: '🇸🇦', name: 'AR' },
+          'fr': { flag: '🇫🇷', name: 'FR' }
+        };
+        
+        if (languageSelector && flagMap[lang]) {
+          const flagElement = document.querySelector('.header__language-selector .language-flag');
+          if (flagElement) flagElement.textContent = flagMap[lang].flag;
+          languageSelector.textContent = flagMap[lang].name;
+        }
+        
+        // Close the dropdown
+        const details = document.querySelector('.header__language-selector');
+        if (details) details.removeAttribute('open');
+        
+        // In a real implementation, this would trigger a page reload or AJAX update
+        console.log(`Language switched to: ${flagMap[lang]?.name || lang}`);
+        
+        // Show success message
+        const message = document.createElement('div');
+        message.innerHTML = `✅ Language changed to ${flagMap[lang]?.name || lang}`;
+        message.style.cssText = 'position: fixed; top: 20px; right: 20px; background: #28a745; color: white; padding: 12px 20px; border-radius: 6px; z-index: 10000; font-family: inherit;';
+        document.body.appendChild(message);
+        setTimeout(() => message.remove(), 3000);
+      };
     }, 200);
   });
 </script>
@@ -431,6 +464,37 @@
           <div class="header__localization header__gtranslate">
             <!-- GTranslate inline instance for header -->
             <div class="gtranslate_wrapper header-gtranslate"></div>
+            
+            {%- comment -%} Fallback Test Language Selector for Development {%- endcomment -%}
+            <details class="header__language-selector" id="Details-HeaderLanguage-1" style="margin-left: 10px;">
+              <summary class="header__menu-item list-menu__item link focus-inset" style="display: flex; align-items: center; padding: 8px 12px; cursor: pointer;">
+                <span class="language-flag" style="margin-right: 6px;">🌐</span>
+                <span>EN</span>
+                <svg style="margin-left: 6px; width: 12px; height: 12px; transform: rotate(0deg); transition: transform 0.2s;" viewBox="0 0 10 6">
+                  <path fill="currentColor" d="m1.04 0 4 4 4-4"/>
+                </svg>
+              </summary>
+              <ul class="header__submenu list-menu list-menu--disclosure" style="position: absolute; top: 100%; right: 0; background: white; border: 1px solid #ddd; border-radius: 8px; padding: 8px 0; min-width: 120px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); z-index: 1000;">
+                <li>
+                  <a href="#" onclick="switchLanguage('en'); return false;" class="header__menu-item list-menu__item link link--text focus-inset" style="display: flex; align-items: center; padding: 8px 16px; text-decoration: none; color: inherit;">
+                    <span style="margin-right: 8px;">🇺🇸</span>
+                    <span>English</span>
+                  </a>
+                </li>
+                <li>
+                  <a href="#" onclick="switchLanguage('ar'); return false;" class="header__menu-item list-menu__item link link--text focus-inset" style="display: flex; align-items: center; padding: 8px 16px; text-decoration: none; color: inherit;">
+                    <span style="margin-right: 8px;">🇸🇦</span>
+                    <span>العربية</span>
+                  </a>
+                </li>
+                <li>
+                  <a href="#" onclick="switchLanguage('fr'); return false;" class="header__menu-item list-menu__item link link--text focus-inset" style="display: flex; align-items: center; padding: 8px 16px; text-decoration: none; color: inherit;">
+                    <span style="margin-right: 8px;">🇫🇷</span>
+                    <span>Français</span>
+                  </a>
+                </li>
+              </ul>
+            </details>
           </div>
         {%- endif -%}
 
