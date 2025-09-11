@@ -13,6 +13,23 @@
   "sections": {
     "header": {
       "type": "header",
+      "blocks": {
+        "g_translate_shop_translator_app_block_dropdown_3DV9Vb": {
+          "type": "shopify://apps/g-translate-shop-translator/blocks/app-block-dropdown/408a74ac-f92d-43cf-a1b1-a044341e66bd",
+          "disabled": true,
+          "settings": {
+            "horizontal_position": "inline",
+            "vertical_position": "bottom",
+            "select_language_label": "Select Language",
+            "native_language_names": true,
+            "wrapper_selector": "",
+            "custom_css": ""
+          }
+        }
+      },
+      "block_order": [
+        "g_translate_shop_translator_app_block_dropdown_3DV9Vb"
+      ],
       "name": "Header",
       "settings": {
         "logo_position": "top-left",
@@ -25,7 +42,7 @@
         "enable_country_selector": false,
         "enable_language_selector": true,
         "gtranslate_style": "dropdown",
-        "gtranslate_show_flags": true,
+        "gtranslate_show_flags": false,
         "gtranslate_text_color": "#333333",
         "gtranslate_bg_color": "#ffffff",
         "drawer_title": "Menu",
