@@ -22,10 +22,18 @@
     if(!menuElems.length){
       menuElems = Array.from(document.querySelectorAll('nav.header__inline-menu details'));
     }
+    // Broad fallback: any details inside a header element that has a summary and a nested ul (generic)
+    if(!menuElems.length){
+      menuElems = Array.from(document.querySelectorAll('header details'));
+    }
     return menuElems.map(m=>{
       const details = m.tagName === 'DETAILS' ? m : m.querySelector('details');
       const summary = details ? details.querySelector('summary') : null;
-      const submenu = details ? details.querySelector('.header__submenu') : null;
+      // Try multiple submenu patterns
+      let submenu = null;
+      if(details){
+        submenu = details.querySelector('.header__submenu') || details.querySelector('ul.list-menu--disclosure') || details.querySelector('ul');
+      }
       return {root: m, details, summary, submenu};
     }).filter(x=>x.details && x.summary && x.submenu);
   }
@@ -52,7 +60,9 @@
       /* Ensure open state always visible regardless of animations */
       .header__inline-menu header-menu details[open] > .header__submenu,
   nav.header__inline-menu details[open] > .header__submenu,
-  .dropdown-hover-active details[open] > .header__submenu {opacity:1!important;transform:translateY(0)!important;visibility:visible!important;pointer-events:auto!important;}
+  .dropdown-hover-active details[open] > .header__submenu,
+  .dropdown-hover-active details[open] > ul {opacity:1!important;transform:translateY(0)!important;visibility:visible!important;pointer-events:auto!important;}
+  .dropdown-hover-active details > ul {transition:opacity .18s ease, transform .18s ease;}
     }`;
     document.head.appendChild(style);
   }
@@ -65,8 +75,12 @@
       log('no menus yet', {
         inlineNavs: document.querySelectorAll('.header__inline-menu').length,
         headerMenus: document.querySelectorAll('.header__inline-menu header-menu').length,
-        detailsWithSub: document.querySelectorAll('details > .header__submenu').length
+        detailsWithSub: document.querySelectorAll('details > .header__submenu').length,
+        headerDetails: document.querySelectorAll('header details').length
       });
+      // Diagnostic: show first few candidate details outerHTML truncated
+      const cand = Array.from(document.querySelectorAll('header details')).slice(0,3).map(d=>d.outerHTML.slice(0,120));
+      if(cand.length) log('header details candidates (truncated):', cand);
       return; 
     }
     log('menus found', state.menus.length);
