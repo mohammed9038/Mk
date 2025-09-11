@@ -41,9 +41,12 @@
   function closeOthers(except){ state.menus.forEach(m=>{ if(m.details!==except) m.details.removeAttribute('open'); }); }
   function add(el,ev,fn,opt){ el.addEventListener(ev,fn,opt); state.listeners.push(()=>el.removeEventListener(ev,fn,opt)); }
   function log(){ if(DEBUG) console.log('[dropdown-hover]', ...arguments); }
-  function openMenu(m){
+  function toggleMenu(m){
     if(!isDesktop()) return; 
-    if(!m.details.hasAttribute('open')){ 
+    if(m.details.hasAttribute('open')){ 
+      m.details.removeAttribute('open');
+      log('close', m.summary && m.summary.textContent && m.summary.textContent.trim());
+    } else {
       closeOthers(m.details); 
       m.details.setAttribute('open','');
       // Fallback: force reflow then ensure attribute still present
@@ -62,6 +65,8 @@
       nav.header__inline-menu details[open] > .header__submenu,
       .dropdown-hover-active details[open] > .header__submenu,
       .dropdown-hover-active details[open] > ul,
+      .dropdown-click-active details[open] > .header__submenu,
+      .dropdown-click-active details[open] > ul,
       details[open] > .header__submenu,
       details[open] > ul.list-menu--disclosure {
         opacity:1!important;
@@ -80,7 +85,8 @@
       }
       .dropdown-hover-active details > ul {transition:opacity .18s ease, transform .18s ease;}
       /* Ensure parent positioning */
-      .dropdown-hover-active details, .dropdown-hover-active header-menu {position:relative!important;}
+      .dropdown-hover-active details, .dropdown-hover-active header-menu,
+      .dropdown-click-active details, .dropdown-click-active header-menu {position:relative!important;}
     }`;
     document.head.appendChild(style);
   }
@@ -103,26 +109,44 @@
     }
     log('menus found', state.menus.length);
     state.menus.forEach(m=>{
-      let leaveTimer=null;
-      function cancel(){ if(leaveTimer){ clearTimeout(leaveTimer); leaveTimer=null; } }
-      function scheduleClose(){ leaveTimer=setTimeout(()=>{ m.details.removeAttribute('open'); log('close', m.summary && m.summary.textContent && m.summary.textContent.trim()); },180); }
-
-      // Root hover
-      add(m.root,'mouseenter',()=>{ cancel(); openMenu(m); });
-      add(m.root,'mouseleave',()=>{ cancel(); scheduleClose(); });
-      // Details hover backup
-      add(m.details,'mouseenter',()=>{ cancel(); openMenu(m); });
-      add(m.details,'mouseleave',()=>{ cancel(); scheduleClose(); });
-      // Summary specific events
-      add(m.summary,'mouseenter',()=>{ cancel(); openMenu(m); });
-      add(m.summary,'focusin',()=>openMenu(m));
-      add(m.summary,'keydown',e=>{ if(e.key==='Escape'){ m.details.removeAttribute('open'); m.summary.blur(); log('escape close'); }});
-      add(m.summary,'click',e=>{ if(isDesktop()){ e.preventDefault(); openMenu(m); }});
+      // Click to toggle dropdown (no hover)
+      add(m.summary,'click',e=>{ 
+        if(isDesktop()){ 
+          e.preventDefault(); 
+          e.stopPropagation();
+          toggleMenu(m); 
+        }
+      });
+      // Keyboard support
+      add(m.summary,'keydown',e=>{ 
+        if(e.key==='Escape'){ 
+          m.details.removeAttribute('open'); 
+          m.summary.blur(); 
+          log('escape close'); 
+        }
+        // Enter/Space to toggle
+        if(e.key==='Enter' || e.key===' '){
+          e.preventDefault();
+          toggleMenu(m);
+        }
+      });
     });
     state.initialized=true;
-    document.documentElement.classList.add('dropdown-hover-active');
+    document.documentElement.classList.add('dropdown-click-active');
+    
+    // Close dropdowns when clicking outside
+    add(document, 'click', e => {
+      if(!isDesktop()) return;
+      const clickedMenu = e.target.closest('details');
+      state.menus.forEach(m => {
+        if(m.details !== clickedMenu && m.details.hasAttribute('open')){
+          m.details.removeAttribute('open');
+          log('close outside click', m.summary && m.summary.textContent && m.summary.textContent.trim());
+        }
+      });
+    });
   }
-  function teardown(){ offAll(); state.menus=[]; state.initialized=false; document.documentElement.classList.remove('dropdown-hover-active'); }
+  function teardown(){ offAll(); state.menus=[]; state.initialized=false; document.documentElement.classList.remove('dropdown-click-active'); }
   function reinit(){ teardown(); setup(); }
 
   // Retry mechanism if menus not yet present
@@ -171,8 +195,8 @@
         const res = { status:'fail', reason:'no menus', width:innerWidth };
         if(state.menus.length){
           const first=state.menus[0];
-          first.root.dispatchEvent(new Event('mouseenter',{bubbles:true}));
-          if(first.details.hasAttribute('open')){ res.status='pass'; delete res.reason; } else { res.reason='hover did not open'; }
+          first.summary.click(); // Simulate click instead of mouseenter
+          if(first.details.hasAttribute('open')){ res.status='pass'; delete res.reason; } else { res.reason='click did not open'; }
         }
         showOverlay(res);
         console.log('[dropdown-hover test]',res);
@@ -182,7 +206,7 @@
   function showOverlay(res){
     const el=document.createElement('div');
     el.style.cssText='position:fixed;top:8px;right:8px;z-index:999999;font:12px/1.4 system-ui,Segoe UI,Arial,sans-serif;padding:10px 14px;border-radius:6px;box-shadow:0 2px 6px rgba(0,0,0,.25);color:#fff;background:'+(res.status==='pass'?'#107c41':'#c50f1f');
-    el.innerHTML=(res.status==='pass'?'✅':'❌')+' Hover '+res.status.toUpperCase()+(res.reason?'<br>'+res.reason:'')+'<br><a href="#" style="color:#fff;text-decoration:underline" id="close-hover-test">close</a>';
+    el.innerHTML=(res.status==='pass'?'✅':'❌')+' Click '+res.status.toUpperCase()+(res.reason?'<br>'+res.reason:'')+'<br><a href="#" style="color:#fff;text-decoration:underline" id="close-hover-test">close</a>';
     document.body.appendChild(el);
     el.querySelector('#close-hover-test').addEventListener('click',e=>{e.preventDefault(); el.remove();});
   }
