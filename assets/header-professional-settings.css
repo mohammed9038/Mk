@@ -1,0 +1,256 @@
+/* 🏢 Professional Header Settings CSS Implementation */
+/* This file ensures all the professional header settings work correctly */
+
+/* Professional Logo Settings */
+.header__heading-logo--desktop {
+  display: block;
+  width: var(--logo-width-desktop);
+  height: auto;
+}
+
+.header__heading-logo--mobile {
+  display: none;
+  width: var(--logo-width-mobile);
+  height: auto;
+}
+
+/* Mobile logo visibility */
+@media screen and (max-width: 749px) {
+  .header__heading-logo--desktop {
+    display: none;
+  }
+  
+  .header__heading-logo--mobile {
+    display: block;
+  }
+  
+  /* If no mobile logo, show desktop logo at mobile size */
+  .header__heading-logo-wrapper:not(:has(.header__heading-logo--mobile)) .header__heading-logo--desktop {
+    display: block;
+    width: var(--logo-width-mobile);
+  }
+}
+
+/* Professional Navigation Styling */
+.header__navigation {
+  font-size: var(--nav-font-size);
+  font-weight: var(--nav-font-weight);
+  height: var(--nav-height);
+  display: flex;
+  align-items: center;
+}
+
+.header__navigation a {
+  color: var(--nav-text-color);
+  text-decoration: none;
+  transition: color var(--dropdown-delay) ease;
+}
+
+.header__navigation a:hover {
+  color: var(--nav-hover-color);
+}
+
+.header__navigation a.active,
+.header__navigation a[aria-current="page"] {
+  color: var(--nav-active-color);
+}
+
+/* Professional Dropdown Styling */
+.header__navigation details[open] summary ~ * {
+  animation: dropdown-fade-in var(--dropdown-delay) ease;
+}
+
+@keyframes dropdown-fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.header__submenu {
+  min-width: var(--dropdown-width);
+  background: var(--dropdown-bg);
+  border: 1px solid var(--dropdown-border);
+  border-radius: var(--dropdown-radius);
+  box-shadow: 0 var(--dropdown-shadow) calc(var(--dropdown-shadow) * 2) rgba(0, 0, 0, 0.1);
+  padding: 0.5rem 0;
+}
+
+.header__submenu a {
+  color: var(--dropdown-text);
+  padding: 0.75rem 1rem;
+  display: block;
+  transition: background-color var(--dropdown-delay) ease;
+}
+
+.header__submenu a:hover {
+  background-color: var(--dropdown-hover-bg);
+}
+
+/* Professional Header Spacing */
+.header {
+  padding-top: var(--header-padding-top);
+  padding-bottom: var(--header-padding-bottom);
+  max-width: var(--header-max-width);
+  margin: 0 auto;
+}
+
+/* Professional Search Bar Styling */
+.header__search-bar {
+  width: var(--search-width);
+}
+
+.search-bar input {
+  background: var(--search-bg);
+  border: 1px solid var(--search-border);
+  color: var(--search-text);
+}
+
+.search-bar input::placeholder {
+  color: var(--search-text-muted);
+}
+
+.search-bar input:focus {
+  border-color: var(--search-border-focus);
+}
+
+/* Professional Navigation Shadow */
+.header__navigation {
+  box-shadow: var(--enable-nav-shadow, 0 2px 4px rgba(0, 0, 0, 0.1));
+}
+
+/* Professional Dropdown Icons */
+.header__navigation details > summary::after {
+  content: var(--enable-dropdown-icons, '▼');
+  margin-left: 0.5rem;
+  font-size: 0.8em;
+  transition: transform var(--dropdown-delay) ease;
+}
+
+.header__navigation details[open] > summary::after {
+  transform: rotate(180deg);
+}
+
+/* Professional Animation Controls */
+.header * {
+  transition-duration: var(--dropdown-delay);
+}
+
+/* Professional Header Blur Effect */
+.header-wrapper[style*="backdrop-filter"] {
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  background: rgba(255, 255, 255, 0.9);
+}
+
+/* Professional Mobile Drawer Settings */
+.menu-drawer {
+  width: var(--drawer-width);
+}
+
+.menu-drawer__heading {
+  color: var(--drawer-title-color);
+  background: var(--drawer-header-bg);
+}
+
+.menu-drawer__utility-links {
+  background: var(--utilities-bg);
+}
+
+/* Professional Language Selector */
+.header__language-selector {
+  color: var(--gtranslate-text-color);
+  background: var(--gtranslate-bg-color);
+}
+
+.header__language-selector:hover {
+  background: var(--gtranslate-hover-bg);
+}
+
+/* Professional Responsive Adjustments */
+@media screen and (max-width: 990px) {
+  .header__navigation {
+    display: none;
+  }
+  
+  .header__search-bar--center {
+    width: 100%;
+    max-width: var(--search-width);
+  }
+}
+
+/* Professional Search Style Variants */
+.header__search-bar--responsive .search-bar {
+  display: block;
+}
+
+.header__search-bar--responsive .search-icon {
+  display: none;
+}
+
+@media screen and (max-width: 749px) {
+  .header__search-bar--responsive .search-bar {
+    display: none;
+  }
+  
+  .header__search-bar--responsive .search-icon {
+    display: block;
+  }
+}
+
+/* Professional Sticky Header with Reduced Logo */
+.scrolled-past-header .header__heading-logo-wrapper {
+  transition: all 0.3s ease;
+}
+
+.scrolled-past-header .header__heading-logo--desktop {
+  width: calc(var(--logo-width-desktop) * 0.75);
+}
+
+.scrolled-past-header .header__heading-logo--mobile {
+  width: calc(var(--logo-width-mobile) * 0.75);
+}
+
+/* Professional Mega Menu Support */
+.header__mega-menu {
+  min-width: calc(var(--dropdown-width) * 2);
+  max-width: var(--header-max-width);
+}
+
+/* Professional Debug Mode Indicators */
+body[data-debug-mode="true"] .header {
+  outline: 2px dashed #ff6b6b;
+}
+
+body[data-debug-mode="true"] .header__navigation {
+  outline: 1px dashed #4ecdc4;
+}
+
+body[data-debug-mode="true"] .header__search-bar {
+  outline: 1px dashed #45b7d1;
+}
+
+/* Professional Performance Monitoring */
+.header[data-performance-monitoring="true"] {
+  position: relative;
+}
+
+.header[data-performance-monitoring="true"]::before {
+  content: "⚡ Performance Monitoring Active";
+  position: absolute;
+  top: -20px;
+  right: 0;
+  font-size: 10px;
+  background: #28a745;
+  color: white;
+  padding: 2px 6px;
+  border-radius: 3px;
+  z-index: 1000;
+}
+
+/* Professional Custom CSS Injection Point */
+/* Custom CSS from admin settings will be injected here */

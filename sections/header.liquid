@@ -34,6 +34,12 @@
 <link rel="stylesheet" href="{{ 'header-structure.css' | asset_url }}" media="print" onload="this.media='all'">
 <noscript>{{ 'header-structure.css' | asset_url | stylesheet_tag }}</noscript>
 
+{%- comment -%}
+  Professional Header Settings CSS - Makes all the professional settings work correctly
+{%- endcomment -%}
+<link rel="stylesheet" href="{{ 'header-professional-settings.css' | asset_url }}" media="print" onload="this.media='all'">
+<noscript>{{ 'header-professional-settings.css' | asset_url | stylesheet_tag }}</noscript>
+
 <style>
   header-drawer {
     justify-self: start;
@@ -160,21 +166,57 @@
   @media screen and (min-width:990px){ .header { padding-top: {{ section.settings.padding_top }}px; padding-bottom: {{ section.settings.padding_bottom }}px; } }
   /* Inject dynamic search vars */
   :root, .header-wrapper { 
+    /* Professional Search Settings */
     --search-width: {{ section.settings.search_width | default: 400 }}px;
-    --search-bg: {{ section.settings.search_background | default: '#ffffff' }};
-    --search-border: {{ section.settings.search_border | default: '#e0e0e0' }};
-    --search-border-focus: {{ section.settings.search_border | default: '#e0e0e0' }};
+    --search-bg: {{ section.settings.search_background | default: '#f8f9fa' }};
+    --search-border: {{ section.settings.search_border | default: '#dee2e6' }};
+    --search-border-focus: {{ section.settings.search_border | default: '#dee2e6' }};
     --search-text: {{ section.settings.search_text | default: '#333333' }};
     --search-text-muted: {{ section.settings.search_text | default: '#333333' | color_modify: 'alpha', 0.6 }};
     --search-button-bg: {{ section.settings.search_button_bg | default: 'rgba(0,0,0,0.08)' }};
     --search-button-bg-hover: {{ section.settings.search_button_bg | default: 'rgba(0,0,0,0.15)' }};
     --search-button-icon: {{ section.settings.search_button_icon | default: '#333333' }};
     
-    /* GTranslate theme settings */
+    /* Professional Navigation Settings */
+    --nav-height: {{ section.settings.nav_height | default: 60 }}px;
+    --nav-font-size: {{ section.settings.nav_font_size | default: 16 }}px;
+    --nav-font-weight: {{ section.settings.nav_font_weight | default: 500 }};
+    --nav-text-color: {{ section.settings.nav_text_color | default: '#2c3e50' }};
+    --nav-hover-color: {{ section.settings.nav_hover_color | default: '#3498db' }};
+    --nav-active-color: {{ section.settings.nav_active_color | default: '#e74c3c' }};
+    --nav-background: {{ section.settings.nav_background | default: '#ffffff' }};
+    --nav-border-color: {{ section.settings.nav_border_color | default: '#e9ecef' }};
+    
+    /* Professional Dropdown Settings */
+    --dropdown-width: {{ section.settings.dropdown_width | default: 240 }}px;
+    --dropdown-shadow: {{ section.settings.dropdown_shadow | default: 20 }}px;
+    --dropdown-radius: {{ section.settings.dropdown_radius | default: 8 }}px;
+    --dropdown-bg: {{ section.settings.dropdown_bg | default: '#ffffff' }};
+    --dropdown-border: {{ section.settings.dropdown_border | default: '#e9ecef' }};
+    --dropdown-text: {{ section.settings.dropdown_text | default: '#2c3e50' }};
+    --dropdown-hover-bg: {{ section.settings.dropdown_hover_bg | default: '#f8f9fa' }};
+    --dropdown-delay: {{ section.settings.dropdown_delay | default: 300 }}ms;
+    
+    /* Professional Header Spacing */
+    --header-padding-top: {{ section.settings.header_padding_top | default: 20 }}px;
+    --header-padding-bottom: {{ section.settings.header_padding_bottom | default: 20 }}px;
+    --header-max-width: {{ section.settings.header_max_width | default: 1400 }}px;
+    
+    /* Professional Logo Settings */
+    --logo-width-desktop: {{ section.settings.logo_width | default: 140 }}px;
+    --logo-width-mobile: {{ section.settings.logo_width_mobile | default: 110 }}px;
+    
+    /* GTranslate Professional Settings */
     --gtranslate-text-color: {{ section.settings.gtranslate_text_color | default: '#333333' }};
     --gtranslate-bg-color: {{ section.settings.gtranslate_bg_color | default: '#ffffff' }};
     --gtranslate-hover-bg: {{ section.settings.gtranslate_bg_color | default: '#ffffff' | color_modify: 'mix', '#f8f9fa', 50 }};
     --gtranslate-border-color: {{ section.settings.gtranslate_bg_color | default: '#ffffff' | color_modify: 'mix', '#e5e5e5', 20 }};
+    
+    /* Mobile Drawer Professional Settings */
+    --drawer-width: {{ section.settings.drawer_width | default: 320 }}px;
+    --drawer-title-color: {{ section.settings.drawer_title_color | default: '#333333' }};
+    --drawer-header-bg: {{ section.settings.drawer_header_bg | default: '#ffffff' }};
+    --utilities-bg: {{ section.settings.utilities_bg | default: '#f8f9fa' }};
   }
 {%- endstyle -%}
 
@@ -304,7 +346,8 @@
   endfor
 -%}
 
-<{% if section.settings.sticky_header_type != 'none' %}sticky-header data-sticky-type="{{ section.settings.sticky_header_type }}"{% else %}div{% endif %} class="header-wrapper color-{{ section.settings.color_scheme }} gradient{% if section.settings.show_line_separator %} header-wrapper--border-bottom{% endif %}">
+<{% if section.settings.sticky_header_type != 'none' %}sticky-header data-sticky-type="{{ section.settings.sticky_header_type }}"{% else %}div{% endif %} class="header-wrapper color-{{ section.settings.color_scheme }} gradient{% if section.settings.show_line_separator %} header-wrapper--border-bottom{% endif %}"
+{%- if section.settings.enable_header_blur -%} style="backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);"{% endif %}>
   
   {%- comment -%} Top Navigation Bar with Dropdown Support {%- endcomment -%}
   {%- if section.settings.show_top_menu and section.settings.menu != blank -%}
@@ -416,21 +459,36 @@
           <h1 class="header__heading">
         {%- endif -%}
             <a href="{{ routes.root_url }}" class="header__heading-link link link--text focus-inset">
-              {%- if settings.logo != blank -%}
+              {%- comment -%} Professional Logo with Mobile Support {%- endcomment -%}
+              {%- if section.settings.logo != blank -%}
                 <div class="header__heading-logo-wrapper">
-                  {%- assign logo_alt = settings.logo.alt | default: shop.name | escape -%}
-                  {%- assign logo_height = settings.logo_width | divided_by: settings.logo.aspect_ratio -%}
-                  {% capture sizes %}(max-width: {{ settings.logo_width | times: 2 }}px) 50vw, {{ settings.logo_width }}px{% endcapture %}
-                  {% capture widths %}{{ settings.logo_width }}, {{ settings.logo_width | times: 1.5 | round }}, {{ settings.logo_width | times: 2 }}{% endcapture %}
-                  {{ settings.logo | image_url: width: 600 | image_tag:
-                    class: 'header__heading-logo motion-reduce',
+                  {%- assign logo_alt = section.settings.logo.alt | default: shop.name | escape -%}
+                  {%- assign logo_height = section.settings.logo_width | divided_by: section.settings.logo.aspect_ratio -%}
+                  {% capture sizes %}(max-width: {{ section.settings.logo_width | times: 2 }}px) 50vw, {{ section.settings.logo_width }}px{% endcapture %}
+                  {% capture widths %}{{ section.settings.logo_width }}, {{ section.settings.logo_width | times: 1.5 | round }}, {{ section.settings.logo_width | times: 2 }}{% endcapture %}
+                  
+                  {%- comment -%} Desktop logo {%- endcomment -%}
+                  {{ section.settings.logo | image_url: width: 600 | image_tag:
+                    class: 'header__heading-logo header__heading-logo--desktop motion-reduce',
                     widths: widths,
                     height: logo_height,
-                    width: settings.logo_width,
+                    width: section.settings.logo_width,
                     alt: logo_alt,
                     sizes: sizes,
                     preload: true
                   }}
+                  
+                  {%- comment -%} Mobile logo (if different) {%- endcomment -%}
+                  {%- if section.settings.logo_mobile != blank -%}
+                    {%- assign mobile_logo_height = section.settings.logo_width_mobile | divided_by: section.settings.logo_mobile.aspect_ratio -%}
+                    {{ section.settings.logo_mobile | image_url: width: 400 | image_tag:
+                      class: 'header__heading-logo header__heading-logo--mobile motion-reduce',
+                      height: mobile_logo_height,
+                      width: section.settings.logo_width_mobile,
+                      alt: logo_alt,
+                      loading: 'lazy'
+                    }}
+                  {%- endif -%}
                 </div>
               {%- else -%}
                 <span class="h2">{{ shop.name }}</span>
