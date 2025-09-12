@@ -76,6 +76,7 @@
       {{ body_font_bold_italic | font_face: font_display: 'swap' }}
       {{ settings.type_header_font | font_face: font_display: 'swap' }}
 
+      {% assign scheme_classes = '' %}
       {% for scheme in settings.color_schemes -%}
         {% assign scheme_classes = scheme_classes | append: ', .color-' | append: scheme.id %}
         {% if forloop.index == 1 -%}
@@ -285,10 +286,10 @@
   {%- comment -%} Navigation Controller will be loaded via head {%- endcomment -%}
 
     {%- unless settings.type_body_font.system? -%}
-      <link rel="preload" as="font" href="{{ settings.type_body_font | font_url }}" type="font/woff2" crossorigin>
+      {{ settings.type_body_font | font_url | preload_tag: as: 'font', type: 'font/woff2', crossorigin: 'anonymous' }}
     {%- endunless -%}
     {%- unless settings.type_header_font.system? -%}
-      <link rel="preload" as="font" href="{{ settings.type_header_font | font_url }}" type="font/woff2" crossorigin>
+      {{ settings.type_header_font | font_url | preload_tag: as: 'font', type: 'font/woff2', crossorigin: 'anonymous' }}
     {%- endunless -%}
 
     {%- if localization.available_countries.size > 1 or localization.available_languages.size > 1 -%}
@@ -311,7 +312,7 @@
         document.documentElement.classList.add('shopify-design-mode');
       }
     </script>
- <script type="text/javascript" src="https://firebasestorage.googleapis.com/v0/b/vajro/o/app_install_popup_href_v2.js?alt=media" defer></script> 
+ <script type="text/javascript" src="{{ 'app_install_popup_href_v2.js' | asset_url }}" defer></script> 
 <script> 
     VJR_BANNER.init({ 
         "title": "Al Shariqah", // Title of the app 
@@ -328,16 +329,17 @@
 </script>
 
 {%- comment -%} Mobile Bottom Navigation CSS and Scripts {%- endcomment -%}
-{%- if sections['mobile-bottom-navigation'].settings.enable_bottom_nav -%}
+{%- assign mobile_nav_section = content_for_layout | split: 'mobile-bottom-navigation' -%}
+{%- if mobile_nav_section.size > 1 -%}
   <link rel="stylesheet" href="{{ 'mobile-bottom-navigation.css' | asset_url }}" media="print" onload="this.media='all'">
   <noscript>{{ 'mobile-bottom-navigation.css' | asset_url | stylesheet_tag }}</noscript>
   
   <style>
     :root {
-      --mobile-nav-bg: {{ sections['mobile-bottom-navigation'].settings.background_color | default: '#ffffff' }};
-      --mobile-nav-text: {{ sections['mobile-bottom-navigation'].settings.text_color | default: '#666666' }};
-      --mobile-nav-active: {{ sections['mobile-bottom-navigation'].settings.active_color | default: '#1a365d' }};
-      --mobile-nav-badge: {{ sections['mobile-bottom-navigation'].settings.badge_color | default: '#ef4444' }};
+      --mobile-nav-bg: #ffffff;
+      --mobile-nav-text: #666666;
+      --mobile-nav-active: #1a365d;
+      --mobile-nav-badge: #ef4444;
     }
   </style>
   
@@ -463,46 +465,32 @@
           initAttempts++;
           
           try {
-            // Find all GTranslate containers that we manage in theme
-            const containers = document.querySelectorAll('.header-gtranslate, .mobile-gtranslate, .footer-gtranslate');
-            let initialized = 0;
-
-            containers.forEach(function(container) {
-              if (!container || container.dataset.gtInitialized) return;
-
-              try {
-                // Prefer the official constructor if available
-                if (window.GTranslateWidget && window.gtranslateSettings) {
-                  // Instantiate a widget targeting this specific container
-                  new window.GTranslateWidget({
-                    ...window.gtranslateSettings,
-                    wrapper_selector: '.' + Array.from(container.classList).join('.'),
-                  });
-                  container.dataset.gtInitialized = 'true';
-                  initialized++;
-                  return;
+            if (window.gt_widget_script && typeof window.gt_widget_script.render === 'function') {
+              // Find all GTranslate containers
+              const containers = document.querySelectorAll('.header-gtranslate, .mobile-gtranslate, .footer-gtranslate');
+              let initialized = 0;
+              
+              containers.forEach(function(container) {
+                try {
+                  if (container && !container.dataset.gtInitialized) {
+                    window.gt_widget_script.render(container);
+                    container.dataset.gtInitialized = 'true';
+                    initialized++;
+                  }
+                } catch (error) {
+                  console.warn('[GTranslate] Failed to initialize container:', error);
                 }
-
-                // Fallback to legacy/script helper if present
-                if (window.gt_widget_script && typeof window.gt_widget_script.render === 'function') {
-                  window.gt_widget_script.render(container);
-                  container.dataset.gtInitialized = 'true';
-                  initialized++;
-                  return;
+              });
+              
+              if (initialized > 0) {
+                console.log(`[GTranslate] Successfully initialized ${initialized} widgets`);
+                
+                // Notify navigation controller
+                if (window.navigationController && typeof window.navigationController.enhanceGTranslate === 'function') {
+                  window.navigationController.enhanceGTranslate();
                 }
-              } catch (error) {
-                console.warn('[GTranslate] Failed to initialize container:', error);
+                return; // Success - stop trying
               }
-            });
-
-            if (initialized > 0) {
-              console.log(`[GTranslate] Successfully initialized ${initialized} widgets`);
-
-              // Notify navigation controller
-              if (window.navigationController && typeof window.navigationController.enhanceGTranslate === 'function') {
-                window.navigationController.enhanceGTranslate();
-              }
-              return; // Success - stop trying
             }
           } catch (error) {
             console.warn('[GTranslate] Initialization error:', error);
@@ -520,7 +508,7 @@
         setTimeout(initializeGTranslate, 100);
       });
     </script>
-    <script src="https://cdn.gtranslate.net/widgets/latest/dropdown.js" defer></script>
+    <script src="{{ 'gtranslate-dropdown.js' | asset_url }}" defer></script>
     
     {%- comment -%} Professional Navigation and Slideshow Enhancement {%- endcomment -%}
     <script src="{{ 'professional-drawer.js' | asset_url }}" defer></script>
