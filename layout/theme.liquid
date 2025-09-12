@@ -376,6 +376,18 @@
 
     {% sections 'header-group' %}
 
+    <!-- GTranslate: language translation widget -->
+    <div class="gtranslate_wrapper" style="position: fixed; top: 100px; right: 20px; z-index: 1000; background: white; padding: 10px; border: 1px solid #ccc; border-radius: 5px;">
+      <!-- Fallback HTML if script doesn't initialize -->
+      <div class="gtranslate-fallback">
+        <select onchange="window.location.href=this.value">
+          <option value="">🌐 Language</option>
+          <option value="?lang=en">🇺🇸 English</option>
+          <option value="?lang=ar">🇸🇦 العربية</option>
+        </select>
+      </div>
+    </div>
+
     {%- comment -%} Mobile Bottom Navigation {%- endcomment -%}
     {% render 'mobile-bottom-nav' %}
 
@@ -435,9 +447,6 @@
     {%- if settings.predictive_search_enabled -%}
       <script src="{{ 'predictive-search.js' | asset_url }}" defer="defer"></script>
     {%- endif -%}
-    
-    <!-- GTranslate: language translation widget -->
-    <div class="gtranslate_wrapper"></div>
     <script>
       window.gtranslateSettings = {
         "default_language": "en",
@@ -492,6 +501,9 @@
                     initialized++;
                     // Make sure the container is visible
                     container.style.display = '';
+                    // Hide fallback HTML
+                    const fallback = container.querySelector('.gtranslate-fallback');
+                    if (fallback) fallback.style.display = 'none';
                   }
                 } catch (error) {
                   // Silent fail to reduce console spam
@@ -524,6 +536,17 @@
         
         // Start initialization
         setTimeout(initializeGTranslate, 100);
+        
+        // Add immediate test to verify container is accessible
+        setTimeout(function() {
+          const testContainer = document.querySelector('.gtranslate_wrapper');
+          if (testContainer) {
+            console.log('[GTranslate] Container found and accessible');
+            testContainer.style.border = '2px solid red'; // Visual test
+          } else {
+            console.log('[GTranslate] Container NOT found');
+          }
+        }, 1000);
       });
     </script>
     <script src="{{ 'gtranslate-dropdown.js' | asset_url }}" defer></script>
