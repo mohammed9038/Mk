@@ -1,0 +1,233 @@
+/* 🏢 Professional Header Settings CSS - Clean & Modern Implementation */
+/* This file ensures all professional settings work correctly with the clean header structure */
+
+/* === PROFESSIONAL LOGO SETTINGS === */
+.header__heading-logo--desktop {
+  max-width: var(--logo-width-desktop, 140px);
+  width: auto;
+  height: auto;
+  display: block;
+}
+
+.header__heading-logo--mobile {
+  max-width: var(--logo-width-mobile, 110px);
+  width: auto;
+  height: auto;
+  display: none;
+}
+
+/* Mobile logo visibility control */
+@media screen and (max-width: 749px) {
+  .header__heading-logo--desktop {
+    display: none;
+  }
+  
+  .header__heading-logo--mobile {
+    display: block;
+  }
+  
+  /* If no mobile logo, show desktop logo at mobile size */
+  .header__heading-logo-wrapper:not(:has(.header__heading-logo--mobile)) .header__heading-logo--desktop {
+    display: block;
+    max-width: var(--logo-width-mobile, 110px);
+  }
+}
+
+/* === PROFESSIONAL NAVIGATION SETTINGS === */
+.header__navigation {
+  height: var(--nav-height, 60px);
+}
+
+.header__navigation a {
+  color: var(--nav-text-color, rgba(var(--color-foreground), 0.85));
+  font-size: var(--nav-font-size, 16px);
+  font-weight: var(--nav-font-weight, 500);
+  transition: color 0.2s ease;
+}
+
+.header__navigation a:hover,
+.header__navigation a:focus {
+  color: var(--nav-hover-color, rgba(var(--color-foreground), 1));
+}
+
+.header__navigation a[aria-current="page"],
+.header__navigation a.active {
+  color: var(--nav-active-color, rgb(var(--color-button)));
+}
+
+/* Navigation positioning */
+.header__navigation--left {
+  justify-self: start;
+}
+
+.header__navigation--center {
+  justify-self: center;
+}
+
+.header__navigation--right {
+  justify-self: end;
+}
+
+/* === PROFESSIONAL SEARCH SETTINGS === */
+.header__search-bar {
+  max-width: var(--search-width, 400px);
+  width: 100%;
+}
+
+.header__search-bar input {
+  background: var(--search-bg, rgba(var(--color-background), 1));
+  border-color: var(--search-border, rgba(var(--color-border), 0.2));
+  color: var(--search-text, rgba(var(--color-foreground), 1));
+  transition: border-color 0.2s ease;
+}
+
+.header__search-bar input:focus {
+  border-color: var(--search-border-focus, rgb(var(--color-button)));
+}
+
+.header__search-bar input::placeholder {
+  color: var(--search-text-muted, rgba(var(--color-foreground), 0.6));
+}
+
+/* === PROFESSIONAL DROPDOWN SETTINGS === */
+.header__submenu,
+.dropdown-menu,
+.mega-menu {
+  min-width: var(--dropdown-width, 240px);
+  background: var(--dropdown-bg, #ffffff);
+  border: 1px solid var(--dropdown-border, #e9ecef);
+  border-radius: var(--dropdown-radius, 6px);
+  box-shadow: 0 var(--dropdown-shadow, 8px) calc(var(--dropdown-shadow, 8px) * 2) rgba(0, 0, 0, 0.1);
+}
+
+.header__submenu a,
+.dropdown-menu a,
+.mega-menu a {
+  color: var(--dropdown-text, #2c3e50);
+  transition: background-color var(--dropdown-delay, 200ms) ease;
+}
+
+.header__submenu a:hover,
+.dropdown-menu a:hover,
+.mega-menu a:hover {
+  background-color: var(--dropdown-hover-bg, #f8f9fa);
+}
+
+/* Professional dropdown animations */
+.header__navigation details[open] summary ~ * {
+  animation: dropdown-fade-in var(--dropdown-delay, 200ms) ease;
+}
+
+@keyframes dropdown-fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* === PROFESSIONAL HEADER LAYOUT === */
+.header {
+  padding-top: var(--header-padding-top, 16px);
+  padding-bottom: var(--header-padding-bottom, 16px);
+  max-width: var(--header-max-width, 1200px);
+}
+
+/* === PROFESSIONAL STICKY HEADER === */
+.sticky-header.scrolled-past-header .header__heading-logo--desktop {
+  max-width: calc(var(--logo-width-desktop, 140px) * 0.75);
+  transition: max-width 0.3s ease;
+}
+
+.sticky-header.scrolled-past-header .header__heading-logo--mobile {
+  max-width: calc(var(--logo-width-mobile, 110px) * 0.75);
+  transition: max-width 0.3s ease;
+}
+
+/* === PROFESSIONAL MOBILE RESPONSIVE === */
+@media screen and (max-width: 989px) {
+  .header__navigation {
+    display: none;
+  }
+  
+  .header__search-bar:not(.header__search-bar--mobile-visible) {
+    display: none;
+  }
+  
+  /* Mobile logo adjustments */
+  .header__heading-logo--desktop,
+  .header__heading-logo--mobile {
+    max-width: calc(var(--logo-width-mobile, 110px) * 0.9);
+  }
+}
+
+/* === PROFESSIONAL DEBUG MODE === */
+.header[data-debug-mode="true"] {
+  outline: 2px dashed #ff6b6b;
+  position: relative;
+}
+
+.header[data-debug-mode="true"]::before {
+  content: "🔧 Professional Header Debug Mode";
+  position: absolute;
+  top: -25px;
+  left: 0;
+  background: #ff6b6b;
+  color: white;
+  padding: 2px 8px;
+  font-size: 12px;
+  border-radius: 3px;
+  z-index: 1000;
+}
+
+/* === PROFESSIONAL ACCESSIBILITY === */
+.header a:focus,
+.header button:focus,
+.header summary:focus {
+  outline: 2px solid rgb(var(--color-button));
+  outline-offset: 2px;
+}
+
+/* === PROFESSIONAL CUSTOM CSS INTEGRATION === */
+/* Custom CSS from admin settings can be injected here */
+
+/* === CLEAN PROFESSIONAL OVERRIDES === */
+/* Ensure our clean structure takes precedence */
+.header * {
+  box-sizing: border-box;
+}
+
+.header ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.header a {
+  text-decoration: none;
+}
+
+/* Professional spacing and alignment */
+.header__left-section,
+.header__center-section,
+.header__right-section {
+  display: flex;
+  align-items: center;
+}
+
+.header__left-section {
+  justify-self: start;
+  gap: 2rem;
+}
+
+.header__center-section {
+  justify-self: center;
+}
+
+.header__right-section {
+  justify-self: end;
+  gap: 1rem;
+}

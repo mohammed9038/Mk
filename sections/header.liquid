@@ -37,167 +37,60 @@
 {%- comment -%}
   Professional Header Settings CSS - Makes all the professional settings work correctly
 {%- endcomment -%}
-<link rel="stylesheet" href="{{ 'header-professional-settings.css' | asset_url }}" media="print" onload="this.media='all'">
-<noscript>{{ 'header-professional-settings.css' | asset_url | stylesheet_tag }}</noscript>
+<link rel="stylesheet" href="{{ 'header-professional-clean.css' | asset_url }}" media="print" onload="this.media='all'">
+<noscript>{{ 'header-professional-clean.css' | asset_url | stylesheet_tag }}</noscript>
 
-<style>
-  header-drawer {
-    justify-self: start;
-    margin-left: -1.2rem;
-  }
+{%- comment -%}
+  Clean Professional Header CSS - Modern, organized styling
+{%- endcomment -%}
+<link rel="stylesheet" href="{{ 'header-clean-professional.css' | asset_url }}" media="print" onload="this.media='all'">
+<noscript>{{ 'header-clean-professional.css' | asset_url | stylesheet_tag }}</noscript>
 
-  {%- if section.settings.sticky_header_type == 'reduce-logo-size' -%}
-    .scrolled-past-header .header__heading-logo-wrapper {
-      width: 75%;
-    }
-  {%- endif -%}
+{%- comment -%}
+  Clean Professional Header CSS - Modern, organized styling
+{%- endcomment -%}
+<link rel="stylesheet" href="{{ 'header-clean-professional.css' | asset_url }}" media="print" onload="this.media='all'">
+<noscript>{{ 'header-clean-professional.css' | asset_url | stylesheet_tag }}</noscript>
 
-  {%- if section.settings.menu_type_desktop != "drawer" -%}
-    @media screen and (min-width: 990px) {
-      header-drawer {
-        display: none;
-      }
-    }
-  {%- endif -%}
-
-  .menu-drawer-container {
-    display: flex;
-  }
-
-  /* Top Navigation Styles */
-  .top-nav-wrapper {
-    border-bottom: 1px solid rgba(var(--color-foreground), 0.08);
-    padding: 0;
-    min-height: 60px;
-    display: flex;
-    align-items: center;
-  }
-
-  .top-nav__list {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 0;
-    margin: 0;
-    padding: 0;
-    list-style: none;
-    height: 60px;
-    width: 100%;
-  }
-
-  .top-nav__item {
-    display: flex;
-    align-items: center;
-    height: 100%;
-    position: relative;
-  }
-
-  .top-nav__link {
-    font-size: 1.3rem;
-    text-decoration: none;
-    color: rgba(var(--color-foreground), 0.7);
-    transition: color var(--duration-short) ease;
-    padding: 0 1.5rem;
-    height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  .top-nav__link:hover,
-  .top-nav__link--active {
-    color: rgba(var(--color-foreground), 1);
-  }
-
-  @media screen and (max-width: 749px) {
-    .top-nav-wrapper {
-      display: none;
-    }
-  }
-
-  /* Language selector positioning */
-  .header__left-localization {
-    position: absolute;
-    left: 0;
-    top: 50%;
-    transform: translateY(-50%);
-  }
-
-  .list-menu {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-  }
-
-  .list-menu--inline {
-    display: inline-flex;
-    flex-wrap: wrap;
-  }
-
-  summary.list-menu__item {
-    padding-right: 2.7rem;
-  }
-
-  .list-menu__item {
-    display: flex;
-    align-items: center;
-    line-height: calc(1 + 0.3 / var(--font-body-scale));
-  }
-
-  .list-menu__item--link {
-    text-decoration: none;
-    padding-bottom: 1rem;
-    padding-top: 1rem;
-    line-height: calc(1 + 0.8 / var(--font-body-scale));
-  }
-
-  @media screen and (min-width: 750px) {
-    .list-menu__item--link {
-      padding-bottom: 0.5rem;
-      padding-top: 0.5rem;
-    }
-  }
-</style>
-
+{%- comment -%} Professional CSS Variables for Dynamic Settings {%- endcomment -%}
 {%- style -%}
-  .header { padding: {{ section.settings.padding_top | times: 0.5 | round: 0 }}px 3rem {{ section.settings.padding_bottom | times: 0.5 | round: 0 }}px 3rem; }
-  .section-header { position: sticky; margin-bottom: {{ section.settings.margin_bottom | times: 0.75 | round: 0 }}px; }
-  @media screen and (min-width:750px){ .section-header { margin-bottom: {{ section.settings.margin_bottom }}px; } }
-  @media screen and (min-width:990px){ .header { padding-top: {{ section.settings.padding_top }}px; padding-bottom: {{ section.settings.padding_bottom }}px; } }
-  /* Inject dynamic search vars */
   :root, .header-wrapper { 
     /* Professional Search Settings */
     --search-width: {{ section.settings.search_width | default: 400 }}px;
     --search-bg: {{ section.settings.search_background | default: '#f8f9fa' }};
     --search-border: {{ section.settings.search_border | default: '#dee2e6' }};
-    --search-border-focus: {{ section.settings.search_border | default: '#dee2e6' }};
+    --search-border-focus: {{ section.settings.search_border_focus | default: '#007bff' }};
     --search-text: {{ section.settings.search_text | default: '#333333' }};
     --search-text-muted: {{ section.settings.search_text | default: '#333333' | color_modify: 'alpha', 0.6 }};
-    --search-button-bg: {{ section.settings.search_button_bg | default: 'rgba(0,0,0,0.08)' }};
-    --search-button-bg-hover: {{ section.settings.search_button_bg | default: 'rgba(0,0,0,0.15)' }};
-    --search-button-icon: {{ section.settings.search_button_icon | default: '#333333' }};
     
     /* Professional Navigation Settings */
-    --show-main-navigation: {{ section.settings.show_main_navigation | default: true }};
-    --menu-position: {{ section.settings.menu_position | default: 'center' }};
     --nav-height: {{ section.settings.nav_height | default: 60 }}px;
     --nav-font-size: {{ section.settings.nav_font_size | default: 16 }}px;
     --nav-font-weight: {{ section.settings.nav_font_weight | default: 500 }};
-    --nav-text-color: {{ section.settings.nav_text_color | default: '#2c3e50' }};
-    --nav-hover-color: {{ section.settings.nav_hover_color | default: '#3498db' }};
-    --nav-active-color: {{ section.settings.nav_active_color | default: '#e74c3c' }};
-    --nav-background: {{ section.settings.nav_background | default: '#ffffff' }};
-    --nav-border-color: {{ section.settings.nav_border_color | default: '#e9ecef' }};
+    --nav-text-color: {{ section.settings.nav_text_color | default: 'rgba(var(--color-foreground), 0.85)' }};
+    --nav-hover-color: {{ section.settings.nav_hover_color | default: 'rgba(var(--color-foreground), 1)' }};
+    --nav-active-color: {{ section.settings.nav_active_color | default: 'rgb(var(--color-button))' }};
+    
+    /* Professional Logo Settings */
+    --logo-width-desktop: {{ section.settings.logo_width | default: 140 }}px;
+    --logo-width-mobile: {{ section.settings.logo_width_mobile | default: 110 }}px;
     
     /* Professional Dropdown Settings */
     --dropdown-width: {{ section.settings.dropdown_width | default: 240 }}px;
-    --dropdown-shadow: {{ section.settings.dropdown_shadow | default: 20 }}px;
-    --dropdown-radius: {{ section.settings.dropdown_radius | default: 8 }}px;
+    --dropdown-shadow: {{ section.settings.dropdown_shadow | default: 8 }}px;
+    --dropdown-radius: {{ section.settings.dropdown_radius | default: 6 }}px;
     --dropdown-bg: {{ section.settings.dropdown_bg | default: '#ffffff' }};
     --dropdown-border: {{ section.settings.dropdown_border | default: '#e9ecef' }};
     --dropdown-text: {{ section.settings.dropdown_text | default: '#2c3e50' }};
     --dropdown-hover-bg: {{ section.settings.dropdown_hover_bg | default: '#f8f9fa' }};
-    --dropdown-delay: {{ section.settings.dropdown_delay | default: 300 }}ms;
+    --dropdown-delay: {{ section.settings.dropdown_delay | default: 200 }}ms;
+    
+    /* Professional Header Layout */
+    --header-padding-top: {{ section.settings.header_padding_top | default: 16 }}px;
+    --header-padding-bottom: {{ section.settings.header_padding_bottom | default: 16 }}px;
+    --header-max-width: {{ section.settings.header_max_width | default: 1200 }}px;
+  }
+{%- endstyle -%}
     
     /* Professional Header Spacing */
     --header-padding-top: {{ section.settings.header_padding_top | default: 20 }}px;
@@ -348,8 +241,13 @@
   endfor
 -%}
 
-<{%- if section.settings.sticky_header_type != 'none' -%}sticky-header data-sticky-type="{{ section.settings.sticky_header_type }}"{%- else -%}div{%- endif -%} class="header-wrapper color-{{ section.settings.color_scheme }} gradient{% if section.settings.show_line_separator %} header-wrapper--border-bottom{% endif %}"
-{%- if section.settings.enable_header_blur -%} style="backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);"{% endif %}>
+{%- if section.settings.sticky_header_type != 'none' -%}
+  <sticky-header data-sticky-type="{{ section.settings.sticky_header_type }}" class="header-wrapper color-{{ section.settings.color_scheme }} gradient{% if section.settings.show_line_separator %} header-wrapper--border-bottom{% endif %}"
+    {%- if section.settings.enable_header_blur -%} style="backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);"{% endif %}>
+{%- else -%}
+  <div class="header-wrapper color-{{ section.settings.color_scheme }} gradient{% if section.settings.show_line_separator %} header-wrapper--border-bottom{% endif %}"
+    {%- if section.settings.enable_header_blur -%} style="backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);"{% endif %}>
+{%- endif -%}
   
   {%- comment -%} Top Navigation Bar with Dropdown Support {%- endcomment -%}
   {%- if section.settings.show_top_menu and section.settings.menu != blank -%}
@@ -689,7 +587,11 @@
       </div>
     </div>
   </header>
-</{% if section.settings.sticky_header_type != 'none' %}sticky-header{% else %}div{% endif %}>
+{%- if section.settings.sticky_header_type != 'none' -%}
+  </sticky-header>
+{%- else -%}
+  </div>
+{%- endif -%}
 
 {%- if settings.cart_type == "notification" -%}
   {%- render 'cart-notification', color_scheme: section.settings.color_scheme, desktop_menu_type: section.settings.menu_type_desktop -%}
