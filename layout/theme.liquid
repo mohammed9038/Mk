@@ -463,32 +463,46 @@
           initAttempts++;
           
           try {
-            if (window.gt_widget_script && typeof window.gt_widget_script.render === 'function') {
-              // Find all GTranslate containers
-              const containers = document.querySelectorAll('.header-gtranslate, .mobile-gtranslate, .footer-gtranslate');
-              let initialized = 0;
-              
-              containers.forEach(function(container) {
-                try {
-                  if (container && !container.dataset.gtInitialized) {
-                    window.gt_widget_script.render(container);
-                    container.dataset.gtInitialized = 'true';
-                    initialized++;
-                  }
-                } catch (error) {
-                  console.warn('[GTranslate] Failed to initialize container:', error);
+            // Find all GTranslate containers that we manage in theme
+            const containers = document.querySelectorAll('.header-gtranslate, .mobile-gtranslate, .footer-gtranslate');
+            let initialized = 0;
+
+            containers.forEach(function(container) {
+              if (!container || container.dataset.gtInitialized) return;
+
+              try {
+                // Prefer the official constructor if available
+                if (window.GTranslateWidget && window.gtranslateSettings) {
+                  // Instantiate a widget targeting this specific container
+                  new window.GTranslateWidget({
+                    ...window.gtranslateSettings,
+                    wrapper_selector: '.' + Array.from(container.classList).join('.'),
+                  });
+                  container.dataset.gtInitialized = 'true';
+                  initialized++;
+                  return;
                 }
-              });
-              
-              if (initialized > 0) {
-                console.log(`[GTranslate] Successfully initialized ${initialized} widgets`);
-                
-                // Notify navigation controller
-                if (window.navigationController && typeof window.navigationController.enhanceGTranslate === 'function') {
-                  window.navigationController.enhanceGTranslate();
+
+                // Fallback to legacy/script helper if present
+                if (window.gt_widget_script && typeof window.gt_widget_script.render === 'function') {
+                  window.gt_widget_script.render(container);
+                  container.dataset.gtInitialized = 'true';
+                  initialized++;
+                  return;
                 }
-                return; // Success - stop trying
+              } catch (error) {
+                console.warn('[GTranslate] Failed to initialize container:', error);
               }
+            });
+
+            if (initialized > 0) {
+              console.log(`[GTranslate] Successfully initialized ${initialized} widgets`);
+
+              // Notify navigation controller
+              if (window.navigationController && typeof window.navigationController.enhanceGTranslate === 'function') {
+                window.navigationController.enhanceGTranslate();
+              }
+              return; // Success - stop trying
             }
           } catch (error) {
             console.warn('[GTranslate] Initialization error:', error);
