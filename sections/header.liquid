@@ -37,7 +37,7 @@
   endif
   
   # Performance Optimization
-  assign critical_css_inline = section.settings.inline_critical_css | default: true
+  assign critical_css_inline = section.settings.inline_critical_css | default: false
   assign preload_logo = section.settings.preload_logo | default: true
 -%}
 
@@ -162,20 +162,28 @@
           <ul class="header-nav list-unstyled" role="list">
             {%- for link in linklists[menu_handle].links -%}
               <li class="header-nav__item">
-                <a href="{{ link.url }}" class="header-nav__link link focus-inset"
-                   {% if link.current %}aria-current="page"{% endif %}>
-                  {{ link.title | escape }}
-                </a>
                 {%- if link.links.size > 0 -%}
-                  <ul class="header-nav__dropdown" role="list">
-                    {%- for child_link in link.links -%}
-                      <li>
-                        <a href="{{ child_link.url }}" class="header-nav__dropdown-link link focus-inset">
-                          {{ child_link.title | escape }}
-                        </a>
-                      </li>
-                    {%- endfor -%}
-                  </ul>
+                  <details class="header-nav__dropdown">
+                    <summary class="header-nav__link link focus-inset"
+                             {% if link.current %}aria-current="page"{% endif %}>
+                      {{ link.title | escape }}
+                      <span class="header-nav__caret">▼</span>
+                    </summary>
+                    <ul class="header-nav__submenu" role="list">
+                      {%- for child_link in link.links -%}
+                        <li class="header-nav__subitem">
+                          <a href="{{ child_link.url }}" class="header-nav__sublink link focus-inset">
+                            {{ child_link.title | escape }}
+                          </a>
+                        </li>
+                      {%- endfor -%}
+                    </ul>
+                  </details>
+                {%- else -%}
+                  <a href="{{ link.url }}" class="header-nav__link link focus-inset"
+                     {% if link.current %}aria-current="page"{% endif %}>
+                    {{ link.title | escape }}
+                  </a>
                 {%- endif -%}
               </li>
             {%- endfor -%}
@@ -248,8 +256,8 @@
 =============================================== {%- endcomment -%}
 
 {%- unless critical_css_inline -%}
-  <link rel="stylesheet" href="{{ 'header-professional.css' | asset_url }}" media="print" onload="this.media='all'">
-  <noscript><link rel="stylesheet" href="{{ 'header-professional.css' | asset_url }}"></noscript>
+  <link rel="stylesheet" href="{{ 'header-clean.css' | asset_url }}" media="print" onload="this.media='all'">
+  <noscript><link rel="stylesheet" href="{{ 'header-clean.css' | asset_url }}"></noscript>
 {%- endunless -%}
 
 <script src="{{ 'header-clean.js' | asset_url }}" type="module" defer></script>
