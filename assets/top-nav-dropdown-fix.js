@@ -96,7 +96,7 @@
     // Close all dropdowns when clicking outside (but not on GTranslate)
     document.addEventListener('click', (e) => {
       // Don't interfere with GTranslate dropdowns
-      if (e.target.closest('.gtranslate_wrapper, .header-gtranslate, .gt-dropdown, .gt-option, [class*="gtranslate"]')) {
+      if (e.target.closest('.gtranslate_wrapper, .header__gtranslate, .gt-dropdown, .gt-option, [class*="gtranslate"]')) {
         return;
       }
       
@@ -119,7 +119,7 @@
       const openDropdowns = topNav.querySelectorAll('details[open] .header__submenu, .header__submenu-details[open] .header__submenu--nested');
       openDropdowns.forEach(submenu => {
         // Only apply to navigation dropdowns, not GTranslate
-        if (!submenu.closest('.gtranslate_wrapper, .header-gtranslate')) {
+        if (!submenu.closest('.gtranslate_wrapper, .header__gtranslate')) {
           submenu.style.opacity = '1';
           submenu.style.visibility = 'visible';
           submenu.style.transform = 'translateY(0)';

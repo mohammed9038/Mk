@@ -62,7 +62,7 @@
     </script>
     <script src="https://cdn.gtranslate.net/widgets/latest/dropdown.js" defer></script>
     
-    <script src="{{ 'gtranslate-enhancements.js' | asset_url }}" defer="defer"></script>
+    <script src="{{ 'gtranslate-enhancements.js' | asset_url }}" defer></script>
 
     {%- if settings.favicon != blank -%}
       <link rel="icon" type="image/png" href="{{ settings.favicon | image_url: width: 32, height: 32 }}">
@@ -89,8 +89,7 @@
     <script src="{{ 'pubsub.js' | asset_url }}" defer="defer"></script>
     <script src="{{ 'global.js' | asset_url }}" defer="defer"></script>
     
-    {%- comment -%} Professional Navigation System - Load early {%- endcomment -%}
-    <script src="{{ 'navigation-dropdown-fix.js' | asset_url }}" defer="defer"></script>
+    {%- comment -%} Professional Navigation System - already loaded in head {%- endcomment -%}
     <script src="{{ 'slideshow-enhancer.js' | asset_url }}" defer="defer"></script>
     {%- if settings.animations_reveal_on_scroll -%}
       <script src="{{ 'animations.js' | asset_url }}" defer="defer"></script>
@@ -479,7 +478,7 @@
         console.log('[GTranslate] Initializing...');
         
         // Find all GTranslate containers
-        const containers = document.querySelectorAll('.gtranslate_wrapper, .header-gtranslate, .mobile-gtranslate, .footer-gtranslate');
+        const containers = document.querySelectorAll('.gtranslate_wrapper, .mobile-gtranslate, .footer-gtranslate');
         console.log('[GTranslate] Found', containers.length, 'containers');
         
         containers.forEach(function(container, index) {
