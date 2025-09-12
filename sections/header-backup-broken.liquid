@@ -24,17 +24,29 @@
   assign enable_sticky_header = section.settings.enable_sticky_header | default: false
   assign logo_position = section.settings.logo_position | default: 'left'
   assign menu_handle = section.settings.menu | default: 'main-menu'
+  assign enable_search = section.settings.enable_search | default: true
+  assign enable_cart = section.settings.enable_cart | default: true
+  assign enable_account = section.settings.enable_account | default: true
   
   # Responsive Configuration
   assign mobile_breakpoint = 990
   assign logo_width_desktop = section.settings.logo_width | default: 140
   assign logo_width_mobile = section.settings.logo_width_mobile | default: 110
   
-  # Feature Detection
-  assign has_menu = false
+  # Feature Detection - Simplified
   if linklists[menu_handle].links.size > 0
     assign has_menu = true
+  else
+    assign has_menu = false
   endif
+  
+  if localization.available_countries.size > 1 or localization.available_languages.size > 1
+    assign has_localization = true
+  else
+    assign has_localization = false
+  endif
+  
+  assign has_customer_accounts = shop.customer_accounts_enabled
   
   # Performance Optimization
   assign critical_css_inline = section.settings.inline_critical_css | default: true
@@ -135,21 +147,13 @@
     =============================================== {%- endcomment -%}
     
     <div class="header-professional__logo">
-      {%- if section.settings.logo -%}
-        <a href="{{ routes.root_url }}" class="header__heading-link link link--text focus-inset">
-          <img src="{{ section.settings.logo | image_url: width: logo_width_desktop }}" 
-               alt="{{ section.settings.logo.alt | default: shop.name | escape }}"
-               width="{{ logo_width_desktop }}"
-               height="{{ section.settings.logo.height | divided_by: section.settings.logo.width | times: logo_width_desktop | round }}"
-               {% if preload_logo %}loading="eager"{% else %}loading="lazy"{% endif %}>
-        </a>
-      {%- else -%}
-        <h1 class="header__heading">
-          <a href="{{ routes.root_url }}" class="header__heading-link link link--text focus-inset">
-            {{ shop.name }}
-          </a>
-        </h1>
-      {%- endif -%}
+      {% render 'header-logo', 
+        logo: section.settings.logo,
+        logo_mobile: section.settings.logo_mobile,
+        logo_width: logo_width_desktop,
+        logo_width_mobile: logo_width_mobile,
+        preload: preload_logo
+      %}
     </div>
 
     {%- comment -%} ===============================================
@@ -158,29 +162,11 @@
     
     {%- if has_menu -%}
       <nav class="header-professional__navigation" role="navigation" aria-label="{{ 'sections.header.menu' | t }}">
-        {%- if linklists[menu_handle].links.size > 0 -%}
-          <ul class="header-nav list-unstyled" role="list">
-            {%- for link in linklists[menu_handle].links -%}
-              <li class="header-nav__item">
-                <a href="{{ link.url }}" class="header-nav__link link focus-inset"
-                   {% if link.current %}aria-current="page"{% endif %}>
-                  {{ link.title | escape }}
-                </a>
-                {%- if link.links.size > 0 -%}
-                  <ul class="header-nav__dropdown" role="list">
-                    {%- for child_link in link.links -%}
-                      <li>
-                        <a href="{{ child_link.url }}" class="header-nav__dropdown-link link focus-inset">
-                          {{ child_link.title | escape }}
-                        </a>
-                      </li>
-                    {%- endfor -%}
-                  </ul>
-                {%- endif -%}
-              </li>
-            {%- endfor -%}
-          </ul>
-        {%- endif -%}
+        {% render 'header-navigation',
+          menu_handle: menu_handle,
+          enable_dropdowns: section.settings.enable_dropdowns,
+          dropdown_style: section.settings.dropdown_style
+        %}
       </nav>
     {%- endif -%}
 
@@ -189,50 +175,23 @@
     =============================================== {%- endcomment -%}
     
     <div class="header-professional__utilities">
-      {%- comment -%} Search Button {%- endcomment -%}
-      {%- if section.settings.enable_search -%}
-        <button type="button" class="header__icon header__icon--search" aria-label="{{ 'general.search.search' | t }}">
-          🔍
-        </button>
-      {%- endif -%}
-      
-      {%- comment -%} Account Link {%- endcomment -%}
-      {%- if section.settings.enable_account and shop.customer_accounts_enabled -%}
-        <a href="{%- if customer -%}{{ routes.account_url }}{%- else -%}{{ routes.account_login_url }}{%- endif -%}" 
-           class="header__icon header__icon--account link focus-inset" 
-           aria-label="{{ 'customer.account.title' | t }}">
-          👤
-        </a>
-      {%- endif -%}
-      
-      {%- comment -%} Cart Link {%- endcomment -%}
-      {%- if section.settings.enable_cart -%}
-        <a href="{{ routes.cart_url }}" class="header__icon header__icon--cart link focus-inset" id="cart-icon-bubble">
-          🛒
-          <span class="visually-hidden">{{ 'templates.cart.cart' | t }}</span>
-          {%- if cart != empty -%}
-            <div class="cart-count-bubble">
-              <span aria-hidden="true">{{ cart.item_count }}</span>
-              <span class="visually-hidden">{{ 'sections.header.cart_count' | t: count: cart.item_count }}</span>
-            </div>
-          {%- endif -%}
-        </a>
-      {%- endif -%}
+      {% render 'header-utilities',
+        enable_search: enable_search,
+        enable_account: enable_account,
+        enable_cart: enable_cart,
+        has_customer_accounts: has_customer_accounts,
+        enable_localization: has_localization,
+        mobile_menu_handle: menu_handle
+      %}
     </div>
   </div>
 
-  {%- comment -%} ===============================================
-      MOBILE MENU DRAWER - Temporarily disabled
-  =============================================== {%- endcomment -%}
-  
-  {%- comment -%}
+  {%- comment -%} Mobile Menu Drawer - Use existing header drawer {%- endcomment -%}
   {%- if has_menu -%}
-    {% render 'mobile-menu-drawer', 
-      menu_handle: menu_handle,
-      enable_search: enable_search
+    {% render 'header-drawer', 
+      menu: linklists[menu_handle]
     %}
   {%- endif -%}
-  {%- endcomment -%}
 </header>
 
 {%- comment -%} ===============================================
@@ -252,7 +211,7 @@
   <noscript><link rel="stylesheet" href="{{ 'header-professional.css' | asset_url }}"></noscript>
 {%- endunless -%}
 
-<script src="{{ 'header-clean.js' | asset_url }}" type="module" defer></script>
+<script src="{{ 'header-clean.js' | asset_url }}" defer></script>
 
 {%- comment -%} ===============================================
     STICKY HEADER COMPONENT
