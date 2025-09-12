@@ -789,40 +789,96 @@
 
 {% schema %}
 {
-  "name": "t:sections.header.name",
+  "name": "🏢 Professional Header",
   "class": "section-header",
-  "max_blocks": 3,
+  "max_blocks": 5,
   "settings": [
+    {
+      "type": "paragraph",
+      "content": "🎯 **Professional Header System** - Configure your header layout, navigation, and branding with advanced customization options for a modern e-commerce experience."
+    },
+    
+    {
+      "type": "header",
+      "content": "🏢 Brand & Logo Settings"
+    },
+    {
+      "type": "image_picker",
+      "id": "logo",
+      "label": "🖼️ Main logo"
+    },
+    {
+      "type": "image_picker",
+      "id": "logo_mobile",
+      "label": "📱 Mobile logo (optional)",
+      "info": "Different logo for mobile devices. Leave empty to use main logo."
+    },
+    {
+      "type": "range",
+      "id": "logo_width",
+      "min": 50,
+      "max": 300,
+      "step": 10,
+      "default": 140,
+      "unit": "px",
+      "label": "📐 Desktop logo width"
+    },
+    {
+      "type": "range",
+      "id": "logo_width_mobile",
+      "min": 40,
+      "max": 200,
+      "step": 10,
+      "default": 110,
+      "unit": "px",
+      "label": "📱 Mobile logo width"
+    },
     {
       "type": "select",
       "id": "logo_position",
       "options": [
         {
           "value": "top-left",
-          "label": "t:sections.header.settings.logo_position.options__2.label"
+          "label": "Top Left"
         },
         {
           "value": "top-center",
-          "label": "t:sections.header.settings.logo_position.options__3.label"
+          "label": "Top Center"
         },
         {
           "value": "middle-left",
-          "label": "t:sections.header.settings.logo_position.options__1.label"
+          "label": "Middle Left"
         },
         {
           "value": "middle-center",
-          "label": "t:sections.header.settings.logo_position.options__4.label"
+          "label": "Middle Center"
         }
       ],
       "default": "middle-left",
-      "label": "t:sections.header.settings.logo_position.label",
-      "info": "t:sections.header.settings.logo_help.content"
+      "label": "📍 Logo position"
+    },
+    
+    {
+      "type": "header",
+      "content": "🧭 Professional Navigation System"
+    },
+    {
+      "type": "paragraph",
+      "content": "Configure your main navigation menu with professional dropdown support, smooth animations, and modern UX patterns."
     },
     {
       "type": "link_list",
       "id": "menu",
       "default": "main-menu",
-      "label": "t:sections.header.settings.menu.label"
+      "label": "🔗 Main navigation menu",
+      "info": "Select the menu to display in your header navigation"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_top_menu",
+      "default": true,
+      "label": "✅ Enable top navigation bar",
+      "info": "Show the main navigation menu above the header for better organization"
     },
     {
       "type": "select",
@@ -830,229 +886,100 @@
       "options": [
         {
           "value": "dropdown",
-          "label": "t:sections.header.settings.menu_type_desktop.options__1.label"
+          "label": "🎯 Professional Dropdown"
         },
         {
           "value": "mega",
-          "label": "t:sections.header.settings.menu_type_desktop.options__2.label"
+          "label": "🎪 Mega Menu"
         },
         {
           "value": "drawer",
-          "label": "t:sections.header.settings.menu_type_desktop.options__3.label"
+          "label": "📋 Side Drawer"
         }
       ],
       "default": "dropdown",
-      "label": "t:sections.header.settings.menu_type_desktop.label",
-      "info": "t:sections.header.settings.menu_type_desktop.info"
+      "label": "🎨 Desktop menu style",
+      "info": "Professional dropdown recommended for modern e-commerce experience"
     },
     {
       "type": "select",
-      "id": "sticky_header_type",
+      "id": "dropdown_animation",
       "options": [
         {
-          "value": "none",
-          "label": "t:sections.header.settings.sticky_header_type.options__1.label"
+          "value": "fade",
+          "label": "Fade In"
         },
         {
-          "value": "on-scroll-up",
-          "label": "t:sections.header.settings.sticky_header_type.options__2.label"
+          "value": "slide",
+          "label": "Slide Down"
         },
         {
-          "value": "always",
-          "label": "t:sections.header.settings.sticky_header_type.options__3.label"
+          "value": "zoom",
+          "label": "Zoom In"
         },
         {
-          "value": "reduce-logo-size",
-          "label": "t:sections.header.settings.sticky_header_type.options__4.label"
+          "value": "professional",
+          "label": "Professional (Recommended)"
         }
       ],
-      "default": "on-scroll-up",
-      "label": "t:sections.header.settings.sticky_header_type.label"
+      "default": "professional",
+      "label": "🎬 Dropdown animation style"
+    },
+    {
+      "type": "range",
+      "id": "dropdown_delay",
+      "min": 200,
+      "max": 800,
+      "step": 50,
+      "default": 300,
+      "unit": "ms",
+      "label": "⏱️ Animation duration",
+      "info": "How long dropdown animations take (300ms recommended)"
     },
     {
       "type": "checkbox",
-      "id": "show_line_separator",
+      "id": "enable_hover_dropdowns",
       "default": true,
-      "label": "t:sections.header.settings.show_line_separator.label"
+      "label": "🖱️ Enable hover dropdowns",
+      "info": "Open dropdowns on hover (desktop only)"
     },
+    {
+      "type": "checkbox",
+      "id": "enable_mega_menu",
+      "default": false,
+      "label": "📋 Enable mega menu support",
+      "info": "Allow wide dropdowns for categories with many items"
+    },
+    
     {
       "type": "header",
-      "content": "t:sections.header.settings.header__1.content"
-    },
-    {
-      "type": "color_scheme",
-      "id": "color_scheme",
-      "label": "t:sections.all.colors.label",
-      "default": "scheme-1"
+      "content": "🎨 Navigation Styling & Layout"
     },
     {
       "type": "color_scheme",
       "id": "menu_color_scheme",
-      "label": "t:sections.header.settings.menu_color_scheme.label",
+      "label": "🎨 Navigation color scheme",
       "default": "scheme-1"
     },
     {
-      "type": "header",
-      "content": "t:sections.header.settings.header__3.content",
-      "info": "t:sections.header.settings.header__4.info"
-    },
-    {
-      "type": "checkbox",
-      "id": "enable_country_selector",
-      "default": false,
-      "label": "t:sections.header.settings.enable_country_selector.label"
-    },
-    {
-      "type": "header",
-      "content": "t:sections.header.settings.header__5.content",
-      "info": "t:sections.header.settings.header__6.info"
-    },
-    {
-      "type": "header",
-      "content": "🌍 Language Settings"
-    },
-    {
-      "type": "checkbox",
-      "id": "enable_language_selector",
-      "default": true,
-      "label": "Enable GTranslate language selector",
-      "info": "Show language translation widget in header"
-    },
-    {
-      "type": "select",
-      "id": "gtranslate_style",
-      "options": [
-        {
-          "value": "dropdown",
-          "label": "Dropdown (recommended)"
-        },
-        {
-          "value": "flags",
-          "label": "Flag icons"
-        },
-        {
-          "value": "text",
-          "label": "Text only"
-        }
-      ],
-      "default": "dropdown",
-      "label": "🎨 GTranslate style",
-      "info": "Choose how language selector appears"
-    },
-    {
-      "type": "checkbox",
-      "id": "gtranslate_show_flags",
-      "default": true,
-      "label": "Show country flags",
-      "info": "Display flag icons next to language names"
-    },
-    {
-      "type": "color",
-      "id": "gtranslate_text_color",
-      "label": "🎨 Language selector text color",
-      "default": "#333333"
-    },
-    {
-      "type": "color",
-      "id": "gtranslate_bg_color",
-      "label": "🎨 Language selector background",
-      "default": "#ffffff"
-    },
-    {
-      "type": "header",
-      "content": "� Professional Mobile Drawer Settings"
-    },
-    {
-      "type": "text",
-      "id": "drawer_title",
-      "label": "📝 Drawer title",
-      "default": "Menu",
-      "info": "Title shown at the top of the mobile drawer"
-    },
-    {
       "type": "range",
-      "id": "drawer_width",
-      "min": 280,
-      "max": 400,
-      "step": 20,
+      "id": "nav_height",
+      "min": 40,
+      "max": 80,
+      "step": 5,
+      "default": 60,
       "unit": "px",
-      "label": "📐 Drawer width",
-      "default": 320,
-      "info": "Width of the mobile drawer"
-    },
-    {
-      "type": "range",
-      "id": "drawer_title_size",
-      "min": 14,
-      "max": 24,
-      "step": 1,
-      "unit": "px",
-      "label": "📏 Title font size",
-      "default": 18
-    },
-    {
-      "type": "color",
-      "id": "drawer_title_color",
-      "label": "🎨 Title color",
-      "default": "#333333"
-    },
-    {
-      "type": "color",
-      "id": "drawer_header_bg",
-      "label": "🖌️ Header background",
-      "default": "#ffffff"
-    },
-    {
-      "type": "header",
-      "content": "⚙️ Drawer Utilities"
-    },
-    {
-      "type": "checkbox",
-      "id": "show_drawer_utilities",
-      "default": true,
-      "label": "Show utilities section",
-      "info": "Display language selector, account link, etc."
-    },
-    {
-      "type": "checkbox",
-      "id": "show_language_selector",
-      "default": true,
-      "label": "Show GTranslate language selector",
-      "info": "Display GTranslate language selector in drawer"
-    },
-    {
-      "type": "checkbox",
-      "id": "show_account_link",
-      "default": true,
-      "label": "Show account link",
-      "info": "Display login/account link in drawer"
-    },
-    {
-      "type": "color",
-      "id": "utilities_bg",
-      "label": "🖌️ Utilities background",
-      "default": "#f8f9fa"
-    },
-    {
-      "type": "header",
-      "content": "🧭 Navigation Settings"
-    },
-    {
-      "type": "checkbox",
-      "id": "drawer_auto_expand",
-      "default": false,
-      "label": "Auto-expand submenus",
-      "info": "Automatically expand first-level submenus"
+      "label": "📏 Navigation height"
     },
     {
       "type": "range",
       "id": "nav_font_size",
-      "min": 14,
+      "min": 12,
       "max": 20,
       "step": 1,
+      "default": 16,
       "unit": "px",
-      "label": "📏 Navigation font size",
-      "default": 16
+      "label": "📝 Navigation font size"
     },
     {
       "type": "select",
@@ -1060,19 +987,19 @@
       "options": [
         {
           "value": "400",
-          "label": "Normal"
+          "label": "Normal (400)"
         },
         {
           "value": "500",
-          "label": "Medium"
+          "label": "Medium (500) - Recommended"
         },
         {
           "value": "600",
-          "label": "Semi-bold"
+          "label": "Semi-bold (600)"
         },
         {
           "value": "700",
-          "label": "Bold"
+          "label": "Bold (700)"
         }
       ],
       "default": "500",
@@ -1082,62 +1009,137 @@
       "type": "color",
       "id": "nav_text_color",
       "label": "🎨 Navigation text color",
-      "default": "#333333"
+      "default": "#2c3e50"
     },
     {
       "type": "color",
       "id": "nav_hover_color",
-      "label": "🎨 Navigation hover color",
-      "default": "#007acc"
+      "label": "🎯 Navigation hover color",
+      "default": "#3498db"
     },
     {
       "type": "color",
       "id": "nav_active_color",
-      "label": "🎨 Active page color",
-      "default": "#007acc"
+      "label": "✨ Active page color",
+      "default": "#e74c3c"
     },
     {
-      "type": "header",
-      "content": "🔗 Social Links"
+      "type": "color",
+      "id": "nav_background",
+      "label": "🖌️ Navigation background",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "nav_border_color",
+      "label": "📏 Navigation border color",
+      "default": "#e9ecef"
     },
     {
       "type": "checkbox",
-      "id": "show_drawer_social",
+      "id": "enable_nav_shadow",
       "default": true,
-      "label": "Show social links",
-      "info": "Display social media links at bottom of drawer"
+      "label": "🌫️ Enable navigation shadow",
+      "info": "Add subtle shadow below navigation for depth"
     },
-    {
-      "type": "text",
-      "id": "social_heading",
-      "label": "📝 Social section heading",
-      "default": "Follow Us",
-      "info": "Heading text above social links"
-    },
+    
     {
       "type": "header",
-      "content": "�🔍 Search Bar Settings"
+      "content": "🎪 Professional Dropdown Styling"
+    },
+    {
+      "type": "range",
+      "id": "dropdown_width",
+      "min": 200,
+      "max": 400,
+      "step": 20,
+      "default": 240,
+      "unit": "px",
+      "label": "📐 Dropdown width"
+    },
+    {
+      "type": "range",
+      "id": "dropdown_shadow",
+      "min": 0,
+      "max": 50,
+      "step": 5,
+      "default": 20,
+      "unit": "px",
+      "label": "🌫️ Dropdown shadow intensity"
+    },
+    {
+      "type": "range",
+      "id": "dropdown_radius",
+      "min": 0,
+      "max": 20,
+      "step": 2,
+      "default": 8,
+      "unit": "px",
+      "label": "� Dropdown border radius"
+    },
+    {
+      "type": "color",
+      "id": "dropdown_bg",
+      "label": "🎨 Dropdown background",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "dropdown_border",
+      "label": "🖌️ Dropdown border color",
+      "default": "#e9ecef"
+    },
+    {
+      "type": "color",
+      "id": "dropdown_text",
+      "label": "� Dropdown text color",
+      "default": "#2c3e50"
+    },
+    {
+      "type": "color",
+      "id": "dropdown_hover_bg",
+      "label": "🎯 Dropdown hover background",
+      "default": "#f8f9fa"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_dropdown_icons",
+      "default": true,
+      "label": "🔹 Enable dropdown icons",
+      "info": "Show arrow indicators for submenus"
+    },
+    
+    {
+      "type": "header",
+      "content": "🔍 Smart Search Integration"
     },
     {
       "type": "checkbox",
       "id": "show_search_bar",
       "default": true,
-      "label": "Show search bar",
-      "info": "Display a full search bar in the header center. When enabled, search icon only appears on mobile."
+      "label": "✅ Enable search functionality",
+      "info": "Display search functionality in the header"
     },
     {
-      "type": "checkbox",
-      "id": "show_search_icon",
-      "default": false,
-      "label": "Show search icon only",
-      "info": "Display only a search icon (opens modal when clicked). Use this instead of the search bar for a minimal design."
-    },
-    {
-      "type": "text",
-      "id": "search_placeholder",
-      "default": "Search products...",
-      "label": "🔤 Search placeholder text",
-      "info": "Custom text shown inside the search bar when empty"
+      "type": "select",
+      "id": "search_style",
+      "options": [
+        {
+          "value": "bar",
+          "label": "🔍 Search Bar"
+        },
+        {
+          "value": "icon",
+          "label": "🔍 Search Icon Only"
+        },
+        {
+          "value": "both",
+          "label": "🔍 Responsive (Bar + Icon)"
+        }
+      ],
+      "default": "both",
+      "label": "🎨 Search display style",
+      "info": "Responsive mode shows bar on desktop, icon on mobile"
     },
     {
       "type": "select",
@@ -1160,22 +1162,18 @@
       "label": "📍 Search bar position"
     },
     {
-      "type": "color",
-      "id": "search_background",
-      "label": "🎨 Search background color",
-      "default": "#ffffff"
+      "type": "text",
+      "id": "search_placeholder",
+      "default": "Search products, brands, categories...",
+      "label": "💬 Search placeholder text",
+      "info": "Text shown inside the search bar when empty"
     },
     {
-      "type": "color",
-      "id": "search_border",
-      "label": "🖌️ Search border color",
-      "default": "#e0e0e0"
-    },
-    {
-      "type": "color",
-      "id": "search_text",
-      "label": "📝 Search text color",
-      "default": "#333333"
+      "type": "checkbox",
+      "id": "enable_predictive_search",
+      "default": true,
+      "label": "🔮 Enable predictive search",
+      "info": "Show search suggestions as users type"
     },
     {
       "type": "range",
@@ -1183,24 +1181,96 @@
       "min": 200,
       "max": 600,
       "step": 20,
+      "default": 400,
       "unit": "px",
-      "label": "📐 Search bar width",
-      "default": 400
+      "label": "� Search bar width"
     },
     {
+      "type": "color",
+      "id": "search_background",
+      "label": "🎨 Search background color",
+      "default": "#f8f9fa"
+    },
+    {
+      "type": "color",
+      "id": "search_border",
+      "label": "🖌️ Search border color",
+      "default": "#dee2e6"
+    },
+    
+    {
       "type": "header",
-      "content": "📍 Top Navigation"
+      "content": "🌍 Multi-Language & Localization"
     },
     {
       "type": "checkbox",
-      "id": "show_top_menu",
+      "id": "enable_language_selector",
       "default": true,
-      "label": "Show navigation at top",
-      "info": "Display the main navigation menu above the header"
+      "label": "✅ Enable language selector",
+      "info": "Show GTranslate language selector for international customers"
     },
     {
+      "type": "select",
+      "id": "gtranslate_style",
+      "options": [
+        {
+          "value": "dropdown",
+          "label": "🌐 Dropdown Menu (Recommended)"
+        },
+        {
+          "value": "flags",
+          "label": "🏳️ Flag Icons"
+        },
+        {
+          "value": "text",
+          "label": "📝 Text Only"
+        },
+        {
+          "value": "globe",
+          "label": "🌍 Globe Icon + Dropdown"
+        }
+      ],
+      "default": "dropdown",
+      "label": "🎨 Language selector style"
+    },
+    {
+      "type": "checkbox",
+      "id": "gtranslate_show_flags",
+      "default": true,
+      "label": "�️ Show country flags",
+      "info": "Display flag icons in language selector"
+    },
+    {
+      "type": "select",
+      "id": "language_position",
+      "options": [
+        {
+          "value": "header",
+          "label": "Main Header"
+        },
+        {
+          "value": "top-bar",
+          "label": "Top Navigation Bar"
+        },
+        {
+          "value": "both",
+          "label": "Both Locations"
+        }
+      ],
+      "default": "header",
+      "label": "� Language selector position"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_country_selector",
+      "default": false,
+      "label": "🌎 Enable country/region selector",
+      "info": "Show Shopify native country selector for shipping/currency"
+    },
+    
+    {
       "type": "header",
-      "content": "t:sections.header.settings.mobile_layout.content"
+      "content": "📱 Mobile Experience & Responsive Design"
     },
     {
       "type": "select",
@@ -1208,58 +1278,297 @@
       "options": [
         {
           "value": "center",
-          "label": "t:sections.header.settings.mobile_logo_position.options__1.label"
+          "label": "Center"
         },
         {
           "value": "left",
-          "label": "t:sections.header.settings.mobile_logo_position.options__2.label"
+          "label": "Left"
         }
       ],
       "default": "center",
-      "label": "t:sections.header.settings.mobile_logo_position.label"
+      "label": "� Mobile logo position"
     },
+    {
+      "type": "checkbox",
+      "id": "enable_mobile_drawer",
+      "default": true,
+      "label": "📱 Enable mobile drawer menu",
+      "info": "Use slide-out drawer for mobile navigation"
+    },
+    {
+      "type": "text",
+      "id": "drawer_title",
+      "label": "📝 Mobile drawer title",
+      "default": "Menu",
+      "info": "Title shown at the top of the mobile drawer"
+    },
+    {
+      "type": "range",
+      "id": "drawer_width",
+      "min": 280,
+      "max": 400,
+      "step": 20,
+      "default": 320,
+      "unit": "px",
+      "label": "📐 Mobile drawer width"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_mobile_search",
+      "default": true,
+      "label": "🔍 Show search in mobile drawer",
+      "info": "Include search functionality in mobile menu"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_mobile_bottom_nav",
+      "default": false,
+      "label": "� Enable mobile bottom navigation",
+      "info": "Add sticky bottom navigation for mobile (Home, Search, Menu, Cart)"
+    },
+    
     {
       "type": "header",
-      "content": "t:sections.all.spacing"
+      "content": "⚙️ Advanced Features & Behavior"
     },
     {
-      "type": "range",
-      "id": "margin_bottom",
-      "min": 0,
-      "max": 100,
-      "step": 4,
-      "unit": "px",
-      "label": "t:sections.header.settings.margin_bottom.label",
-      "default": 0
+      "type": "select",
+      "id": "sticky_header_type",
+      "options": [
+        {
+          "value": "none",
+          "label": "None"
+        },
+        {
+          "value": "on-scroll-up",
+          "label": "On Scroll Up (Recommended)"
+        },
+        {
+          "value": "always",
+          "label": "Always Sticky"
+        },
+        {
+          "value": "reduce-logo-size",
+          "label": "Sticky with Reduced Logo"
+        }
+      ],
+      "default": "on-scroll-up",
+      "label": "📌 Sticky header behavior"
     },
+    {
+      "type": "checkbox",
+      "id": "show_line_separator",
+      "default": true,
+      "label": "� Show header separator line"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_header_animations",
+      "default": true,
+      "label": "✨ Enable header animations",
+      "info": "Smooth transitions and hover effects"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_breadcrumbs",
+      "default": false,
+      "label": "🗂️ Enable breadcrumb navigation",
+      "info": "Show page hierarchy below header"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_scroll_progress",
+      "default": false,
+      "label": "📊 Enable scroll progress bar",
+      "info": "Show reading progress on blog posts and pages"
+    },
+    
     {
       "type": "header",
-      "content": "t:sections.all.padding.section_padding_heading"
+      "content": "🎨 Visual Design & Spacing"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "🎨 Header color scheme",
+      "default": "scheme-1"
     },
     {
       "type": "range",
-      "id": "padding_top",
+      "id": "header_padding_top",
       "min": 0,
-      "max": 36,
-      "step": 4,
+      "max": 50,
+      "step": 5,
+      "default": 20,
       "unit": "px",
-      "label": "t:sections.all.padding.padding_top",
-      "default": 20
+      "label": "� Header top padding"
     },
     {
       "type": "range",
-      "id": "padding_bottom",
+      "id": "header_padding_bottom",
       "min": 0,
-      "max": 36,
-      "step": 4,
+      "max": 50,
+      "step": 5,
+      "default": 20,
       "unit": "px",
-      "label": "t:sections.all.padding.padding_bottom",
-      "default": 20
+      "label": "📏 Header bottom padding"
+    },
+    {
+      "type": "range",
+      "id": "header_max_width",
+      "min": 1200,
+      "max": 1800,
+      "step": 100,
+      "default": 1400,
+      "unit": "px",
+      "label": "📐 Header max width",
+      "info": "Maximum width of header content"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_header_blur",
+      "default": false,
+      "label": "🌫️ Enable header backdrop blur",
+      "info": "Modern glass effect for sticky header"
+    },
+    
+    {
+      "type": "header",
+      "content": "� Developer Options"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_debug_mode",
+      "default": false,
+      "label": "🐛 Enable debug mode",
+      "info": "Show console logs for navigation system (for developers)"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_performance_monitoring",
+      "default": false,
+      "label": "📊 Enable performance monitoring",
+      "info": "Log navigation performance metrics to console"
+    },
+    {
+      "type": "textarea",
+      "id": "custom_css",
+      "label": "🎨 Custom CSS",
+      "info": "Add custom CSS for advanced styling (optional)",
+      "placeholder": "/* Your custom CSS here */\n/* Example: .header { background: gradient; } */"
+    },
+    {
+      "type": "textarea",
+      "id": "custom_js",
+      "label": "⚙️ Custom JavaScript",
+      "info": "Add custom JavaScript for advanced functionality (optional)",
+      "placeholder": "// Your custom JavaScript here\n// Example: console.log('Header loaded');"
     }
   ],
   "blocks": [
     {
       "type": "@app"
+    },
+    {
+      "type": "mega_menu",
+      "name": "🎪 Mega Menu Block",
+      "settings": [
+        {
+          "type": "text",
+          "id": "menu_item",
+          "label": "🔗 Menu item name",
+          "info": "Enter the exact name of the menu item this mega menu is for"
+        },
+        {
+          "type": "range",
+          "id": "mega_menu_columns",
+          "min": 2,
+          "max": 6,
+          "step": 1,
+          "default": 4,
+          "label": "📊 Number of columns"
+        },
+        {
+          "type": "checkbox",
+          "id": "show_mega_menu_images",
+          "default": true,
+          "label": "🖼️ Show category images"
+        },
+        {
+          "type": "checkbox",
+          "id": "show_mega_menu_descriptions",
+          "default": false,
+          "label": "📝 Show category descriptions"
+        }
+      ]
+    },
+    {
+      "type": "promotional_banner",
+      "name": "📢 Promotional Banner",
+      "settings": [
+        {
+          "type": "text",
+          "id": "banner_text",
+          "label": "📝 Banner text",
+          "default": "🚚 Free shipping on orders over $50! Shop now and save!"
+        },
+        {
+          "type": "url",
+          "id": "banner_link",
+          "label": "🔗 Banner link (optional)"
+        },
+        {
+          "type": "color",
+          "id": "banner_bg",
+          "label": "🎨 Banner background",
+          "default": "#3498db"
+        },
+        {
+          "type": "color",
+          "id": "banner_text_color",
+          "label": "📝 Banner text color",
+          "default": "#ffffff"
+        },
+        {
+          "type": "checkbox",
+          "id": "banner_show_close",
+          "default": true,
+          "label": "❌ Show close button",
+          "info": "Allow customers to dismiss the banner"
+        }
+      ]
+    },
+    {
+      "type": "utility_bar",
+      "name": "🛠️ Utility Bar",
+      "settings": [
+        {
+          "type": "text",
+          "id": "utility_text",
+          "label": "📝 Utility text",
+          "default": "Customer Service: 1-800-123-4567"
+        },
+        {
+          "type": "select",
+          "id": "utility_position",
+          "options": [
+            {
+              "value": "left",
+              "label": "Left"
+            },
+            {
+              "value": "center",
+              "label": "Center"
+            },
+            {
+              "value": "right",
+              "label": "Right"
+            }
+          ],
+          "default": "right",
+          "label": "📍 Text position"
+        }
+      ]
     }
   ]
 }
