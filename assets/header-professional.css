@@ -1,0 +1,813 @@
+/*
+* ====================================
+* 🏢 PROFESSIONAL HEADER STYLES
+* ====================================
+* A comprehensive, mobile-first CSS system for the professional header
+* with clean organization, modern design patterns, and performance optimization.
+* 
+* Author: Professional Theme Development
+* Version: 2.0
+* Last Updated: 2025
+*/
+
+/* ====================================
+   CSS VARIABLES - CENTRALIZED CONTROL
+   ==================================== */
+:root {
+  /* 🎨 Color System */
+  --header-bg: #ffffff;
+  --header-text: #2c3e50;
+  --header-border: #e9ecef;
+  --header-shadow: rgba(0, 0, 0, 0.1);
+  
+  /* 🧭 Navigation Colors */
+  --nav-text: #2c3e50;
+  --nav-hover: #3498db;
+  --nav-active: #e74c3c;
+  --nav-bg: #ffffff;
+  --nav-border: #e9ecef;
+  
+  /* 🎪 Dropdown Colors */
+  --dropdown-bg: #ffffff;
+  --dropdown-border: #e9ecef;
+  --dropdown-text: #2c3e50;
+  --dropdown-hover-bg: #f8f9fa;
+  --dropdown-shadow: rgba(0, 0, 0, 0.15);
+  
+  /* 🔍 Search Colors */
+  --search-bg: #f8f9fa;
+  --search-border: #dee2e6;
+  --search-text: #495057;
+  --search-placeholder: #6c757d;
+  
+  /* 📐 Layout & Spacing */
+  --header-max-width: 1400px;
+  --header-padding-top: 20px;
+  --header-padding-bottom: 20px;
+  --nav-height: 60px;
+  --logo-width: 140px;
+  --logo-width-mobile: 110px;
+  
+  /* 🎬 Animation & Effects */
+  --animation-duration: 300ms;
+  --animation-easing: cubic-bezier(0.4, 0, 0.2, 1);
+  --dropdown-radius: 8px;
+  --dropdown-shadow-size: 20px;
+  
+  /* 📱 Responsive Breakpoints */
+  --mobile-breakpoint: 990px;
+  --tablet-breakpoint: 768px;
+  
+  /* 🔤 Typography */
+  --nav-font-size: 16px;
+  --nav-font-weight: 500;
+  --dropdown-font-size: 15px;
+}
+
+/* ====================================
+   MOBILE-FIRST BASE STYLES
+   ==================================== */
+.header-wrapper {
+  position: relative;
+  background: var(--header-bg);
+  border-bottom: 1px solid var(--header-border);
+  z-index: 100;
+}
+
+.header-wrapper--border-bottom {
+  border-bottom: 1px solid var(--header-border);
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--header-padding-top) 0 var(--header-padding-bottom);
+  max-width: var(--header-max-width);
+  margin: 0 auto;
+  width: 100%;
+}
+
+/* ====================================
+   PROFESSIONAL NAVIGATION SYSTEM
+   ==================================== */
+
+/* Top Navigation Bar (Optional) */
+.top-nav-wrapper {
+  background: var(--nav-bg);
+  border-bottom: 1px solid var(--nav-border);
+  padding: 0;
+}
+
+.top-nav {
+  max-width: var(--header-max-width);
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.top-nav__list {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  height: var(--nav-height);
+}
+
+.top-nav__item {
+  position: relative;
+  margin: 0 15px;
+}
+
+.top-nav__link {
+  display: block;
+  padding: 8px 12px;
+  color: var(--nav-text);
+  text-decoration: none;
+  font-size: var(--nav-font-size);
+  font-weight: var(--nav-font-weight);
+  transition: color var(--animation-duration) var(--animation-easing);
+  white-space: nowrap;
+}
+
+.top-nav__link:hover,
+.top-nav__link:focus {
+  color: var(--nav-hover);
+}
+
+.top-nav__link--active {
+  color: var(--nav-active);
+  font-weight: 600;
+}
+
+/* ====================================
+   HEADER LAYOUT SECTIONS
+   ==================================== */
+.header__main-row {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  gap: 20px;
+  width: 100%;
+  padding: 0 20px;
+}
+
+.header__left-section {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 20px;
+}
+
+.header__center-section {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.header__right-section {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 15px;
+}
+
+/* ====================================
+   PROFESSIONAL LOGO SYSTEM
+   ==================================== */
+.header__heading {
+  margin: 0;
+  line-height: 1;
+}
+
+.header__heading-link {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+  transition: transform var(--animation-duration) var(--animation-easing);
+}
+
+.header__heading-link:hover {
+  transform: scale(1.02);
+}
+
+.header__heading-logo-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.header__heading-logo {
+  max-width: var(--logo-width-mobile);
+  height: auto;
+  display: block;
+  transition: opacity var(--animation-duration) var(--animation-easing);
+}
+
+.header__heading-logo--desktop {
+  display: none;
+}
+
+.header__heading-logo--mobile {
+  display: block;
+}
+
+/* ====================================
+   NAVIGATION POSITIONING
+   ==================================== */
+.header__navigation {
+  display: none; /* Hidden on mobile by default */
+}
+
+.header__navigation--left {
+  justify-self: start;
+}
+
+.header__navigation--center {
+  justify-self: center;
+}
+
+.header__navigation--right {
+  justify-self: end;
+}
+
+/* ====================================
+   PROFESSIONAL DROPDOWN SYSTEM
+   ==================================== */
+.header__submenu {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  min-width: 200px;
+  background: var(--dropdown-bg);
+  border: 1px solid var(--dropdown-border);
+  border-radius: var(--dropdown-radius);
+  box-shadow: 0 var(--dropdown-shadow-size) var(--dropdown-shadow-size) var(--dropdown-shadow);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-10px);
+  transition: all var(--animation-duration) var(--animation-easing);
+  z-index: 1000;
+  padding: 8px 0;
+  margin-top: 8px;
+}
+
+.header__submenu.is-open,
+header-menu details[open] .header__submenu {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.header__submenu-item {
+  position: relative;
+}
+
+.header__submenu .header__menu-item {
+  display: block;
+  padding: 12px 20px;
+  color: var(--dropdown-text);
+  text-decoration: none;
+  font-size: var(--dropdown-font-size);
+  transition: background-color var(--animation-duration) var(--animation-easing);
+  border: none;
+  width: 100%;
+  text-align: left;
+}
+
+.header__submenu .header__menu-item:hover,
+.header__submenu .header__menu-item:focus {
+  background-color: var(--dropdown-hover-bg);
+}
+
+/* Nested Dropdown Support */
+.header__submenu--nested {
+  left: 100%;
+  top: 0;
+  margin-top: 0;
+  margin-left: 8px;
+}
+
+.has-submenu > .header__menu-item::after {
+  content: '›';
+  position: absolute;
+  right: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 14px;
+  color: var(--dropdown-text);
+}
+
+/* ====================================
+   SMART SEARCH SYSTEM
+   ==================================== */
+.header__search-bar {
+  position: relative;
+  display: none; /* Hidden on mobile by default */
+}
+
+.header__search-bar--center {
+  width: 100%;
+  max-width: 400px;
+}
+
+.search-form {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.search-input {
+  width: 100%;
+  padding: 12px 50px 12px 16px;
+  border: 1px solid var(--search-border);
+  border-radius: 6px;
+  background: var(--search-bg);
+  color: var(--search-text);
+  font-size: 14px;
+  transition: all var(--animation-duration) var(--animation-easing);
+}
+
+.search-input:focus {
+  outline: none;
+  border-color: var(--nav-hover);
+  box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.2);
+}
+
+.search-input::placeholder {
+  color: var(--search-placeholder);
+}
+
+.search-submit {
+  position: absolute;
+  right: 8px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  color: var(--search-text);
+  cursor: pointer;
+  padding: 8px;
+  transition: color var(--animation-duration) var(--animation-easing);
+}
+
+.search-submit:hover {
+  color: var(--nav-hover);
+}
+
+/* Search Icon (Mobile) */
+.header__icon--search {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 6px;
+  color: var(--header-text);
+  text-decoration: none;
+  transition: all var(--animation-duration) var(--animation-easing);
+}
+
+.header__icon--search:hover {
+  background: var(--dropdown-hover-bg);
+  color: var(--nav-hover);
+}
+
+/* ====================================
+   PROFESSIONAL ICONS SYSTEM
+   ==================================== */
+.header__icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 6px;
+  color: var(--header-text);
+  text-decoration: none;
+  transition: all var(--animation-duration) var(--animation-easing);
+  position: relative;
+}
+
+.header__icon:hover,
+.header__icon:focus {
+  background: var(--dropdown-hover-bg);
+  color: var(--nav-hover);
+}
+
+.header__icon svg {
+  width: 20px;
+  height: 20px;
+}
+
+/* Cart Count Bubble */
+.cart-count-bubble {
+  position: absolute;
+  top: -2px;
+  right: -2px;
+  background: var(--nav-active);
+  color: white;
+  border-radius: 50%;
+  min-width: 18px;
+  height: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  font-weight: 600;
+  line-height: 1;
+}
+
+/* ====================================
+   LOCALIZATION & LANGUAGE SELECTOR
+   ==================================== */
+.header__localization {
+  display: flex;
+  align-items: center;
+}
+
+.header__gtranslate {
+  position: relative;
+}
+
+.gtranslate_wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+/* ====================================
+   STICKY HEADER SYSTEM
+   ==================================== */
+.shopify-section-header-sticky {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 101;
+  animation: slideDown var(--animation-duration) var(--animation-easing);
+}
+
+.shopify-section-header-hidden {
+  transform: translateY(-100%);
+  transition: transform var(--animation-duration) var(--animation-easing);
+}
+
+@keyframes slideDown {
+  from {
+    transform: translateY(-100%);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+
+/* Sticky header backdrop blur effect */
+.header-wrapper[style*="backdrop-filter"] {
+  background: rgba(255, 255, 255, 0.9);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+/* ====================================
+   PROFESSIONAL DRAWER SYSTEM (Mobile)
+   ==================================== */
+.header__drawer {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1000;
+  visibility: hidden;
+  opacity: 0;
+  transition: all var(--animation-duration) var(--animation-easing);
+}
+
+.header__drawer.is-open {
+  visibility: visible;
+  opacity: 1;
+}
+
+.drawer__overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  cursor: pointer;
+}
+
+.drawer__content {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: var(--drawer-width);
+  height: 100%;
+  background: var(--header-bg);
+  box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+  transform: translateX(-100%);
+  transition: transform var(--animation-duration) var(--animation-easing);
+  overflow-y: auto;
+}
+
+.header__drawer.is-open .drawer__content {
+  transform: translateX(0);
+}
+
+.drawer__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px;
+  border-bottom: 1px solid var(--nav-border);
+}
+
+.drawer__title {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--nav-text);
+}
+
+.drawer__close {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border: none;
+  background: none;
+  color: var(--nav-text);
+  cursor: pointer;
+  border-radius: 4px;
+  transition: all var(--animation-duration) var(--animation-easing);
+}
+
+.drawer__close:hover {
+  background: var(--dropdown-hover-bg);
+  color: var(--nav-hover);
+}
+
+.drawer__navigation {
+  padding: 20px 0;
+}
+
+.drawer__menu {
+  padding: 0;
+  margin: 0;
+}
+
+.drawer__item {
+  border-bottom: 1px solid var(--nav-border);
+}
+
+.drawer__link {
+  display: block;
+  padding: 15px 20px;
+  color: var(--nav-text);
+  text-decoration: none;
+  font-size: 16px;
+  font-weight: 500;
+  transition: all var(--animation-duration) var(--animation-easing);
+}
+
+.drawer__link:hover,
+.drawer__link--active {
+  background: var(--dropdown-hover-bg);
+  color: var(--nav-hover);
+}
+
+.drawer__submenu {
+  background: var(--dropdown-hover-bg);
+  border-top: 1px solid var(--nav-border);
+}
+
+.drawer__subitem {
+  border-bottom: 1px solid var(--nav-border);
+}
+
+.drawer__sublink {
+  display: block;
+  padding: 12px 40px;
+  color: var(--dropdown-text);
+  text-decoration: none;
+  font-size: 14px;
+  transition: all var(--animation-duration) var(--animation-easing);
+}
+
+.drawer__sublink:hover,
+.drawer__sublink--active {
+  background: var(--nav-bg);
+  color: var(--nav-hover);
+}
+
+.drawer__search {
+  padding: 20px;
+  border-top: 1px solid var(--nav-border);
+}
+
+.drawer__search .search-form {
+  position: relative;
+}
+
+.drawer__search .search-input {
+  width: 100%;
+  padding: 12px 40px 12px 16px;
+  border: 1px solid var(--search-border);
+  border-radius: 6px;
+  background: var(--search-bg);
+  color: var(--search-text);
+  font-size: 14px;
+}
+
+.drawer__search .search-submit {
+  position: absolute;
+  right: 8px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  color: var(--search-text);
+  cursor: pointer;
+  padding: 8px;
+}
+
+/* Body scroll lock when drawer is open */
+body.drawer-open {
+  overflow: hidden;
+}
+
+/* Mobile drawer button */
+.header__menu-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border: none;
+  background: none;
+  color: var(--header-text);
+  cursor: pointer;
+  border-radius: 6px;
+  transition: all var(--animation-duration) var(--animation-easing);
+}
+
+.header__menu-toggle:hover {
+  background: var(--dropdown-hover-bg);
+  color: var(--nav-hover);
+}
+
+/* ====================================
+   RESPONSIVE DESIGN - TABLET & DESKTOP
+   ==================================== */
+
+/* Tablet (768px+) */
+@media screen and (min-width: 768px) {
+  .header__main-row {
+    padding: 0 30px;
+    gap: 30px;
+  }
+  
+  .header__search-bar--center {
+    display: block;
+  }
+  
+  .header__icon--search.header__search--mobile-only {
+    display: none;
+  }
+}
+
+/* Desktop (990px+) */
+@media screen and (min-width: 990px) {
+  /* Logo sizing for desktop */
+  .header__heading-logo {
+    max-width: var(--logo-width);
+  }
+  
+  .header__heading-logo--desktop {
+    display: block;
+  }
+  
+  .header__heading-logo--mobile {
+    display: none;
+  }
+  
+  /* Show navigation on desktop */
+  .header__navigation {
+    display: flex;
+  }
+  
+  /* Hide mobile drawer button */
+  .header__menu-toggle {
+    display: none;
+  }
+  
+  /* Show search bar options */
+  .header__search-bar {
+    display: block;
+  }
+  
+  /* Enable hover dropdowns on desktop */
+  .header__submenu-item:hover .header__submenu,
+  header-menu:hover details .header__submenu {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+  }
+  
+  /* Responsive grid adjustments */
+  .header__main-row {
+    padding: 0 40px;
+  }
+}
+
+/* Large Desktop (1200px+) */
+@media screen and (min-width: 1200px) {
+  .top-nav__item {
+    margin: 0 20px;
+  }
+  
+  .header__main-row {
+    gap: 40px;
+  }
+}
+
+/* ====================================
+   UTILITY CLASSES
+   ==================================== */
+.visually-hidden {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  padding: 0 !important;
+  margin: -1px !important;
+  overflow: hidden !important;
+  clip: rect(0, 0, 0, 0) !important;
+  white-space: nowrap !important;
+  border: 0 !important;
+}
+
+.list-unstyled {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.link {
+  color: inherit;
+  text-decoration: none;
+}
+
+.link:hover,
+.link:focus {
+  text-decoration: none;
+}
+
+/* Focus styles for accessibility */
+.focus-inset:focus {
+  outline: 2px solid var(--nav-hover);
+  outline-offset: 2px;
+}
+
+/* ====================================
+   PERFORMANCE OPTIMIZATIONS
+   ==================================== */
+
+/* Reduce motion for users with vestibular disorders */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* GPU acceleration for smooth animations */
+.header__submenu,
+.header__heading-link,
+.header__icon {
+  will-change: transform;
+}
+
+/* ====================================
+   PRINT STYLES
+   ==================================== */
+@media print {
+  .header-wrapper {
+    background: white !important;
+    box-shadow: none !important;
+    border-bottom: 1px solid #ccc !important;
+  }
+  
+  .header__icon,
+  .header__search-bar,
+  .header__menu-toggle {
+    display: none !important;
+  }
+}
+
+/* ====================================
+   END OF PROFESSIONAL HEADER STYLES
+   ==================================== */
