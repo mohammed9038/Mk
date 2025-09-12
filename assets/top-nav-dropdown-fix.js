@@ -93,8 +93,13 @@
       }
     });
     
-    // Close all dropdowns when clicking outside
+    // Close all dropdowns when clicking outside (but not on GTranslate)
     document.addEventListener('click', (e) => {
+      // Don't interfere with GTranslate dropdowns
+      if (e.target.closest('.gtranslate_wrapper, .header-gtranslate, .gt-dropdown, .gt-option, [class*="gtranslate"]')) {
+        return;
+      }
+      
       if (!topNav.contains(e.target)) {
         mainDropdowns.forEach(dropdown => {
           if (dropdown.hasAttribute('open')) {
@@ -109,14 +114,17 @@
       }
     });
     
-    // Force visibility for any open dropdowns
+    // Force visibility for any open dropdowns (only navigation dropdowns)
     setTimeout(() => {
       const openDropdowns = topNav.querySelectorAll('details[open] .header__submenu, .header__submenu-details[open] .header__submenu--nested');
       openDropdowns.forEach(submenu => {
-        submenu.style.opacity = '1';
-        submenu.style.visibility = 'visible';
-        submenu.style.transform = 'translateY(0)';
-        submenu.style.pointerEvents = 'auto';
+        // Only apply to navigation dropdowns, not GTranslate
+        if (!submenu.closest('.gtranslate_wrapper, .header-gtranslate')) {
+          submenu.style.opacity = '1';
+          submenu.style.visibility = 'visible';
+          submenu.style.transform = 'translateY(0)';
+          submenu.style.pointerEvents = 'auto';
+        }
       });
     }, 100);
   }

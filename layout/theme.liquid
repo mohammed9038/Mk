@@ -474,7 +474,7 @@
     
     {%- comment -%} GTranslate Initialization {%- endcomment -%}
     <script>
-      // Clean GTranslate initialization - only make existing widget visible
+      // Enhanced GTranslate initialization for editor vs preview compatibility
       document.addEventListener('DOMContentLoaded', function() {
         console.log('[GTranslate] Initializing...');
         
@@ -484,32 +484,60 @@
         
         containers.forEach(function(container, index) {
           if (container) {
-            // Just ensure containers are visible - let GTranslate handle the rest
+            // Ensure containers are visible and have proper styles
             container.style.display = 'block';
             container.style.visibility = 'visible';
             container.style.opacity = '1';
-            console.log('[GTranslate] Container ' + (index + 1) + ' made visible');
+            container.style.position = 'relative';
+            container.style.zIndex = '1000';
+            console.log('[GTranslate] Container ' + (index + 1) + ' prepared');
           }
         });
         
-        // Check if GTranslate script loaded after delay
-        setTimeout(function() {
-          const hasContent = Array.from(containers).some(container => 
-            container && container.innerHTML.trim() && !container.innerHTML.includes('Loading')
-          );
-          if (hasContent) {
-            console.log('[GTranslate] Widget loaded successfully');
-          } else {
-            console.warn('[GTranslate] Widget may not have loaded - check external script');
-          }
-        }, 3000);
+        // Handle different behavior between editor and preview
+        const isEditor = window.location.href.includes('editor_preview') || window.Shopify?.designMode;
         
-        // Notify navigation controller
+        if (isEditor) {
+          console.log('[GTranslate] Running in Shopify editor mode');
+          // In editor mode, ensure immediate visibility
+          setTimeout(function() {
+            containers.forEach(function(container) {
+              if (container && !container.innerHTML.trim()) {
+                container.innerHTML = '<div style="padding: 4px 8px; background: #f0f0f0; border: 1px dashed #ccc; font-size: 12px; color: #666;">GTranslate Widget</div>';
+              }
+            });
+          }, 500);
+        } else {
+          console.log('[GTranslate] Running in preview/live mode');
+          // In preview mode, wait for external script and handle fallback
+          let retryCount = 0;
+          const maxRetries = 10;
+          
+          function checkGTranslateLoad() {
+            retryCount++;
+            const hasContent = Array.from(containers).some(container => 
+              container && container.innerHTML.trim() && !container.innerHTML.includes('Loading')
+            );
+            
+            if (hasContent) {
+              console.log('[GTranslate] Widget loaded successfully in preview');
+            } else if (retryCount < maxRetries) {
+              console.log('[GTranslate] Retry', retryCount, '- checking again...');
+              setTimeout(checkGTranslateLoad, 1000);
+            } else {
+              console.warn('[GTranslate] Failed to load after', maxRetries, 'attempts');
+            }
+          }
+          
+          setTimeout(checkGTranslateLoad, 2000);
+        }
+        
+        // Notify navigation controller (after navigation dropdown fix loads)
         setTimeout(function() {
           if (window.navigationController && typeof window.navigationController.enhanceGTranslate === 'function') {
             window.navigationController.enhanceGTranslate();
           }
-        }, 1000);
+        }, 1500);
       });
     </script>
     <script src="{{ 'gtranslate-dropdown.js' | asset_url }}" defer></script>
