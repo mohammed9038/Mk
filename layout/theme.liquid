@@ -54,7 +54,6 @@
     <script src="{{ 'global.js' | asset_url }}" defer="defer"></script>
     
     {%- comment -%} Professional Navigation System - Load early {%- endcomment -%}
-    <script src="{{ 'navigation-controller.js' | asset_url }}" defer="defer"></script>
     <script src="{{ 'navigation-dropdown-fix.js' | asset_url }}" defer="defer"></script>
     <script src="{{ 'slideshow-enhancer.js' | asset_url }}" defer="defer"></script>
     {%- if settings.animations_reveal_on_scroll -%}
@@ -438,7 +437,7 @@
     {%- endif -%}
     
     <!-- GTranslate: language translation widget -->
-    <div class="gtranslate_wrapper" style="display: none;"></div>
+    <div class="gtranslate_wrapper"></div>
     <script>
       window.gtranslateSettings = {
         "default_language": "en",
@@ -482,7 +481,7 @@
           try {
             if (window.gt_widget_script && typeof window.gt_widget_script.render === 'function') {
               // Find all GTranslate containers
-              const containers = document.querySelectorAll('.header-gtranslate, .mobile-gtranslate, .footer-gtranslate');
+              const containers = document.querySelectorAll('.gtranslate_wrapper, .header-gtranslate, .mobile-gtranslate, .footer-gtranslate');
               let initialized = 0;
               
               containers.forEach(function(container) {
@@ -491,6 +490,8 @@
                     window.gt_widget_script.render(container);
                     container.dataset.gtInitialized = 'true';
                     initialized++;
+                    // Make sure the container is visible
+                    container.style.display = '';
                   }
                 } catch (error) {
                   // Silent fail to reduce console spam

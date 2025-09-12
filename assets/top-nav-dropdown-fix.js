@@ -4,12 +4,6 @@
   
   console.log('🔧 Top Navigation Dropdown Fix Loading...');
   
-// Top Navigation Dropdown JavaScript Fix - COMPREHENSIVE
-(function() {
-  'use strict';
-  
-  console.log('🔧 Top Navigation Dropdown Fix Loading...');
-  
   function initTopNavDropdowns() {
     // Find all dropdown elements in the top navigation
     const topNav = document.querySelector('.top-nav');
