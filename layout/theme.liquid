@@ -474,46 +474,37 @@
     
     {%- comment -%} GTranslate Initialization {%- endcomment -%}
     <script>
-      // Enhanced GTranslate initialization with debugging
+      // Clean GTranslate initialization - only make existing widget visible
       document.addEventListener('DOMContentLoaded', function() {
         console.log('[GTranslate] Initializing...');
-        console.log('[GTranslate] Settings:', window.gtranslateSettings);
         
         // Find all GTranslate containers
         const containers = document.querySelectorAll('.gtranslate_wrapper, .header-gtranslate, .mobile-gtranslate, .footer-gtranslate');
-        console.log('[GTranslate] Found', containers.length, 'containers:', containers);
+        console.log('[GTranslate] Found', containers.length, 'containers');
         
         containers.forEach(function(container, index) {
           if (container) {
+            // Just ensure containers are visible - let GTranslate handle the rest
             container.style.display = 'block';
             container.style.visibility = 'visible';
             container.style.opacity = '1';
-            
-            // Add a fallback in case GTranslate doesn't load
-            if (!container.innerHTML.trim()) {
-              container.innerHTML = '<div style="padding: 8px 12px; border: 1px solid #ddd; border-radius: 4px; background: white; font-size: 14px;">🌍 Loading translator...</div>';
-            }
-            
-            console.log('[GTranslate] Container ' + (index + 1) + ' prepared:', container);
+            console.log('[GTranslate] Container ' + (index + 1) + ' made visible');
           }
         });
         
-        // Check if GTranslate script loaded
+        // Check if GTranslate script loaded after delay
         setTimeout(function() {
-          if (typeof window.doGTranslate === 'function' || typeof window.GTranslateFireEvent === 'function') {
-            console.log('[GTranslate] Script loaded successfully');
+          const hasContent = Array.from(containers).some(container => 
+            container && container.innerHTML.trim() && !container.innerHTML.includes('Loading')
+          );
+          if (hasContent) {
+            console.log('[GTranslate] Widget loaded successfully');
           } else {
-            console.warn('[GTranslate] Script may not have loaded properly');
-            // Add manual fallback
-            containers.forEach(function(container) {
-              if (container && container.innerHTML.includes('Loading translator')) {
-                container.innerHTML = '<select onchange="if(this.value) window.open(\'https://translate.google.com/translate?sl=auto&tl=\'+this.value+\'&u=\'+encodeURIComponent(window.location.href), \'_blank\')"><option value="">🌍 Translate</option><option value="ar">العربية</option><option value="fr">Français</option><option value="es">Español</option></select>';
-              }
-            });
+            console.warn('[GTranslate] Widget may not have loaded - check external script');
           }
         }, 3000);
         
-        // Notify navigation controller after a short delay
+        // Notify navigation controller
         setTimeout(function() {
           if (window.navigationController && typeof window.navigationController.enhanceGTranslate === 'function') {
             window.navigationController.enhanceGTranslate();
