@@ -286,13 +286,13 @@
 
     {%- unless settings.type_body_font.system? -%}
       {%- assign body_font_url = settings.type_body_font | font_url -%}
-      {%- if body_font_url -%}
+      {%- if body_font_url != blank and body_font_url != empty -%}
         {{ body_font_url | preload_tag: as: 'font', type: 'font/woff2', crossorigin: 'anonymous' }}
       {%- endif -%}
     {%- endunless -%}
     {%- unless settings.type_header_font.system? -%}
       {%- assign header_font_url = settings.type_header_font | font_url -%}
-      {%- if header_font_url -%}
+      {%- if header_font_url != blank and header_font_url != empty -%}
         {{ header_font_url | preload_tag: as: 'font', type: 'font/woff2', crossorigin: 'anonymous' }}
       {%- endif -%}
     {%- endunless -%}
