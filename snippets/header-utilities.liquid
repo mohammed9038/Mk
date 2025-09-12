@@ -1,0 +1,140 @@
+{%- comment -%}
+  ==========================================
+  🔧 HEADER UTILITIES COMPONENT
+  ==========================================
+  Search, account, cart, and localization utilities
+  
+  Parameters:
+  - enable_search: Show search functionality
+  - enable_account: Show account link
+  - enable_cart: Show cart
+  - enable_localization: Show language/country selector
+  - mobile_menu_handle: Menu for mobile drawer
+{%- endcomment -%}
+
+{%- liquid
+  assign show_search = enable_search | default: true
+  assign show_account = enable_account | default: true  
+  assign show_cart = enable_cart | default: true
+  assign show_localization = enable_localization | default: true
+  assign mobile_menu = mobile_menu_handle | default: 'main-menu'
+-%}
+
+{%- comment -%} Mobile Menu Toggle {%- endcomment -%}
+{%- if linklists[mobile_menu].links.size > 0 -%}
+  <button class="header-utilities__mobile-toggle" 
+          aria-label="Open menu" 
+          aria-expanded="false"
+          data-mobile-menu-toggle>
+    <svg class="header-utilities__icon" width="20" height="16" viewBox="0 0 20 16" fill="none">
+      <path d="M0 1h20M0 8h20M0 15h20" stroke="currentColor" stroke-width="1.5"/>
+    </svg>
+  </button>
+{%- endif -%}
+
+{%- comment -%} Search {%- endcomment -%}
+{%- if show_search -%}
+  <div class="header-utilities__search">
+    <a href="{{ routes.search_url }}" 
+       class="header-utilities__link header-utilities__link--search"
+       aria-label="Search products">
+      <svg class="header-utilities__icon" width="18" height="19" viewBox="0 0 18 19" fill="none">
+        <path fill-rule="evenodd" clip-rule="evenodd" d="M11.03 11.68A5.784 5.784 0 112.85 3.5a5.784 5.784 0 018.18 8.18zm.26 1.12a6.78 6.78 0 11.72-.7l5.4 5.4a.5.5 0 11-.71.7l-5.41-5.4z" fill="currentColor"/>
+      </svg>
+    </a>
+  </div>
+{%- endif -%}
+
+{%- comment -%} Localization {%- endcomment -%}
+{%- if show_localization -%}
+  <div class="header-utilities__localization">
+    {%- if localization.available_countries.size > 1 -%}
+      <localization-form class="header-utilities__country-selector">
+        {%- form 'localization', id: 'HeaderCountryForm', class: 'localization-form' -%}
+          <div class="no-js-hidden">
+            <details class="header-utilities__dropdown">
+              <summary class="header-utilities__link" aria-expanded="false">
+                <span class="header-utilities__flag">{{ localization.country.flag }}</span>
+                {{ localization.country.currency.symbol }}
+              </summary>
+              <div class="header-utilities__submenu">
+                {%- for country in localization.available_countries -%}
+                  <label class="header-utilities__option" for="HeaderCountry-{{ country.iso_code }}">
+                    <input type="radio" 
+                           id="HeaderCountry-{{ country.iso_code }}"
+                           name="country_code" 
+                           value="{{ country.iso_code }}"
+                           {% if country.iso_code == localization.country.iso_code %}checked{% endif %}>
+                    <span class="header-utilities__flag">{{ country.flag }}</span>
+                    {{ country.name }} ({{ country.currency.symbol }})
+                  </label>
+                {%- endfor -%}
+              </div>
+            </details>
+          </div>
+        {%- endform -%}
+      </localization-form>
+    {%- endif -%}
+    
+    {%- if localization.available_languages.size > 1 -%}
+      <localization-form class="header-utilities__language-selector">
+        {%- form 'localization', id: 'HeaderLanguageForm', class: 'localization-form' -%}
+          <div class="no-js-hidden">
+            <details class="header-utilities__dropdown">
+              <summary class="header-utilities__link" aria-expanded="false">
+                {{ localization.language.endonym_name | capitalize }}
+              </summary>
+              <div class="header-utilities__submenu">
+                {%- for language in localization.available_languages -%}
+                  <label class="header-utilities__option" for="HeaderLanguage-{{ language.iso_code }}">
+                    <input type="radio" 
+                           id="HeaderLanguage-{{ language.iso_code }}"
+                           name="language_code" 
+                           value="{{ language.iso_code }}"
+                           {% if language.iso_code == localization.language.iso_code %}checked{% endif %}>
+                    {{ language.endonym_name | capitalize }}
+                  </label>
+                {%- endfor -%}
+              </div>
+            </details>
+          </div>
+        {%- endform -%}
+      </localization-form>
+    {%- endif -%}
+  </div>
+{%- endif -%}
+
+{%- comment -%} Account {%- endcomment -%}
+{%- if show_account -%}
+  <div class="header-utilities__account">
+    <a href="{%- if customer -%}{{ routes.account_url }}{%- else -%}{{ routes.account_login_url }}{%- endif -%}" 
+       class="header-utilities__link header-utilities__link--account"
+       aria-label="{%- if customer -%}My account{%- else -%}Log in{%- endif -%}">
+      <svg class="header-utilities__icon" width="18" height="19" viewBox="0 0 18 19" fill="none">
+        <path fill-rule="evenodd" clip-rule="evenodd" d="M6 4.5a3 3 0 116 0 3 3 0 01-6 0zm3-4a4 4 0 100 8 4 4 0 000-8zm5.58 12.15c1.12.82 1.83 2.24 1.91 4.85H1.51c.08-2.6.79-4.03 1.9-4.85C4.66 11.75 6.5 11.5 9 11.5s4.35.26 5.58 1.15zM9 10.5c-2.5 0-4.65.24-6.17 1.35C1.27 12.98.5 14.93.5 18v.5h17V18c0-3.07-.77-5.02-2.33-6.15-1.52-1.1-3.67-1.35-6.17-1.35z" fill="currentColor"/>
+      </svg>
+    </a>
+  </div>
+{%- endif -%}
+
+{%- comment -%} Cart {%- endcomment -%}
+{%- if show_cart -%}
+  <div class="header-utilities__cart">
+    <a href="{{ routes.cart_url }}" 
+       class="header-utilities__link header-utilities__link--cart"
+       aria-label="Shopping cart with {{ cart.item_count }} items"
+       id="cart-icon-bubble">
+      <svg class="header-utilities__icon" width="18" height="19" viewBox="0 0 18 19" fill="none">
+        <path fill-rule="evenodd" clip-rule="evenodd" d="M1 1.5A.5.5 0 011.5 1h1.379c.484 0 .962.268 1.196.716l.348.661C4.692 2.808 5.17 3.076 5.654 3.076H16.5a.5.5 0 01.487.613l-1.5 8A.5.5 0 0115 12H6.146l-.348.661A1.5 1.5 0 004.602 13.5H3.5a.5.5 0 010-1h1.102a.5.5 0 00.399-.197l.348-.661c.234-.448.712-.716 1.196-.716H14.37l1.25-7H5.654a1.5 1.5 0 01-1.196-.716l-.348-.661A.5.5 0 013.879 2H1.5a.5.5 0 01-.5-.5z" fill="currentColor"/>
+        <path fill-rule="evenodd" clip-rule="evenodd" d="M6 16.5a1.5 1.5 0 113 0 1.5 1.5 0 01-3 0zM7.5 15a1.5 1.5 0 100 3 1.5 1.5 0 000-3z" fill="currentColor"/>
+        <path fill-rule="evenodd" clip-rule="evenodd" d="M13 16.5a1.5 1.5 0 113 0 1.5 1.5 0 01-3 0zM14.5 15a1.5 1.5 0 100 3 1.5 1.5 0 000-3z" fill="currentColor"/>
+      </svg>
+      
+      {%- if cart.item_count > 0 -%}
+        <span class="header-utilities__cart-count" aria-hidden="true">
+          {{ cart.item_count }}
+        </span>
+      {%- endif -%}
+    </a>
+  </div>
+{%- endif -%}

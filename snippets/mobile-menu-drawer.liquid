@@ -1,0 +1,119 @@
+{%- comment -%}
+  ==========================================
+  📱 MOBILE MENU DRAWER COMPONENT
+  ==========================================
+  Accessible mobile navigation drawer
+  
+  Parameters:
+  - menu_handle: Menu to display
+  - enable_search: Include search in drawer
+{%- endcomment -%}
+
+{%- liquid
+  assign menu = linklists[menu_handle]
+  assign show_search = enable_search | default: true
+-%}
+
+{%- if menu.links.size > 0 -%}
+  <div class="mobile-drawer" id="mobile-menu-drawer" data-mobile-drawer>
+    <div class="mobile-drawer__overlay" data-mobile-drawer-overlay></div>
+    
+    <aside class="mobile-drawer__content" role="dialog" aria-modal="true" aria-label="Mobile menu">
+      {%- comment -%} Drawer Header {%- endcomment -%}
+      <header class="mobile-drawer__header">
+        <h2 class="mobile-drawer__title">Menu</h2>
+        <button class="mobile-drawer__close" 
+                aria-label="Close menu"
+                data-mobile-drawer-close>
+          <svg class="mobile-drawer__icon" width="18" height="17" viewBox="0 0 18 17" fill="none">
+            <path d="M.865 15.978a.5.5 0 00.707.707l7.433-7.431 7.579 7.282a.501.501 0 00.846-.37.5.5 0 00-.153-.351L9.712 8.546l7.417-7.416a.5.5 0 10-.707-.708L8.991 7.853 1.413.573a.5.5 0 10-.693.72l7.563 7.268-7.418 7.417z" fill="currentColor"/>
+          </svg>
+        </button>
+      </header>
+
+      {%- comment -%} Mobile Search {%- endcomment -%}
+      {%- if show_search -%}
+        <div class="mobile-drawer__search">
+          <form action="{{ routes.search_url }}" method="get" class="mobile-search-form" role="search">
+            <div class="mobile-search-form__input-wrapper">
+              <input type="search" 
+                     name="q" 
+                     class="mobile-search-form__input" 
+                     placeholder="Search products..." 
+                     value="{{ search.terms | escape }}" 
+                     aria-label="Search products">
+              <button type="submit" 
+                      class="mobile-search-form__submit" 
+                      aria-label="Search">
+                <svg class="mobile-search-form__icon" width="18" height="19" viewBox="0 0 18 19" fill="none">
+                  <path fill-rule="evenodd" clip-rule="evenodd" d="M11.03 11.68A5.784 5.784 0 112.85 3.5a5.784 5.784 0 018.18 8.18zm.26 1.12a6.78 6.78 0 11.72-.7l5.4 5.4a.5.5 0 11-.71.7l-5.41-5.4z" fill="currentColor"/>
+                </svg>
+              </button>
+            </div>
+          </form>
+        </div>
+      {%- endif -%}
+
+      {%- comment -%} Mobile Navigation {%- endcomment -%}
+      <nav class="mobile-drawer__navigation" role="navigation" aria-label="Mobile navigation">
+        <ul class="mobile-nav" role="list">
+          {%- for link in menu.links -%}
+            <li class="mobile-nav__item">
+              {%- if link.links.size > 0 -%}
+                {%- comment -%} Item with submenu {%- endcomment -%}
+                <details class="mobile-nav__details">
+                  <summary class="mobile-nav__summary">
+                    <span class="mobile-nav__text{% if link.child_active %} mobile-nav__text--active{% endif %}">
+                      {{ link.title | escape }}
+                    </span>
+                    <svg class="mobile-nav__caret" width="12" height="8" viewBox="0 0 12 8" fill="none">
+                      <path d="M1 1.5L6 6.5L11 1.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                  </summary>
+                  
+                  <ul class="mobile-nav__submenu" role="list">
+                    {%- comment -%} Parent link as first item {%- endcomment -%}
+                    <li class="mobile-nav__subitem mobile-nav__subitem--parent">
+                      <a href="{{ link.url }}" 
+                         class="mobile-nav__sublink{% if link.current %} mobile-nav__sublink--active{% endif %}"
+                         {% if link.current %}aria-current="page"{% endif %}>
+                        {{ link.title | escape }}
+                      </a>
+                    </li>
+                    
+                    {%- for child_link in link.links -%}
+                      <li class="mobile-nav__subitem">
+                        <a href="{{ child_link.url }}" 
+                           class="mobile-nav__sublink{% if child_link.current %} mobile-nav__sublink--active{% endif %}"
+                           {% if child_link.current %}aria-current="page"{% endif %}>
+                          {{ child_link.title | escape }}
+                        </a>
+                      </li>
+                    {%- endfor -%}
+                  </ul>
+                </details>
+              {%- else -%}
+                {%- comment -%} Regular item {%- endcomment -%}
+                <a href="{{ link.url }}" 
+                   class="mobile-nav__link{% if link.current %} mobile-nav__link--active{% endif %}"
+                   {% if link.current %}aria-current="page"{% endif %}>
+                  <span class="mobile-nav__text">{{ link.title | escape }}</span>
+                </a>
+              {%- endif -%}
+            </li>
+          {%- endfor -%}
+        </ul>
+      </nav>
+
+      {%- comment -%} Mobile Footer Links {%- endcomment -%}
+      <div class="mobile-drawer__footer">
+        {%- if shop.customer_accounts_enabled -%}
+          <a href="{%- if customer -%}{{ routes.account_url }}{%- else -%}{{ routes.account_login_url }}{%- endif -%}" 
+             class="mobile-drawer__footer-link">
+            {%- if customer -%}My Account{%- else -%}Sign In{%- endif -%}
+          </a>
+        {%- endif -%}
+      </div>
+    </aside>
+  </div>
+{%- endif -%}
