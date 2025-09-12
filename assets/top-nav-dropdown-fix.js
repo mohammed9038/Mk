@@ -36,8 +36,8 @@
           });
         });
         
-        // Desktop hover functionality for main dropdown
-        if (window.innerWidth >= 990) {
+        // Desktop hover functionality for main dropdown (skip GTranslate elements)
+        if (window.innerWidth >= 990 && !dropdown.closest('.gtranslate_wrapper, .header__gtranslate, [class*="gtranslate"], [id*="gtranslate"]')) {
           dropdown.addEventListener('mouseenter', () => {
             dropdown.setAttribute('open', '');
             console.log(`Hover opened: ${summary.textContent.trim()}`);
@@ -74,8 +74,8 @@
           console.log(`Nested dropdown ${summary.textContent.trim()} clicked - ${isOpen ? 'closing' : 'opening'}`);
         });
         
-        // Desktop hover functionality for nested dropdown
-        if (window.innerWidth >= 990) {
+        // Desktop hover functionality for nested dropdown (skip GTranslate elements)
+        if (window.innerWidth >= 990 && !nestedDropdown.closest('.gtranslate_wrapper, .header__gtranslate, [class*="gtranslate"], [id*="gtranslate"]')) {
           nestedDropdown.addEventListener('mouseenter', () => {
             nestedDropdown.setAttribute('open', '');
             console.log(`Nested hover opened: ${summary.textContent.trim()}`);
@@ -95,31 +95,34 @@
     
     // Close all dropdowns when clicking outside (but not on GTranslate)
     document.addEventListener('click', (e) => {
-      // Don't interfere with GTranslate dropdowns
-      if (e.target.closest('.gtranslate_wrapper, .header__gtranslate, .gt-dropdown, .gt-option, [class*="gtranslate"]')) {
+      // Don't interfere with GTranslate dropdowns or their events
+      if (e.target.closest('.gtranslate_wrapper, .header__gtranslate, .gt-dropdown, .gt-option, .gt-selector, .gt-current, .gt-option, [class*="gtranslate"], [id*="gtranslate"]')) {
         return;
       }
       
+      // Only close navigation dropdowns, not GTranslate
       if (!topNav.contains(e.target)) {
         mainDropdowns.forEach(dropdown => {
-          if (dropdown.hasAttribute('open')) {
+          // Extra check to ensure we don't touch GTranslate elements
+          if (dropdown.hasAttribute('open') && !dropdown.closest('.gtranslate_wrapper, .header__gtranslate')) {
             dropdown.removeAttribute('open');
           }
         });
         nestedDropdowns.forEach(dropdown => {
-          if (dropdown.hasAttribute('open')) {
+          // Extra check to ensure we don't touch GTranslate elements
+          if (dropdown.hasAttribute('open') && !dropdown.closest('.gtranslate_wrapper, .header__gtranslate')) {
             dropdown.removeAttribute('open');
           }
         });
       }
     });
     
-    // Force visibility for any open dropdowns (only navigation dropdowns)
+    // Force visibility for any open dropdowns (only navigation dropdowns, never GTranslate)
     setTimeout(() => {
       const openDropdowns = topNav.querySelectorAll('details[open] .header__submenu, .header__submenu-details[open] .header__submenu--nested');
       openDropdowns.forEach(submenu => {
-        // Only apply to navigation dropdowns, not GTranslate
-        if (!submenu.closest('.gtranslate_wrapper, .header__gtranslate')) {
+        // Only apply to navigation dropdowns, never to GTranslate elements
+        if (!submenu.closest('.gtranslate_wrapper, .header__gtranslate, [class*="gtranslate"], [id*="gtranslate"]')) {
           submenu.style.opacity = '1';
           submenu.style.visibility = 'visible';
           submenu.style.transform = 'translateY(0)';
@@ -136,11 +139,32 @@
     initTopNavDropdowns();
   }
   
+  // Function to protect GTranslate functionality after navigation changes
+  function protectGTranslate() {
+    const gtranslateElements = document.querySelectorAll('.gtranslate_wrapper, .header__gtranslate, [class*="gtranslate"], [id*="gtranslate"]');
+    gtranslateElements.forEach(element => {
+      // Ensure GTranslate elements are not affected by navigation styling
+      element.style.cssText = element.style.cssText.replace(/opacity:\s*[^;]+;?/g, '');
+      element.style.cssText = element.style.cssText.replace(/visibility:\s*[^;]+;?/g, '');
+      element.style.cssText = element.style.cssText.replace(/transform:\s*[^;]+;?/g, '');
+      element.style.cssText = element.style.cssText.replace(/pointer-events:\s*[^;]+;?/g, '');
+    });
+  }
+  
   // Re-initialize on Shopify theme editor changes
-  document.addEventListener('shopify:section:load', initTopNavDropdowns);
+  document.addEventListener('shopify:section:load', () => {
+    initTopNavDropdowns();
+    setTimeout(protectGTranslate, 150); // Protect GTranslate after navigation init
+  });
   
   // Re-initialize on window resize for mobile/desktop detection
-  window.addEventListener('resize', initTopNavDropdowns);
+  window.addEventListener('resize', () => {
+    initTopNavDropdowns();
+    setTimeout(protectGTranslate, 150); // Protect GTranslate after navigation init
+  });
   
-  console.log('✅ Top Navigation Dropdown Fix Loaded');
+  // Initial protection for GTranslate
+  setTimeout(protectGTranslate, 200);
+  
+  console.log('✅ Top Navigation Dropdown Fix Loaded with GTranslate Protection');
 })();
