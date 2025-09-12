@@ -4,6 +4,40 @@
   
   console.log('🔧 Top Navigation Dropdown Fix Loading...');
   
+  // Protect GTranslate from any interference
+  const gtElements = new Set();
+
+  function markGTranslateElements() {
+    // Mark all GTranslate elements
+    document.querySelectorAll('.gtranslate_wrapper, .gtranslate_wrapper *, .gt-dropdown, .gt-dropdown *, select[onchange*="doGTranslate"], select[onchange*="doGTranslate"] *').forEach(el => {
+      gtElements.add(el);
+      el.setAttribute('data-gt-protected', 'true');
+    });
+  }
+
+  // Run marking after DOM changes
+  const observer = new MutationObserver(() => {
+    markGTranslateElements();
+  });
+
+  observer.observe(document.body, {
+    childList: true,
+    subtree: true
+  });
+
+  // Initial marking
+  markGTranslateElements();
+
+  // Update all event handlers to check for protected elements
+  function isProtectedElement(element) {
+    return element && (
+      gtElements.has(element) ||
+      element.hasAttribute('data-gt-protected') ||
+      element.closest('[data-gt-protected]') ||
+      element.closest('.gtranslate_wrapper, .header__gtranslate, .gt-dropdown')
+    );
+  }
+  
   function initTopNavDropdowns() {
     // Find all dropdown elements in the top navigation
     const topNav = document.querySelector('.top-nav');
@@ -95,8 +129,8 @@
     
     // Close all dropdowns when clicking outside (but not on GTranslate)
     document.addEventListener('click', (e) => {
-      // Don't interfere with GTranslate dropdowns or their events
-      if (e.target.closest('.gtranslate_wrapper, .header__gtranslate, .gt-dropdown, .gt-option, .gt-selector, .gt-current, .gt-option, [class*="gtranslate"], [id*="gtranslate"]')) {
+      // Skip if clicking on protected GTranslate elements
+      if (isProtectedElement(e.target)) {
         return;
       }
       
