@@ -1,0 +1,30 @@
+{%- assign image_url = block.settings.image_url -%}
+{%- assign image = block.settings.image -%}
+{%- assign image_sub_title = block.settings.image_sub_title -%}
+{%- assign image_title = block.settings.image_title -%}
+{%- assign image_text_alignment = block.settings.image_text_alignment -%}
+{%- assign image_text_position = block.settings.image_text_position -%}
+{% capture text_position %}
+	{%- case image_text_position -%}
+	  {%- when 'top' -%} align-items-start
+	  {%- when 'middle' -%} align-items-center
+	  {%- when 'bottom' -%} align-items-end
+	{%- endcase -%}	
+{% endcapture %}
+<div class="block-image {{block_custom_class}}">
+	<div class="block-image-wrapper text-{{image_text_alignment}} {{text_position}}">
+		<a class="abs-img" style="padding-bottom:{{ 1 | divided_by: block.settings.image.aspect_ratio | times: 100}}%;" href="{% if image_url == blank -%}#{% else %}{{image_url}}{% endif %}"><img class="img-responsive lazyload"
+			src="{% comment ls-rpl %}{{ block.settings.image | img_url: 'master' }}{% endcomment %}{%- capture LS_IMG_URL -%}{%- render "ls-img-url", image: block.settings.image, img_url: 'master' -%}{%- endcapture -%}{{ LS_IMG_URL }}{% comment /ls-rpl %}{% endcomment %}"
+			data-src="{{ img_url }}"
+			data-widths="[180, 360, 470, 600, 770, 970, 1060, 1280, 1512, 1728, 2048]"
+			data-aspectratio="{{ block.settings.image.aspect_ratio }}"
+			data-sizes="auto"
+			alt="{% comment ls-rpl %}{{ block.settings.image.alt | escape }}{% endcomment %}{%- capture LS_ALT -%}{%- render "ls-alt", image: block.settings.image -%}{%- endcapture -%}{{ LS_ALT | escape }}{% comment /ls-rpl %}{% endcomment %}"></a>
+		{%- unless image_sub_title == blank and image_title == blank -%}
+		<div class="desc">
+			<p class="sub-title">{{image_sub_title}}</p>
+			<p class="title-image h1"><a href="{% if image_url == blank %}#{% else %}{{image_url}}{% endif %}">{{image_title}}</a></p>
+		</div>
+		{%- endunless -%}
+	</div>
+</div>

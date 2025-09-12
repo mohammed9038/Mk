@@ -1,0 +1,47 @@
+{% unless settings.shipping_calculator == 'Disabled' %}
+<div id="shipping-calculator">
+  <p class="title-heading">{{ settings.shipping_calculator_heading | default: 'Enter your destination to get a shipping estimate.' }}</p>
+  <div>
+    <p class="field">
+      <label for="address_country"><ls-static-273050>Country</ls-static-273050></label>
+      <select id="address_country" name="address[country]" data-default="{% if shop.customer_accounts_enabled and customer %}{{ customer.default_address.country }}{% elsif settings.shipping_calculator_default_country != '' %}{{ settings.shipping_calculator_default_country }}{% endif %}">{{ country_option_tags }}</select>
+    </p>
+    <p class="field" id="address_province_container" style="display:none;">
+      <label for="address_province" id="address_province_label"><ls-static-298722>Province</ls-static-298722></label>
+      <select id="address_province" name="address[province]" data-default="{% if shop.customer_accounts_enabled and customer and customer.default_address.province != '' %}{{ customer.default_address.province }}{% endif %}"></select>
+    </p>  
+    <p class="field">
+      <label for="address_zip"><ls-static-240643>Zip/Postal Code</ls-static-240643></label>
+      <input type="text" id="address_zip" name="address[zip]"{% if shop.customer_accounts_enabled and customer %} value="{{ customer.default_address.zip }}"{% endif %} />
+    </p>
+    <p class="field">
+      <input type="button" class="get-rates btn button" value="{{ settings.shipping_calculator_submit_button_label | default: 'Calculate shipping' }}" />
+    </p>
+  </div>
+  <div id="wrapper-response"></div>
+</div>
+{% endunless %}
+
+<script id="shipping-calculator-response-template" type="text/template">
+  {% raw %}
+  <p id="shipping-rates-feedback" {{#if success}} class="success" {{else}} class="error" {{/if}}>
+  {{#if success}}
+    {{#if rates}}
+      {{#rates}}
+        {{#if @first}}
+            Rates start at {{{price}}}.
+        {{/if}}
+      {{/rates}}
+    {{else}}
+      We do not ship to this destination.
+    {{/if}}    
+  {{else}}
+    {{ errorFeedback }}
+  {{/if}}
+  </p>
+  {% endraw %}
+</script>
+
+<!--[if lte IE 8]>
+<style> #shipping-calculator { display: none; } </style>
+<![endif]-->

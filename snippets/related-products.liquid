@@ -1,0 +1,337 @@
+{%- if section.settings.product_related_show_collection == '1' -%}
+	{%- assign cListId = blank -%}
+	{%- assign currentProductId = product.id -%}
+	{%- assign currentProductType = product.type -%}
+	{%- for collection in product.collections -%}
+          {%- comment %}<locksmith:9b50>{% endcomment -%}
+            {%- capture var %}{% render 'locksmith-variables', scope: 'subject', subject: collection, subject_parent: product, variable: 'transparent' %}{% endcapture %}{% if var == "true" %}{% else %}{% continue %}{% endif -%}
+          {%- comment %}</locksmith:9b50>{% endcomment -%}
+          {%- for product in collections[collection.handle].products -%}
+            {%- comment %}<locksmith:fa52>{% endcomment -%}
+              {%- capture var %}{% render 'locksmith-variables', scope: 'subject', subject: product, subject_parent: collections[collection.handle], variable: 'transparent' %}{% endcapture %}{% if var == "true" %}{% else %}{% continue %}{% endif -%}
+            {%- comment %}</locksmith:fa52>{% endcomment -%}
+            {%- unless cListId contains product.id or product.id == currentProductId or product.type != currentProductType -%}
+              {%- assign cListId = cListId | append: product.id | append: ',' -%}
+			  {%- if cListId.size > 0 -%}{%- break -%}{%- endif -%}
+            {% endunless %}
+          {%- endfor -%}
+		  {%- if cListId.size > 0 -%}{%- break -%}{%- endif -%}
+		{%- endfor -%}
+	{%- unless cListId == blank -%}
+	<div class="related-products cdzbox-product nav_style01" data-cdzwidget = '{"codazon.cdzRelatedProduct": ""}'>
+		<div class="section-header section-header--small">
+			<h2 class="section-header__title">
+			  {{ related_title }}
+			</h2>
+			<div class="block-actions">
+				{{ 'products.general.related_head' | t }} <a href="javascript:void(0);" class="action select" role="select-all-related">{{ 'products.general.related_select' | t }}</a>
+			</div>
+		</div>
+		{% include 'grid_style' with id: 'related-grid' , show_slider: related_show_slider , items_1900: related_items_1900, items_1600: related_items_1600, items_1440: related_items_1440, items_1280: related_items_1280, items_980: related_items_980, items_768: related_items_768, items_480: related_items_480, items_320: related_items_320, items_0: related_items_0, items_margin: related_items_margin %}
+		<div class="style-related-grid products items product-items product-grid-style-09 {% if related_show_slider ==  '0' %} no_slider flex-grid{% elsif related_show_slider ==  '1' %} cdzowlslider owl-carousel{% endif %}" {% if related_show_slider ==  '1' %} data-cdzwidget = '{"codazon.owlSlider": {{data-related-products}}}' {% endif %}>
+		  {% assign limit = related_products_count | times: 1 %}
+          {% assign count = 1 %}
+    	  {%- assign cListId = blank -%}
+    	  {%- assign currentProductId = product.id -%}
+    	  {%- assign currentProductType = product.type -%}
+		  {%- comment %}<locksmith:59d7>{% endcomment -%}
+		    {%- assign locksmith_28ae_forloop__size = 0 %}{%- for collection in product.collections -%}{% capture var %}{% render 'locksmith-variables', scope: 'subject', subject: collection, subject_parent: product, variable: 'transparent' %}{% endcapture %}{% if var == 'true' %}{% assign locksmith_28ae_forloop__size = locksmith_28ae_forloop__size | plus: 1 %}{% endif %}{% endfor %}{% assign locksmith_28ae_forloop__index = nil -%}
+		  {%- comment %}</locksmith:59d7>{% endcomment -%}
+		  {%- for collection in product.collections -%}
+          	{%- comment %}<locksmith:ec9f>{% endcomment -%}
+          	  {%- capture var %}{% render 'locksmith-variables', scope: 'subject', subject: collection, subject_parent: product, variable: 'transparent' %}{% endcapture %}{% if var == "true" %}{% if locksmith_28ae_forloop__index == nil %}{% assign locksmith_28ae_forloop__index = 1 %}{% assign locksmith_28ae_forloop__index0 = 0 %}{% else %}{% assign locksmith_28ae_forloop__index = locksmith_28ae_forloop__index | plus: 1 %}{% assign locksmith_28ae_forloop__index0 = locksmith_28ae_forloop__index0 | plus: 1 %}{% endif %}{% if locksmith_28ae_forloop__index == 1 %}{% assign locksmith_28ae_forloop__first = true %}{% else %}{% assign locksmith_28ae_forloop__first = false %}{% endif %}{% if locksmith_28ae_forloop__index == locksmith_28ae_forloop__size %}{% assign locksmith_28ae_forloop__last = true %}{% else %}{% assign locksmith_28ae_forloop__last = false %}{% endif %}{% assign locksmith_28ae_forloop__rindex = locksmith_28ae_forloop__size | minus: locksmith_28ae_forloop__index | minus: 1 %}{% assign locksmith_28ae_forloop__rindex0 = locksmith_28ae_forloop__size | minus: locksmith_28ae_forloop__index0 | minus: 1 %}{% else %}{% continue %}{% endif -%}
+          	{%- comment %}</locksmith:ec9f>{% endcomment -%}
+          	{%- if count > limit -%}{%- break -%}{%- endif -%}
+	  		{%- comment %}<locksmith:c43d>{% endcomment -%}
+	  		  {%- assign locksmith_c5f2_forloop__size = 0 %}{%- for product in collections[collection.handle].products -%}{% capture var %}{% render 'locksmith-variables', scope: 'subject', subject: product, subject_parent: collections[collection.handle], variable: 'transparent' %}{% endcapture %}{% if var == 'true' %}{% assign locksmith_c5f2_forloop__size = locksmith_c5f2_forloop__size | plus: 1 %}{% endif %}{% endfor %}{% assign locksmith_c5f2_forloop__index = nil -%}
+	  		{%- comment %}</locksmith:c43d>{% endcomment -%}
+	  		{%- for product in collections[collection.handle].products -%}
+      			{%- comment %}<locksmith:52d6>{% endcomment -%}
+      			  {%- capture var %}{% render 'locksmith-variables', scope: 'subject', subject: product, subject_parent: collections[collection.handle], variable: 'transparent' %}{% endcapture %}{% if var == "true" %}{% assign __relatedProduct = relatedProduct %}{% assign relatedProduct = product %}{% assign locksmith_4a0c_relatedProduct__available = false %}{% assign locksmith_4a0c_relatedProduct__has_only_default_variant = false %}{% assign _variants_count = 0 %}{% for variant in relatedProduct.variants %}{% capture var %}{% render 'locksmith-variables', scope: 'subject', subject: variant, subject_parent: relatedProduct, variable: 'transparent' %}{% endcapture %}{% if var == "true" %}{% else %}{% continue %}{% endif %}{% if locksmith_4a0c_relatedProduct__available == false and variant.available %}{% assign locksmith_4a0c_relatedProduct__available = true %}{% endif %}{% assign _variants_count = _variants_count | plus: 1 %}{% endfor %}{% if _variants_count == 1 %}{% assign locksmith_4a0c_relatedProduct__has_only_default_variant = true %}{% endif %}{% assign relatedProduct = __relatedProduct %}{% if locksmith_c5f2_forloop__index == nil %}{% assign locksmith_c5f2_forloop__index = 1 %}{% assign locksmith_c5f2_forloop__index0 = 0 %}{% else %}{% assign locksmith_c5f2_forloop__index = locksmith_c5f2_forloop__index | plus: 1 %}{% assign locksmith_c5f2_forloop__index0 = locksmith_c5f2_forloop__index0 | plus: 1 %}{% endif %}{% if locksmith_c5f2_forloop__index == 1 %}{% assign locksmith_c5f2_forloop__first = true %}{% else %}{% assign locksmith_c5f2_forloop__first = false %}{% endif %}{% if locksmith_c5f2_forloop__index == locksmith_c5f2_forloop__size %}{% assign locksmith_c5f2_forloop__last = true %}{% else %}{% assign locksmith_c5f2_forloop__last = false %}{% endif %}{% assign locksmith_c5f2_forloop__rindex = locksmith_c5f2_forloop__size | minus: locksmith_c5f2_forloop__index | minus: 1 %}{% assign locksmith_c5f2_forloop__rindex0 = locksmith_c5f2_forloop__size | minus: locksmith_c5f2_forloop__index0 | minus: 1 %}{% else %}{% continue %}{% endif -%}
+      			{%- comment %}</locksmith:52d6>{% endcomment -%}
+      			{%- if count > limit -%}{%- break -%}{%- endif -%}
+          		{%- if cListId contains product.id or product.id == currentProductId or product.type != currentProductType -%}
+          			{%- continue -%}
+         		{%- else -%}
+            		{%- assign cListId = cListId | append: product.id | append: ',' -%}
+					  {% assign relatedProduct = product %}
+					  {% assign modulo = count | modulo: related_total_rows %}
+					  {% if related_total_rows >  1 and related_show_slider ==  '1'%}
+						{% if modulo == 1 %}
+							<div class="items">
+						{% endif %}
+					  {% endif %}
+					  <div class="item" {% if locksmith_4a0c_relatedProduct__has_only_default_variant or relatedProduct.variants.size == 1  %} data-related="" {% endif %} {{ block.shopify_attributes }} {{locksmith_4a0c_relatedProduct__has_only_default_variant}}>
+					  	{% if locksmith_4a0c_relatedProduct__available %}
+							{% if locksmith_4a0c_relatedProduct__has_only_default_variant or relatedProduct.variants.size == 1  %}
+							<div class="field choice related" data-action="relatedProduct"><span type="checkbox" name="{{relatedProduct.title}}" value="{{relatedProduct.handle}}"></span></div>
+							{% endif %}
+						{% endif %}
+						{% include 'product-grid-style-09' with product: relatedProduct, thumbnail_width: related_thumbnail_width, thumbnail_height: related_thumbnail_height, enable_hover_thumbnail: true, enable_product_label: true, enable_product_name: true, enable_price: true, enable_sku: false, enable_vendor: false, enable_addto_cart: true, enable_quickshop: false, enable_addto_compare: true, enable_addto_wishlist: true, enable_review: true, enable_quantity_product: false, enable_variant_product: false, enable_short_description: false, short_description_length: 150, show_product_text_align: 'center' %}
+					  </div>
+					  {% if related_total_rows >  1 and related_show_slider ==  '1'%}
+						{% if modulo == 0 or locksmith_c5f2_forloop__last %}
+						  </div>
+						  {% endif %}
+					  {% endif %}
+					  {%- assign count = count | plus: 1 -%}
+              	{%- endif -%}
+		  	{%- endfor -%}
+		  {% endfor %}
+		</div>
+	</div>
+	{%- endunless -%}
+{%- elsif section.settings.product_related_show_collection == '2' -%}
+	{%- assign relatedHandles = related_product | split: ',' -%}
+	{%- assign handles = blank -%}
+	{%- capture productHandles -%}
+		{%- for rtHandle in relatedHandles -%}
+			{%- if all_products[rtHandle] != blank and rtHandle != product.handle -%}
+				{{rtHandle}}{%- if forloop.last != true -%},{%- endif -%}
+			{%- endif -%}
+		{%- endfor -%}
+	{%- endcapture -%}
+	{%- assign handles = productHandles | split: ',' -%}
+
+	{% unless handles == blank %}
+	<div class="related-products cdzbox-product nav_style01" data-cdzwidget = '{"codazon.cdzRelatedProduct": ""}'>
+			<div class="section-header section-header--small">
+				<h2 class="section-header__title">
+				  {{ related_title }}
+				</h2>
+				<div class="block-actions">
+					{{ 'products.general.related_head' | t }} <a href="javascript:void(0);" class="action select" role="select-all-related">{{ 'products.general.related_select' | t }}</a>
+				</div>
+			</div>
+			{% include 'grid_style' with id: 'related-grid' , show_slider: related_show_slider , items_1900: related_items_1900, items_1600: related_items_1600, items_1440: related_items_1440, items_1280: related_items_1280, items_980: related_items_980, items_768: related_items_768, items_480: related_items_480, items_320: related_items_320, items_0: related_items_0, items_margin: related_items_margin %}
+			<div class="style-related-grid products items product-items product-grid-style-09 {% if related_show_slider ==  '0' %} no_slider flex-grid{% elsif related_show_slider ==  '1' %} cdzowlslider owl-carousel{% endif %}" {% if related_show_slider ==  '1' %} data-cdzwidget = '{"codazon.owlSlider": {{data-related-products}}}' {% endif %}>
+			  {% for handle in handles limit: related_products_count %}
+				  {% assign relatedProduct = all_products[handle] %}
+				  {% assign modulo = forloop.index | modulo: related_total_rows %}
+				  {% if related_total_rows >  1 and related_show_slider ==  '1'%}
+					{% if modulo == 1 %}
+						<div class="items">
+					{% endif %}
+				  {% endif %}
+				  <div class="item" {% if relatedProduct.has_only_default_variant or relatedProduct.variants.size == 1  %} data-related="" {% endif %} {{ block.shopify_attributes }}>
+				  	{% if relatedProduct.available %}
+						{% if relatedProduct.has_only_default_variant or relatedProduct.variants.size == 1  %}
+						<div class="field choice related" data-action="relatedProduct"><span type="checkbox" name="{{relatedProduct.title}}" value="{{relatedProduct.handle}}"></span></div>
+						{% endif %}
+					{% endif %}
+					{% include 'product-grid-style-09' with product: relatedProduct, thumbnail_width: related_thumbnail_width, thumbnail_height: related_thumbnail_height, enable_hover_thumbnail: true, enable_product_label: true, enable_product_name: true, enable_price: true, enable_sku: false, enable_vendor: false, enable_addto_cart: true, enable_quickshop: false, enable_addto_compare: true, enable_addto_wishlist: true, enable_review: true, enable_quantity_product: false, enable_variant_product: false, enable_short_description: false, short_description_length: 150, show_product_text_align: 'center' %}
+				  </div>
+				  {% if related_total_rows >  1 and related_show_slider ==  '1'%}
+					{% if modulo == 0 or forloop.last %}
+					  </div>
+					  {% endif %}
+				  {% endif %}
+			  {% endfor %}
+			</div>
+	</div>
+	{% endunless %}
+{%- else -%}
+	{%- assign relatedHandles = related_product | split: ',' -%}
+	{%- assign handles = blank -%}
+	{%- capture productHandles -%}
+		{%- for rtHandle in relatedHandles -%}
+			{%- if all_products[rtHandle] != blank and rtHandle != product.handle -%}
+				{{rtHandle}}{%- if forloop.last != true -%},{%- endif -%}
+			{%- endif -%}
+		{%- endfor -%}
+	{%- endcapture -%}
+	{%- assign handles = productHandles | split: ',' -%}
+	{%- if handles == blank -%}
+		{%- assign cListId = blank -%}
+		{%- assign currentProductId = product.id -%}
+		{%- assign currentProductType = product.type -%}
+		{%- for collection in product.collections -%}
+	          {%- comment %}<locksmith:3097>{% endcomment -%}
+	            {%- capture var %}{% render 'locksmith-variables', scope: 'subject', subject: collection, subject_parent: product, variable: 'transparent' %}{% endcapture %}{% if var == "true" %}{% else %}{% continue %}{% endif -%}
+	          {%- comment %}</locksmith:3097>{% endcomment -%}
+	          {%- for product in collections[collection.handle].products -%}
+	            {%- comment %}<locksmith:2c91>{% endcomment -%}
+	              {%- capture var %}{% render 'locksmith-variables', scope: 'subject', subject: product, subject_parent: collections[collection.handle], variable: 'transparent' %}{% endcapture %}{% if var == "true" %}{% else %}{% continue %}{% endif -%}
+	            {%- comment %}</locksmith:2c91>{% endcomment -%}
+	            {%- unless cListId contains product.id or product.id == currentProductId or product.type != currentProductType -%}
+	              {%- assign cListId = cListId | append: product.id | append: ',' -%}
+				  {%- if cListId.size > 0 -%}{%- break -%}{%- endif -%}
+	            {% endunless %}
+	          {%- endfor -%}
+			  {%- if cListId.size > 0 -%}{%- break -%}{%- endif -%}
+			{%- endfor -%}
+		{%- unless cListId == blank -%}
+	<div class="related-products cdzbox-product nav_style01" data-cdzwidget = '{"codazon.cdzRelatedProduct": ""}'>
+		<div class="section-header section-header--small">
+			<h2 class="section-header__title">
+			  {{ related_title }}
+			</h2>
+			<div class="block-actions">
+				{{ 'products.general.related_head' | t }} <a href="javascript:void(0);" class="action select" role="select-all-related">{{ 'products.general.related_select' | t }}</a>
+			</div>
+		</div>
+		{% include 'grid_style' with id: 'related-grid' , show_slider: related_show_slider , items_1900: related_items_1900, items_1600: related_items_1600, items_1440: related_items_1440, items_1280: related_items_1280, items_980: related_items_980, items_768: related_items_768, items_480: related_items_480, items_320: related_items_320, items_0: related_items_0, items_margin: related_items_margin %}
+		<div class="style-related-grid products items product-items product-grid-style-09 {% if related_show_slider ==  '0' %} no_slider flex-grid{% elsif related_show_slider ==  '1' %} cdzowlslider owl-carousel{% endif %}" {% if related_show_slider ==  '1' %} data-cdzwidget = '{"codazon.owlSlider": {{data-related-products}}}' {% endif %}>
+		  {% assign limit = related_products_count | times: 1 %}
+          {% assign count = 1 %}
+    	  {%- assign cListId = blank -%}
+    	  {%- assign currentProductId = product.id -%}
+    	  {%- assign currentProductType = product.type -%}
+		  {%- comment %}<locksmith:aca8>{% endcomment -%}
+		    {%- assign locksmith_7a03_forloop__size = 0 %}{%- for collection in product.collections -%}{% capture var %}{% render 'locksmith-variables', scope: 'subject', subject: collection, subject_parent: product, variable: 'transparent' %}{% endcapture %}{% if var == 'true' %}{% assign locksmith_7a03_forloop__size = locksmith_7a03_forloop__size | plus: 1 %}{% endif %}{% endfor %}{% assign locksmith_7a03_forloop__index = nil -%}
+		  {%- comment %}</locksmith:aca8>{% endcomment -%}
+		  {%- for collection in product.collections -%}
+          	{%- comment %}<locksmith:69e2>{% endcomment -%}
+          	  {%- capture var %}{% render 'locksmith-variables', scope: 'subject', subject: collection, subject_parent: product, variable: 'transparent' %}{% endcapture %}{% if var == "true" %}{% if locksmith_7a03_forloop__index == nil %}{% assign locksmith_7a03_forloop__index = 1 %}{% assign locksmith_7a03_forloop__index0 = 0 %}{% else %}{% assign locksmith_7a03_forloop__index = locksmith_7a03_forloop__index | plus: 1 %}{% assign locksmith_7a03_forloop__index0 = locksmith_7a03_forloop__index0 | plus: 1 %}{% endif %}{% if locksmith_7a03_forloop__index == 1 %}{% assign locksmith_7a03_forloop__first = true %}{% else %}{% assign locksmith_7a03_forloop__first = false %}{% endif %}{% if locksmith_7a03_forloop__index == locksmith_7a03_forloop__size %}{% assign locksmith_7a03_forloop__last = true %}{% else %}{% assign locksmith_7a03_forloop__last = false %}{% endif %}{% assign locksmith_7a03_forloop__rindex = locksmith_7a03_forloop__size | minus: locksmith_7a03_forloop__index | minus: 1 %}{% assign locksmith_7a03_forloop__rindex0 = locksmith_7a03_forloop__size | minus: locksmith_7a03_forloop__index0 | minus: 1 %}{% else %}{% continue %}{% endif -%}
+          	{%- comment %}</locksmith:69e2>{% endcomment -%}
+          	{%- if count > limit -%}{%- break -%}{%- endif -%}
+	  		{%- comment %}<locksmith:d9cd>{% endcomment -%}
+	  		  {%- assign locksmith_01cc_forloop__size = 0 %}{%- for product in collections[collection.handle].products -%}{% capture var %}{% render 'locksmith-variables', scope: 'subject', subject: product, subject_parent: collections[collection.handle], variable: 'transparent' %}{% endcapture %}{% if var == 'true' %}{% assign locksmith_01cc_forloop__size = locksmith_01cc_forloop__size | plus: 1 %}{% endif %}{% endfor %}{% assign locksmith_01cc_forloop__index = nil -%}
+	  		{%- comment %}</locksmith:d9cd>{% endcomment -%}
+	  		{%- for product in collections[collection.handle].products -%}
+      			{%- comment %}<locksmith:0456>{% endcomment -%}
+      			  {%- capture var %}{% render 'locksmith-variables', scope: 'subject', subject: product, subject_parent: collections[collection.handle], variable: 'transparent' %}{% endcapture %}{% if var == "true" %}{% assign __relatedProduct = relatedProduct %}{% assign relatedProduct = product %}{% assign locksmith_1d1e_relatedProduct__available = false %}{% assign locksmith_1d1e_relatedProduct__has_only_default_variant = false %}{% assign _variants_count = 0 %}{% for variant in relatedProduct.variants %}{% capture var %}{% render 'locksmith-variables', scope: 'subject', subject: variant, subject_parent: relatedProduct, variable: 'transparent' %}{% endcapture %}{% if var == "true" %}{% else %}{% continue %}{% endif %}{% if locksmith_1d1e_relatedProduct__available == false and variant.available %}{% assign locksmith_1d1e_relatedProduct__available = true %}{% endif %}{% assign _variants_count = _variants_count | plus: 1 %}{% endfor %}{% if _variants_count == 1 %}{% assign locksmith_1d1e_relatedProduct__has_only_default_variant = true %}{% endif %}{% assign relatedProduct = __relatedProduct %}{% if locksmith_01cc_forloop__index == nil %}{% assign locksmith_01cc_forloop__index = 1 %}{% assign locksmith_01cc_forloop__index0 = 0 %}{% else %}{% assign locksmith_01cc_forloop__index = locksmith_01cc_forloop__index | plus: 1 %}{% assign locksmith_01cc_forloop__index0 = locksmith_01cc_forloop__index0 | plus: 1 %}{% endif %}{% if locksmith_01cc_forloop__index == 1 %}{% assign locksmith_01cc_forloop__first = true %}{% else %}{% assign locksmith_01cc_forloop__first = false %}{% endif %}{% if locksmith_01cc_forloop__index == locksmith_01cc_forloop__size %}{% assign locksmith_01cc_forloop__last = true %}{% else %}{% assign locksmith_01cc_forloop__last = false %}{% endif %}{% assign locksmith_01cc_forloop__rindex = locksmith_01cc_forloop__size | minus: locksmith_01cc_forloop__index | minus: 1 %}{% assign locksmith_01cc_forloop__rindex0 = locksmith_01cc_forloop__size | minus: locksmith_01cc_forloop__index0 | minus: 1 %}{% else %}{% continue %}{% endif -%}
+      			{%- comment %}</locksmith:0456>{% endcomment -%}
+      			{%- if count > limit -%}{%- break -%}{%- endif -%}
+          		{%- if cListId contains product.id or product.id == currentProductId or product.type != currentProductType -%}
+          			{%- continue -%}
+         		{%- else -%}
+            		{%- assign cListId = cListId | append: product.id | append: ',' -%}
+					  {% assign relatedProduct = product %}
+					  {% assign modulo = count | modulo: related_total_rows %}
+					  {% if related_total_rows >  1 and related_show_slider ==  '1'%}
+						{% if modulo == 1 %}
+							<div class="items">
+						{% endif %}
+					  {% endif %}
+					  <div class="item" {% if locksmith_1d1e_relatedProduct__has_only_default_variant or relatedProduct.variants.size == 1  %} data-related="" {% endif %} {{ block.shopify_attributes }}>
+					  	{% if locksmith_1d1e_relatedProduct__available %}
+							{% if locksmith_1d1e_relatedProduct__has_only_default_variant or relatedProduct.variants.size == 1  %}
+							<div class="field choice related" data-action="relatedProduct"><span type="checkbox" name="{{relatedProduct.title}}" value="{{relatedProduct.handle}}"></span></div>
+							{% endif %}
+						{% endif %}
+						{% include 'product-grid-style-09' with product: relatedProduct, thumbnail_width: related_thumbnail_width, thumbnail_height: related_thumbnail_height, enable_hover_thumbnail: true, enable_product_label: true, enable_product_name: true, enable_price: true, enable_sku: false, enable_vendor: false, enable_addto_cart: true, enable_quickshop: false, enable_addto_compare: true, enable_addto_wishlist: true, enable_review: true, enable_quantity_product: false, enable_variant_product: false, enable_short_description: false, short_description_length: 150, show_product_text_align: 'center' %}
+					  </div>
+					  {% if related_total_rows >  1 and related_show_slider ==  '1'%}
+						{% if modulo == 0 or locksmith_01cc_forloop__last %}
+						  </div>
+						  {% endif %}
+					  {% endif %}
+					  {%- assign count = count | plus: 1 -%}
+              	{%- endif -%}
+		  	{%- endfor -%}
+		  {% endfor %}
+		</div>
+	</div>
+	{%- endunless -%}
+	{%- else -%}
+		<div class="related-products cdzbox-product nav_style01" data-cdzwidget = '{"codazon.cdzRelatedProduct": ""}'>
+			<div class="section-header section-header--small">
+				<h2 class="section-header__title">
+				  {{ related_title }}
+				</h2>
+				<div class="block-actions">
+					{{ 'products.general.related_head' | t }} <a href="javascript:void(0);" class="action select" role="select-all-related">{{ 'products.general.related_select' | t }}</a>
+				</div>
+			</div>
+			{% include 'grid_style' with id: 'related-grid' , show_slider: related_show_slider , items_1900: related_items_1900, items_1600: related_items_1600, items_1440: related_items_1440, items_1280: related_items_1280, items_980: related_items_980, items_768: related_items_768, items_480: related_items_480, items_320: related_items_320, items_0: related_items_0, items_margin: related_items_margin %}
+			<div class="style-related-grid products items product-items product-grid-style-09 {% if related_show_slider ==  '0' %} no_slider flex-grid{% elsif related_show_slider ==  '1' %} cdzowlslider owl-carousel{% endif %}" {% if related_show_slider ==  '1' %} data-cdzwidget = '{"codazon.owlSlider": {{data-related-products}}}' {% endif %}>
+			  {% for handle in handles limit: related_products_count %}
+				  {% assign relatedProduct = all_products[handle] %}
+				  {% assign modulo = forloop.index | modulo: related_total_rows %}
+				  {% if related_total_rows >  1 and related_show_slider ==  '1'%}
+					{% if modulo == 1 %}
+						<div class="items">
+					{% endif %}
+				  {% endif %}
+				  <div class="item" {% if relatedProduct.has_only_default_variant or relatedProduct.variants.size == 1  %} data-related="" {% endif %} {{ block.shopify_attributes }}>
+				  	{% if relatedProduct.available %}
+						{% if relatedProduct.has_only_default_variant or relatedProduct.variants.size == 1  %}
+						<div class="field choice related" data-action="relatedProduct"><span type="checkbox" name="{{relatedProduct.title}}" value="{{relatedProduct.handle}}"></span></div>
+						{% endif %}
+					{% endif %}
+					{% include 'product-grid-style-09' with product: relatedProduct, thumbnail_width: related_thumbnail_width, thumbnail_height: related_thumbnail_height, enable_hover_thumbnail: true, enable_product_label: true, enable_product_name: true, enable_price: true, enable_sku: false, enable_vendor: false, enable_addto_cart: true, enable_quickshop: false, enable_addto_compare: true, enable_addto_wishlist: true, enable_review: true, enable_quantity_product: false, enable_variant_product: false, enable_short_description: false, short_description_length: 150, show_product_text_align: 'center' %}
+				  </div>
+				  {% if related_total_rows >  1 and related_show_slider ==  '1'%}
+					{% if modulo == 0 or forloop.last %}
+					  </div>
+					  {% endif %}
+				  {% endif %}
+			  {% endfor %}
+			</div>
+		</div>
+	{%- endif -%}
+{%- endif -%}
+
+{%- style -%}
+	{% if related_show_slider ==  '0' %}
+		.related-products .no_slider.flex-grid{
+			display: flex;
+			display: -ms-flex;
+			display: -webkit-flex;
+			flex-wrap: wrap;
+			-webkit-flex-wrap: wrap;
+			-ms-flex-align: stretch;
+			-webkit-align-items: stretch;
+			-moz-align-items: stretch;
+			-ms-align-items: stretch;
+			-o-align-items: stretch;
+			align-items: stretch;
+		}
+		@media (min-width: 1900px){
+			.related-products .grid__item{
+				width: calc(100% / {{items_1900}} - {{items_margin}}px);
+				margin-right: {{items_margin}}px;
+			}
+		}
+		@media (min-width: 1600px) and (max-width: 1900px){
+			.related-products .grid__item{
+				width: calc(100% / {{items_1600}} - {{items_margin}}px);
+				margin-right: {{items_margin}}px;
+			}
+		}
+		@media (min-width: 1440px) and (max-width: 1600px){
+			.related-products .grid__item{
+				width: calc(100% / {{items_1440}} - {{items_margin}}px);
+				margin-right: {{items_margin}}px;
+			}
+		}
+		@media (min-width: 1280px) and (max-width: 1440px){
+			.related-products .grid__item{
+				width: calc(100% / {{items_1280}} - {{items_margin}}px);
+				margin-right: {{items_margin}}px;
+			}
+		}
+		@media (min-width: 980px) and (max-width: 1280px){
+			.related-products .grid__item{
+				width: calc(100% / {{items_980}} - {{items_margin}}px);
+				margin-right: {{items_margin}}px;
+			}
+		}
+		@media (min-width: 768px) and (max-width: 980px){
+			.related-products .grid__item{
+				width: calc(100% / {{items_768}} - {{items_margin}}px);
+				margin-right: {{items_margin}}px;
+			}
+		}
+		@media (min-width: 480px) and (max-width: 768px){
+			.related-products .grid__item{
+				width: calc(100% / {{items_480}} - {{items_margin}}px);
+				margin-right: {{items_margin}}px;
+			}
+		}
+		@media (min-width: 320px) and (max-width: 480px){
+			.related-products .grid__item{
+				width: calc(100% / {{items_320}} - {{items_margin}}px);
+				margin-right: {{items_margin}}px;
+			}
+		}
+		@media (max-width: 320px){
+			.related-products .grid__item{
+				width: calc(100% / {{items_0}} - {{items_margin}}px);
+				margin-right: {{items_margin}}px;
+			}
+		}
+	{% endif %}
+	
+{%- endstyle -%}

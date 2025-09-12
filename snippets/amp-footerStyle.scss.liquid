@@ -1,0 +1,22 @@
+{%- assign amp_footer_background = settings.amp_footer_background -%}
+{%- assign amp_footer_text = settings.amp_footer_text -%}
+{%- assign amp_footer_second_text = settings.amp_footer_second_text -%}
+{%- assign amp_footer_third_text = settings.amp_footer_third_text -%}
+<ls-static-553209>.footer{ background-color:</ls-static-553209> {{amp_footer_background}}<ls-static-693115>; color:</ls-static-693115> {{amp_footer_text}}<ls-static-576515>; }
+.footer a{ color:</ls-static-576515> {{amp_footer_text}}<ls-static-706605>}
+.footer a:hover{ color:</ls-static-706605> {{amp_footer_third_text}}<ls-static-278361>}
+.footer a:hover{ color:</ls-static-278361> {{amp_footer_third_text}}<ls-static-45108>}
+.footer p.h5{ color:</ls-static-45108> {{amp_footer_second_text}}<ls-static-992582>}
+#amp-footer-tab > section .tab-title{ color:</ls-static-992582> {{amp_footer_second_text}}<ls-static-841500>; background-color: transparent; border-color: transparent; border-bottom: 1px solid</ls-static-841500> {{amp_footer_second_text | color_darken: 50}}<ls-static-955802>; }
+#amp-footer-tab > section .tab-title:focus{ outline: none; }
+#amp-footer-tab .icon-toggle{ float: right; position: absolute; right: 0; top:14px;}
+#amp-footer-tab .icon-toggle .icon{ width: 15px; height: 15px; -webkit-transition: opacity 0.7s ease,transform 0.7s ease,visibility 0.7s linear 0s; -moz-transition: opacity 0.7s ease,transform 0.7s ease,visibility 0.7s linear 0s; transition: opacity 0.7s ease,transform 0.7s ease,visibility 0.7s linear 0s; }
+#amp-footer-tab > section[expanded] .icon-toggle .icon{ transform: rotate(-180deg);}
+#amp-footer-tab > section .icon-toggle .icon-plus{ opacity: 1;}
+#amp-footer-tab > section .icon-toggle .icon-minus{ opacity: 0;}
+#amp-footer-tab > section[expanded] .icon-toggle .icon-plus{ opacity: 0; }
+#amp-footer-tab > section[expanded] .icon-toggle .icon-minus{ opacity: 1;}</ls-static-955802>
+{%- if settings.enable_rtl_layout -%}
+	<ls-static-738903>.rtl-layout #amp-footer-tab .icon-toggle{ right: auto; left: 0}
+	.rtl-layout #amp-footer-tab > section .tab-title{ padding-right: 0; padding-left: 20px}</ls-static-738903>
+{%- endif -%}  

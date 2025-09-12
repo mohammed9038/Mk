@@ -1,0 +1,63 @@
+{%- comment %}<locksmith:c288>{% endcomment -%}
+  {%- assign locksmith_d8d5_product__first_available_variant = nil %}{% assign locksmith_d8d5_product__selected_variant = nil %}{% assign locksmith_d8d5_product__selected_or_first_available_variant = nil %}{% assign locksmith_d8d5_product__price = nil %}{% assign locksmith_d8d5_product__compare_at_price = nil %}{% assign locksmith_d8d5_product__compare_at_price_max = nil %}{% for variant in product.variants %}{% capture var %}{% render 'locksmith-variables', scope: 'subject', subject: variant, subject_parent: product, variable: 'transparent' %}{% endcapture %}{% if var == "true" %}{% else %}{% continue %}{% endif %}{% if locksmith_d8d5_product__first_available_variant == nil and variant.available %}{% assign locksmith_d8d5_product__first_available_variant = variant %}{% endif %}{% if locksmith_d8d5_product__selected_variant == nil and variant.selected %}{% assign locksmith_d8d5_product__selected_variant = variant %}{% endif %}{% if variant == product.selected_or_first_available_variant %}{% assign locksmith_d8d5_product__selected_or_first_available_variant = product.selected_or_first_available_variant %}{% endif %}{% if locksmith_d8d5_product__price == nil %}{% assign locksmith_d8d5_product__price = variant.price %}{% endif %}{% if locksmith_d8d5_product__compare_at_price == nil %}{% assign locksmith_d8d5_product__compare_at_price = variant.compare_at_price %}{% endif %}{% if locksmith_d8d5_product__compare_at_price_max == nil or locksmith_d8d5_product__compare_at_price_max < variant.compare_at_price %}{% assign locksmith_d8d5_product__compare_at_price_max = variant.compare_at_price %}{% endif %}{% endfor %}{% if locksmith_d8d5_product__selected_or_first_available_variant == nil %}{% assign locksmith_d8d5_product__selected_or_first_available_variant = locksmith_d8d5_product__first_available_variant %}{% endif -%}
+{%- comment %}</locksmith:c288>{% endcomment -%}
+
+<li class="item product-item amamp-product-item mb-3">
+  {%- assign thumbnail_width = 100 -%}
+  {%- assign thumbnail_height = 100 -%}
+  {%- assign img_size = thumbnail_width | append: 'x' | append: thumbnail_height -%}
+  {%- assign img_ratio = thumbnail_width | times: 1.0 | divided_by: thumbnail_height -%}
+  <div class="product-left">
+    {%- assign featured_image = locksmith_d8d5_product__selected_or_first_available_variant.featured_image | default: product.featured_image -%}
+    {%- if product.featured_image == blank -%}
+        <a href="{{product.url | within: collection | append: '?view=amp-product'}}" class="product-image-container">
+            <span class="product-image-wrapper">
+                {% capture current %}{% cycle 1, 2, 3, 4, 5, 6 %}{% endcapture %}
+              {{ 'product-' | append: current | placeholder_svg_tag: 'placeholder-svg' }}
+            </span>
+        </a>
+    {%- else -%}
+      <a href="{{product.url | within: collection | append: '?view=amp-product'}}" class="product-image-container">
+            <span class="product-image-wrapper">
+              <amp-img class="product-image-photo" 
+                       width="{{ thumbnail_width }}" height="{{ thumbnail_height }}"
+                       src="{% comment ls-rpl %}{{ featured_image | img_url: img_size }}{% endcomment %}{%- capture LS_IMG_URL -%}{%- render "ls-img-url", image: featured_image, img_url: img_size -%}{%- endcapture -%}{{ LS_IMG_URL }}{% comment /ls-rpl %}{% endcomment %}" 
+                       alt="{{ shop.name | escape }}"
+                       layout="responsive">
+                <noscript>
+                  <img src="{% comment ls-rpl %}{{ featured_image | img_url: img_size }}{% endcomment %}{%- capture LS_IMG_URL -%}{%- render "ls-img-url", image: featured_image, img_url: img_size -%}{%- endcapture -%}{{ LS_IMG_URL }}{% comment /ls-rpl %}{% endcomment %}" alt="{{ shop.name | escape }}">
+                </noscript>
+              </amp-img>
+            </span>
+        </a>
+    {%- endif -%}
+  </div>
+  <div class="product-right">
+    <div class="product name product-item-name mb-1">
+        <a class="product-item-link" href="{{product.url | within: collection | append: '?view=amp-product'}}">{{ product.title }}</a>
+    </div>
+     <div class="product-price mb-2">
+        <div class="price">
+            <div class="product-single__prices{% if shop.taxes_included or shop.shipping_policy.body != blank %} product-single__prices--policy-enabled{% endif %}">
+            <span class="visually-hidden" hidden>{{ 'products.product.regular_price' | t }}</span>
+            <span class="product-single__price price-box mx-1" itemprop="price" content="{{ locksmith_d8d5_product__price | divided_by: 100.00 }}">
+              {{ locksmith_d8d5_product__price | money }}
+            </span>
+
+            {%- if locksmith_d8d5_product__compare_at_price > locksmith_d8d5_product__price -%}
+              <span class="visually-hidden" aria-hidden="false" hidden>{{ 'products.product.sale_price' | t }}</span>
+              <s class="product-single__sale-price mx-1">
+                {{ locksmith_d8d5_product__compare_at_price_max | money }}
+              </s>
+            {%- else -%}
+              <span class="visually-hidden" aria-hidden="true" hidden>{{ 'products.product.sale_price' | t }}</span>
+              <s class="product-single__sale-price" hidden>
+                {{ locksmith_d8d5_product__compare_at_price_max | money }}
+              </s>
+            {%- endif -%}
+          </div>
+        </div>
+      </div>
+       <p><a class="btn btn-primary mb-1" href="{{product.url | within: collection | append: '?view=amp-product'}}"><ls-static-54998>View detail</ls-static-54998></a></p>
+  </div>
+</li>

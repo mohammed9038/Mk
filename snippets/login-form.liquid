@@ -1,0 +1,52 @@
+<div class="account-info-summary">
+  {% if customer  %}
+	<div class="info-summary-top">
+      	<div class="icon-account"></div>
+  	</div>
+  	<div class="info-summary-bottom">
+      	<p class="text-uppercase wellcome"><a href="/account" class="name"> <ls-static-845706>Hi,</ls-static-845706> {{ customer.first_name }} </a></p>
+    	<p><a class="link-logout" href="/account/logout">{{ 'general.header.account_logout' | t }}</a></p>
+    </div>
+  {% else %}
+  	<div class="info-summary-top">
+        {% form 'customer_login' %}
+          {{ form.errors | default_errors }}
+          <div id="login_email" class="clearfix field">
+            <input type="email" value="" name="customer[email]" id="customer_email" class="large" size="30"  placeholder="{{ 'general.form.label_email' | t }}"/>
+            <label for="customer_email" class="login">{{ 'general.form.label_email' | t}}</label>
+          </div>
+
+          {% if form.password_needed %}
+
+            <div id="login_password" class="clearfix field">
+              <input type="password" value="" name="customer[password]" id="customer_password" class="large password" size="16" placeholder="{{ 'general.form.label_pass' | t }}"/>
+              <label for="customer_password" class="login">{{ 'general.form.label_pass' | t}}</label>
+            </div>
+
+          {% endif %}
+
+          <div class="action_bottom">
+            <input class="btn" type="submit" value="LogIn" />
+            <div id="forgot_password" class="forgot_password">
+                <a href="/account/login#recover">{{ 'general.header.account_forgot' | t }}</a>
+            </div>
+          </div>
+    		
+        {% endform %}
+    </div>
+  	<div class="info-summary-bottom">
+      	<p class="secondary"> 
+          {%- capture account_register -%}        
+                <a href="/account/register">{{ 'general.header.account_newcustomer_start' | t }}</a>
+            {%- endcapture -%}
+          <span class="create-account-question">{{ 'general.header.account_newcustomer' | t }} {{ account_register }}</span>
+      	</p>
+    </div>
+  {% endif %}
+  <div class="acount-menu">
+    <ul class="account-menu-items items">
+	  {{ settings.account_header_link_list }}
+      <li class="currency-link">{% include 'currency-list-click' %}</li>
+    </ul>
+  </div>
+</div>

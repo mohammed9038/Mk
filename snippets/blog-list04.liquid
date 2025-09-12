@@ -1,0 +1,100 @@
+{%- if article == blank -%}
+<div class="row">
+	<div class="col-12 col-sm-6 col-md-6 order-style">
+		<div class="post-top">
+		<div class="blog-image">
+			{%- assign img_size = thumbnail_width | append: 'x' | append: thumbnail_height -%}
+			{%- assign img_ratio = thumbnail_width | times: 1.0 | divided_by: thumbnail_height -%}
+			<a class="post-img abs-img" href="#" style="padding-bottom:{{ 1 | divided_by: img_ratio | times: 100}}%;">
+			<img class="article__image responsive-image__image lazyload" 
+				    data-src="{% comment ls-rpl %}{{ article.image | img_url: img_size }}{% endcomment %}{%- capture LS_IMG_URL -%}{%- render "ls-img-url", image: article.image, img_url: img_size -%}{%- endcapture -%}{{ LS_IMG_URL }}{% comment /ls-rpl %}{% endcomment %}"
+				    data-aspectratio="{{ article.image.aspect_ratio }}"
+				    data-sizes="{{img_size}}"
+				    tabindex="-1"
+				    alt="{% comment ls-rpl %}{{ article.image.alt | escape }}{% endcomment %}{%- capture LS_ALT -%}{%- render "ls-alt", image: article.image -%}{%- endcapture -%}{{ LS_ALT | escape }}{% comment /ls-rpl %}{% endcomment %}" data-image-id="{{ article.image.id }}"></a>
+			</div>
+		</div>
+	</div>
+	<div class="col-12 col-sm-6 col-md-6">
+		<div class="post-bottom">
+			{%- if blog_cate -%}
+			<a class="post-category" href="#">{{ 'blogs.article.article_cate' | t }}</a>
+			{%- endif -%}
+			<div class="post-title">
+				<a href="#" class="post-item-link" title="{{ 'blogs.article.article_title' | t }}">{{ 'blogs.article.article_title' | t }}</a>
+			</div>
+			{%- if enable_short_description -%}
+				<div class="clearfix post-desc">
+					{{ 'blogs.article.article_desc' | t }}
+				</div>
+			{%- endif -%}
+			<div class="post-footer">
+				{%- if blog_author -%}
+					<ls-static-325124>Codazon</ls-static-325124>
+				{%- endif -%}
+				{%- if blog_date -%}
+				<div class="post-date">
+					<time datetime="{{ 'now' | date: blog_date_format }}">{{ 'now' | date: blog_date_format }}</time>
+				</div>
+				{%- endif -%}	
+			</div>
+			{%- if blog_readmore -%}
+				<a class="more-link" href="#">{{ 'blogs.article.read_more' | t }}</a>
+			{%- endif -%}
+		</div>
+	</div>
+</div>
+{%- else -%}
+<div class="row">
+	<div class="col-12 col-sm-6 col-md-6 order-style">
+		<div class="post-top">
+		<div class="blog-image">
+			{%- assign img_size = thumbnail_width | append: 'x' | append: thumbnail_height -%}
+			{%- assign img_ratio = thumbnail_width | times: 1.0 | divided_by: thumbnail_height -%}
+			<a class="post-img abs-img" href="{{article.url}}" style="padding-bottom:{{ 1 | divided_by: img_ratio | times: 100}}%;">
+			<img class="article__image responsive-image__image lazyload" 
+				    data-src="{% comment ls-rpl %}{{ article.image | img_url: img_size }}{% endcomment %}{%- capture LS_IMG_URL -%}{%- render "ls-img-url", image: article.image, img_url: img_size -%}{%- endcapture -%}{{ LS_IMG_URL }}{% comment /ls-rpl %}{% endcomment %}"
+				    data-aspectratio="{{ article.image.aspect_ratio }}"
+				    data-sizes="{{img_size}}"
+				    tabindex="-1"
+				    alt="{% comment ls-rpl %}{{ article.image.alt | escape }}{% endcomment %}{%- capture LS_ALT -%}{%- render "ls-alt", image: article.image -%}{%- endcapture -%}{{ LS_ALT | escape }}{% comment /ls-rpl %}{% endcomment %}" data-image-id="{{ article.image.id }}"></a>
+			</div>
+		</div>
+	</div>
+	<div class="col-12 col-sm-6 col-md-6">
+		<div class="post-bottom">
+			{%- if blog_cate -%}
+			<a class="post-category" href="{{blogs[cate_blogs].url}}">{{cate_blogs}}</a>
+			{%- endif -%}
+			<div class="post-title">
+				<a href="{{article.url}}" class="post-item-link" title="{{article.title}}">{{ article.title }}</a>
+			</div>
+			{%- if enable_short_description -%}
+				{%- if article.excerpt.size > 0 -%}
+					<div class="clearfix">
+					  <p>{{ article.excerpt | strip_html | truncate: short_description_length }}</p>
+					</div>
+					{%- else -%}
+					  <p>{{ article.content | strip_html | truncate: short_description_length }}</p>
+				{%- endif -%}
+			{%- endif -%}
+			<div class="post-footer">
+				{%- if blog_author -%}
+				<div class="post-author">
+					{{ article.author }}
+				</div>
+				{%- endif -%}
+				{%- if blog_date -%}
+				<div class="post-date">
+					<time datetime="{{ article.published_at | date: blog_date_format }}">{{ article.published_at | date: blog_date_format }}</time>
+				</div>
+				{%- endif -%}
+			</div>
+			{%- if blog_readmore -%}
+				<a class="more-link" href="{{article.url}}">{{ 'blogs.article.read_more' | t }}</a>
+			{%- endif -%}
+		</div>
+	</div>
+</div>
+{%- endif -%}
+

@@ -1,0 +1,201 @@
+<script id="content-wl" type="text/tmpl-script">
+<% if (wishlistItem.length > 0) %>
+
+<div class="wishlist-content-wrapper">
+<% if (wishlistItem.length > 0) %>
+	<div class="block-top">
+      <div class="block-title row">
+      	<div class="col-auto">
+          <strong class="label-wl"><%= wishlist_title %></strong>
+        </div>
+        <div class="col-auto ml-auto">
+          <button class="addcart-wl" data-action="add-allcart-wl" data-index="" data-form=""><%= addAllToCart %></button>
+          </div>
+      </div>
+    </div>
+	<div class="mini-list">
+		<ul class="product-items">
+		<% _.each(wishlistItem, function(element, index) { %>
+			<li id="wishlist-option-item-<%- index %>" class="item wishlist-option-item wishlist-option-item-<%- index %>" data-cdzwidget='{"codazon.cdzWlOption" : {"handle" : "<%- element.handle %>","wrap" : "#wishlist-option-item-<%- index %>"}}'>
+				<div class="product-item-info row">
+					<div class="col-3 product-item-left">
+						<div class="product-image product-item-photo">
+							<% if (element.featured_image == null) { %>
+								<a href="<%- element.href %>"><img class="product-image-photo" src="//cdn.shopify.com/s/assets/no-image-50-3d8cc48bd078edcd544c8d60f929ed2d8800a3fc52e0f602e84b1767e392bfcd_50x.gif"/> </a>
+							<% } else { %>
+								<a href="<%- element.href %>"><img class="product-image-photo" src="<%- element.featured_image %>"/></a>
+							<% } %>
+						  <a class="remove" title="<%= remove %>" data-action="remove-wl" data-index="<%- index %>"><%= remove %></a>
+						</div>
+					</div>
+					<div class="col-9 product-item-details row">
+						<div class="col-9">
+							<div class="product-name"><a href="<%- element.href %>" class="product-item-link"><%- element.title %></a></div>
+							 
+							 <div class="product-price">
+								<span class="product-single__price price price-box">
+								  <span class="money"><%= Shopify.formatMoney(element.currentVariant.price, Currency.moneyFormats[shopCurrency].money_format) %></span>
+								</span>
+
+								<% if (element.compare_at_price_max > element.currentVariant.price) { %>
+								  <s class="product-single__sale-price price">								  
+									<span class="money"><%= Shopify.formatMoney(element.compare_at_price_max, Currency.moneyFormats[shopCurrency].money_format) %></span>
+								  </s>
+								<% } else { %>
+								  <s class="product-single__sale-price price hide">
+									<span class="money"><%= Shopify.formatMoney(element.compare_at_price_max, Currency.moneyFormats[shopCurrency].money_format) %></span>
+								  </s>
+								 <% } %>
+							  </div>
+							 
+							 
+							 
+							 
+							 <div class="product-options">
+								<form method="post" enctype="multipart/form-data" id="wishlist-form-<%- index %>" data-item-index="<%- index %>">								
+									
+                                   <% _.each(element.options, function(e, index) { %>
+                                    <div class="product-option-wrapper" >
+                                            <div class="variant-type-image js hide" value="<%- e.name %>" index="<%- index %>">
+                                             <% var values = []; %>
+												<% _.each(element.variants, function(h) { %>
+													<% var value = h.options[index] %>
+													<% var va = values.includes(value) %>
+													<% if  (!va) {
+															values.push(value); 
+															values = values.join();
+															
+															values = values.split(","); 
+                                                            if (h.featured_image == null) {
+                                                            	var bkg_image = "" ;
+                                                            } else {
+																var bkg_image = h.featured_image.src ; }%>
+														<label value="<%- value %>" data-url="<%- bkg_image %>">
+														</label>
+													<% } %>
+												<% }); %>
+                                            </div>
+                                            <div class="product-option" data-id="product-option-<%- index %>" data-index="<%- index %>"></div>
+
+                                    </div>
+                                    <% }); %>
+                                   
+									<input type="hidden" name="id" value="<%- element.currentVariant.id %>">
+									<input type="hidden" name="quantity" value="<%- element.qtyInPut %>">
+								 </form>
+							 </div>
+						</div>
+						<div class="col-3">
+							<div class="qty-box">
+								<div class="cart-qty">
+									<div class="qty-ctl">
+										<button title="Decrease" type="button" data-role="change_cart_qty" class="decrease" data-qty="-1"></button>
+									</div>
+									<input class="qty input-text qty" data-action="quantity-wl" data-index="<%- index %>" type="text" name="quantity" value="<%- element.qtyInPut %>">
+									<div class="qty-ctl">
+										<button title="Increase" type="button" data-role="change_cart_qty" data-qty="1" class="increase"></button>
+									</div>
+								</div>
+							</div>							
+							<span class="add-to-cart"><button title="<%= addToCart %>" class="addcart-wl" data-action="addcart-wl" data-index="<%- index %>" data-form="wishlist-form-<%- index %>"><%= addToCart %></button></span>
+						</div>
+					</div>
+				</div>
+			</li>
+		<% }); %>
+		</ul>
+	</div>
+</div>
+</script>
+<script data-id="content-option-wl" type="text/tmpl-script">
+<% switch (typeVariant) { 
+	case 'text': %>
+    	<div class="label-header <% if ( valueVariant.length < 2 ) { %> hide <% } %>">
+          <span class="label-name ">
+                <%- nameVariant  %>:
+          </span>
+           <span class="label-value" data-variant-value>
+               <%- valueVariant[0].value %>
+          </span>
+        </div>
+    	<div class="swatch swatch-text clearfix <% if ( valueVariant.length < 2 ) { %> hide <% } %>" data-index="<%- option_index %>">
+    	<% _.each(valueVariant, function(element, index) { %>
+            <div name=<%- option_index %> value="<%- element.value %>" class="swatch-element <%- element.value %> available <% if ( index == '0' ) { %> selected <% } %> ">
+                <input class="<% if ( index == '0' ) { %> checked <% } %>" type="radio" name="option-<%- option_index %>" value="<%- element.value %>" />
+                <label for="swatch-<%- option_index %>-<%- element.value %>">
+                  <%- element.value %>
+                </label>
+              </div>
+         <% }); %>
+         </div>
+    <% break;
+    case 'color': %>
+    	<div class="label-header <% if ( valueVariant.length < 2 ) { %> hide <% } %>">
+          <span class="label-name ">
+                <%- nameVariant  %>:
+          </span>
+           <span class="label-value" data-variant-value>
+               <%- valueVariant[0].value %>
+          </span>
+        </div>
+    	<div class="swatch swatch-color clearfix <% if ( valueVariant.length < 2 ) { %> hide <% } %>" data-index="<%- option_index %>">
+    	<% _.each(valueVariant, function(element, index) { %>
+            <div name=<%- option_index %> value="<%- element.value %>" class="swatch-element <%- element.value %> available <% if ( index == '0' ) { %> selected <% } %> ">
+                <input class="<% if ( index == '0' ) { %> checked <% } %>" type="radio" name="option-<%- option_index %>" value="<%- element.value %>" />
+                <label data-toggle="tooltip" data-placement="top" data-html="true" title="<div class='swatch-option-tooltip'><span class='swatch-option-img' style='background-color: <%- element.value %>; width: 130px; height: 130px; display: block;'></span><span class='swatch-option-text'><%- element.value %></span></div>" style="background-color: <%- element.value %>;">
+                  <%- element.value %>
+                </label>
+                
+              </div>
+         <% }); %>
+         </div>
+    <% break; 
+    case 'image': %>
+   		<div class="label-header <% if ( valueVariant.length < 2 ) { %> hide <% } %>">
+          <span class="label-name ">
+                <%- nameVariant  %>:
+          </span>
+           <span class="label-value" data-variant-value>
+                <%- valueVariant[0].value %>
+          </span>
+        </div>
+    	<div class="swatch swatch-image clearfix <% if ( valueVariant.length < 2 ) { %> hide <% } %>" data-index="<%- option_index %>">
+    	<% _.each(valueVariant, function(element, index) { %>
+            <div name=<%- option_index %> value="<%- element.value %>" class="swatch-element <%- element.value %> available <% if ( index == '0' ) { %> selected <% } %> ">
+                <input class="<% if ( index == '0' ) { %> checked <% } %>" type="radio" name="option-<%- option_index %>" value="<%- element.value %>" />
+                <% if (element.url == "") { %>
+                    <label>                  
+                      <img src="//cdn.shopify.com/s/assets/no-image-50-3d8cc48bd078edcd544c8d60f929ed2d8800a3fc52e0f602e84b1767e392bfcd_50x.gif" />
+                    </label>  
+                <% } else { %>
+					<label data-toggle="tooltip" data-placement="top" data-html="true" title="<div class='swatch-option-tooltip'><span class='swatch-option-img'><img src='<%- element.url %>'/></span><span class='swatch-option-text'><%- element.value %></span></div>">                  
+                      <img src="<%- element.url %>"/>
+                    </label> 
+                <% } %>
+                               
+              </div>
+         <% }); %>
+         </div>
+    <% break; 
+    default : %>
+    	<div class="label-header <% if ( valueVariant.length < 2 ) { %> hide <% } %>">
+          <span class="label-name ">
+                <%- nameVariant  %>:
+          </span>
+           <span class="label-value" data-variant-value>
+                <%- valueVariant[0].value %>
+          </span>
+        </div>
+    	<div class="selector-wrapper js product-form__item <% if ( valueVariant.length < 2 ) { %> hide <% } %>">
+		  <input class="checked" type="radio" value="<%- valueVariant[0].value %>"/>
+          <select class="single-option-selector product-form__input" data-index="option<%- option_index %>" name="<%- option_index %>">            
+            <% _.each(valueVariant, function(element, index) { %>
+               <option value="<%- element.value %>"<% if ( index == '0' ) { %> selected="selected" <% } %>><%- element.value %></option>
+             <% }); %>
+          </select>
+        </div>
+<% } %>
+</script>
+<div id="wishlist-wrapper">
+  <p>{{ 'wishlist.general.wishlist_noItem' | t }}</p>
+</div>

@@ -1,0 +1,18 @@
+{% assign cdz_max_quantity = product.metafields.codazon.cdz_max_quantity %}
+{% assign totalQty = 0 %}
+{% for variant in product.variants  %}
+{%- comment %}<locksmith:8d90>{% endcomment -%}
+  {%- capture var %}{% render 'locksmith-variables', scope: 'subject', subject: variant, subject_parent: product, variable: 'transparent' %}{% endcapture %}{% if var == "true" %}{% else %}{% continue %}{% endif -%}
+{%- comment %}</locksmith:8d90>{% endcomment -%}
+{% assign totalQty = totalQty | plus: variant.inventory_quantity %}
+{% endfor %}
+{% unless cdz_max_quantity == blank %}
+{% if totalQty < cdz_max_quantity %}
+	{% assign qtySold = cdz_max_quantity | minus: totalQty %}
+	<div class="deal-process">
+		<div class="deal-process-title h3">{{qtySold}} {{ 'products.product.sold' | t }}</div>
+		{% assign percentQty = qtySold | times: 1.0 | divided_by: cdz_max_quantity %}
+		<div class="deal-process-bar"><span style="width:{{ percentQty | times: 100}}%"></span></div>
+	</div>
+{% endif %}
+{% endunless %}

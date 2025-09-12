@@ -1,0 +1,296 @@
+{%- assign show_text = section.settings.text_display -%}
+{%- assign show_text_area = section.settings.text_area -%}
+{%- assign show_text_align = section.settings.text_align -%}
+<div class="cdz-video-wrapper space-lg" data-section-id="{{ section.id }}" data-section-type="featured-video-section" data-cdzwidget='{"codazon.videoframe" : {"url" : "{{ section.settings.video_url.id }}", "dimensionRatio" : "{{ section.settings.video_ratio }}", "style" : "{{ section.settings.video_style }}"}}'>
+<div class="container">
+  {% if section.settings.video_title != blank %}
+  <div class="row">
+	  <div class="col-12">
+		<div class="cdz-block-title">
+			<p class="b-title h2"><span>{{ section.settings.video_title | escape }}</span></p>
+		</div>
+	  </div>
+  </div>
+  {% endif %}
+
+<div class="cdz-video-wrap flex-grid-row"><div class="row">
+{% if show_text_area == '01' and show_text %}
+	<div class="col-md-6 ads-col-text ads-col-left">
+		<div class="cdz-banner cdz-banner-text {% if show_text_align == '01' %} text-center {% elsif show_text_align == '02' %} text-left {% else %} text-right {% endif %}">
+			<div class="text-wrap">
+				<p class="sub-title">{{ section.settings.text_heading01  | escape }}</p>
+				<p class="banner-title">{{ section.settings.text_heading02  | escape }}</p>
+				<div class="desc">
+					<p>{{ section.settings.text_desc  | escape }}</p>
+				</div>
+				<div class="actions">
+					<a class="action btn primary" href="{{ section.settings.text_btn_link }}">{{ section.settings.text_btn  | escape }}</a>
+				</div>
+			</div>
+		</div>
+	</div>
+{% endif %}
+<div class="ads-col-video {% if show_text %} col-md-6 {% if show_text_area == '01' %} ads-col-right {% else %} ads-col-left {% endif %} {% else %} col-12 {% endif %}"  data-role="cdz-video-frame">
+  <div class="cdz-video">
+	<div class="cdz-video-mask" data-role="placeholder-mask" data-toggle="modal" data-target="#videoModalCenter">
+		{%- if section.settings.video_style == 'image_with_btn_play' -%}
+			{%- if section.settings.video_placehoder_image != blank -%}
+				{% comment ls-rpl %}{%- assign img_url = section.settings.video_placehoder_image | img_url: '1x1' | replace: '_1x1.', '_{width}x.' -%}{% endcomment %}{%- capture LS_IMG_URL -%}{%- render "ls-img-url", image: section.settings.video_placehoder_image, img_url: '1x1' -%}{%- endcapture -%}{%- assign img_url = LS_IMG_URL | replace: '_1x1.', '_{width}x.' -%}{% comment /ls-rpl %}{% endcomment %}
+			  <img class="img-responsive video-placeholder lazyload{% unless forloop.first == true %} lazypreload{% endunless %}" data-role="video-placeholder"
+					src="{% comment ls-rpl %}{{ section.settings.video_placehoder_image | img_url: '300x300' }}{% endcomment %}{%- capture LS_IMG_URL -%}{%- render "ls-img-url", image: section.settings.video_placehoder_image, img_url: '300x300' -%}{%- endcapture -%}{{ LS_IMG_URL }}{% comment /ls-rpl %}{% endcomment %}"
+					data-src="{{ img_url }}"
+					data-widths="[180, 360, 470, 600, 770, 970, 1060, 1280, 1512, 1728, 2048]"
+					data-aspectratio="{{ section.settings.video_placehoder_image.aspect_ratio }}"
+					data-sizes="auto"
+					alt="{% comment ls-rpl %}{{ section.settings.video_placehoder_image.alt | escape }}{% endcomment %}{%- capture LS_ALT -%}{%- render "ls-alt", image: section.settings.video_placehoder_image -%}{%- endcapture -%}{{ LS_ALT | escape }}{% comment /ls-rpl %}{% endcomment %}">
+			{%- endif -%}
+		{%- else -%}
+			{% if section.settings.video_url.type == "youtube" %}
+				<img class="img-responsive video-placeholder" data-role="video-placeholder" src="//img.youtube.com/vi/{{ section.settings.video_url.id }}/maxresdefault.jpg">
+			{% endif %}
+			{% if section.settings.video_url.type == "vimeo" %}
+				<img class="img-responsive video-placeholder" data-role="video-placeholder" src="//i.vimeocdn.com/video/{{ section.settings.video_url.id }}.jpg">
+			{% endif %}
+		{%- endif -%}
+		<div class="video-player" data-role="play-video">
+			<div class="video-player-icon">
+				<span><svg id="plyIcn" viewBox="0 0 11.2 15.3" width="8" height="10"><path d="M0.8,15.3c-0.2,0-0.5-0.1-0.6-0.3c-0.2-0.3-0.2-0.8,0.2-1l8.8-6.3L1.5,2.2v4.1C1.5,6.7,1.2,7,0.7,7S0,6.7,0,6.3V0.8c0-0.3,0.2-0.5,0.4-0.7C0.7,0,1,0,1.2,0.1L10.8,7c0.2,0.1,0.3,0.4,0.3,0.6S11,8.1,10.8,8.3l-9.7,6.9C1.1,15.3,0.9,15.3,0.8,15.3z"></path></svg></span>
+			</div>
+		</div>
+	  </div>
+	  
+	  <div class="modal fade" id="videoModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true" data-keyboard="false" data-backdrop="static">
+		  <div class="modal-dialog modal-dialog-centered" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"  data-role="stop-video">
+				  <span aria-hidden="true">&times;</span>
+				</button>
+			  </div>
+			  <div class="modal-body">
+				<div class="cdz-video-frame">
+      		<div class="frame-inner abs-frame"  data-role="abs-frame">
+      	  {% if section.settings.video_url == blank %}
+      		<iframe class="abs-frame-inner" src="//www.youtube.com/embed/_9VUPq3SxOc?rel=0&showinfo=0&vq=720" frameborder="0" allowfullscreen allow="autoplay"></iframe>
+
+      	  {% else %}
+
+      		{% if section.settings.video_url.type == "youtube" %}
+      		  <iframe class="abs-frame-inner" src="//www.youtube.com/embed/{{ section.settings.video_url.id }}?rel=0&showinfo=0&vq=720" frameborder="0" allowfullscreen allow="autoplay"></iframe>
+      		{% endif %}
+
+      		{% if section.settings.video_url.type == "vimeo" %}
+      		  <iframe class="abs-frame-inner" src="//player.vimeo.com/video/{{ section.settings.video_url.id }}?byline=0&portrait=0&badge=0" frameborder="0" allowfullscreen allow="autoplay"></iframe>
+
+      		{% endif %}
+
+      	  {% endif %}
+
+      		</div>
+	     </div>
+			  </div>
+			</div>
+		  </div>
+		</div>
+	  
+</div>
+</div>
+{% if show_text_area == '02' and show_text %}
+	<div class="col-md-6 ads-col-text ads-col-right">
+		<div class="cdz-banner cdz-banner-text {% if show_text_align == '01' %} text-center {% elsif show_text_align == '02' %} text-left {% else %} text-right {% endif %}">
+			<div class="text-wrap">
+				<p class="sub-title">{{ section.settings.text_heading01  | escape }}</p>
+				<p class="banner-title">{{ section.settings.text_heading02  | escape }}</p>
+				<div class="desc">
+					<p>{{ section.settings.text_desc  | escape }}</p>
+				</div>
+				<div class="actions">
+					<a class="action btn primary" href="{{ section.settings.text_btn_link }}">{{ section.settings.text_btn  | escape }}</a>
+				</div>
+			</div>
+		</div>
+	</div>
+{% endif %}
+</div>
+</div></div>
+</div>
+
+
+
+{% schema %}
+{
+  "name": "Video Frame",
+  "class": "index-section featured-video-section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "video_title",
+      "label": "Title",
+      "default": {
+        "de": "Video Frame",
+        "en": "Video Frame",
+        "es": "Video Frame",
+        "fr": "Vidéo",
+        "it": "Video",
+        "ja": "ビデオ",
+        "nl": "Video",
+        "pt-BR": "Vídeo",
+        "zh-CN": "视频",
+        "zh-TW": "影片"
+      }
+    },
+    {
+      "type": "image_picker",
+      "id": "video_placehoder_image",
+      "label": "Placehoder Image"
+    },
+    {
+      "type": "video_url",
+      "id": "video_url",
+      "label": {
+        "de": "Videolink",
+        "en": "Video link",
+        "es": "Enlace de video",
+        "fr": "Lien de la vidéo",
+        "it": "Link video",
+        "ja": "ビデオリンク",
+        "nl": "Videolink",
+        "pt-BR": "Link do vídeo",
+        "zh-CN": "视频链接",
+        "zh-TW": "影片連結"
+      },
+      "accept": [
+        "youtube",
+        "vimeo"
+      ]
+    },
+	{
+      "type": "select",
+      "id": "video_style",
+      "label": "Style",
+      "default": "image_with_btn_play",
+      "options": [
+        {
+          "label": "Placehoder img with play button",
+          "value": "image_with_btn_play"
+        },
+        {
+          "label": "Default Placehoder",
+          "value": "default_placehoder"
+        }
+      ]
+    },
+	{
+      "type": "text",
+      "id": "video_ratio",
+      "label": "Frame Dimension Ratio",
+      "default": "0.562",
+	  "info": "Ratio = Height/Width. Eg.480px/854px = 0.562"
+    },
+	{
+		"type": "header",
+		"content": "Text Area"
+	},
+	  {
+        "type": "checkbox",
+        "id": "text_display",
+        "label": "Show Text Area",
+		"default" : true
+      },
+	  {
+		"type": "select",
+		"id": "text_area",
+		"label": "Text Display",
+		"info": "Show text in left or right video area",
+		"default": "01",
+        "options": [
+          {
+            "label": "Left Area",
+            "value": "01"
+          },
+          {
+            "label": "Right Area",
+            "value": "02"
+          }
+        ]
+      },
+	  {
+		"type": "select",
+		"id": "text_align",
+		"label": "Text alignment",
+		"default": "01",
+        "options": [
+          {
+            "label": "Center",
+            "value": "01"
+          },
+          {
+            "label": "Left",
+            "value": "02"
+          },
+          {
+            "label": "Right",
+            "value": "03"
+          }
+        ]
+      },
+	  {
+		"type": "text",
+        "id": "text_heading01",
+        "label": "Heading 1",
+		"default" : "NEW YEAR, NEW POSSIBILITIES"
+	  },
+	  {
+		"type": "text",
+        "id": "text_heading02",
+        "label": "Heading 2",
+		"default" : "IN IT FOR THE LONG RUN"
+	  },
+	  {
+		"type": "text",
+        "id": "text_desc",
+        "label": "Describe",
+		"default" : "The next generation of REBOUND series safety shoes offers optimized attenuation and comfort to reduce physical stress to the greatest extent possible."
+	  },
+	  {
+		"type": "text",
+        "id": "text_btn",
+        "label": "Button label",
+		"default" : "View More"
+	  },
+	  {
+		"type": "url",
+        "id": "text_btn_link",
+        "label": "Button link"
+	  }
+  ],
+  "presets": [
+    {
+      "name": {
+        "de": "Video Frame",
+        "en": "Video Frame",
+        "es": "Video Frame",
+        "fr": "Vidéo",
+        "it": "Video",
+        "ja": "ビデオ",
+        "nl": "Video",
+        "pt-BR": "Vídeo",
+        "zh-CN": "视频",
+        "zh-TW": "影片"
+      },
+      "category": {
+        "de": "Video",
+        "en": "Video",
+        "es": "Video",
+        "fr": "Vidéo",
+        "it": "Video",
+        "ja": "動画",
+        "nl": "Video",
+        "pt-BR": "Vídeo",
+        "zh-CN": "视频",
+        "zh-TW": "影片"
+      }
+    }
+  ]
+}
+{% endschema %}

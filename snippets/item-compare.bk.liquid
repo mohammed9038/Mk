@@ -1,0 +1,108 @@
+<script id="content-compare" type="text/tmpl-script">
+<div class="comparison">
+<div class="table-wrapper">
+		<div id="cdzcompare-messages"></div>
+<% if (compareItem.length > 0) { %>
+		<table class="data table table-comparison">
+			<tbody>
+				<tr>
+					<th scope="row" class="cell tb-product"><span>{{'products.product.label_product' | t}}</span></th>
+					<% _.each(compareItem, function(element, index) { %>
+						<td class="first">
+							<a href="<%- element.href %>"><img class="product-image-photo" src="<%- element.featured_image %>" style="width: 100px; height: 100px;"/></a>
+							<div class="product-name"><a href="<%- element.href %>"><%- element.title %></a></div>
+							<span class="remove" data-action="rm-compare-item" data-index="<%- index %>">{{'products.product.remove' | t}}</span>
+						</td>
+					<% }) %>
+				</tr>
+				<tr>
+					<th scope="row" class="cell tb-product"><span>{{'products.product.vender' | t}}</span></th>
+					<% _.each(compareItem, function(element, index) { %>
+						<td>
+							<div class="product-vendor">
+								<span><%= element.vendor %></span>
+							 </div>
+						</td>
+					<% }) %>
+				</tr>
+				<tr>
+					<th scope="row" class="cell tb-product"><span>{{'products.product.sku' | t}}</span></th>
+					<% _.each(compareItem, function(element, index) { %>
+						<td>
+							<div class="product-sku">
+								<span><%= element.sku %></span>
+							 </div>
+						</td>
+					<% }) %>
+				</tr>
+				<tr>
+					<th scope="row" class="cell tb-product"><span>{{'products.product.price' | t}}</span></th>
+					<% _.each(compareItem, function(element, index) { %>
+						<td>
+							<div class="product-price">
+							   <div class="price">
+								  <span class="money"><%= Shopify.formatMoney(element.currentVariant.price) %></span>
+							  </div>
+							 </div>
+						</td>
+					<% }) %>
+				</tr>
+				<tr>
+					<th scope="row" class="cell tb-product"><span>{{'products.product.options' | t}}</span></th>
+					<% _.each(compareItem, function(element, index) { %>
+					<td>
+						<div class="product-options">
+							<form method="post" enctype="multipart/form-data" id="compare-form-<%- index %>">									
+								<% if (element.options[0].name != "Title") { %>
+									 <% _.each(element.options, function(e) { %>
+										<div class="selector-wrapper js product-form__item">
+										  <label for="SingleOptionSelector-<%- index %>">
+											<%- e.name %>
+										  </label>
+										  <select data-role="productSelectOptionWl" data-item-index="<%- index %>" class="single-option-selector single-option-selector- product-form__input" id="SingleOptionSelector-<%- index %>" data-index="option<%- index %>">
+											<% _.each(e.values, function(h) { %>
+												<option value="<%- h %>"><%- h %></option>
+											<% }); %>
+										  </select>
+										</div>
+										<button type="submit" name="add" id="AddToCart" class="btn {{ btn_class }}{% if section.settings.enable_payment_button %} btn--secondary{% endif %}">
+										  <span id="AddToCartText">{{ 'products.product.add_to_cart' | t }}</span>
+										</button>
+									<% }); } %>
+								
+								<input type="hidden" name="id" value="<%- element.currentVariant.id %>">
+								<input type="hidden" name="quantity" value="<%- element.qtyInPut %>">
+								
+								<div class="product-single__quantity">
+								  <label for="Quantity">{{ 'products.product.quantity' | t }}</label>
+								  <input type="number" id="Quantity" name="quantity" value="<%- element.qtyInPut %>" min="1" class="quantity-selector">
+								</div>
+
+								<button type="submit" name="add" id="AddToCart" class="btn btn--secondary">
+								  <span id="AddToCartText">{{ 'cart.general.btn_addcart' | t }}</span>
+								</button>
+							   </form>
+						 </div>
+					 </td>
+					 <% }) %>
+				</tr>
+				
+				<tr>
+					<th scope="row" class="cell tb-product"><span>{{'products.product.description' | t}}</span></th>
+					<% _.each(compareItem, function(element, index) { %>
+						<td>
+							<div class="product-description">
+								<span><%= element.description %></span>
+							 </div>
+						</td>
+					<% }) %>
+				</tr>
+			</tbody>
+		</table>
+
+<% } else { %>
+	<div class="compare-wrapper"><p>{{ 'compare.general.compare_noItem' | t }}</p></div>
+</div>
+</div>
+<% } %>
+</script>

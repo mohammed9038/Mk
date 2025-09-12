@@ -1,0 +1,42 @@
+{% comment %}
+
+  A snippet to include a search bar anywhere in your theme.
+  Note we are using 'input-group' for the layout. Look under Forms > Input Groups for some demos.
+
+  More information:
+   - http://docs.shopify.com/themes/liquid-variables/search
+
+  To return only products in results:
+    - http://docs.shopify.com/manual/configuration/store-customization/return-only-product-in-storefront-search-results
+    - Or manually add type=product to the search URL as a query parameter
+    - Uncomment hidden input with value="product" below
+
+{% endcomment %}
+{%- assign header_search_type = settings.header_search_type -%}
+{%- if search-bar == 'popup' -%}
+<div class="search-form-wrapper" id="search-popup-wrapper">
+  <form action="/search" method="get" class="header-bar__search-form clearfix" role="search"  data-cdzwidget='{"codazon.searchAutoComplete" : {"type" : "{{ header_search_type }}"}}'>
+	<input type="hidden" name="type" value="{{ header_search_type }}">
+	<input type="hidden" name="options[unavailable_products]" value="hide">
+	<input type="hidden" name="options[prefix]" value="last">
+	<button type="submit" class="button search-button action header-bar__search-submit">
+	  <span class="icon icon-search" aria-hidden="true"></span>
+	  <span class="fallback-text">{{ 'general.header.search_submit' | t }}</span>
+	</button>
+	<input type="search" name="q" value="{{ search.terms | escape }}" aria-label="{{ 'general.header.search_placeholder' | t }}" class="input-text header-bar__search-input" placeholder="{{ 'general.header.search_placeholder' | t }}">
+  </form>
+</div>
+{%- else -%}
+  <form action="/search" method="get" class="input-group search-bar" role="search"  data-cdzwidget='{"codazon.searchAutoComplete" : {"type" : "{{ header_search_type }}"}}'>
+    <input type="hidden" name="type" value="{{ header_search_type }}">
+	<input type="hidden" name="options[unavailable_products]" value="hide">
+	<input type="hidden" name="options[prefix]" value="last">
+    <input type="search" name="q" value="{{ search.terms | escape }}" placeholder="{{ 'general.header.search_placeholder' | t }}" class="input-text input-group-field" aria-label="{{ 'general.header.search_placeholder' | t }}" placeholder="{{ 'general.header.search_placeholder' | t }}">
+    <span class="input-group-btn">
+      <button type="submit" class="button search-button action">
+        <span class="icon icon-search" aria-hidden="true"></span>
+        <span class="fallback-text">{{ 'general.header.search_submit' | t }}</span>
+      </button>
+    </span>
+  </form>
+{%- endif -%}

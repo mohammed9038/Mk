@@ -1,0 +1,2282 @@
+{%- assign cdzmegamenu_wrapper_class = section.settings.cdzmegamenu_wrapper_class -%}
+{%- assign cdzmegamenu_ddstyle = section.settings.cdzmegamenu_ddstyle -%}
+{%- assign cdzmegamenu_ddanimation = section.settings.cdzmegamenu_ddanimation -%}
+{%- assign cdzmegamenu_type = section.settings.cdzmegamenu_type -%}
+{%- assign cdzmegamenu_identifier = section.settings.cdzmegamenu_identifier -%}
+{%- assign cdzmegamenu_status = section.settings.cdzmegamenu_status -%}
+{%- assign bpMMenu =  settings.responsive_header -%}
+{%- if bpMMenu == blank -%}
+{%- assign bpMMenu =  '768' -%}
+{%- endif -%}
+{%- if cdzmegamenu_status == "enable" -%}
+<div data-section-id="{{ section.id }}" data-section-type="cdz-megamenu" id="cdzmegamenu-section-{{ section.id }}" {% unless cdzmegamenu_identifier == blank %} data-hide='menu-hidden' {% endunless %}>
+<nav data-mmenu-id="{{cdzmegamenu_identifier}}" class="cdz-navigation supports-js {{cdzmegamenu_wrapper_class}}" data-action="navigation" {% if cdzmegamenu_identifier != blank %}data-cdzprewidget{% else %}data-cdzwidget{% endif%}='{"codazon.buildCdzMegaMenu" : {"type" : "{{cdzmegamenu_type}}", "animation" : "{{cdzmegamenu_ddanimation}}", "dropdownStyle" : "{{cdzmegamenu_ddstyle}}", "breakpoint" : {{bpMMenu}}{% unless section.settings.cdzmegamenu_identifier == blank %}, "identifier" : "{{ cdzmegamenu_identifier }}"{% endunless %}}}'>
+	<div class="cdz-menu cdz-desk-menu {% if cdzmegamenu_type == 'horizontal' %} cdz-horizontal-menu {% elsif cdzmegamenu_type == 'vertical' %}cdz-vertical-menu {% endif %}{% if cdzmegamenu_ddanimation == 'transform' %}  cdz-transform {% endif %}">
+		<ul class="groupmenu">
+			{%- for block in section.blocks -%}
+				{%- if forloop.length > 0 -%}
+						{% comment ls-rpl %}{%- assign sizeimg_url = block.settings.cdzmegamenu_itemimgicon | img_url : block.settings.cdzmegamenu_item_imgsize -%}{% endcomment %}{%- capture LS_IMG_URL -%}{%- render "ls-img-url", image: block.settings.cdzmegamenu_itemimgicon, img_url : block.settings.cdzmegamenu_item_imgsize -%}{%- endcapture -%}{%- assign sizeimg_url = LS_IMG_URL -%}{% comment /ls-rpl %}{% endcomment %}
+						<li class="item level0 {% unless block.settings.cdzmegamenu_customclass == blank %}{{ block.settings.cdzmegamenu_customclass }}{% endunless %}{% unless block.type == 'menulink'%} parent{% endunless %} {% if block.settings.cdzmegamenu_itemurl contains collection.handle %}active{% endif %}">
+							<a class="menu-link" href="{% if block.settings.cdzmegamenu_itemurl == blank%}javascript:void(0){% else %}{{block.settings.cdzmegamenu_itemurl}}{% endif %}">
+							{%- if block.settings.cdzmegamenu_itemicon == 'mmfonticon' -%}
+								{%- unless block.settings.cdzmegamenu_itemfonticon == blank -%}<span class="fa 		{{block.settings.cdzmegamenu_itemfonticon}}"></span>{%- endunless -%}
+							{%- else -%}
+								{%- unless block.settings.cdzmegamenu_itemimgicon == blank -%}<i class="menu-icon img-icon"><img src="{{sizeimg_url}}" /></i>{%- endunless -%}
+							{%- endif -%}
+							<span>{{block.settings.cdzmegamenu_title}}</span>{%- unless block.settings.cdzmegamenu_lbitem == blank -%}<span class="mm-item-label {{block.settings.cdzmegamenu_lbclscustom}}"><span class="mm-label" style="color: {{block.settings.cdzmegamenu_lbcolor}}; background-color: {{block.settings.cdzmegamenu_lbbackground}}; border-color: {{block.settings.cdzmegamenu_lbbackground}}">{{block.settings.cdzmegamenu_lbitem}}</span></span>{%- endunless -%}</a>
+							
+							{%- case block.type -%}
+								{%- when 'menu' -%}
+								<ul class="cat-tree groupmenu-drop groupmenu-width">
+									{%- for link in linklists[block.settings.cdzmegamenu_list].links -%}
+									<li class="level1 item nav-{{forloop.index}}{% if link.active %} active {% if link.child_active %}child-active{% endif %}{% endif %} {% if link.links != blank %} parent {% endif %}">
+									<a class="menu-link" href="{{ link.url }}"><span>{{ link.title }}</span></a>
+									{%- if link.links != blank -%}
+									  <ul class="cat-tree child">
+										{%- for child_link in link.links -%}  
+										<li class="level1 item nav-{{forloop.index}} {% if child_link.active %} active {% if child_link.child_active %}child-active{% endif %}{% endif %}{% if child_link.links != blank %} parent {% endif %}">
+										<a class="menu-link" href= "{{ child_link.url }}"><span>{{ child_link.title }}</span></a>
+										{%- if child_link.links != blank -%}
+										  <ul class="cat-tree child">
+										  {%- for grandchild_link in child_link.links -%}  
+											<li class="level2 item nav-{{forloop.index}} {% if grandchild_link.active %} active {% if grandchild_link.child_active %}child-active{% endif %}{% endif %}"
+											><a class="menu-link" href= "{{ grandchild_link.url }}"><span>{{ grandchild_link.title }}</span></a></li>
+										  {%- endfor -%}
+										  </ul>
+										{%- endif -%}   
+										</li>
+										{%- endfor -%}
+									  </ul> 
+									{%- endif -%} 
+									</li>
+									{%- endfor -%}
+								</ul>
+								
+								{%- when 'html-onecolumn' -%}
+								<ul class="groupmenu-drop">
+									<li class="item level1" style="{{block.settings.mmdd_custom_css_inline}}">
+										{%- unless block.settings.mmdd_bg_content == blank -%}
+											<img class="image-background" src="{% comment ls-rpl %}{{block.settings.mmdd_bg_content | img_url : 'master'}}{% endcomment %}{%- capture LS_IMG_URL -%}{%- render "ls-img-url", image: block.settings.mmdd_bg_content, img_url : 'master' -%}{%- endcapture -%}{{LS_IMG_URL}}{% comment /ls-rpl %}{% endcomment %}" {% case block.settings.mmdd_bg_position %}
+											{% when '0' %}
+												style = "position: absolute; left: {{block.settings.mmdd_bg_position_x}}px; top: {{block.settings.mmdd_bg_position_y}}px;"
+											{% when '1' %}
+												style = "position: absolute; left: {{block.settings.mmdd_bg_position_x}}px; bottom: {{block.settings.mmdd_bg_position_y}}px;"
+											{% when '2' %}
+												style = "position: absolute; right: {{block.settings.mmdd_bg_position_x}}px; top: {{block.settings.mmdd_bg_position_y}}px;"
+											{% when '3' %}
+												style = "position: absolute; right: {{block.settings.mmdd_bg_position_x}}px; bottom: {{block.settings.mmdd_bg_position_y}}px;"
+											{% endcase %} />
+										{%- endunless -%}
+										<div class="groupmenu-drop-content {{block.settings.mmdd_width}}">
+											<div class="menu-column-content">
+												{{block.settings.mmdd_html_col1}}
+											</div>
+										</div>
+									</li>
+								</ul>
+								{%- when 'html-two-columns' -%}
+								<ul class="groupmenu-drop">
+									<li class="item level1" style="{{block.settings.mmdd_custom_css_inline}}">
+										{%- unless block.settings.mmdd_bg_content == blank -%}
+											<img class="image-background" src="{% comment ls-rpl %}{{block.settings.mmdd_bg_content | img_url : 'master'}}{% endcomment %}{%- capture LS_IMG_URL -%}{%- render "ls-img-url", image: block.settings.mmdd_bg_content, img_url : 'master' -%}{%- endcapture -%}{{LS_IMG_URL}}{% comment /ls-rpl %}{% endcomment %}" {% case block.settings.mmdd_bg_position %}
+											{% when '0' %}
+												style = "position: absolute; left: {{block.settings.mmdd_bg_position_x}}px; top: {{block.settings.mmdd_bg_position_y}}px;"
+											{% when '1' %}
+												style = "position: absolute; left: {{block.settings.mmdd_bg_position_x}}px; bottom: {{block.settings.mmdd_bg_position_y}}px;"
+											{% when '2' %}
+												style = "position: absolute; right: {{block.settings.mmdd_bg_position_x}}px; top: {{block.settings.mmdd_bg_position_y}}px;"
+											{% when '3' %}
+												style = "position: absolute; right: {{block.settings.mmdd_bg_position_x}}px; bottom: {{block.settings.mmdd_bg_position_y}}px;"
+											{% endcase %} />
+										{%- endunless -%}
+										<div class="groupmenu-drop-content {{block.settings.mmdd_width}}">
+											<div class="menu-column-content" style="float: left; width: {{block.settings.mmdd_html_col1_per}}; {% if block.settings.mmdd_html_col1_per == blank %}width: 50% {% endif %}">
+												{{block.settings.mmdd_html_col1}}
+											</div>
+											<div class="menu-column-content" style="float: left; width: {{block.settings.mmdd_html_col2_per}}; {% if block.settings.mmdd_html_col2_per == blank %}width: 50% {% endif %}">
+												{{block.settings.mmdd_html_col2}}
+											</div>
+										</div>
+									</li>
+								</ul>
+								{%- when 'html-three-columns' -%}
+								<ul class="groupmenu-drop">
+									<li class="item level1" style="{{block.settings.mmdd_custom_css_inline}}">
+										{%- unless block.settings.mmdd_bg_content == blank -%}
+											<img class="image-background" src="{% comment ls-rpl %}{{block.settings.mmdd_bg_content | img_url : 'master'}}{% endcomment %}{%- capture LS_IMG_URL -%}{%- render "ls-img-url", image: block.settings.mmdd_bg_content, img_url : 'master' -%}{%- endcapture -%}{{LS_IMG_URL}}{% comment /ls-rpl %}{% endcomment %}" {% case block.settings.mmdd_bg_position %}
+											{% when '0' %}
+												style = "position: absolute; left: {{block.settings.mmdd_bg_position_x}}px; top: {{block.settings.mmdd_bg_position_y}}px;"
+											{% when '1' %}
+												style = "position: absolute; left: {{block.settings.mmdd_bg_position_x}}px; bottom: {{block.settings.mmdd_bg_position_y}}px;"
+											{% when '2' %}
+												style = "position: absolute; right: {{block.settings.mmdd_bg_position_x}}px; top: {{block.settings.mmdd_bg_position_y}}px;"
+											{% when '3' %}
+												style = "position: absolute; right: {{block.settings.mmdd_bg_position_x}}px; bottom: {{block.settings.mmdd_bg_position_y}}px;"
+											{% endcase %} />
+										{%- endunless -%}
+										<div class="groupmenu-drop-content {{block.settings.mmdd_width}}">
+											<div class="menu-column-content" style="float: left; width: {{block.settings.mmdd_html_col1_per}}; {% if block.settings.mmdd_html_col1_per == blank %}width: 33% {% endif %}">
+												{{block.settings.mmdd_html_col1}}
+											</div>
+											<div class="menu-column-content" style="float: left; width: {{block.settings.mmdd_html_col2_per}}; {% if block.settings.mmdd_html_col2_per == blank %}width: 33% {% endif %}">
+												{{block.settings.mmdd_html_col2}}
+											</div>
+											<div class="menu-column-content" style="float: left; width: {{block.settings.mmdd_html_col3_per}}; {% if block.settings.mmdd_html_col3_per == blank %}width: 34% {% endif %}">
+												{{block.settings.mmdd_html_col3}}
+											</div>
+										</div>
+									</li>
+								</ul>
+								{%- when 'html-four-columns' -%}
+								<ul class="groupmenu-drop">
+									<li class="item level1" style="{{block.settings.mmdd_custom_css_inline}}">
+										{%- unless block.settings.mmdd_bg_content == blank -%}
+											<img class="image-background" src="{% comment ls-rpl %}{{block.settings.mmdd_bg_content | img_url : 'master'}}{% endcomment %}{%- capture LS_IMG_URL -%}{%- render "ls-img-url", image: block.settings.mmdd_bg_content, img_url : 'master' -%}{%- endcapture -%}{{LS_IMG_URL}}{% comment /ls-rpl %}{% endcomment %}" {% case block.settings.mmdd_bg_position %}
+											{% when '0' %}
+												style = "position: absolute; left: {{block.settings.mmdd_bg_position_x}}px; top: {{block.settings.mmdd_bg_position_y}}px;"
+											{% when '1' %}
+												style = "position: absolute; left: {{block.settings.mmdd_bg_position_x}}px; bottom: {{block.settings.mmdd_bg_position_y}}px;"
+											{% when '2' %}
+												style = "position: absolute; right: {{block.settings.mmdd_bg_position_x}}px; top: {{block.settings.mmdd_bg_position_y}}px;"
+											{% when '3' %}
+												style = "position: absolute; right: {{block.settings.mmdd_bg_position_x}}px; bottom: {{block.settings.mmdd_bg_position_y}}px;"
+											{% endcase %} />
+										{%- endunless -%}
+										<div class="groupmenu-drop-content {{block.settings.mmdd_width}}">
+											<div class="menu-column-content" style="float: left; width: {{block.settings.mmdd_html_col1_per}}; {% if block.settings.mmdd_html_col1_per == blank %}width: 20% {% endif %}">
+												{{block.settings.mmdd_html_col1}}
+											</div>
+											<div class="menu-column-content" style="float: left; width: {{block.settings.mmdd_html_col2_per}}; {% if block.settings.mmdd_html_col2_per == blank %}width: 20% {% endif %}">
+												{{block.settings.mmdd_html_col2}}
+											</div>
+											<div class="menu-column-content" style="float: left; width: {{block.settings.mmdd_html_col3_per}}; {% if block.settings.mmdd_html_col3_per == blank %}width: 20% {% endif %}">
+												{{block.settings.mmdd_html_col3}}
+											</div>
+											<div class="menu-column-content" style="float: left; width: {{block.settings.mmdd_html_col4_per}}; {% if block.settings.mmdd_html_col4_per == blank %}width: 20% {% endif %}">
+												{{block.settings.mmdd_html_col4}}
+											</div>
+										</div>
+									</li>
+								</ul>
+								{%- when 'html-five-columns' -%}
+								<ul class="groupmenu-drop">
+									<li class="item level1" style="{{block.settings.mmdd_custom_css_inline}}">
+										{%- unless block.settings.mmdd_bg_content == blank -%}
+											<img class="image-background" src="{% comment ls-rpl %}{{block.settings.mmdd_bg_content | img_url : 'master'}}{% endcomment %}{%- capture LS_IMG_URL -%}{%- render "ls-img-url", image: block.settings.mmdd_bg_content, img_url : 'master' -%}{%- endcapture -%}{{LS_IMG_URL}}{% comment /ls-rpl %}{% endcomment %}" {% case block.settings.mmdd_bg_position %}
+											{% when '0' %}
+												style = "position: absolute; left: {{block.settings.mmdd_bg_position_x}}px; top: {{block.settings.mmdd_bg_position_y}}px;"
+											{% when '1' %}
+												style = "position: absolute; left: {{block.settings.mmdd_bg_position_x}}px; bottom: {{block.settings.mmdd_bg_position_y}}px;"
+											{% when '2' %}
+												style = "position: absolute; right: {{block.settings.mmdd_bg_position_x}}px; top: {{block.settings.mmdd_bg_position_y}}px;"
+											{% when '3' %}
+												style = "position: absolute; right: {{block.settings.mmdd_bg_position_x}}px; bottom: {{block.settings.mmdd_bg_position_y}}px;"
+											{% endcase %} />
+										{%- endunless -%}
+										<div class="groupmenu-drop-content {{block.settings.mmdd_width}}">
+											<div class="menu-column-content" style="float: left; width: {{block.settings.mmdd_html_col1_per}}; {% if block.settings.mmdd_html_col1_per == blank %}width: 20% {% endif %}">
+												{{block.settings.mmdd_html_col1}}
+											</div>
+											<div class="menu-column-content" style="float: left; width: {{block.settings.mmdd_html_col2_per}}; {% if block.settings.mmdd_html_col2_per == blank %}width: 20% {% endif %}">
+												{{block.settings.mmdd_html_col2}}
+											</div>
+											<div class="menu-column-content" style="float: left; width: {{block.settings.mmdd_html_col3_per}}; {% if block.settings.mmdd_html_col3_per == blank %}width: 20% {% endif %}">
+												{{block.settings.mmdd_html_col3}}
+											</div>
+											<div class="menu-column-content" style="float: left; width: {{block.settings.mmdd_html_col4_per}}; {% if block.settings.mmdd_html_col4_per == blank %}width: 20% {% endif %}">
+												{{block.settings.mmdd_html_col4}}
+											</div>
+											<div class="menu-column-content" style="float: left; width: {{block.settings.mmdd_html_col5_per}}; {% if block.settings.mmdd_html_col5_per == blank %}width: 20% {% endif %}">
+												{{block.settings.mmdd_html_col5}}
+											</div>
+										</div>
+									</li>
+								</ul>
+								{%- when 'html-six-columns' -%}
+								<ul class="groupmenu-drop">
+									<li class="item level1" style="{{block.settings.mmdd_custom_css_inline}}">
+										{%- unless block.settings.mmdd_bg_content == blank -%}
+											<img class="image-background" src="{% comment ls-rpl %}{{block.settings.mmdd_bg_content | img_url : 'master'}}{% endcomment %}{%- capture LS_IMG_URL -%}{%- render "ls-img-url", image: block.settings.mmdd_bg_content, img_url : 'master' -%}{%- endcapture -%}{{LS_IMG_URL}}{% comment /ls-rpl %}{% endcomment %}" {% case block.settings.mmdd_bg_position %}
+											{% when '0' %}
+												style = "position: absolute; left: {{block.settings.mmdd_bg_position_x}}px; top: {{block.settings.mmdd_bg_position_y}}px;"
+											{% when '1' %}
+												style = "position: absolute; left: {{block.settings.mmdd_bg_position_x}}px; bottom: {{block.settings.mmdd_bg_position_y}}px;"
+											{% when '2' %}
+												style = "position: absolute; right: {{block.settings.mmdd_bg_position_x}}px; top: {{block.settings.mmdd_bg_position_y}}px;"
+											{% when '3' %}
+												style = "position: absolute; right: {{block.settings.mmdd_bg_position_x}}px; bottom: {{block.settings.mmdd_bg_position_y}}px;"
+											{% endcase %} />
+										{%- endunless -%}
+										<div class="groupmenu-drop-content {{block.settings.mmdd_width}}">
+											<div class="menu-column-content" style="float: left; width: {{block.settings.mmdd_html_col1_per}}; {% if block.settings.mmdd_html_col1_per == blank %}width: 16.6% {% endif %}">
+												{{block.settings.mmdd_html_col1}}
+											</div>
+											<div class="menu-column-content" style="float: left; width: {{block.settings.mmdd_html_col2_per}}; {% if block.settings.mmdd_html_col2_per == blank %}width: 16.6% {% endif %}">
+												{{block.settings.mmdd_html_col2}}
+											</div>
+											<div class="menu-column-content" style="float: left; width: {{block.settings.mmdd_html_col3_per}}; {% if block.settings.mmdd_html_col3_per == blank %}width: 16.6% {% endif %}">
+												{{block.settings.mmdd_html_col3}}
+											</div>
+											<div class="menu-column-content" style="float: left; width: {{block.settings.mmdd_html_col4_per}}; {% if block.settings.mmdd_html_col4_per == blank %}width: 16.6% {% endif %}">
+												{{block.settings.mmdd_html_col4}}
+											</div>
+											<div class="menu-column-content" style="float: left; width: {{block.settings.mmdd_html_col5_per}}; {% if block.settings.mmdd_html_col5_per == blank %}width: 16.6% {% endif %}">
+												{{block.settings.mmdd_html_col5}}
+											</div>
+											<div class="menu-column-content" style="float: left; width: {{block.settings.mmdd_html_col6_per}}; {% if block.settings.mmdd_html_col6_per == blank %}width: 16.6% {% endif %}">
+												{{block.settings.mmdd_html_col6}}
+											</div>
+										</div>
+									</li>
+								</ul>
+							{% endcase %}
+						</li>
+						
+						
+					
+				{% endif %}
+			{% endfor %}
+		</ul>
+	</div>
+</nav>
+
+</div>
+{% endif %}
+
+{% schema %}
+{
+  "name": "CDZ MegaMenu Left",
+  "max_blocks": 20,
+  "settings": [
+	{
+      "type": "text",
+      "id": "title",
+      "label": {
+        "de": "Titel",
+        "en": "Heading",
+        "es": "Título",
+        "fr": "Titre",
+        "it": "Heading",
+        "ja": "見出し",
+        "pt-BR": "Título"
+      },
+      "default": {
+        "de": "Featured Kategorie",
+        "en": "Codazon MegaMenu",
+        "es": "Colección destacada",
+        "fr": "Collection en vedette",
+        "it": "Collezione in evidenza",
+        "ja": "特集コレクション",
+        "pt-BR": "Coleção em destaque"
+      }
+    },
+	{
+	   "type":      "text",
+	   "id":        "cdzmegamenu_identifier",
+	   "label":     "Identifier",
+	   "default": 	"cdzmegamenu03"
+	},
+	{
+	   "type":      "text",
+	   "id":        "cdzmegamenu_wrapper_class",
+	   "label":     "Wrapper CSS Class"
+	},
+	{
+	   "type":      "select",
+	   "id":        "cdzmegamenu_type",
+	   "options": [
+		  { "value": "horizontal", "label": "Horizontal"},
+		  { "value": "vertical", "label": "Vertical"},
+		  { "value": "toggle", "label": "Toggle"}
+	   ],
+	   "label":     "Type",
+	   "default" : "vertical"
+	},
+	{
+	   "type":      "select",
+	   "id":        "cdzmegamenu_ddstyle",
+	   "options": [
+		  { "value": "auto", "label": "Auto Width"},
+		  { "value": "full", "label": "Full Width"}
+	   ],
+	   "label":     "Dropdown Style",
+	   "default" : "auto"
+	},
+	{
+	   "type":      "select",
+	   "id":        "cdzmegamenu_ddanimation",
+	   "options": [
+		  { "value": "normal", "label": "Normal"},
+		  { "value": "fade", "label": "Fade"},
+		  { "value": "slide", "label": "Slide"},
+		  { "value": "transform", "label": "Transform"}
+	   ],
+	   "label":     "Dropdown Animation",
+	   "default" : "fade"
+	},
+	{
+	   "type":      "select",
+	   "id":        "cdzmegamenu_status",
+	   "options": [
+		  { "value": "enable", "label": "Enable"},
+		  { "value": "disable", "label": "Disable"}
+	   ],
+	   "label":     "Status",
+	   "default" : "enable"
+	}
+  ],
+  "blocks": [
+	{
+      "type": "menulink",
+      "name": {
+        "de": "Menü",
+        "en": "Menu Item Link",
+        "es": "Menú",
+        "fr": "Menu",
+        "it": "Menu",
+        "ja": "メニュー",
+        "pt-BR": "Menu"
+      },
+      "settings": [
+        {
+          "type": "text",
+          "id": "cdzmegamenu_title",
+          "label": {
+            "de": "Titel",
+            "en": "Menu Item Title",
+            "es": "Título",
+            "fr": "Titre",
+            "it": "Heading",
+            "ja": "見出し",
+            "pt-BR": "Título"
+          },
+          "default": {
+            "de": "Links",
+            "en": "Title Item",
+            "es": "Enlaces",
+            "fr": "Liens",
+            "it": "Links",
+            "ja": "リンク",
+            "pt-BR": "Links"
+          }
+        },
+        {
+          "type": "url",
+          "id": "cdzmegamenu_itemurl",
+          "label": {
+            "de": "Bild-Link",
+            "en": "Menu Item URL",
+            "es": "Enlace de imagen",
+            "fr": "Lien vers l'image",
+            "it": "Link immagine",
+            "ja": "画像リンク",
+            "pt-BR": "Link da imagem"
+          } 
+        },
+		{
+			"type" : "header",
+			"content" : "-- Label For Menu Item --"
+		},
+        {
+          "type": "text",
+          "id": "cdzmegamenu_lbitem",
+          "label": {
+            "de": "Bild-Link",
+            "en": "Menu Item Label",
+            "es": "Enlace de imagen",
+            "fr": "Lien vers l'image",
+            "it": "Link immagine",
+            "ja": "画像リンク",
+            "pt-BR": "Link da imagem"
+          } 
+        },
+		{
+          "type": "color",
+          "id": "cdzmegamenu_lbcolor",
+          "label": "Item Label Color",
+		  "default": "#ffffff",
+		  "info": "Default: [#ffffff]"
+        },
+		{
+          "type": "color",
+          "id": "cdzmegamenu_lbbackground",
+          "label": "Item Label Background Color",
+		  "default" : "#fdbc20",
+		  "info": "Default: [#fdbc20]"
+        },
+        {
+          "type": "text",
+          "id": "cdzmegamenu_lbclscustom",
+          "label": "Custom Class For Label Icon"
+        },
+		
+		{
+			"type" : "header",
+			"content" : "-- Icon For Menu Item --"
+		},
+		{
+		   "type":      "select",
+		   "id":        "cdzmegamenu_itemicon",
+		   "options": [
+			  { "value": "mmfonticon", "label": "Show Font Icon"},
+			  { "value": "mmimgicon", "label": "Show Image Icon"}
+		   ],
+		   "label":     "Show Font or Image Icon",
+		   "default" : "mmfonticon"
+		},
+		{
+			"type" : "text",
+			"id" : "cdzmegamenu_itemfonticon",
+			"label" : "Menu Font Icon Item",
+			"info": "Ex: fa-home. Use Font Awesome [see here](http:\/\/fontawesome.com\/v4.7.0\/cheatsheet\/)."
+		},
+		{
+		  "type": "image_picker",
+		  "id": "cdzmegamenu_itemimgicon",
+		  "label": "Menu Image Icon Item"
+		},
+		{
+			"type" : "text",
+			"id" : "cdzmegamenu_item_imgsize",
+			"label" : "Menu Size Image Icon Item",
+			"default": "40x40",
+			"info": "Default: [40x40]"
+		}
+		
+      ]
+    },
+	{
+      "type": "menu",
+      "name": {
+        "de": "Menü",
+        "en": "Link List",
+        "es": "Menú",
+        "fr": "Menu",
+        "it": "Menu",
+        "ja": "メニュー",
+        "pt-BR": "Menu"
+      },
+      "settings": [
+        {
+          "type": "text",
+          "id": "cdzmegamenu_title",
+          "label": {
+            "de": "Titel",
+            "en": "Menu Item Title",
+            "es": "Título",
+            "fr": "Titre",
+            "it": "Heading",
+            "ja": "見出し",
+            "pt-BR": "Título"
+          },
+          "default": {
+            "de": "Links",
+            "en": "Title Item",
+            "es": "Enlaces",
+            "fr": "Liens",
+            "it": "Links",
+            "ja": "リンク",
+            "pt-BR": "Links"
+          }
+        },
+        {
+          "type": "url",
+          "id": "cdzmegamenu_itemurl",
+          "label": {
+            "de": "Bild-Link",
+            "en": "Menu Item URL",
+            "es": "Enlace de imagen",
+            "fr": "Lien vers l'image",
+            "it": "Link immagine",
+            "ja": "画像リンク",
+            "pt-BR": "Link da imagem"
+          } 
+        },
+        {
+          "type": "text",
+          "id": "cdzmegamenu_customclass",
+          "label": "Item - Custom Class",
+		  "info" : "Input class [fixtop] if you want Dropdown Menu fixed top"
+        },
+		{
+			"type" : "header",
+			"content" : "-- Label For Menu Item --"
+		},
+        {
+          "type": "text",
+          "id": "cdzmegamenu_lbitem",
+          "label": {
+            "de": "Bild-Link",
+            "en": "Menu Item Label",
+            "es": "Enlace de imagen",
+            "fr": "Lien vers l'image",
+            "it": "Link immagine",
+            "ja": "画像リンク",
+            "pt-BR": "Link da imagem"
+          } 
+        },
+		{
+          "type": "color",
+          "id": "cdzmegamenu_lbcolor",
+          "label": "Item Label Color",
+		  "default": "#ffffff",
+		  "info": "Default: [#ffffff]"
+        },
+		{
+          "type": "color",
+          "id": "cdzmegamenu_lbbackground",
+          "label": "Item Label Background Color",
+		  "default" : "#fdbc20",
+		  "info": "Default: [#fdbc20]"
+        },
+        {
+          "type": "text",
+          "id": "cdzmegamenu_lbclscustom",
+          "label": "Custom Class For Label Icon"
+        },
+		
+		{
+			"type" : "header",
+			"content" : "-- Icon For Menu Item --"
+		},
+		{
+		   "type":      "select",
+		   "id":        "cdzmegamenu_itemicon",
+		   "options": [
+			  { "value": "mmfonticon", "label": "Show Font Icon"},
+			  { "value": "mmimgicon", "label": "Show Image Icon"}
+		   ],
+		   "label":     "Show Font or Image Icon",
+		   "default" : "mmfonticon"
+		},
+		{
+			"type" : "text",
+			"id" : "cdzmegamenu_itemfonticon",
+			"label" : "Menu Font Icon Item",
+			"info": "Ex: fa-home. Use Font Awesome [see here](http:\/\/fontawesome.com\/v4.7.0\/cheatsheet\/)."
+		},
+		{
+		  "type": "image_picker",
+		  "id": "cdzmegamenu_itemimgicon",
+		  "label": "Menu Image Icon Item"
+		},
+		{
+			"type" : "text",
+			"id" : "cdzmegamenu_item_imgsize",
+			"label" : "Menu Size Image Icon Item",
+			"default": "40x40",
+			"info": "Default: [40x40]"
+		},
+		{
+			"type" : "header",
+			"content" : "-- DropDown Content --"
+		},
+		{
+			"type" : "text",
+			"id" : "mmdd_custom_css_inline",
+			"label" : "Custom CSS Inline Style",
+			"info": "padding:20px; margin: 20px;"
+		},
+		{
+			"type" : "select",
+			"id" : "mmdd_width",
+			"options": [
+			  { "value": "groupmenu-width-1", "label": "Width 1 - 120px"},
+			  { "value": "groupmenu-width-2", "label": "Width 2 - 240px"},
+			  { "value": "groupmenu-width-3", "label": "Width 3 - 350px"},
+			  { "value": "groupmenu-width-4", "label": "Width 4 - 460px"},
+			  { "value": "groupmenu-width-5", "label": "Width 5 - 580px"},
+			  { "value": "groupmenu-width-6", "label": "Width 6 - 700px"},
+			  { "value": "groupmenu-width-7", "label": "Width 7 - 820px"},
+			  { "value": "groupmenu-width-8", "label": "Width 8 - 930px"},
+			  { "value": "groupmenu-width-9", "label": "Width 9 - 1050px"},
+			  { "value": "groupmenu-width-10", "label": "Width 10 - 1170px"},
+			  { "value": "groupmenu-width-11", "label": "Width 11 - 1280px"},
+			  { "value": "groupmenu-width-12", "label": "Width 12 - 1400px"}
+		   ],
+			"label" : "Dropdown Width",
+			"default": "groupmenu-width-6"
+		},
+        {
+          "type": "link_list",
+          "id": "cdzmegamenu_list",
+          "label": {
+            "de": "Menü",
+            "en": "Dropdown Content - Select Menu",
+            "es": "Menú",
+            "fr": "Menu",
+            "it": "Menu",
+            "ja": "メニュー",
+            "pt-BR": "Menu"
+          }
+        },
+		{
+			"type" : "header",
+			"content" : "-- Background For Content --"
+		},
+		{
+			"type" : "image_picker",
+			"id" : "mmdd_bg_content",
+			"label" : "Background for content"
+		},
+		{
+			"type" : "select",
+			"id" : "mmdd_bg_position",
+			"options": [
+			  { "value": "0", "label": "Left - Top"},
+			  { "value": "1", "label": "Left - Bottom"},
+			  { "value": "2", "label": "Right - Top"},
+			  { "value": "3", "label": "Right - Bottom"}
+		   ],
+			"label" : "Background Position",
+			"default" : "0"
+		},
+		{
+			"type" : "text",
+			"id" : "mmdd_bg_position_x",
+			"label" : "X(px)",
+			"default" : "0"
+		},
+		{
+			"type" : "text",
+			"id" : "mmdd_bg_position_y",
+			"label" : "Y(px)",
+			"default" : "0"
+		}
+		
+      ]
+    },
+	
+	{
+      "type": "html-onecolumn",
+      "name": {
+        "de": "Menü",
+        "en": "HTML - 1 Column",
+        "es": "Menú",
+        "fr": "Menu",
+        "it": "Menu",
+        "ja": "メニュー",
+        "pt-BR": "Menu"
+      },
+      "settings": [
+        {
+          "type": "text",
+          "id": "cdzmegamenu_title",
+          "label": {
+            "de": "Titel",
+            "en": "Menu Item Title",
+            "es": "Título",
+            "fr": "Titre",
+            "it": "Heading",
+            "ja": "見出し",
+            "pt-BR": "Título"
+          },
+          "default": {
+            "de": "Links",
+            "en": "Title Item",
+            "es": "Enlaces",
+            "fr": "Liens",
+            "it": "Links",
+            "ja": "リンク",
+            "pt-BR": "Links"
+          }
+        },
+        {
+          "type": "url",
+          "id": "cdzmegamenu_itemurl",
+          "label": {
+            "de": "Bild-Link",
+            "en": "Menu Item URL",
+            "es": "Enlace de imagen",
+            "fr": "Lien vers l'image",
+            "it": "Link immagine",
+            "ja": "画像リンク",
+            "pt-BR": "Link da imagem"
+          } 
+        },
+        {
+          "type": "text",
+          "id": "cdzmegamenu_customclass",
+          "label": "Item - Custom Class",
+		  "info" : "Input class [fixtop] if you want Dropdown Menu fixed top"
+        },
+		{
+			"type" : "header",
+			"content" : "-- Label For Menu Item --"
+		},
+        {
+          "type": "text",
+          "id": "cdzmegamenu_lbitem",
+          "label": {
+            "de": "Bild-Link",
+            "en": "Menu Item Label",
+            "es": "Enlace de imagen",
+            "fr": "Lien vers l'image",
+            "it": "Link immagine",
+            "ja": "画像リンク",
+            "pt-BR": "Link da imagem"
+          } 
+        },
+		{
+          "type": "color",
+          "id": "cdzmegamenu_lbcolor",
+          "label": "Item Label Color",
+		  "default": "#ffffff",
+		  "info": "Default: [#ffffff]"
+        },
+		{
+          "type": "color",
+          "id": "cdzmegamenu_lbbackground",
+          "label": "Item Label Background Color",
+		  "default" : "#fdbc20",
+		  "info": "Default: [#fdbc20]"
+        },
+        {
+          "type": "text",
+          "id": "cdzmegamenu_lbclscustom",
+          "label": "Custom Class For Label Icon"
+        },
+		
+		{
+			"type" : "header",
+			"content" : "-- Icon For Menu Item --"
+		},
+		{
+		   "type":      "select",
+		   "id":        "cdzmegamenu_itemicon",
+		   "options": [
+			  { "value": "mmfonticon", "label": "Show Font Icon"},
+			  { "value": "mmimgicon", "label": "Show Image Icon"}
+		   ],
+		   "label":     "Show Font or Image Icon",
+		   "default" : "mmfonticon"
+		},
+		{
+			"type" : "text",
+			"id" : "cdzmegamenu_itemfonticon",
+			"label" : "Menu Font Icon Item",
+			"info": "Ex: fa-home. Use Font Awesome [see here](http:\/\/fontawesome.com\/v4.7.0\/cheatsheet\/)."
+		},
+		{
+		  "type": "image_picker",
+		  "id": "cdzmegamenu_itemimgicon",
+		  "label": "Menu Image Icon Item"
+		},
+		{
+			"type" : "text",
+			"id" : "cdzmegamenu_item_imgsize",
+			"label" : "Menu Size Image Icon Item",
+			"default": "40x40",
+			"info": "Default: [40x40]"
+		},
+		{
+			"type" : "header",
+			"content" : "-- DropDown Content --"
+		},
+		{
+			"type" : "text",
+			"id" : "mmdd_custom_css_inline",
+			"label" : "Custom CSS Inline Style",
+			"info": "padding:20px; margin: 20px;"
+		},
+		{
+			"type" : "select",
+			"id" : "mmdd_width",
+			"options": [
+			  { "value": "groupmenu-width-1", "label": "Width 1 - 120px"},
+			  { "value": "groupmenu-width-2", "label": "Width 2 - 240px"},
+			  { "value": "groupmenu-width-3", "label": "Width 3 - 350px"},
+			  { "value": "groupmenu-width-4", "label": "Width 4 - 460px"},
+			  { "value": "groupmenu-width-5", "label": "Width 5 - 580px"},
+			  { "value": "groupmenu-width-6", "label": "Width 6 - 700px"},
+			  { "value": "groupmenu-width-7", "label": "Width 7 - 820px"},
+			  { "value": "groupmenu-width-8", "label": "Width 8 - 930px"},
+			  { "value": "groupmenu-width-9", "label": "Width 9 - 1050px"},
+			  { "value": "groupmenu-width-10", "label": "Width 10 - 1170px"},
+			  { "value": "groupmenu-width-11", "label": "Width 11 - 1280px"},
+			  { "value": "groupmenu-width-12", "label": "Width 12 - 1400px"}
+		   ],
+			"label" : "Dropdown Width",
+			"default": "groupmenu-width-6"
+		},
+		{
+			"type" : "header",
+			"content" : "-- Background For Content --"
+		},
+		{
+			"type" : "image_picker",
+			"id" : "mmdd_bg_content",
+			"label" : "Background for content"
+		},
+		{
+			"type" : "select",
+			"id" : "mmdd_bg_position",
+			"options": [
+			  { "value": "0", "label": "Left - Top"},
+			  { "value": "1", "label": "Left - Bottom"},
+			  { "value": "2", "label": "Right - Top"},
+			  { "value": "3", "label": "Right - Bottom"}
+		   ],
+			"label" : "Background Position",
+			"default" : "0"
+		},
+		{
+			"type" : "text",
+			"id" : "mmdd_bg_position_x",
+			"label" : "X(px)",
+			"default" : "0"
+		},
+		{
+			"type" : "text",
+			"id" : "mmdd_bg_position_y",
+			"label" : "Y(px)",
+			"default" : "0"
+		},
+		{
+			"type" : "header",
+			"content" : "-- DropDown Content - Column --"
+		},
+        {
+          "type": "html",
+          "id": "mmdd_html_col1",
+          "label": {
+            "de": "Text",
+            "en": "Dropdown Content",
+            "es": "Texto",
+            "fr": "Texte",
+            "it": "Testo",
+            "ja": "テキスト",
+            "pt-BR": "Texto"
+          }
+        }
+		
+      ]
+    },
+	
+	{
+      "type": "html-two-columns",
+      "name": {
+        "de": "Menü",
+        "en": "HTML - 2 Columns",
+        "es": "Menú",
+        "fr": "Menu",
+        "it": "Menu",
+        "ja": "メニュー",
+        "pt-BR": "Menu"
+      },
+      "settings": [
+        {
+          "type": "text",
+          "id": "cdzmegamenu_title",
+          "label": {
+            "de": "Titel",
+            "en": "Menu Item Title",
+            "es": "Título",
+            "fr": "Titre",
+            "it": "Heading",
+            "ja": "見出し",
+            "pt-BR": "Título"
+          },
+          "default": {
+            "de": "Links",
+            "en": "Title Item",
+            "es": "Enlaces",
+            "fr": "Liens",
+            "it": "Links",
+            "ja": "リンク",
+            "pt-BR": "Links"
+          }
+        },
+        {
+          "type": "url",
+          "id": "cdzmegamenu_itemurl",
+          "label": {
+            "de": "Bild-Link",
+            "en": "Menu Item URL",
+            "es": "Enlace de imagen",
+            "fr": "Lien vers l'image",
+            "it": "Link immagine",
+            "ja": "画像リンク",
+            "pt-BR": "Link da imagem"
+          } 
+        },
+        {
+          "type": "text",
+          "id": "cdzmegamenu_customclass",
+          "label": "Item - Custom Class",
+		  "info" : "Input class [fixtop] if you want Dropdown Menu fixed top"
+        },
+		{
+			"type" : "header",
+			"content" : "-- Label For Menu Item --"
+		},
+        {
+          "type": "text",
+          "id": "cdzmegamenu_lbitem",
+          "label": {
+            "de": "Bild-Link",
+            "en": "Menu Item Label",
+            "es": "Enlace de imagen",
+            "fr": "Lien vers l'image",
+            "it": "Link immagine",
+            "ja": "画像リンク",
+            "pt-BR": "Link da imagem"
+          } 
+        },
+		{
+          "type": "color",
+          "id": "cdzmegamenu_lbcolor",
+          "label": "Item Label Color",
+		  "default": "#ffffff",
+		  "info": "Default: [#ffffff]"
+        },
+		{
+          "type": "color",
+          "id": "cdzmegamenu_lbbackground",
+          "label": "Item Label Background Color",
+		  "default" : "#fdbc20",
+		  "info": "Default: [#fdbc20]"
+        },
+        {
+          "type": "text",
+          "id": "cdzmegamenu_lbclscustom",
+          "label": "Custom Class For Label Icon"
+        },
+		
+		{
+			"type" : "header",
+			"content" : "-- Icon For Menu Item --"
+		},
+		{
+		   "type":      "select",
+		   "id":        "cdzmegamenu_itemicon",
+		   "options": [
+			  { "value": "mmfonticon", "label": "Show Font Icon"},
+			  { "value": "mmimgicon", "label": "Show Image Icon"}
+		   ],
+		   "label":     "Show Font or Image Icon",
+		   "default" : "mmfonticon"
+		},
+		{
+			"type" : "text",
+			"id" : "cdzmegamenu_itemfonticon",
+			"label" : "Menu Font Icon Item",
+			"info": "Ex: fa-home. Use Font Awesome [see here](http:\/\/fontawesome.com\/v4.7.0\/cheatsheet\/)."
+		},
+		{
+		  "type": "image_picker",
+		  "id": "cdzmegamenu_itemimgicon",
+		  "label": "Menu Image Icon Item"
+		},
+		{
+			"type" : "text",
+			"id" : "cdzmegamenu_item_imgsize",
+			"label" : "Menu Size Image Icon Item",
+			"default": "40x40",
+			"info": "Default: [40x40]"
+		},
+		{
+			"type" : "header",
+			"content" : "-- DropDown Content --"
+		},
+		{
+			"type" : "text",
+			"id" : "mmdd_custom_css_inline",
+			"label" : "Custom CSS Inline Style",
+			"info": "padding:20px; margin: 20px;"
+		},
+		{
+			"type" : "select",
+			"id" : "mmdd_width",
+			"options": [
+			  { "value": "groupmenu-width-1", "label": "Width 1 - 120px"},
+			  { "value": "groupmenu-width-2", "label": "Width 2 - 240px"},
+			  { "value": "groupmenu-width-3", "label": "Width 3 - 350px"},
+			  { "value": "groupmenu-width-4", "label": "Width 4 - 460px"},
+			  { "value": "groupmenu-width-5", "label": "Width 5 - 580px"},
+			  { "value": "groupmenu-width-6", "label": "Width 6 - 700px"},
+			  { "value": "groupmenu-width-7", "label": "Width 7 - 820px"},
+			  { "value": "groupmenu-width-8", "label": "Width 8 - 930px"},
+			  { "value": "groupmenu-width-9", "label": "Width 9 - 1050px"},
+			  { "value": "groupmenu-width-10", "label": "Width 10 - 1170px"},
+			  { "value": "groupmenu-width-11", "label": "Width 11 - 1280px"},
+			  { "value": "groupmenu-width-12", "label": "Width 12 - 1400px"}
+		   ],
+			"label" : "Dropdown Width",
+			"default": "groupmenu-width-6"
+		},
+		{
+			"type" : "header",
+			"content" : "-- Background For Content --"
+		},
+		{
+			"type" : "image_picker",
+			"id" : "mmdd_bg_content",
+			"label" : "Background for content"
+		},
+		{
+			"type" : "select",
+			"id" : "mmdd_bg_position",
+			"options": [
+			  { "value": "0", "label": "Left - Top"},
+			  { "value": "1", "label": "Left - Bottom"},
+			  { "value": "2", "label": "Right - Top"},
+			  { "value": "3", "label": "Right - Bottom"}
+		   ],
+			"label" : "Background Position",
+			"default" : "0"
+		},
+		{
+			"type" : "text",
+			"id" : "mmdd_bg_position_x",
+			"label" : "X(px)",
+			"default" : "0"
+		},
+		{
+			"type" : "text",
+			"id" : "mmdd_bg_position_y",
+			"label" : "Y(px)",
+			"default" : "0"
+		},
+		{
+			"type" : "header",
+			"content" : "-- Dropdown Content - First Column --"
+		},
+        {
+          "type": "html",
+          "id": "mmdd_html_col1",
+          "label": {
+            "de": "Text",
+            "en": "Dropdown Content - First Column",
+            "es": "Texto",
+            "fr": "Texte",
+            "it": "Testo",
+            "ja": "テキスト",
+            "pt-BR": "Texto"
+          }
+        },
+		{
+		   "type":      "text",
+		   "id":        "mmdd_html_col1_per",
+		   "label":     "Percentage of First Column",
+		   "default" : "50%",
+		   "info" : "Percentage < 100%. Total percentage of all columns = 100%"
+		},
+		{
+			"type" : "header",
+			"content" : "-- Dropdown Content - Second Column --"
+		},
+		{
+          "type": "html",
+          "id": "mmdd_html_col2",
+          "label": {
+            "de": "Text",
+            "en": "Dropdown Content  - Second Column",
+            "es": "Texto",
+            "fr": "Texte",
+            "it": "Testo",
+            "ja": "テキスト",
+            "pt-BR": "Texto"
+          }
+        },
+		{
+		   "type":      "text",
+		   "id":        "mmdd_html_col2_per",
+		   "label":     "Percentage of Second Column",
+		   "default" : "50%",
+		   "info" : "Percentage < 100%. Total percentage of all columns = 100%"
+		}
+		
+      ]
+    },
+	
+	{
+      "type": "html-three-columns",
+      "name": {
+        "de": "Menü",
+        "en": "HTML - 3 Columns",
+        "es": "Menú",
+        "fr": "Menu",
+        "it": "Menu",
+        "ja": "メニュー",
+        "pt-BR": "Menu"
+      },
+      "settings": [
+        {
+          "type": "text",
+          "id": "cdzmegamenu_title",
+          "label": {
+            "de": "Titel",
+            "en": "Menu Item Title",
+            "es": "Título",
+            "fr": "Titre",
+            "it": "Heading",
+            "ja": "見出し",
+            "pt-BR": "Título"
+          },
+          "default": {
+            "de": "Links",
+            "en": "Title Item",
+            "es": "Enlaces",
+            "fr": "Liens",
+            "it": "Links",
+            "ja": "リンク",
+            "pt-BR": "Links"
+          }
+        },
+        {
+          "type": "url",
+          "id": "cdzmegamenu_itemurl",
+          "label": {
+            "de": "Bild-Link",
+            "en": "Menu Item URL",
+            "es": "Enlace de imagen",
+            "fr": "Lien vers l'image",
+            "it": "Link immagine",
+            "ja": "画像リンク",
+            "pt-BR": "Link da imagem"
+          } 
+        },
+        {
+          "type": "text",
+          "id": "cdzmegamenu_customclass",
+          "label": "Item - Custom Class",
+		  "info" : "Input class [fixtop] if you want Dropdown Menu fixed top"
+        },
+		{
+			"type" : "header",
+			"content" : "-- Label For Menu Item --"
+		},
+        {
+          "type": "text",
+          "id": "cdzmegamenu_lbitem",
+          "label": {
+            "de": "Bild-Link",
+            "en": "Menu Item Label",
+            "es": "Enlace de imagen",
+            "fr": "Lien vers l'image",
+            "it": "Link immagine",
+            "ja": "画像リンク",
+            "pt-BR": "Link da imagem"
+          } 
+        },
+		{
+          "type": "color",
+          "id": "cdzmegamenu_lbcolor",
+          "label": "Item Label Color",
+		  "default": "#ffffff",
+		  "info": "Default: [#ffffff]"
+        },
+		{
+          "type": "color",
+          "id": "cdzmegamenu_lbbackground",
+          "label": "Item Label Background Color",
+		  "default" : "#fdbc20",
+		  "info": "Default: [#fdbc20]"
+        },
+        {
+          "type": "text",
+          "id": "cdzmegamenu_lbclscustom",
+          "label": "Custom Class For Label Icon"
+        },
+		
+		{
+			"type" : "header",
+			"content" : "-- Icon For Menu Item --"
+		},
+		{
+		   "type":      "select",
+		   "id":        "cdzmegamenu_itemicon",
+		   "options": [
+			  { "value": "mmfonticon", "label": "Show Font Icon"},
+			  { "value": "mmimgicon", "label": "Show Image Icon"}
+		   ],
+		   "label":     "Show Font or Image Icon",
+		   "default" : "mmfonticon"
+		},
+		{
+			"type" : "text",
+			"id" : "cdzmegamenu_itemfonticon",
+			"label" : "Menu Font Icon Item",
+			"info": "Ex: fa-home. Use Font Awesome [see here](http:\/\/fontawesome.com\/v4.7.0\/cheatsheet\/)."
+		},
+		{
+		  "type": "image_picker",
+		  "id": "cdzmegamenu_itemimgicon",
+		  "label": "Menu Image Icon Item"
+		},
+		{
+			"type" : "text",
+			"id" : "cdzmegamenu_item_imgsize",
+			"label" : "Menu Size Image Icon Item",
+			"default": "40x40",
+			"info": "Default: [40x40]"
+		},
+		{
+			"type" : "header",
+			"content" : "-- DropDown Content --"
+		},
+		{
+			"type" : "text",
+			"id" : "mmdd_custom_css_inline",
+			"label" : "Custom CSS Inline Style",
+			"info": "padding:20px; margin: 20px;"
+		},
+		{
+			"type" : "select",
+			"id" : "mmdd_width",
+			"options": [
+			  { "value": "groupmenu-width-1", "label": "Width 1 - 120px"},
+			  { "value": "groupmenu-width-2", "label": "Width 2 - 240px"},
+			  { "value": "groupmenu-width-3", "label": "Width 3 - 350px"},
+			  { "value": "groupmenu-width-4", "label": "Width 4 - 460px"},
+			  { "value": "groupmenu-width-5", "label": "Width 5 - 580px"},
+			  { "value": "groupmenu-width-6", "label": "Width 6 - 700px"},
+			  { "value": "groupmenu-width-7", "label": "Width 7 - 820px"},
+			  { "value": "groupmenu-width-8", "label": "Width 8 - 930px"},
+			  { "value": "groupmenu-width-9", "label": "Width 9 - 1050px"},
+			  { "value": "groupmenu-width-10", "label": "Width 10 - 1170px"},
+			  { "value": "groupmenu-width-11", "label": "Width 11 - 1280px"},
+			  { "value": "groupmenu-width-12", "label": "Width 12 - 1400px"}
+		   ],
+			"label" : "Dropdown Width",
+			"default": "groupmenu-width-6"
+		},
+		{
+			"type" : "header",
+			"content" : "-- Background For Content --"
+		},
+		{
+			"type" : "image_picker",
+			"id" : "mmdd_bg_content",
+			"label" : "Background for content"
+		},
+		{
+			"type" : "select",
+			"id" : "mmdd_bg_position",
+			"options": [
+			  { "value": "0", "label": "Left - Top"},
+			  { "value": "1", "label": "Left - Bottom"},
+			  { "value": "2", "label": "Right - Top"},
+			  { "value": "3", "label": "Right - Bottom"}
+		   ],
+			"label" : "Background Position",
+			"default" : "0"
+		},
+		{
+			"type" : "text",
+			"id" : "mmdd_bg_position_x",
+			"label" : "X(px)",
+			"default" : "0"
+		},
+		{
+			"type" : "text",
+			"id" : "mmdd_bg_position_y",
+			"label" : "Y(px)",
+			"default" : "0"
+		},
+		{
+			"type" : "header",
+			"content" : "-- Dropdown Content - First Column --"
+		},
+        {
+          "type": "html",
+          "id": "mmdd_html_col1",
+          "label": {
+            "de": "Text",
+            "en": "Dropdown Content - First Column",
+            "es": "Texto",
+            "fr": "Texte",
+            "it": "Testo",
+            "ja": "テキスト",
+            "pt-BR": "Texto"
+          }
+        },
+		{
+		   "type":      "text",
+		   "id":        "mmdd_html_col1_per",
+		   "label":     "Percentage of First Column",
+		   "default" : "33.33%",
+		   "info" : "Percentage < 100%. Total percentage of all columns = 100%"
+		},
+		{
+			"type" : "header",
+			"content" : "-- Dropdown Content - Second Column --"
+		},
+		{
+          "type": "html",
+          "id": "mmdd_html_col2",
+          "label": {
+            "de": "Text",
+            "en": "Dropdown Content  - Second Column",
+            "es": "Texto",
+            "fr": "Texte",
+            "it": "Testo",
+            "ja": "テキスト",
+            "pt-BR": "Texto"
+          }
+        },
+		{
+		   "type":      "text",
+		   "id":        "mmdd_html_col2_per",
+		   "label":     "Percentage of Second Column",
+		   "default" : "33.33%",
+		   "info" : "Percentage < 100%. Total percentage of all columns = 100%"
+		},
+		{
+			"type" : "header",
+			"content" : "-- Dropdown Content - Third Column --"
+		},
+		{
+          "type": "html",
+          "id": "mmdd_html_col3",
+          "label": {
+            "de": "Text",
+            "en": "Dropdown Content  - Third Column",
+            "es": "Texto",
+            "fr": "Texte",
+            "it": "Testo",
+            "ja": "テキスト",
+            "pt-BR": "Texto"
+          }
+        },
+		{
+		   "type":      "text",
+		   "id":        "mmdd_html_col3_per",
+		   "label":     "Percentage of Second Column",
+		   "default" : "33.33%",
+		   "info" : "Percentage < 100%. Total percentage of all columns = 100%"
+		}
+		
+      ]
+    },
+	
+	{
+      "type": "html-four-columns",
+      "name": {
+        "de": "Menü",
+        "en": "HTML - 4 Columns",
+        "es": "Menú",
+        "fr": "Menu",
+        "it": "Menu",
+        "ja": "メニュー",
+        "pt-BR": "Menu"
+      },
+      "settings": [
+        {
+          "type": "text",
+          "id": "cdzmegamenu_title",
+          "label": {
+            "de": "Titel",
+            "en": "Menu Item Title",
+            "es": "Título",
+            "fr": "Titre",
+            "it": "Heading",
+            "ja": "見出し",
+            "pt-BR": "Título"
+          },
+          "default": {
+            "de": "Links",
+            "en": "Title Item",
+            "es": "Enlaces",
+            "fr": "Liens",
+            "it": "Links",
+            "ja": "リンク",
+            "pt-BR": "Links"
+          }
+        },
+        {
+          "type": "url",
+          "id": "cdzmegamenu_itemurl",
+          "label": {
+            "de": "Bild-Link",
+            "en": "Menu Item URL",
+            "es": "Enlace de imagen",
+            "fr": "Lien vers l'image",
+            "it": "Link immagine",
+            "ja": "画像リンク",
+            "pt-BR": "Link da imagem"
+          } 
+        },
+        {
+          "type": "text",
+          "id": "cdzmegamenu_customclass",
+          "label": "Item - Custom Class",
+		  "info" : "Input class [fixtop] if you want Dropdown Menu fixed top"
+        },
+		{
+			"type" : "header",
+			"content" : "-- Label For Menu Item --"
+		},
+        {
+          "type": "text",
+          "id": "cdzmegamenu_lbitem",
+          "label": {
+            "de": "Bild-Link",
+            "en": "Menu Item Label",
+            "es": "Enlace de imagen",
+            "fr": "Lien vers l'image",
+            "it": "Link immagine",
+            "ja": "画像リンク",
+            "pt-BR": "Link da imagem"
+          } 
+        },
+		{
+          "type": "color",
+          "id": "cdzmegamenu_lbcolor",
+          "label": "Item Label Color",
+		  "default": "#ffffff",
+		  "info": "Default: [#ffffff]"
+        },
+		{
+          "type": "color",
+          "id": "cdzmegamenu_lbbackground",
+          "label": "Item Label Background Color",
+		  "default" : "#fdbc20",
+		  "info": "Default: [#fdbc20]"
+        },
+        {
+          "type": "text",
+          "id": "cdzmegamenu_lbclscustom",
+          "label": "Custom Class For Label Icon"
+        },
+		
+		{
+			"type" : "header",
+			"content" : "-- Icon For Menu Item --"
+		},
+		{
+		   "type":      "select",
+		   "id":        "cdzmegamenu_itemicon",
+		   "options": [
+			  { "value": "mmfonticon", "label": "Show Font Icon"},
+			  { "value": "mmimgicon", "label": "Show Image Icon"}
+		   ],
+		   "label":     "Show Font or Image Icon",
+		   "default" : "mmfonticon"
+		},
+		{
+			"type" : "text",
+			"id" : "cdzmegamenu_itemfonticon",
+			"label" : "Menu Font Icon Item",
+			"info": "Ex: fa-home. Use Font Awesome [see here](http:\/\/fontawesome.com\/v4.7.0\/cheatsheet\/)."
+		},
+		{
+		  "type": "image_picker",
+		  "id": "cdzmegamenu_itemimgicon",
+		  "label": "Menu Image Icon Item"
+		},
+		{
+			"type" : "text",
+			"id" : "cdzmegamenu_item_imgsize",
+			"label" : "Menu Size Image Icon Item",
+			"default": "40x40",
+			"info": "Default: [40x40]"
+		},
+		{
+			"type" : "header",
+			"content" : "-- DropDown Content --"
+		},
+		{
+			"type" : "text",
+			"id" : "mmdd_custom_css_inline",
+			"label" : "Custom CSS Inline Style",
+			"info": "padding:20px; margin: 20px;"
+		},
+		{
+			"type" : "select",
+			"id" : "mmdd_width",
+			"options": [
+			  { "value": "groupmenu-width-1", "label": "Width 1 - 120px"},
+			  { "value": "groupmenu-width-2", "label": "Width 2 - 240px"},
+			  { "value": "groupmenu-width-3", "label": "Width 3 - 350px"},
+			  { "value": "groupmenu-width-4", "label": "Width 4 - 460px"},
+			  { "value": "groupmenu-width-5", "label": "Width 5 - 580px"},
+			  { "value": "groupmenu-width-6", "label": "Width 6 - 700px"},
+			  { "value": "groupmenu-width-7", "label": "Width 7 - 820px"},
+			  { "value": "groupmenu-width-8", "label": "Width 8 - 930px"},
+			  { "value": "groupmenu-width-9", "label": "Width 9 - 1050px"},
+			  { "value": "groupmenu-width-10", "label": "Width 10 - 1170px"},
+			  { "value": "groupmenu-width-11", "label": "Width 11 - 1280px"},
+			  { "value": "groupmenu-width-12", "label": "Width 12 - 1400px"}
+		   ],
+			"label" : "Dropdown Width",
+			"default": "groupmenu-width-6"
+		},
+		{
+			"type" : "header",
+			"content" : "-- Background For Content --"
+		},
+		{
+			"type" : "image_picker",
+			"id" : "mmdd_bg_content",
+			"label" : "Background for content"
+		},
+		{
+			"type" : "select",
+			"id" : "mmdd_bg_position",
+			"options": [
+			  { "value": "0", "label": "Left - Top"},
+			  { "value": "1", "label": "Left - Bottom"},
+			  { "value": "2", "label": "Right - Top"},
+			  { "value": "3", "label": "Right - Bottom"}
+		   ],
+			"label" : "Background Position",
+			"default" : "0"
+		},
+		{
+			"type" : "text",
+			"id" : "mmdd_bg_position_x",
+			"label" : "X(px)",
+			"default" : "0"
+		},
+		{
+			"type" : "text",
+			"id" : "mmdd_bg_position_y",
+			"label" : "Y(px)",
+			"default" : "0"
+		},
+		{
+			"type" : "header",
+			"content" : "-- Dropdown Content - First Column --"
+		},
+        {
+          "type": "html",
+          "id": "mmdd_html_col1",
+          "label": {
+            "de": "Text",
+            "en": "Dropdown Content - First Column",
+            "es": "Texto",
+            "fr": "Texte",
+            "it": "Testo",
+            "ja": "テキスト",
+            "pt-BR": "Texto"
+          }
+        },
+		{
+		   "type":      "text",
+		   "id":        "mmdd_html_col1_per",
+		   "label":     "Percentage of First Column",
+		   "default" : "25%",
+		   "info" : "Percentage < 100%. Total percentage of all columns = 100%"
+		},
+		{
+			"type" : "header",
+			"content" : "-- Dropdown Content - Second Column --"
+		},
+		{
+          "type": "html",
+          "id": "mmdd_html_col2",
+          "label": {
+            "de": "Text",
+            "en": "Dropdown Content  - Second Column",
+            "es": "Texto",
+            "fr": "Texte",
+            "it": "Testo",
+            "ja": "テキスト",
+            "pt-BR": "Texto"
+          }
+        },
+		{
+		   "type":      "text",
+		   "id":        "mmdd_html_col2_per",
+		   "label":     "Percentage of Second Column",
+		   "default" : "25%",
+		   "info" : "Percentage < 100%. Total percentage of all columns = 100%"
+		},
+		{
+			"type" : "header",
+			"content" : "-- Dropdown Content - Third Column --"
+		},
+		{
+          "type": "html",
+          "id": "mmdd_html_col3",
+          "label": {
+            "de": "Text",
+            "en": "Dropdown Content  - Third Column",
+            "es": "Texto",
+            "fr": "Texte",
+            "it": "Testo",
+            "ja": "テキスト",
+            "pt-BR": "Texto"
+          }
+        },
+		{
+		   "type":      "text",
+		   "id":        "mmdd_html_col3_per",
+		   "label":     "Percentage of Third Column",
+		   "default" : "25%",
+		   "info" : "Percentage < 100%. Total percentage of all columns = 100%"
+		},
+		{
+			"type" : "header",
+			"content" : "-- Dropdown Content - Fourth Column --"
+		},
+		{
+          "type": "html",
+          "id": "mmdd_html_col4",
+          "label": {
+            "de": "Text",
+            "en": "Dropdown Content  - Fourth Column",
+            "es": "Texto",
+            "fr": "Texte",
+            "it": "Testo",
+            "ja": "テキスト",
+            "pt-BR": "Texto"
+          }
+        },
+		{
+		   "type":      "text",
+		   "id":        "mmdd_html_col4_per",
+		   "label":     "Percentage of Fourth Column",
+		   "default" : "25%",
+		   "info" : "Percentage < 100%. Total percentage of all columns = 100%"
+		}
+		
+      ]
+    },
+	
+	{
+      "type": "html-five-columns",
+      "name": {
+        "de": "Menü",
+        "en": "HTML - 5 Columns",
+        "es": "Menú",
+        "fr": "Menu",
+        "it": "Menu",
+        "ja": "メニュー",
+        "pt-BR": "Menu"
+      },
+      "settings": [
+        {
+          "type": "text",
+          "id": "cdzmegamenu_title",
+          "label": {
+            "de": "Titel",
+            "en": "Menu Item Title",
+            "es": "Título",
+            "fr": "Titre",
+            "it": "Heading",
+            "ja": "見出し",
+            "pt-BR": "Título"
+          },
+          "default": {
+            "de": "Links",
+            "en": "Title Item",
+            "es": "Enlaces",
+            "fr": "Liens",
+            "it": "Links",
+            "ja": "リンク",
+            "pt-BR": "Links"
+          }
+        },
+        {
+          "type": "url",
+          "id": "cdzmegamenu_itemurl",
+          "label": {
+            "de": "Bild-Link",
+            "en": "Menu Item URL",
+            "es": "Enlace de imagen",
+            "fr": "Lien vers l'image",
+            "it": "Link immagine",
+            "ja": "画像リンク",
+            "pt-BR": "Link da imagem"
+          } 
+        },
+        {
+          "type": "text",
+          "id": "cdzmegamenu_customclass",
+          "label": "Item - Custom Class",
+		  "info" : "Input class [fixtop] if you want Dropdown Menu fixed top"
+        },
+		{
+			"type" : "header",
+			"content" : "-- Label For Menu Item --"
+		},
+        {
+          "type": "text",
+          "id": "cdzmegamenu_lbitem",
+          "label": {
+            "de": "Bild-Link",
+            "en": "Menu Item Label",
+            "es": "Enlace de imagen",
+            "fr": "Lien vers l'image",
+            "it": "Link immagine",
+            "ja": "画像リンク",
+            "pt-BR": "Link da imagem"
+          } 
+        },
+		{
+          "type": "color",
+          "id": "cdzmegamenu_lbcolor",
+          "label": "Item Label Color",
+		  "default": "#ffffff",
+		  "info": "Default: [#ffffff]"
+        },
+		{
+          "type": "color",
+          "id": "cdzmegamenu_lbbackground",
+          "label": "Item Label Background Color",
+		  "default" : "#fdbc20",
+		  "info": "Default: [#fdbc20]"
+        },
+        {
+          "type": "text",
+          "id": "cdzmegamenu_lbclscustom",
+          "label": "Custom Class For Label Icon"
+        },
+		
+		{
+			"type" : "header",
+			"content" : "-- Icon For Menu Item --"
+		},
+		{
+		   "type":      "select",
+		   "id":        "cdzmegamenu_itemicon",
+		   "options": [
+			  { "value": "mmfonticon", "label": "Show Font Icon"},
+			  { "value": "mmimgicon", "label": "Show Image Icon"}
+		   ],
+		   "label":     "Show Font or Image Icon",
+		   "default" : "mmfonticon"
+		},
+		{
+			"type" : "text",
+			"id" : "cdzmegamenu_itemfonticon",
+			"label" : "Menu Font Icon Item",
+			"info": "Ex: fa-home. Use Font Awesome [see here](http:\/\/fontawesome.com\/v4.7.0\/cheatsheet\/)."
+		},
+		{
+		  "type": "image_picker",
+		  "id": "cdzmegamenu_itemimgicon",
+		  "label": "Menu Image Icon Item"
+		},
+		{
+			"type" : "text",
+			"id" : "cdzmegamenu_item_imgsize",
+			"label" : "Menu Size Image Icon Item",
+			"default": "40x40",
+			"info": "Default: [40x40]"
+		},
+		{
+			"type" : "header",
+			"content" : "-- DropDown Content --"
+		},
+		{
+			"type" : "text",
+			"id" : "mmdd_custom_css_inline",
+			"label" : "Custom CSS Inline Style",
+			"info": "padding:20px; margin: 20px;"
+		},
+		{
+			"type" : "select",
+			"id" : "mmdd_width",
+			"options": [
+			  { "value": "groupmenu-width-1", "label": "Width 1 - 120px"},
+			  { "value": "groupmenu-width-2", "label": "Width 2 - 240px"},
+			  { "value": "groupmenu-width-3", "label": "Width 3 - 350px"},
+			  { "value": "groupmenu-width-4", "label": "Width 4 - 460px"},
+			  { "value": "groupmenu-width-5", "label": "Width 5 - 580px"},
+			  { "value": "groupmenu-width-6", "label": "Width 6 - 700px"},
+			  { "value": "groupmenu-width-7", "label": "Width 7 - 820px"},
+			  { "value": "groupmenu-width-8", "label": "Width 8 - 930px"},
+			  { "value": "groupmenu-width-9", "label": "Width 9 - 1050px"},
+			  { "value": "groupmenu-width-10", "label": "Width 10 - 1170px"},
+			  { "value": "groupmenu-width-11", "label": "Width 11 - 1280px"},
+			  { "value": "groupmenu-width-12", "label": "Width 12 - 1400px"}
+		   ],
+			"label" : "Dropdown Width",
+			"default": "groupmenu-width-6"
+		},
+		{
+			"type" : "header",
+			"content" : "-- Background For Content --"
+		},
+		{
+			"type" : "image_picker",
+			"id" : "mmdd_bg_content",
+			"label" : "Background for content"
+		},
+		{
+			"type" : "select",
+			"id" : "mmdd_bg_position",
+			"options": [
+			  { "value": "0", "label": "Left - Top"},
+			  { "value": "1", "label": "Left - Bottom"},
+			  { "value": "2", "label": "Right - Top"},
+			  { "value": "3", "label": "Right - Bottom"}
+		   ],
+			"label" : "Background Position",
+			"default" : "0"
+		},
+		{
+			"type" : "text",
+			"id" : "mmdd_bg_position_x",
+			"label" : "X(px)",
+			"default" : "0"
+		},
+		{
+			"type" : "text",
+			"id" : "mmdd_bg_position_y",
+			"label" : "Y(px)",
+			"default" : "0"
+		},
+		{
+			"type" : "header",
+			"content" : "-- Dropdown Content - First Column --"
+		},
+        {
+          "type": "html",
+          "id": "mmdd_html_col1",
+          "label": {
+            "de": "Text",
+            "en": "Dropdown Content - First Column",
+            "es": "Texto",
+            "fr": "Texte",
+            "it": "Testo",
+            "ja": "テキスト",
+            "pt-BR": "Texto"
+          }
+        },
+		{
+		   "type":      "text",
+		   "id":        "mmdd_html_col1_per",
+		   "label":     "Percentage of First Column",
+		   "default" : "20%",
+		   "info" : "Percentage < 100%. Total percentage of all columns = 100%"
+		},
+		{
+			"type" : "header",
+			"content" : "-- Dropdown Content - Second Column --"
+		},
+		{
+          "type": "html",
+          "id": "mmdd_html_col2",
+          "label": {
+            "de": "Text",
+            "en": "Dropdown Content  - Second Column",
+            "es": "Texto",
+            "fr": "Texte",
+            "it": "Testo",
+            "ja": "テキスト",
+            "pt-BR": "Texto"
+          }
+        },
+		{
+		   "type":      "text",
+		   "id":        "mmdd_html_col2_per",
+		   "label":     "Percentage of Second Column",
+		   "default" : "20%",
+		   "info" : "Percentage < 100%. Total percentage of all columns = 100%"
+		},
+		{
+			"type" : "header",
+			"content" : "-- Dropdown Content - Third Column --"
+		},
+		{
+          "type": "html",
+          "id": "mmdd_html_col3",
+          "label": {
+            "de": "Text",
+            "en": "Dropdown Content  - Third Column",
+            "es": "Texto",
+            "fr": "Texte",
+            "it": "Testo",
+            "ja": "テキスト",
+            "pt-BR": "Texto"
+          }
+        },
+		{
+		   "type":      "text",
+		   "id":        "mmdd_html_col3_per",
+		   "label":     "Percentage of Third Column",
+		   "default" : "20%",
+		   "info" : "Percentage < 100%. Total percentage of all columns = 100%"
+		},
+		{
+			"type" : "header",
+			"content" : "-- Dropdown Content - Fourth Column --"
+		},
+		{
+          "type": "html",
+          "id": "mmdd_html_col4",
+          "label": {
+            "de": "Text",
+            "en": "Dropdown Content  - Fourth Column",
+            "es": "Texto",
+            "fr": "Texte",
+            "it": "Testo",
+            "ja": "テキスト",
+            "pt-BR": "Texto"
+          }
+        },
+		{
+		   "type":      "text",
+		   "id":        "mmdd_html_col4_per",
+		   "label":     "Percentage of Fourth Column",
+		   "default" : "20%",
+		   "info" : "Percentage < 100%. Total percentage of all columns = 100%"
+		},
+		{
+			"type" : "header",
+			"content" : "-- Dropdown Content - Fifth Column --"
+		},
+		{
+          "type": "html",
+          "id": "mmdd_html_col5",
+          "label": {
+            "de": "Text",
+            "en": "Dropdown Content  - Fifth Column",
+            "es": "Texto",
+            "fr": "Texte",
+            "it": "Testo",
+            "ja": "テキスト",
+            "pt-BR": "Texto"
+          }
+        },
+		{
+		   "type":      "text",
+		   "id":        "mmdd_html_col5_per",
+		   "label":     "Percentage of Fifth Column",
+		   "default" : "20%",
+		   "info" : "Percentage < 100%. Total percentage of all columns = 100%"
+		}
+		
+      ]
+    },
+	
+	{
+      "type": "html-six-columns",
+      "name": {
+        "de": "Menü",
+        "en": "HTML - 6 Columns",
+        "es": "Menú",
+        "fr": "Menu",
+        "it": "Menu",
+        "ja": "メニュー",
+        "pt-BR": "Menu"
+      },
+      "settings": [
+        {
+          "type": "text",
+          "id": "cdzmegamenu_title",
+          "label": {
+            "de": "Titel",
+            "en": "Menu Item Title",
+            "es": "Título",
+            "fr": "Titre",
+            "it": "Heading",
+            "ja": "見出し",
+            "pt-BR": "Título"
+          },
+          "default": {
+            "de": "Links",
+            "en": "Title Item",
+            "es": "Enlaces",
+            "fr": "Liens",
+            "it": "Links",
+            "ja": "リンク",
+            "pt-BR": "Links"
+          }
+        },
+        {
+          "type": "url",
+          "id": "cdzmegamenu_itemurl",
+          "label": {
+            "de": "Bild-Link",
+            "en": "Menu Item URL",
+            "es": "Enlace de imagen",
+            "fr": "Lien vers l'image",
+            "it": "Link immagine",
+            "ja": "画像リンク",
+            "pt-BR": "Link da imagem"
+          } 
+        },
+        {
+          "type": "text",
+          "id": "cdzmegamenu_customclass",
+          "label": "Item - Custom Class",
+		  "info" : "Input class [fixtop] if you want Dropdown Menu fixed top"
+        },
+		{
+			"type" : "header",
+			"content" : "-- Label For Menu Item --"
+		},
+        {
+          "type": "text",
+          "id": "cdzmegamenu_lbitem",
+          "label": {
+            "de": "Bild-Link",
+            "en": "Menu Item Label",
+            "es": "Enlace de imagen",
+            "fr": "Lien vers l'image",
+            "it": "Link immagine",
+            "ja": "画像リンク",
+            "pt-BR": "Link da imagem"
+          } 
+        },
+		{
+          "type": "color",
+          "id": "cdzmegamenu_lbcolor",
+          "label": "Item Label Color",
+		  "default": "#ffffff",
+		  "info": "Default: [#ffffff]"
+        },
+		{
+          "type": "color",
+          "id": "cdzmegamenu_lbbackground",
+          "label": "Item Label Background Color",
+		  "default" : "#fdbc20",
+		  "info": "Default: [#fdbc20]"
+        },
+        {
+          "type": "text",
+          "id": "cdzmegamenu_lbclscustom",
+          "label": "Custom Class For Label Icon"
+        },
+		
+		{
+			"type" : "header",
+			"content" : "-- Icon For Menu Item --"
+		},
+		{
+		   "type":      "select",
+		   "id":        "cdzmegamenu_itemicon",
+		   "options": [
+			  { "value": "mmfonticon", "label": "Show Font Icon"},
+			  { "value": "mmimgicon", "label": "Show Image Icon"}
+		   ],
+		   "label":     "Show Font or Image Icon",
+		   "default" : "mmfonticon"
+		},
+		{
+			"type" : "text",
+			"id" : "cdzmegamenu_itemfonticon",
+			"label" : "Menu Font Icon Item",
+			"info": "Ex: fa-home. Use Font Awesome [see here](http:\/\/fontawesome.com\/v4.7.0\/cheatsheet\/)."
+		},
+		{
+		  "type": "image_picker",
+		  "id": "cdzmegamenu_itemimgicon",
+		  "label": "Menu Image Icon Item"
+		},
+		{
+			"type" : "text",
+			"id" : "cdzmegamenu_item_imgsize",
+			"label" : "Menu Size Image Icon Item",
+			"default": "40x40",
+			"info": "Default: [40x40]"
+		},
+		{
+			"type" : "header",
+			"content" : "-- DropDown Content --"
+		},
+		{
+			"type" : "text",
+			"id" : "mmdd_custom_css_inline",
+			"label" : "Custom CSS Inline Style",
+			"info": "padding:20px; margin: 20px;"
+		},
+		{
+			"type" : "select",
+			"id" : "mmdd_width",
+			"options": [
+			  { "value": "groupmenu-width-1", "label": "Width 1 - 120px"},
+			  { "value": "groupmenu-width-2", "label": "Width 2 - 240px"},
+			  { "value": "groupmenu-width-3", "label": "Width 3 - 350px"},
+			  { "value": "groupmenu-width-4", "label": "Width 4 - 460px"},
+			  { "value": "groupmenu-width-5", "label": "Width 5 - 580px"},
+			  { "value": "groupmenu-width-6", "label": "Width 6 - 700px"},
+			  { "value": "groupmenu-width-7", "label": "Width 7 - 820px"},
+			  { "value": "groupmenu-width-8", "label": "Width 8 - 930px"},
+			  { "value": "groupmenu-width-9", "label": "Width 9 - 1050px"},
+			  { "value": "groupmenu-width-10", "label": "Width 10 - 1170px"},
+			  { "value": "groupmenu-width-11", "label": "Width 11 - 1280px"},
+			  { "value": "groupmenu-width-12", "label": "Width 12 - 1400px"}
+		   ],
+			"label" : "Dropdown Width",
+			"default": "groupmenu-width-6"
+		},
+		{
+			"type" : "header",
+			"content" : "-- Background For Content --"
+		},
+		{
+			"type" : "image_picker",
+			"id" : "mmdd_bg_content",
+			"label" : "Background for content"
+		},
+		{
+			"type" : "select",
+			"id" : "mmdd_bg_position",
+			"options": [
+			  { "value": "0", "label": "Left - Top"},
+			  { "value": "1", "label": "Left - Bottom"},
+			  { "value": "2", "label": "Right - Top"},
+			  { "value": "3", "label": "Right - Bottom"}
+		   ],
+			"label" : "Background Position",
+			"default" : "0"
+		},
+		{
+			"type" : "text",
+			"id" : "mmdd_bg_position_x",
+			"label" : "X(px)",
+			"default" : "0"
+		},
+		{
+			"type" : "text",
+			"id" : "mmdd_bg_position_y",
+			"label" : "Y(px)",
+			"default" : "0"
+		},
+		{
+			"type" : "header",
+			"content" : "-- Dropdown Content - First Column --"
+		},
+        {
+          "type": "html",
+          "id": "mmdd_html_col1",
+          "label": {
+            "de": "Text",
+            "en": "Dropdown Content - First Column",
+            "es": "Texto",
+            "fr": "Texte",
+            "it": "Testo",
+            "ja": "テキスト",
+            "pt-BR": "Texto"
+          }
+        },
+		{
+		   "type":      "text",
+		   "id":        "mmdd_html_col1_per",
+		   "label":     "Percentage of First Column",
+		   "default" : "16.6%",
+		   "info" : "Percentage < 100%. Total percentage of all columns = 100%"
+		},
+		{
+			"type" : "header",
+			"content" : "-- Dropdown Content - Second Column --"
+		},
+		{
+          "type": "html",
+          "id": "mmdd_html_col2",
+          "label": {
+            "de": "Text",
+            "en": "Dropdown Content  - Second Column",
+            "es": "Texto",
+            "fr": "Texte",
+            "it": "Testo",
+            "ja": "テキスト",
+            "pt-BR": "Texto"
+          }
+        },
+		{
+		   "type":      "text",
+		   "id":        "mmdd_html_col2_per",
+		   "label":     "Percentage of Second Column",
+		   "default" : "16.6%",
+		   "info" : "Percentage < 100%. Total percentage of all columns = 100%"
+		},
+		{
+			"type" : "header",
+			"content" : "-- Dropdown Content - Third Column --"
+		},
+		{
+          "type": "html",
+          "id": "mmdd_html_col3",
+          "label": {
+            "de": "Text",
+            "en": "Dropdown Content  - Third Column",
+            "es": "Texto",
+            "fr": "Texte",
+            "it": "Testo",
+            "ja": "テキスト",
+            "pt-BR": "Texto"
+          }
+        },
+		{
+		   "type":      "text",
+		   "id":        "mmdd_html_col3_per",
+		   "label":     "Percentage of Third Column",
+		   "default" : "16.6%",
+		   "info" : "Percentage < 100%. Total percentage of all columns = 100%"
+		},
+		{
+			"type" : "header",
+			"content" : "-- Dropdown Content - Fourth Column --"
+		},
+		{
+          "type": "html",
+          "id": "mmdd_html_col4",
+          "label": {
+            "de": "Text",
+            "en": "Dropdown Content  - Fourth Column",
+            "es": "Texto",
+            "fr": "Texte",
+            "it": "Testo",
+            "ja": "テキスト",
+            "pt-BR": "Texto"
+          }
+        },
+		{
+		   "type":      "text",
+		   "id":        "mmdd_html_col4_per",
+		   "label":     "Percentage of Fourth Column",
+		   "default" : "16.6%",
+		   "info" : "Percentage < 100%. Total percentage of all columns = 100%"
+		},
+		{
+			"type" : "header",
+			"content" : "-- Dropdown Content - Fifth Column --"
+		},
+		{
+          "type": "html",
+          "id": "mmdd_html_col5",
+          "label": {
+            "de": "Text",
+            "en": "Dropdown Content  - Fifth Column",
+            "es": "Texto",
+            "fr": "Texte",
+            "it": "Testo",
+            "ja": "テキスト",
+            "pt-BR": "Texto"
+          }
+        },
+		{
+		   "type":      "text",
+		   "id":        "mmdd_html_col5_per",
+		   "label":     "Percentage of Fifth Column",
+		   "default" : "16.6%",
+		   "info" : "Percentage < 100%. Total percentage of all columns = 100%"
+		},
+		{
+			"type" : "header",
+			"content" : "-- Dropdown Content - Sixth Column --"
+		},
+		{
+          "type": "html",
+          "id": "mmdd_html_col6",
+          "label": {
+            "de": "Text",
+            "en": "Dropdown Content  - Sixth Column",
+            "es": "Texto",
+            "fr": "Texte",
+            "it": "Testo",
+            "ja": "テキスト",
+            "pt-BR": "Texto"
+          }
+        },
+		{
+		   "type":      "text",
+		   "id":        "mmdd_html_col6_per",
+		   "label":     "Percentage of Sixth Column",
+		   "default" : "16.6%",
+		   "info" : "Percentage < 100%. Total percentage of all columns = 100%"
+		}
+		
+      ]
+    }
+  ]
+}
+{% endschema %}

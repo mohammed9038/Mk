@@ -1,0 +1,40 @@
+{%- case displayWishlistStyle -%}
+  {%- when 'sidebar' -%}
+	<div class="wishlist-wrapper">
+      <a id="top-wishlist" class="wishlist-trigger cdz-top-link" data-role="cdz-sidebar-trigger" data-action="cdz-wishlist-trigger"  data-sidebar="utilies-wishlist">
+        <span class="text-underlink">{{ 'general.header.title_top_wishlist' | t }}</span>
+        <span class="text-uppercase">{{ 'general.header.title_bottom_wishlist' | t}}</span>
+      </a>
+      <div data-role="utilies-section" class="utilies-section utilies-wishlist desk-wl" id="utilies-wishlist" data-cdzwidget='{"codazon.sideBar" : {"side" : "right", "section" : "wishlist"}}'>
+		<div id="desk_mbwishlist">
+			{% include 'item-wishlist'%}
+		</div>
+      </div>
+    </div>
+  {%- when 'dropdown' -%}
+	<div class="wishlist-wrapper" >
+      <div class="cdz-dropdown"  data-role="cdz-dropdown" data-action="cdz-wishlist-trigger" data-cdzwidget='{"codazon.dropDown" : {"show" : "no"}}'>
+          <a  id="top-wishlist" class="wishlist-trigger cdz-top-link" data-role="cdz-dd-trigger">
+              <span class="text-underlink">{{ 'general.header.title_top_wishlist' | t }}</span>
+        		<span class="text-uppercase">{{ 'general.header.title_bottom_wishlist' | t}}</span>
+          </a> 	
+          <div class="cdz-dd-content" data-role="cdz-dd-content" >
+              <div id="desk_mbwishlist">
+				{% include 'item-wishlist'%}
+			</div>
+          </div>
+      </div>
+   </div>
+  {%- when 'popup' -%}
+	<div class="wishlist-wrapper">
+      	<a  id="top-wishlist" class="wishlist-trigger cdz-top-link" data-action="cdz-wishlist-trigger" data-role="cdz-popup-trigger" data-popup="popup-wishlist">
+            <span class="text-underlink">{{ 'general.header.title_top_wishlist' | t }}</span>
+        	<span class="text-uppercase">{{ 'general.header.title_bottom_wishlist' | t}}</span>
+        </a> 
+      <div data-role="cdz-popup-section" class="cdz-popup popup-wishlist desk-wl" id="popup-wishlist"  data-cdzwidget='{"codazon.cdzPopUp" : {"overrideOthers" : "false", "section" : "wishlist"}}'>
+         <div id="desk_mbwishlist">
+			{% include 'item-wishlist'%}
+		</div>
+      </div>
+    </div>
+{%- endcase -%}

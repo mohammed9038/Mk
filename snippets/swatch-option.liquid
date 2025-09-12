@@ -1,0 +1,130 @@
+{%- comment %}<locksmith:6788>{% endcomment -%}
+  {%- assign locksmith_420a_product__first_available_variant = nil %}{% assign locksmith_420a_product__selected_variant = nil %}{% assign locksmith_420a_product__selected_or_first_available_variant = nil %}{% for variant in product.variants %}{% capture var %}{% render 'locksmith-variables', scope: 'subject', subject: variant, subject_parent: product, variable: 'transparent' %}{% endcapture %}{% if var == "true" %}{% else %}{% continue %}{% endif %}{% if locksmith_420a_product__first_available_variant == nil and variant.available %}{% assign locksmith_420a_product__first_available_variant = variant %}{% endif %}{% if locksmith_420a_product__selected_variant == nil and variant.selected %}{% assign locksmith_420a_product__selected_variant = variant %}{% endif %}{% if variant == product.selected_or_first_available_variant %}{% assign locksmith_420a_product__selected_or_first_available_variant = product.selected_or_first_available_variant %}{% endif %}{% endfor %}{% if locksmith_420a_product__selected_or_first_available_variant == nil %}{% assign locksmith_420a_product__selected_or_first_available_variant = locksmith_420a_product__first_available_variant %}{% endif -%}
+{%- comment %}</locksmith:6788>{% endcomment -%}
+
+<script data-id="content-option-{{ option_index }}" type="text/tmpl-script">
+<% switch (typeVariant) { 
+	case 'text': %>
+    	<div class="label-header <% if ( valueVariant.length < 2 ) { %> hide <% } %>">
+          <span class="label-name ">
+                <%- nameVariant  %>:
+          </span>
+           <span class="label-value" data-variant-value>
+              <% _.each(valueVariant, function(element, index) { %>
+					<% if ( element.available == "true" ) %>
+						<%- element.value %>					 
+				<% }); %>
+          </span>
+        </div>
+    	<div class="swatch swatch-text clearfix <% if ( valueVariant.length < 2 ) { %> hide <% } %>" data-index="<%- option_index %>">
+    	<% _.each(valueVariant, function(element, index) { %>
+            <div value="<%- element.value %>" data-stock="<%- element.qtyStock %>" name="<%- option_index %>" class="swatch-element <%- element.value %> available <% if ( element.available == 'true' ) { %> selected <% } %> ">
+                <input class="<% if ( element.available == 'true' ) { %> checked <% } %>" type="radio" name="option-<%- option_index %>" value="<%- element.value %>" />
+                <label for="swatch-<%- option_index %>-<%- element.value %>">
+                  <%- element.value %>
+                </label>
+              </div>
+         <% }); %>
+         </div>
+    <% break;
+    case 'color': %>
+    	<div class="label-header <% if ( valueVariant.length < 2 ) { %> hide <% } %>">
+          <span class="label-name ">
+                <%- nameVariant  %>:
+          </span>
+           <span class="label-value" data-variant-value>
+              <% _.each(valueVariant, function(element, index) { %>
+					<% if ( element.available == "true" ) %>
+						<%- element.value %>					 
+				<% }); %>
+          </span>
+        </div>
+    	<div class="swatch swatch-color clearfix <% if ( valueVariant.length < 2 ) { %> hide <% } %>" data-index="<%- option_index %>">
+    	<% _.each(valueVariant, function(element, index) { %>
+            <div value="<%- element.value %>" data-stock="<%- element.qtyStock %>" name="<%- option_index %>"  class="swatch-element <%- element.value %> available <% if ( element.available == 'true' ) { %> selected <% } %> ">
+                <input class="<% if ( element.available == 'true' ) { %> checked <% } %>" type="radio" name="option-<%- option_index %>" value="<%- element.value %>" />
+                <label data-toggle="tooltip" data-placement="top" data-html="true" title="<div class='swatch-option-tooltip'><span class='swatch-option-img' style='background-color: <%- element.value %>; width: 130px; height: 130px; display: block;'></span><span class='swatch-option-text'><%- element.value %></span></div>" style="background-color: <%- element.value %>;">
+                  <%- element.value %>
+                </label>
+                
+              </div>
+         <% }); %>
+         </div>
+    <% break; 
+    case 'image': %>
+   		<div class="label-header <% if ( valueVariant.length < 2 ) { %> hide <% } %>">
+          <span class="label-name ">
+                <%- nameVariant  %>:
+          </span>
+           <span class="label-value" data-variant-value>
+               <% _.each(valueVariant, function(element, index) { %>
+					<% if ( element.available == "true" ) %>
+						<%- element.value %>					 
+				<% }); %>
+          </span>
+        </div>
+    	<div class="swatch swatch-image clearfix <% if ( valueVariant.length < 2 ) { %> hide <% } %>" data-index="<%- option_index %>">
+    	<% _.each(valueVariant, function(element, index) { %>
+            <div value="<%- element.value %>" data-stock="<%- element.qtyStock %>"  name="<%- option_index %>"  class="swatch-element <%- element.value %> available <% if ( element.available == 'true' ) { %> selected <% } %> ">
+                <input class="<% if ( element.available == 'true' ) { %> checked <% } %>" type="radio" name="option-<%- option_index %>" value="<%- element.value %>" />
+                <label  data-toggle="tooltip" data-placement="top" data-html="true" title="<div class='swatch-option-tooltip'><span class='swatch-option-img'><img src='<%- element.url %>'/></span><span class='swatch-option-text'><%- element.value %></span></div>">                  
+                  <img src="<%- element.url %>"/>
+                </label>                
+              </div>
+         <% }); %>
+         </div>
+    <% break; 
+    default : %>
+    	<div class="label-header <% if ( valueVariant.length < 2 ) { %> hide <% } %>">
+          <span class="label-name ">
+                <%- nameVariant  %>:
+          </span>
+           <span class="label-value" data-variant-value>
+				<% _.each(valueVariant, function(element, index) { %>
+					<% if ( element.available == "true" ) %>
+						<%- element.value %>					 
+				<% }); %>
+          </span>
+        </div>
+    	<div class="selector-wrapper js product-form__item <% if ( valueVariant.length < 2 ) { %> hide <% } %>">
+			<input class="checked" type="radio" <% _.each(valueVariant, function(element, index) { %>
+					<% if ( element.available == "true" ) { %>
+					data-stock="<%- element.qtyStock %>"
+					value="<%- element.value %>"			 
+				<% } }); %> />
+          <select class="single-option-selector product-form__input"  name="<%- option_index %>"  data-index="option<%- option_index %>">            
+            <% _.each(valueVariant, function(element, index) { %>
+               <option  name="<%- option_index %>"  data-stock="<%- element.qtyStock %>" value="<%- element.value %>"<% if ( element.available == 'true' ) { %> selected="selected" <% } %>><%- element.value %></option>
+             <% }); %>
+          </select>
+        </div>
+<% } %>
+</script>
+{%- assign name = option.name | downcase -%}
+<div class="product-option-wrapper" >
+  <div class="variant-type-image js hide" value="{{ name }}" index="{{ option_index }}">
+    {%- assign values = '' -%}
+    {%- for variant in product.variants -%}
+    {%- comment %}<locksmith:a373>{% endcomment -%}
+      {%- capture var %}{% render 'locksmith-variables', scope: 'subject', subject: variant, subject_parent: product, variable: 'transparent' %}{% endcapture %}{% if var == "true" %}{% else %}{% continue %}{% endif -%}
+    {%- comment %}</locksmith:a373>{% endcomment -%}
+    {%- assign value = variant.options[option_index] -%}
+    {%- unless values contains value -%}
+    {%- assign values = values | join: ',' -%}
+    {%- assign values = values | append: ',' | append: value -%} 
+    {%- assign values = values | split: ',' -%}
+    {% comment ls-rpl %}{%- assign bkg_image = variant.image.src | img_url: '130x' -%}{% endcomment %}{%- capture LS_IMG_URL -%}{%- render "ls-img-url", image: variant.image.src, img_url: '130x' -%}{%- endcapture -%}{%- assign bkg_image = LS_IMG_URL -%}{% comment /ls-rpl %}{% endcomment %}
+	{%- capture available -%}
+		{%- if locksmith_420a_product__selected_or_first_available_variant.options[option_index] ==  value -%}
+			true
+		{%- else -%}
+			false
+		{%- endif -%}
+	{%- endcapture -%}
+    <label value="{{ value | escape }}" data-url="{{ bkg_image }}" data-stock="{{ variant.inventory_quantity }}"  data-available="{{available}}">
+    </label>
+    {%- endunless -%}
+    {%- endfor -%}
+  </div>
+  <div class="product-option" data-id="product-option-{{ option_index }}" data-index="{{ option_index }}"></div>
+</div>

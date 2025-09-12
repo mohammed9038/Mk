@@ -1,0 +1,124 @@
+<div class="modal fade" tabindex="-1" role="dialog" id="wishlistModal">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" data-dismiss="modal" aria-label="Close" class="close">{% include 'icon-close' %}</button>
+        <h4 class="modal-title"><span class="brackets skeleton-loading" data-trans-key="products.product.wishlist_box">{{ 'products.product.wishlist_box' | t }}</span><span v-if="wishlistItems.length > 0">({{ '{{ wishlistItems.length'}}}})</span></h4>
+      </div>
+      <div class="modal-body">
+        <div class="message alert" :class="[wishlistMsgType == 'success' ? 'alert-success' : 'alert-warning']" v-if="wishlistMsg != ''">
+          {{ '{{ wishlistMsg' }}}}
+        </div>
+        <template v-if="wishlistItems.length > 0">
+          <div class="form_cart">
+            <table class="data-table cart-table">
+              <colgroup>
+                <col>
+                <col width="1">
+                <col width="1">
+                <col width="1">
+                <col width="1">
+                <col width="1">
+              </colgroup>
+              <thead>
+                <tr class="first last">
+                  <th colspan="1">&nbsp;</th>
+                  <th colspan="2"><span class="nobr"><span class="brackets" v-html="getTextTransByKey('cart.label.product')"></span></span></th>
+                  <th class="a-center" colspan="1"><span class="nobr"><span class="brackets" v-html="getTextTransByKey('cart.label.price')"></span></span></th>
+                  <th colspan="2" class="a-center"><span class="brackets" v-html="getTextTransByKey('cart.label.quantity')"></span></th>
+                  <th colspan="2" class="a-center" colspan="1"><span class="brackets" v-html="getTextTransByKey('products.product.options')"></span></th>
+                  <th colspan="1" class="a-center last">&nbsp;</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr v-for="(item, index) in wishlistItems" :class="[index % 2 == 0 ? 'odd' : 'even', index == 0 ? 'first' : '', index == wishlistItems.length - 1 ? 'last' : '', 'wishlist-option-item-' + index]">
+                  <td colspan="1" class="product-image shoppingcart-image">
+                    <a :href="item.url" class="product-image">
+                      <img :src="resizeImage(item.featured_image, '505x')" class="img-resposive"/>
+                    </a>
+                  </td>
+                  <td colspan="2" class="product-name shoppingcart-name">
+                    <h2 class="product-name">
+                      <a :href="item.href">{{ '{{ item.title' }}}}</a>
+                      <span v-if="item.availableVariant == false">
+                        <span class="brackets" v-html="getTextTransByKey('products.product.sold_out')"></span>
+                      </span>
+                    </h2>
+                  </td>
+                  <td colspan="1" class="a-right product-unittax">
+                    <div class="product-shop-stock-price">
+                      <div class="price-box">
+                        <p class="product-single__price product-single__price-wishlist">
+                          <template v-if="item.currentVariant.compare_at_price > item.currentVariant.price">
+                            <span class="product-price__price product-price__price-wishlist product-price__sale product-price__sale--single">
+                              <span class="ProductPrice-wishlist">
+                                <money :price="item.currentVariant.price | displayPrice(currentCurrency)"></money>
+                              </span>
+                            </span>
+
+                            <s class="wishlistPrice-wishlist"><money :price="item.currentVariant.compare_at_price | displayPrice(currentCurrency)"></money></s>
+                          </template>
+                          <template v-else>
+                            <s class="wishlistPrice-wishlist hide"><money :price="item.currentVariant.compare_at_price | displayPrice(currentCurrency)"></money></s>
+                            <span class="product-price__price product-price__price-wishlist">
+                              <span class="ProductPrice-wishlist">
+                                <money :price="item.currentVariant.price | displayPrice(currentCurrency)"></money>
+                              </span>
+                            </span>
+                          </template>
+                        </p>
+                      </div>
+                    </div>
+                  </td>
+                  <td colspan="2" class="a-center product-qty shoppingcart-qty">
+                    {% if settings.wl_show_qty %}
+                    <div class="qty_cart">
+                      <div class="qty-ctl">
+                        <button :title="getTextTransByKey('products.product.qty_decrease')" :data-input="'#Quantity-wishlist' + index" class="decrease change-qty not-bind" v-on:click="item.qtyInPut = (item.qtyInPut < 2) ? 1 : item.qtyInPut - 1"></button>
+                      </div>
+                      <input type="number" :id="'Quantity-wishlist' + index" name="quantity" value="1" min="1" class="input-text qty" pattern="[0-9]*" v-model="item.qtyInPut">
+                      <div class="qty-ctl">
+                        <button :title="getTextTransByKey('products.product.qty_increase')" :data-input="'#Quantity-wishlist' + index" class="increase change-qty not-bind" v-on:click="item.qtyInPut += 1"><span class="brackets skeleton-loading"></span></button>
+                      </div>
+                    </div>
+                    {% endif %}
+                  </td>
+                  <td colspan="2" class="product-options">
+                    <form action="/cart/add" method="post" enctype="multipart/form-data" :id="'wishlist-form-' + index">
+                      <template v-if="item.title != 'Default Title'">
+                        <div v-for="(option, indexOption) in item.options" class="selector-wrapper js product-form__item">
+                          <template v-if="option.name != 'Title'">
+                            <label v-bind:class="[option.name == 'default' ? 'label--hidden' : '']" v-bind:for="'WishlistSingleOptionSelector-' + indexOption">
+                              {{ "{{ defaultTrans(getTextTransByKey('collections.filters.' + lowercase(option.name)), option.name) " }}}}
+                            </label>
+
+                            <select @change="changeOptionWishlist" class="single-option-selector single-option-selector-wishlist product-form__input" :id="'WishlistSingleOptionSelector-' + indexOption" :data-index="'option' + (indexOption + 1) " :data-item-index="index">
+                              <option v-for="value in option.values" :value="value">
+                                {{ "{{ defaultTrans(getTextTransByKey('collections.filters.' + lowercase(value)), value) " }}}}
+                              </option>
+                            </select>
+                          </template>
+                        </div>
+                      </template>
+                      <input type="hidden" name="id" :value="item.currentVariant.id">
+                      <input type="hidden" name="quantity" v-model="item.qtyInPut">
+                      <button class="button btn-cart hide" type="button"><ls-static-646065>Add cart hidden</ls-static-646065></button>
+                    </form>
+                  </td>
+                  <td colspan="1" class="a-center last"><a href="javascript:void(0)" class="remove-wishlist btn-remove" v-on:click="removeItemWishlist(index, false)"></a>
+                    <a href="javascript:void(0)" v-if="item.availableVariant == true" class="add-cart-wishlist" href="#" v-on:click="addCartInWishlist('#wishlist-form-' + index, index);" :title="getTextTransByKey('products.product.add_to_cart')">
+                      {% include 'icon-cart' %}
+                    </a>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </template> 
+        <template v-else>
+          <p class="alert alert-warning"><span class="brackets" v-html="getTextTransByKey('products.product.wislist_no_items')"></span></p>
+        </template> 
+      </div>
+    </div>
+  </div>
+</div>

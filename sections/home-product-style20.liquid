@@ -1,0 +1,647 @@
+{%- comment %}<locksmith:5392>{% endcomment -%}
+  {%- assign locksmith_ba1b_product__first_available_variant = nil %}{% assign locksmith_ba1b_product__selected_variant = nil %}{% assign locksmith_ba1b_product__selected_or_first_available_variant = nil %}{% for variant in product.variants %}{% capture var %}{% render 'locksmith-variables', scope: 'subject', subject: variant, subject_parent: product, variable: 'transparent' %}{% endcapture %}{% if var == "true" %}{% else %}{% continue %}{% endif %}{% if locksmith_ba1b_product__first_available_variant == nil and variant.available %}{% assign locksmith_ba1b_product__first_available_variant = variant %}{% endif %}{% if locksmith_ba1b_product__selected_variant == nil and variant.selected %}{% assign locksmith_ba1b_product__selected_variant = variant %}{% endif %}{% if variant == product.selected_or_first_available_variant %}{% assign locksmith_ba1b_product__selected_or_first_available_variant = product.selected_or_first_available_variant %}{% endif %}{% endfor %}{% if locksmith_ba1b_product__selected_or_first_available_variant == nil %}{% assign locksmith_ba1b_product__selected_or_first_available_variant = locksmith_ba1b_product__first_available_variant %}{% endif -%}
+{%- comment %}</locksmith:5392>{% endcomment -%}
+
+<!-- Genaral Setting -->
+{%- assign title_text_align = section.settings.title_text_align -%}
+{%- assign enable_full_container = section.settings.enable_full_container -%}
+{%- assign custom_class = section.settings.custom_class -%}
+{%- assign custom_css_inline = section.settings.custom_css_inline -%}
+{%- assign block_background_color = section.settings.block_background_color -%}
+{%- assign block_background_image = section.settings.block_background_image -%}
+{%- assign block_background_image_option = section.settings.block_background_image_option -%}
+{%- assign enable_background_image_fullwidth = section.settings.enable_background_image_fullwidth -%}
+{%- assign html_links = section.settings.html_links -%}
+{%- assign special_color = section.settings.special_color -%}
+<div data-section-id="{{ section.id }}" data-section-type="home-product-section" id="{{ section.id }}"> 
+	<div class="cdz-home-block home-product-style20 cls-{{ section.id }} {% unless custom_class == blank %}{{custom_class}}{% endunless %}" style="{% if enable_background_image_fullwidth %}{% unless block_background_color == blank %}background-color: {{block_background_color}};{% endunless %}{% unless block_background_image == blank %}background: {{block_background_color}} url({% comment ls-rpl %}{{block_background_image | img_url: 'master' }}{% endcomment %}{%- capture LS_IMG_URL -%}{%- render "ls-img-url", image: block_background_image, img_url: 'master' -%}{%- endcapture -%}{{LS_IMG_URL }}{% comment /ls-rpl %}{% endcomment %}) {{block_background_image_option}};{% endunless%}{{custom_css_inline}}{% endif %}">
+		<div class="container{% if enable_full_container %}-fluid{% endif %}">
+			<div class="home-block" style="{% if enable_background_image_fullwidth == false %}{% unless block_background_color == blank %}background-color: {{block_background_color}};{% endunless %}{% unless block_background_image == blank %}background: {{block_background_color}} url({% comment ls-rpl %}{{block_background_image | img_url: 'master' }}{% endcomment %}{%- capture LS_IMG_URL -%}{%- render "ls-img-url", image: block_background_image, img_url: 'master' -%}{%- endcapture -%}{{LS_IMG_URL }}{% comment /ls-rpl %}{% endcomment %}) {{block_background_image_option}};{% endunless%}{{custom_css_inline}}{% endif %}">
+				{%- unless section.settings.title_block == blank and section.settings.sub_title == blank -%}
+				<div class="cdz-block-title">
+					<div class="row">
+						<div class="col-12 col-sm-4 block-title">
+							<p class="b-title h2"><span>{{ section.settings.title_block | escape }}</span></p>
+							<p class="title-desc"><span>{{ section.settings.sub_title | escape }}</span></p>
+						</div>
+						<div class="box-cate-link col-12 col-sm-8">
+							{{html_links}}
+						</div>
+					</div>
+				</div>
+				{%- endunless -%}
+			<div class="block-wrapper">
+				<div class="row">
+					{%- assign image_url = section.settings.image_url -%}
+					{%- assign image = section.settings.image -%}
+					{%- assign enable_mobile = section.settings.enable_mobile -%}
+					<div class="block-image {{section.settings.banner_custom_class}} {% if enable_mobile == false %}hidden-mobile{% endif %}">
+						<div class="block-image-wrapper">
+							<a href="{% if image_url == blank -%}#{% else %}{{image_url}}{% endif %}"><img class="img-responsive lazyload"
+								src="{% comment ls-rpl %}{{ image | img_url: 'master' }}{% endcomment %}{%- capture LS_IMG_URL -%}{%- render "ls-img-url", image: image, img_url: 'master' -%}{%- endcapture -%}{{ LS_IMG_URL }}{% comment /ls-rpl %}{% endcomment %}"
+								data-src="{{ img_url }}"
+								data-widths="[180, 360, 470, 600, 770, 970, 1060, 1280, 1512, 1728, 2048]"
+								data-aspectratio="{{ block.settings.image.aspect_ratio }}"
+								data-sizes="auto"
+								alt="{% comment ls-rpl %}{{ image.alt | escape }}{% endcomment %}{%- capture LS_ALT -%}{%- render "ls-alt", image: image -%}{%- endcapture -%}{{ LS_ALT | escape }}{% comment /ls-rpl %}{% endcomment %}"></a>
+						</div>
+					</div>
+					{%- assign grid_alignment = section.settings.grid_alignment -%}
+					{%- assign enable_hover_thumbnail = section.settings.enable_hover_thumbnail -%}
+					{%- assign enable_product_label = section.settings.enable_product_label -%}
+					{%- assign enable_product_name = section.settings.enable_product_name -%}
+					{%- assign enable_price = section.settings.enable_price -%}
+					{%- assign enable_sku = section.settings.enable_sku -%}
+					{%- assign enable_vendor = section.settings.enable_vendor -%}
+					{%- assign enable_addto_cart = section.settings.enable_addto_cart -%}
+					{%- assign enable_quickshop = section.settings.enable_quickshop -%}
+					{%- assign enable_addto_compare = section.settings.enable_addto_compare -%}
+					{%- assign enable_addto_wishlist = section.settings.enable_addto_wishlist -%}
+					{%- assign enable_review = section.settings.enable_review -%}
+					{%- assign enable_quantity_product = section.settings.enable_quantity_product -%}
+					{%- assign enable_short_description = section.settings.enable_short_description -%}
+					{%- assign enable_variant_product = section.settings.enable_variant_product -%}
+					{%- assign show_product_text_align = section.settings.text_align -%}
+					{%- assign class_sameheight = section.settings.class_sameheight -%}
+					{%- assign thumbnail_width = '320' -%}
+					{%- unless section.settings.thumbnail_width == blank -%}
+						{%- assign thumbnail_width = section.settings.thumbnail_width -%}
+					{%- endunless -%}
+					{%- assign thumbnail_height = '320' -%}
+					{%- unless section.settings.thumbnail_height == blank -%}
+						{%- assign thumbnail_height = section.settings.thumbnail_height -%}
+					{%- endunless -%}
+					{%- assign short_description_length = '150' -%}
+					{%- unless section.settings.short_description_length == blank -%}
+						{%- assign short_description_length = section.settings.short_description_length -%}
+					{%- endunless -%}
+					
+					{%- assign slider_collection = section.settings.slider_collection -%}
+					{%- assign products_count = '9' -%}
+					{%- unless section.settings.products_count == blank -%}
+						{%- assign products_count = section.settings.products_count -%}
+					{%- endunless -%}
+					{%- assign show_prostyle = '15' -%}
+
+					{%- assign items_slider = '1' -%}
+					{%- assign items_1900 = '1' -%}
+					{%- assign items_1600 = '1' -%}
+					{%- assign items_1440 = '1' -%}
+					{%- assign items_1280 = '1' -%}
+					{%- assign items_980 = '1' -%}
+					{%- assign items_768 = '1' -%}
+					{%- assign items_480 = '1' -%}
+					{%- assign items_320 = '1' -%}
+					{%- assign items_0 = '1' -%}
+					{%- assign items_margin = '0' -%}
+					{%- assign show_slider = '1' -%}
+					{%- assign slider_dots = section.settings.slider_dots -%}
+					{%- assign slider_nav = section.settings.slider_nav -%}
+					{%- assign total_rows = '1' -%}
+					{%- capture data-owlslider -%}
+						{ "items": {{items_slider}}, "items_1900": {{items_1900}}, "items_1600": {{items_1600}}, "items_1440": {{items_1440}}, "items_1280": {{items_1280}}, "items_980": {{items_980}}, "items_768": {{items_768}}, "items_480": {{items_480}}, "items_320": {{items_320}}, "items_0": {{items_0}}, "margin": {{items_margin}}, "nav": {{slider_nav}}, "dots": {{slider_dots}}, "rtl": {{settings.enable_rtl_layout}}}
+					{%- endcapture -%}
+					{%- case show_prostyle -%}
+					  {%- when '01' -%}
+						{% assign productstyle = 'product-grid-style-01' %}
+						{% assign grid_item = 'product-grid-style-01' %}
+					  {%- when '02' -%}
+						{% assign productstyle = 'product-grid-style-02' %}
+						{% assign grid_item = 'product-grid-style-02' %}
+					  {%- when '03' -%}
+						{% assign productstyle = 'product-grid-style-03' %}
+						{% assign grid_item = 'product-grid-style-03' %}
+					  {%- when '04' -%}
+						{% assign productstyle = 'product-grid-style-04' %}
+						{% assign grid_item = 'product-grid-style-04' %}
+					  {%- when '05' -%}
+						{% assign productstyle = 'product-grid-style-05' %}
+						{% assign grid_item = 'product-grid-style-05' %}
+					  {%- when '06' -%}
+						{% assign productstyle = 'product-grid-style-06' %}
+						{% assign grid_item = 'product-grid-style-06' %}
+					  {%- when '07' -%}
+						{% assign productstyle = 'product-grid-style-07' %}
+						{% assign grid_item = 'product-grid-style-07' %}
+					  {%- when '08' -%}
+						{% assign productstyle = 'product-grid-style-08' %}
+						{% assign grid_item = 'product-grid-style-08' %}
+					  {%- when '09' -%}
+						{% assign productstyle = 'product-grid-style-09' %}
+						{% assign grid_item = 'product-grid-style-09' %}
+					  {%- when '10' -%}
+						{% assign productstyle = 'product-grid-style-10' %}
+						{% assign grid_item = 'product-grid-style-10' %}
+					  {%- when '11' -%}
+						{% assign productstyle = 'product-grid-style-11' %}
+						{% assign grid_item = 'product-grid-style-11' %}
+					  {%- when '12' -%}
+						{% assign productstyle = 'product-grid-style-12' %}
+						{% assign grid_item = 'product-grid-style-12' %}
+					  {%- when '13' -%}
+						{% assign productstyle = 'product-grid-style-13' %}
+						{% assign grid_item = 'product-grid-style-13' %}
+					  {%- when '14' -%}
+						{% assign productstyle = 'product-grid-style-14' %}
+						{% assign grid_item = 'product-grid-style-14' %}
+					  {%- when '15' -%}
+						{% assign productstyle = 'product-grid-style-15' %}
+						{% assign grid_item = 'product-grid-style-15' %}
+					{%- endcase -%}
+					{%- assign order_by = section.settings.order_by -%}
+					{%- assign order = section.settings.order -%}
+					{%- if order == 'asc' -%}
+					{%- assign products = collections[slider_collection].products | sort: order_by -%}
+					{%- else -%}
+					{%- assign products = collections[slider_collection].products | sort: order_by | reverse -%}
+					{%- endif -%}
+					<div class="block-products {{section.settings.grid_custom_class}}{% unless grid_alignment == blank %} text-{{grid_alignment}}{% endunless %}">
+						<div class="row" data-cdzwidget = '{"codazon.changeItemProduct": {}}'>
+							<div class="col-12 col-md-6 {% if show_slider ==  '1' %}no-loaded{% endif %}">
+								{%- if show_slider ==  '1' -%}
+									<div class='brand-loader double-bounce-spinner'>
+										<div class='double-bounce1'></div>
+										<div class='double-bounce2'></div>
+									</div>
+								{%- endif -%}
+							<div class="big-product style-{{section.id}} products product-items {% if show_slider ==  '0' %} no_slider flex-grid{% elsif show_slider ==  '1' %} cdzowlslider owl-carousel{% endif %} {{productstyle}}" {% if show_slider ==  '1' %} data-cdzwidget = '{"codazon.owlSlider": {{data-owlslider}}}' {% endif %} data-sameheight="{{class_sameheight}}">
+								{%- if collections[slider_collection].products == blank -%}
+									{%- for i in (1..products_count) -%}
+										{%- assign product = blank -%}
+											<div class="item" data-item='{{forloop.index}}'>
+												<div class="product-miniature">
+													<div class="product-item {% if show_product_text_align == 'center' %} text-center {% elsif show_product_text_align == 'left' %} text-left {% else %} text-right {% endif %}">
+														{%- assign img_size = thumbnail_width | append: 'x' | append: thumbnail_height -%}
+														{%- assign img_ratio = thumbnail_width | times: 1.0 | divided_by: thumbnail_height -%}
+														<div class="product-item-top">
+															<div class="photo product-item-photo">
+																<a href="#" class="product-image-container">
+																	<span class="product-image-wrapper" style="padding-bottom: 100%">
+																		<img class="product-image-photo responsive-image__image lazyload"
+																		    data-src="{% comment ls-rpl %}{{ product.featured_image | img_url: img_size }}{% endcomment %}{%- capture LS_IMG_URL -%}{%- render "ls-img-url", image: product.featured_image, img_url: img_size -%}{%- endcapture -%}{{ LS_IMG_URL }}{% comment /ls-rpl %}{% endcomment %}"
+																		    data-aspectratio="{{ product.featured_image.aspect_ratio }}"
+																		    data-sizes="{{img_size}}"
+																		    tabindex="-1"
+																		    alt="{% comment ls-rpl %}{{ product.featured_image.alt | escape }}{% endcomment %}{%- capture LS_ALT -%}{%- render "ls-alt", image: product.featured_image -%}{%- endcapture -%}{{ LS_ALT | escape }}{% comment /ls-rpl %}{% endcomment %}">
+																	</span>
+																</a>
+															</div>
+														</div>
+														<div class="product-item-bottom">
+															<div class="product name product-item-name">
+																<a class="product-item-link" href="#"><ls-static-704419>Product Name</ls-static-704419></a>
+															</div>
+															<div class="product-price">
+																<div class="price">
+																	<span class="product-single__price price-box money">
+																		23.99$
+																	</span>
+																</div>
+															</div>
+															<div class="product description product-item-description">
+																<div class="product-description rte" itemprop="description">
+																	<ls-static-541940>Lorem ipsum dolor sit amet, consectetur adipiscing elit...</ls-static-541940>
+																</div>
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+									{%- endfor -%}
+								{%- else -%}
+									{%- comment %}<locksmith:2175>{% endcomment -%}
+									  {%- assign locksmith_29bb_forloop__size = 0 %}{%- for product in products limit: products_count -%}{% capture var %}{% render 'locksmith-variables', scope: 'subject', subject: product, variable: 'transparent' %}{% endcapture %}{% if var == 'true' %}{% assign locksmith_29bb_forloop__size = locksmith_29bb_forloop__size | plus: 1 %}{% endif %}{% endfor %}{% assign locksmith_29bb_forloop__index = nil -%}
+									{%- comment %}</locksmith:2175>{% endcomment -%}
+									{%- for product in products limit: products_count -%}
+										{%- comment %}<locksmith:026c>{% endcomment -%}
+										  {%- capture var %}{% render 'locksmith-variables', scope: 'subject', subject: product, variable: 'transparent' %}{% endcapture %}{% if var == "true" %}{% if locksmith_29bb_forloop__index == nil %}{% assign locksmith_29bb_forloop__index = 1 %}{% assign locksmith_29bb_forloop__index0 = 0 %}{% else %}{% assign locksmith_29bb_forloop__index = locksmith_29bb_forloop__index | plus: 1 %}{% assign locksmith_29bb_forloop__index0 = locksmith_29bb_forloop__index0 | plus: 1 %}{% endif %}{% if locksmith_29bb_forloop__index == 1 %}{% assign locksmith_29bb_forloop__first = true %}{% else %}{% assign locksmith_29bb_forloop__first = false %}{% endif %}{% if locksmith_29bb_forloop__index == locksmith_29bb_forloop__size %}{% assign locksmith_29bb_forloop__last = true %}{% else %}{% assign locksmith_29bb_forloop__last = false %}{% endif %}{% assign locksmith_29bb_forloop__rindex = locksmith_29bb_forloop__size | minus: locksmith_29bb_forloop__index | minus: 1 %}{% assign locksmith_29bb_forloop__rindex0 = locksmith_29bb_forloop__size | minus: locksmith_29bb_forloop__index0 | minus: 1 %}{% else %}{% continue %}{% endif -%}
+										{%- comment %}</locksmith:026c>{% endcomment -%}
+										<div class="item" data-item='{{locksmith_29bb_forloop__index}}'>
+											{% include grid_item with product, thumbnail_width, thumbnail_height, enable_hover_thumbnail, enable_product_label, enable_product_name, enable_price, enable_sku, enable_vendor, enable_addto_cart, enable_quickshop, enable_addto_compare, enable_addto_wishlist, enable_review, enable_quantity_product, enable_variant_product, enable_short_description, short_description_length, show_product_text_align %}
+										</div>
+									
+									{%- endfor -%}
+								{%- endif -%}
+							</div>
+							</div>
+							<div class="col-12 col-md-6 small-product hidden-mobile">
+								<div class="row">
+									{%- if collections[slider_collection].products == blank -%}
+										{%- for i in (1..products_count) -%}
+											<div class="item gitem col-4 {% if forloop.first == true %}selected-thumb {% endif %}" data-item='{{forloop.index}}' {{ block.shopify_attributes }}>
+												<div class="item-image">
+													<span class="item-count">{{forloop.index}}</span>
+													{% assign img_size = thumbnail_width | append: 'x' | append: thumbnail_height %}
+													{% assign img_ratio = thumbnail_width | times: 1.0 | divided_by: thumbnail_height %}
+									    			{% assign featured_image = locksmith_ba1b_product__selected_or_first_available_variant.featured_image | default: product.featured_image %}
+												    <div class="photo product-item-photo">
+														<a href="#" class="product-image-container">
+															<span class="product-image-wrapper" style="padding-bottom: 100%">
+																<img class="product-image-photo responsive-image__image img-responsive"
+																    src="{% comment ls-rpl %}{{ product.featured_image | img_url: '130x' }}{% endcomment %}{%- capture LS_IMG_URL -%}{%- render "ls-img-url", image: product.featured_image, img_url: '130x' -%}{%- endcapture -%}{{ LS_IMG_URL }}{% comment /ls-rpl %}{% endcomment %}"
+																    data-aspectratio="{{ product.featured_image.aspect_ratio }}" 
+																    alt="{% comment ls-rpl %}{{ product.featured_image.alt | escape }}{% endcomment %}{%- capture LS_ALT -%}{%- render "ls-alt", image: product.featured_image -%}{%- endcapture -%}{{ LS_ALT | escape }}{% comment /ls-rpl %}{% endcomment %}">
+															</span>
+														</a>
+													</div>
+												</div>
+											</div>
+										{%- endfor -%}
+									{%- else -%}
+										{%- comment %}<locksmith:f254>{% endcomment -%}
+										  {%- assign locksmith_2017_forloop__size = 0 %}{%- for product in products limit: products_count -%}{% capture var %}{% render 'locksmith-variables', scope: 'subject', subject: product, variable: 'transparent' %}{% endcapture %}{% if var == 'true' %}{% assign locksmith_2017_forloop__size = locksmith_2017_forloop__size | plus: 1 %}{% endif %}{% endfor %}{% assign locksmith_2017_forloop__index = nil -%}
+										{%- comment %}</locksmith:f254>{% endcomment -%}
+										{%- for product in products limit: products_count -%}
+										{%- comment %}<locksmith:cb08>{% endcomment -%}
+										  {%- capture var %}{% render 'locksmith-variables', scope: 'subject', subject: product, variable: 'transparent' %}{% endcapture %}{% if var == "true" %}{% if locksmith_2017_forloop__index == nil %}{% assign locksmith_2017_forloop__index = 1 %}{% assign locksmith_2017_forloop__index0 = 0 %}{% else %}{% assign locksmith_2017_forloop__index = locksmith_2017_forloop__index | plus: 1 %}{% assign locksmith_2017_forloop__index0 = locksmith_2017_forloop__index0 | plus: 1 %}{% endif %}{% if locksmith_2017_forloop__index == 1 %}{% assign locksmith_2017_forloop__first = true %}{% else %}{% assign locksmith_2017_forloop__first = false %}{% endif %}{% if locksmith_2017_forloop__index == locksmith_2017_forloop__size %}{% assign locksmith_2017_forloop__last = true %}{% else %}{% assign locksmith_2017_forloop__last = false %}{% endif %}{% assign locksmith_2017_forloop__rindex = locksmith_2017_forloop__size | minus: locksmith_2017_forloop__index | minus: 1 %}{% assign locksmith_2017_forloop__rindex0 = locksmith_2017_forloop__size | minus: locksmith_2017_forloop__index0 | minus: 1 %}{% else %}{% continue %}{% endif -%}
+										{%- comment %}</locksmith:cb08>{% endcomment -%}
+										<div class="item gitem col-4 {% if locksmith_2017_forloop__first == true %}selected-thumb {% endif %}" data-item='{{locksmith_2017_forloop__index}}' {{ block.shopify_attributes }}>
+											<div class="item-image">
+												<span class="item-count">{{locksmith_2017_forloop__index}}</span>
+												{% assign img_size = thumbnail_width | append: 'x' | append: thumbnail_height %}
+												{% assign img_ratio = thumbnail_width | times: 1.0 | divided_by: thumbnail_height %}
+								    			{% assign featured_image = locksmith_ba1b_product__selected_or_first_available_variant.featured_image | default: product.featured_image %}
+								    			{%- unless product.featured_image == blank -%}
+													<div class="product-item-top">
+															<div class="photo product-item-photo">
+																<a href="#" class="product-image-container">
+																	<span class="product-image-wrapper" style="padding-bottom: 100%">
+																		<img class="product-image-photo responsive-image__image img-responsive"
+																		    src="{% comment ls-rpl %}{{ product.featured_image | img_url: '130x' }}{% endcomment %}{%- capture LS_IMG_URL -%}{%- render "ls-img-url", image: product.featured_image, img_url: '130x' -%}{%- endcapture -%}{{ LS_IMG_URL }}{% comment /ls-rpl %}{% endcomment %}"
+																		    data-aspectratio="{{ product.featured_image.aspect_ratio }}" 
+																		    alt="{% comment ls-rpl %}{{ product.featured_image.alt | escape }}{% endcomment %}{%- capture LS_ALT -%}{%- render "ls-alt", image: product.featured_image -%}{%- endcapture -%}{{ LS_ALT | escape }}{% comment /ls-rpl %}{% endcomment %}">
+																	</span>
+																</a>
+															</div>
+														</div>
+											    {%- endunless -%}
+											</div>
+										</div>
+										{%- endfor -%}
+									{%- endif -%}
+							</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	</div>
+</div>
+
+{%- style -%}
+	.cls-{{ section.id }} .box-cate-link ul li a:hover,
+	.cls-{{ section.id }} .box-cate-link ul li.active a{
+		background-color: {{special_color}};
+	}
+	.cls-{{ section.id }} .products.product-items .product-item .qs-button{
+		background-color: {{special_color}};
+		border-color: {{special_color}};
+	}
+	.cls-{{ section.id }} .products.product-items .product-item .qs-button:hover{
+		color: {{special_color}};
+		border-color: {{special_color}};
+		background-color: #ffffff;
+	}
+	.cls-{{ section.id }} .products.product-items.product-grid-style-15 .product-miniature .product-item-actions,
+	.cls-{{ section.id }} .products.product-items.product-grid-style-06 .product-miniature .product-item-actions{
+		background-color: {{special_color}};
+	}
+	.cls-{{ section.id }} .products.product-items.product-grid-style-15 .product-miniature .button-hover-wrap>.action:hover,
+	.cls-{{ section.id }} .products.product-items.product-grid-style-06 .product-miniature .button-hover-wrap>.action:hover,
+	.cls-{{ section.id }} .product-item .price .money,
+	.cls-{{ section.id }} .product-item .product-single__sale-price{
+		color: {{special_color}};
+	}
+	.cls-{{ section.id }} .product-grid-style-15 .product-item .media-slider.owl-carousel .owl-nav [class*='owl-']:hover,
+	.cls-{{ section.id }}.nav_style01 .owl-carousel .owl-nav [class*='owl-']:hover{
+		background-color: {{special_color}};
+		border-color: {{special_color}};
+	}
+	.cls-{{ section.id }} .products.product-items.product-grid-style-15 .product-miniature .product-item-bottom .gitem:hover{
+		border-color: {{special_color}};
+	}
+	.cls-{{ section.id }}.home-product-style20 .small-product .selected-thumb:before{
+		border-color: {{special_color}};
+	}
+	.cls-{{ section.id }}.home-product-style20 .small-product .selected-thumb .item-count{
+		background: {{special_color}};
+    	color: #fff;
+	}
+{%- endstyle -%}
+{% schema %}
+{
+	"name": "Home Product Style 20",
+    "class": "index-section cdz-product-style20",
+    "settings": [
+		{
+		  "type": "text",
+		  "id": "title",
+		  "label": "Heading Section",
+		  "default": "Home Product Style 20"
+		},
+		{
+		  "type": "text",
+		  "id": "title_block",
+		  "label": "Heading Block",
+		  "default": "Our categories"
+		},
+		{
+		  "type": "textarea",
+		  "id": "sub_title",
+		  "label": "Describe Heading"
+		},
+		{
+			"type": "select",
+			"id": "title_text_align",
+			"label": "Heading Alignment",
+			"options": [
+				{ "value": "left", "label": "Left"},
+				{ "value": "right", "label": "Right"},
+				{ "value": "center", "label": "Center"}
+			],
+			"default" : "left"
+		},
+		{
+		  "type": "html",
+		  "id": "html_links",
+		  "label": "HTML Links",
+		  "default": "<ul><li class=\"item active\"><a href=\"javascript:void(0)\">Link 01</a></li><li class=\"item\"><a href=\"javascript:void(0)\">Link 02</a></li><li class=\"item\"><a href=\"javascript:void(0)\">Link 03</a></li><li class=\"item\"><a href=\"javascript:void(0)\">Link 04</a></li></ul>"
+		},
+		{
+		  "type": "checkbox",
+		  "id": "enable_full_container",
+		  "label": "Enable Full Container Block",
+		  "default" : false
+		},
+		{
+		  "type": "text",
+		  "id": "custom_class",
+		  "label": "Custom Class"
+		},
+		{
+		  "type": "text",
+		  "id": "custom_css_inline",
+		  "label": "Custom CSS Inline Style",
+		  "info": "padding: 20px; margin: 30px;"
+		},
+		{
+		  "type": "color",
+		  "id": "block_background_color",
+		  "label": "Block Background Color"
+		},
+		{
+		  "type": "image_picker",
+		  "id": "block_background_image",
+		  "label": "Block Background Image"
+		},
+		{
+		  "type": "text",
+		  "id": "block_background_image_option",
+		  "label": "Block Background Image Option",
+		  "info": "Default: [0 0 no-repeat fixed]"
+		},
+		{
+		  "type": "checkbox",
+		  "id": "enable_background_image_fullwidth",
+		  "label": "Display Background Full Width",
+		  "default" : true
+		},
+		{
+		  "type": "color",
+		  "id": "special_color",
+		  "label": "Special Color",
+		  "default": "#ff6a00",
+		  "info": "Color for hover text, button...[Ex: organe: #ff6a00, red: #df1830, pink: #ed06cf, blue: #5c6ac3]"
+		},
+		{
+			"type" : "header",
+			"content" : "-- Banner --"
+		},
+		{
+			"type": "text",
+			"id": "banner_custom_class",
+			"label": "Custom Class",
+			"default": "col-12 col-md-3 col-lg-3",
+			"info": "Used for container widths [ex: col-1...col-12,..., col-xl-1...col-xl-12]"
+		},
+		{
+			"type": "image_picker",
+			"id": "image",
+			"label": "Image"
+		},
+		{
+			"type": "url",
+			"id": "image_url",
+			"label": "Image URL"
+		},
+		{
+			"type": "checkbox",
+			"id": "enable_mobile",
+			"label": "Enable banner on mobile",
+			"default": false
+		},
+		{
+			"type" : "header",
+			"content" : "-- Grid Products --"
+		},
+		{
+			"type": "text",
+			"id": "grid_custom_class",
+			"label": "Grid Products - Custom Class",
+			"default": "col-12 col-md-9 col-lg-9",
+			"info": "Used for container widths [ex: col-1...col-12,..., col-xl-1...col-xl-12]"
+		},
+		{
+		  "type": "collection",
+		  "id": "slider_collection",
+		  "label": "Collection"
+		},
+		{
+			"type": "select",
+			"id": "text_align",
+			"label": "Text Alignment",
+			"options": [
+				{ "value": "left", "label": "Left"},
+				{ "value": "right", "label": "Right"},
+				{ "value": "center", "label": "Center"}
+			],
+			"default" : "center"
+		},
+		{
+			"type": "textarea",
+			"id": "class_sameheight",
+			"label": "Classes Set The Heights"
+		},
+		{
+		  "type": "select",
+		  "id": "order_by",
+		  "label": "Order by",
+		  "options": [
+				{ "value": "title", "label": "Name"},
+				{ "value": "price", "label": "Price"},
+				{ "value": "published_at", "label": "Publish time"},
+				{ "value": "id", "label": "Product's ID"}
+			  ],
+		  "default" : "id"
+		},
+		{
+		  "type": "select",
+		  "id": "order",
+		  "label": "Order",
+		  "options": [
+				{ "value": "asc", "label": "ASC"},
+				{ "value": "desc", "label": "DESC"}
+			  ],
+		  "default" : "asc"
+		},
+		{
+		  "type": "text",
+		  "id": "thumbnail_width",
+		  "label": "Thumbnail Width",
+		  "default" : "405"
+		},
+		{
+		  "type": "text",
+		  "id": "thumbnail_height",
+		  "label": "Thumbnail Height",
+		  "default" : "370"
+		},
+		{
+		  "type": "checkbox",
+		  "id": "enable_product_name",
+		  "label": "Enable Product Name",
+		  "default" : true
+		},
+		{
+		  "type": "checkbox",
+		  "id": "enable_price",
+		  "label": "Enable Price",
+		  "default" : true
+		},
+		{
+		  "type": "checkbox",
+		  "id": "enable_hover_thumbnail",
+		  "label": "Enable Hover Thumbnail",
+		  "default" : true
+		},
+		{
+		  "type": "checkbox",
+		  "id": "enable_product_label",
+		  "label": "Enable Product Label",
+		  "default" : true
+		},
+		{
+		  "type": "checkbox",
+		  "id": "enable_sku",
+		  "label": "Enable SKU",
+		  "default" : false
+		},
+		{
+		  "type": "checkbox",
+		  "id": "enable_vendor",
+		  "label": "Enable Vendor",
+		  "default" : false
+		},
+		{
+		  "type": "checkbox",
+		  "id": "enable_addto_cart",
+		  "label": "Enable Add to cart",
+		  "default" : true
+		},
+		{
+		  "type": "checkbox",
+		  "id": "enable_quickshop",
+		  "label": "Enable Quickshop",
+		  "default" : true
+		},
+		{
+		  "type": "checkbox",
+		  "id": "enable_addto_compare",
+		  "label": "Enable Add to Compare",
+		  "default" : true
+		},
+		{
+		  "type": "checkbox",
+		  "id": "enable_addto_wishlist",
+		  "label": "Enable Add to Wishlist",
+		  "default" : true
+		},
+		{
+		  "type": "checkbox",
+		  "id": "enable_review",
+		  "label": "Enable Review Product",
+		  "default" : true
+		},
+		{
+		  "type": "checkbox",
+		  "id": "enable_quantity_product",
+		  "label": "Enable Quantity Product",
+		  "default" : true
+		},
+		{
+		  "type": "checkbox",
+		  "id": "enable_variant_product",
+		  "label": "Enable Variant",
+		  "default" : false
+		},
+		{
+		  "type": "checkbox",
+		  "id": "enable_short_description",
+		  "label": "Enable Short Description",
+		  "default" : false
+		},
+		{
+		  "type": "text",
+		  "id": "short_description_length",
+		  "label": "Description Length",
+		  "default" : "150"
+		},
+		{
+			"type" : "header",
+			"content" : "-- Setting Item --"
+		},
+		{
+			"type" : "header",
+			"content" : "-- Setting Slider --"
+		},
+		{
+		   "type":      "text",
+		   "id":        "products_count",
+		   "label":     "Number of Products to Display",
+		   "default" : "12"
+		},
+		{
+		   "type":      "select",
+		   "id":        "slider_dots",
+		   "options": [
+			  { "value": "0", "label": "No"},
+			  { "value": "1", "label": "Yes"}
+		   ],
+		   "label":     "Show Slider Dots",
+		   "default" : "0"
+		},
+		{
+		   "type":      "select",
+		   "id":        "slider_nav",
+		   "options": [
+			  { "value": "0", "label": "No"},
+			  { "value": "1", "label": "Yes"}
+		   ],
+		   "label":     "Show Slider Arrows",
+		   "default" : "1"
+		}
+	],
+	"presets": [
+    {
+      "name": "Home Product Style 20",
+      "category": "Codazon Block Products",
+      "settings": {
+        "title": "Home Product Style 20",
+		"custom_class": "space-lg nav_style01"
+      }
+    }
+  ]
+}
+{% endschema %}

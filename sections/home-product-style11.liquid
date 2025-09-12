@@ -1,0 +1,440 @@
+<!-- Genaral Setting -->
+{%- assign title_text_align = section.settings.title_text_align -%}
+{%- assign enable_full_container = section.settings.enable_full_container -%}
+{%- assign custom_class = section.settings.custom_class -%}
+{%- assign custom_css_inline = section.settings.custom_css_inline -%}
+{%- assign block_background_color = section.settings.block_background_color -%}
+{%- assign block_background_image = section.settings.block_background_image -%}
+{%- assign block_background_image_option = section.settings.block_background_image_option -%}
+{%- assign enable_background_image_fullwidth = section.settings.enable_background_image_fullwidth -%}
+
+<!-- Setting Block Products -->
+
+<div data-section-id="{{ section.id }}" data-section-type="home-product-11-section" id="{{ section.id }}"> 
+	<div class="cdz-home-block home-product-style11 {% unless custom_class == blank %}{{custom_class}}{% endunless %}" style="{% if enable_background_image_fullwidth %}{% unless block_background_color == blank %}background-color: {{block_background_color}};{% endunless %}{% unless block_background_image == blank %}background: {{block_background_color}} url({% comment ls-rpl %}{{block_background_image | img_url: 'master' }}{% endcomment %}{%- capture LS_IMG_URL -%}{%- render "ls-img-url", image: block_background_image, img_url: 'master' -%}{%- endcapture -%}{{LS_IMG_URL }}{% comment /ls-rpl %}{% endcomment %}) {{block_background_image_option}};{% endunless%}{{custom_css_inline}}{% endif %}">
+		<div class="container{% if enable_full_container %}-fluid{% endif %}">
+			<div class="home-block" style="{% if enable_background_image_fullwidth == false %}{% unless block_background_color == blank %}background-color: {{block_background_color}};{% endunless %}{% unless block_background_image == blank %}background: {{block_background_color}} url({% comment ls-rpl %}{{block_background_image | img_url: 'master' }}{% endcomment %}{%- capture LS_IMG_URL -%}{%- render "ls-img-url", image: block_background_image, img_url: 'master' -%}{%- endcapture -%}{{LS_IMG_URL }}{% comment /ls-rpl %}{% endcomment %}) {{block_background_image_option}};{% endunless%}{{custom_css_inline}}{% endif %}">
+				{% unless section.settings.title_block == blank and section.settings.sub_title == blank %}
+				<div class="cdz-block-title block-title-{{title_text_align}}">
+					<p class="b-title h2"><span>{{ section.settings.title_block | escape }}</span></p>
+					<p class="title-desc"><span>{{ section.settings.sub_title | escape }}</span></p>
+				</div>
+				{% endunless %}
+			<div class="block-wrapper">
+				<div class="row">
+				<div class="col-12">{% include 'cdz-grid-products' with block: section %}</div>
+				{% assign button_enable = section.settings.button_enable %}
+				{% assign button_text = section.settings.button_text %}
+				{% assign button_link = section.settings.button_link %}
+				{% if button_enable == true and button_text != blank %}
+					<div class="col-12">
+						<div class="button-actions"><a class="btn-view-all" href="{% if button_link == blank %}#{% else %}{{button_link}}{% endif %}"><span>{{button_text}}</span></a></div>
+					</div>
+				{% endif %}
+				</div>
+				
+			</div>
+		</div>
+	</div>
+	</div>
+</div>
+
+
+{% schema %}
+{
+	"name": "Home Product Style 11",
+    "class": "index-section cdz-product-style11",
+    "settings": [
+		{
+		  "type": "text",
+		  "id": "title",
+		  "label": "Heading Section",
+		  "default": "Home Product Style 11"
+		},
+		{
+		  "type": "text",
+		  "id": "title_block",
+		  "label": "Heading Block"
+		},
+		{
+		  "type": "textarea",
+		  "id": "sub_title",
+		  "label": "Describe Heading"
+		},
+		{
+			"type": "select",
+			"id": "title_text_align",
+			"label": "Heading Alignment",
+			"options": [
+				{ "value": "left", "label": "Left"},
+				{ "value": "right", "label": "Right"},
+				{ "value": "center", "label": "Center"}
+			],
+			"default" : "center"
+		},
+		{
+		  "type": "checkbox",
+		  "id": "enable_full_container",
+		  "label": "Enable Full Container Block",
+		  "default" : false
+		},
+		{
+		  "type": "text",
+		  "id": "custom_class",
+		  "label": "Custom Class"
+		},
+		{
+		  "type": "text",
+		  "id": "custom_css_inline",
+		  "label": "Custom CSS Inline Style",
+		  "info": "padding: 20px; margin: 30px;"
+		},
+		{
+		  "type": "color",
+		  "id": "block_background_color",
+		  "label": "Block Background Color"
+		},
+		{
+		  "type": "image_picker",
+		  "id": "block_background_image",
+		  "label": "Block Background Image"
+		},
+		{
+		  "type": "text",
+		  "id": "block_background_image_option",
+		  "label": "Block Background Image Option",
+		  "info": "Default: [0 0 no-repeat fixed]"
+		},
+		{
+		  "type": "checkbox",
+		  "id": "enable_background_image_fullwidth",
+		  "label": "Display Background Full Width",
+		  "default" : true
+		},
+		{
+			"type" : "header",
+			"content" : "-- Setting Button View all --"
+		},
+		{
+		  "type": "text",
+		  "id": "button_text",
+		  "label": "Button Text",
+		  "default": "View All"
+		},
+		{
+		  "type": "url",
+		  "id": "button_link",
+		  "label": "Button Link"
+		},
+		{
+		  "type": "checkbox",
+		  "id": "button_enable",
+		  "label": "Enable Button",
+		  "default": true
+		},
+		{
+			"type" : "header",
+			"content" : "-- Setting Product Item --"
+		},
+		{
+		  "type": "collection",
+		  "id": "slider_collection",
+		  "label": "Collection"
+		},
+		{
+			"type": "select",
+			"id": "text_align",
+			"label": "Text Alignment",
+			"options": [
+				{ "value": "left", "label": "Left"},
+				{ "value": "right", "label": "Right"},
+				{ "value": "center", "label": "Center"}
+			],
+			"default" : "center"
+		},
+		{
+			"type": "textarea",
+			"id": "class_sameheight",
+			"label": "Classes Set The Heights",
+			"default" : ".product-item-description,.product-reviews-summary,.product-item-name,.product-options,.product-item-bottom",
+			"info": "Set the heights of input elements using classes like '.product-item-description' and '.product-item-name'"
+		},
+		{
+		   "type": "select",
+		   "id": "show_prostyle",
+		   "options": [
+			  { "value": "01", "label": "Style 01"},
+			  { "value": "02", "label": "Style 02"},
+			  { "value": "03", "label": "Style 03"},
+			  { "value": "04", "label": "Style 04"},
+			  { "value": "05", "label": "Style 05"},
+			  { "value": "06", "label": "Style 06"},
+			  { "value": "07", "label": "Style 07"},
+			  { "value": "08", "label": "Style 08"},
+			  { "value": "09", "label": "Style 09"},
+			  { "value": "10", "label": "Style 10"},
+			  { "value": "11", "label": "Style 11"},
+			  { "value": "12", "label": "Style 12"},
+			  { "value": "13", "label": "Style 13"},
+			  { "value": "14", "label": "Style 14"},
+			  { "value": "15", "label": "Style 15"},
+			  { "value": "16", "label": "Style 16"},
+			  { "value": "17", "label": "Style 17"}
+		   ],
+		   "label": "Product Listing Style",
+		   "default" : "09"
+		},
+		{
+		  "type": "select",
+		  "id": "order_by",
+		  "label": "Order by",
+		  "options": [
+				{ "value": "title", "label": "Name"},
+				{ "value": "price", "label": "Price"},
+				{ "value": "published_at", "label": "Publish time"},
+				{ "value": "id", "label": "Product's ID"}
+			  ],
+		  "default" : "id"
+		},
+		{
+		  "type": "select",
+		  "id": "order",
+		  "label": "Order",
+		  "options": [
+				{ "value": "asc", "label": "ASC"},
+				{ "value": "desc", "label": "DESC"}
+			  ],
+		  "default" : "asc"
+		},
+		{
+		  "type": "text",
+		  "id": "thumbnail_width",
+		  "label": "Thumbnail Width",
+		  "default" : "333"
+		},
+		{
+		  "type": "text",
+		  "id": "thumbnail_height",
+		  "label": "Thumbnail Height",
+		  "default" : "410"
+		},
+		{
+		  "type": "checkbox",
+		  "id": "enable_product_name",
+		  "label": "Enable Product Name",
+		  "default" : true
+		},
+		{
+		  "type": "checkbox",
+		  "id": "enable_price",
+		  "label": "Enable Price",
+		  "default" : true
+		},
+		{
+		  "type": "checkbox",
+		  "id": "enable_hover_thumbnail",
+		  "label": "Enable Hover Thumbnail",
+		  "default" : true
+		},
+		{
+		  "type": "checkbox",
+		  "id": "enable_product_label",
+		  "label": "Enable Product Label",
+		  "default" : true
+		},
+		{
+		  "type": "checkbox",
+		  "id": "enable_sku",
+		  "label": "Enable SKU",
+		  "default" : false
+		},
+		{
+		  "type": "checkbox",
+		  "id": "enable_vendor",
+		  "label": "Enable Vendor",
+		  "default" : false
+		},
+		{
+		  "type": "checkbox",
+		  "id": "enable_addto_cart",
+		  "label": "Enable Add to cart",
+		  "default" : true
+		},
+		{
+		  "type": "checkbox",
+		  "id": "enable_quickshop",
+		  "label": "Enable Quickshop",
+		  "default" : true
+		},
+		{
+		  "type": "checkbox",
+		  "id": "enable_addto_compare",
+		  "label": "Enable Add to Compare",
+		  "default" : true
+		},
+		{
+		  "type": "checkbox",
+		  "id": "enable_addto_wishlist",
+		  "label": "Enable Add to Wishlist",
+		  "default" : true
+		},
+		{
+		  "type": "checkbox",
+		  "id": "enable_review",
+		  "label": "Enable Review Product",
+		  "default" : true
+		},
+		{
+		  "type": "checkbox",
+		  "id": "enable_quantity_product",
+		  "label": "Enable Quantity Product",
+		  "default" : false
+		},
+		{
+		  "type": "checkbox",
+		  "id": "enable_variant_product",
+		  "label": "Enable Variant",
+		  "default" : false
+		},
+		{
+		  "type": "checkbox",
+		  "id": "enable_short_description",
+		  "label": "Enable Short Description",
+		  "default" : false
+		},
+		{
+		  "type": "text",
+		  "id": "short_description_length",
+		  "label": "Description Length",
+		  "default" : "100"
+		},
+		{
+			"type" : "header",
+			"content" : "-- Setting Slider --"
+		},
+		{
+		   "type": "select",
+		   "id": "show_slider",
+		   "options": [
+			  { "value": "0", "label": "No"},
+			  { "value": "1", "label": "Yes"}
+		   ],
+		   "label": "Show As Slider",
+		   "default" : "0"
+		},
+		{
+		   "type":      "text",
+		   "id":        "products_count",
+		   "label":     "Number of Products to Display",
+		   "default" : "8"
+		},
+		{
+		   "type":      "text",
+		   "id":        "items_slider",
+		   "label":     "Product Items",
+		   "default": 	"4"
+		},
+		{
+		   "type":      "text",
+		   "id":        "items_1900",
+		   "label":     "Desktop 1900 view",
+		   "default": 	"4"
+		},
+		{
+		   "type":      "text",
+		   "id":        "items_1600",
+		   "label":     "Desktop 1600 view",
+		   "default": 	"4"
+		},
+		{
+		   "type":      "text",
+		   "id":        "items_1440",
+		   "label":     "Desktop 1440 view",
+		   "default": 	"4"
+		},
+		{
+		   "type":      "text",
+		   "id":        "items_1280",
+		   "label":     "Desktop 1280 view",
+		   "default": 	"4"
+		},
+		{
+		   "type":      "text",
+		   "id":        "items_980",
+		   "label":     "Desktop Small View",
+		   "default": 	"4"
+		},
+		{
+		   "type":      "text",
+		   "id":        "items_768",
+		   "label":     "Tablet Lanscape View",
+		   "default": 	"3"
+		},
+		{
+		   "type":      "text",
+		   "id":        "items_480",
+		   "label":     "Tablet Portrait View",
+		   "default": 	"2"
+		},
+		{
+		   "type":      "text",
+		   "id":        "items_320",
+		   "label":     "Mobile Lanscape View",
+		   "default": 	"2"
+		},
+		{
+		   "type":      "text",
+		   "id":        "items_0",
+		   "label":     "Mobile Portrait View",
+		   "default": 	"1"
+		},
+		{
+		  "type": "range",
+		  "id": "total_rows",
+		  "label": "Total Rows",
+		  "min": 1,
+		  "max": 6,
+		  "step": 1,
+		  "default": 2
+		},
+		{
+		   "type":      "text",
+		   "id":        "items_margin",
+		   "label":     "Items Margin",
+		   "default": "20"
+		},
+		{
+		   "type":      "select",
+		   "id":        "slider_dots",
+		   "options": [
+			  { "value": "0", "label": "No"},
+			  { "value": "1", "label": "Yes"}
+		   ],
+		   "label":     "Show Slider Dots",
+		   "default" : "0"
+		},
+		{
+		   "type":      "select",
+		   "id":        "slider_nav",
+		   "options": [
+			  { "value": "0", "label": "No"},
+			  { "value": "1", "label": "Yes"}
+		   ],
+		   "label":     "Show Slider Arrows",
+		   "default" : "1"
+		}
+	],
+	"presets": [
+    {
+      "name": "Home Product Style 11",
+      "category": "Codazon Block Products",
+      "settings": {
+        "title": "Home Product Style 11",
+		"title_block": "New in this season",
+		"custom_class": "space-lg nav_style01 title_line100"
+      }
+    }
+  ]
+}
+{% endschema %}
+

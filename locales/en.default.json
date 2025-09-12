@@ -46,13 +46,7 @@
     },
     "search": {
       "search": "Search",
-      "reset": "Clear search term",
-      "close": "Close search",
-      "placeholder": "Search products...",
-      "submit": "Search"
-    },
-    "navigation": {
-      "mobile_bottom": "Mobile bottom navigation"
+      "reset": "Clear search term"
     },
     "cart": {
       "view": "View cart ({{ count }})",

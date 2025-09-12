@@ -1,0 +1,350 @@
+  <script type="text/javascript" async src="//s7.addthis.com/js/250/addthis_widget.js#pubid=ra-4def63cd3cf37569"></script>
+{% assign blog_sidebar = section.settings.blog_sidebar %}
+{%- assign paginate_article = '10' -%}
+{% unless section.settings.paginate_article == blank %}
+	{% assign paginate_article = section.settings.paginate_article %}
+{% endunless %}
+{% assign enable_sidebarblog_cate = section.settings.enable_sidebarblog_cate %}
+{% assign sidebarblog_cate = section.settings.sidebarblog_cate %}
+{% assign enable_sidebarblog_tags = section.settings.enable_sidebarblog_tags %}
+{% assign enable_sidebarblog_recent = section.settings.enable_sidebarblog_recent %}
+{% assign blog_viewall = section.settings.blog_viewall %}
+{% assign blog_cate = section.settings.blog_cate %}
+{% assign blog_author = section.settings.blog_author %}
+{% assign blog_tags = section.settings.blog_tags %}
+{% assign blog_desc = section.settings.blog_desc %}
+{% assign blog_readmore = section.settings.blog_readmore %}
+{% assign blog_social_sharing = section.settings.blog_social_sharing %}
+{% assign blog_date = section.settings.blog_date %}
+{%- assign blog_date_format = '%b %e, %Y' -%}
+{% unless section.settings.blog_date_format == blank %}
+	{% assign blog_date_format = section.settings.blog_date_format %}
+{% endunless %}
+{% assign enable_short_description = section.settings.enable_short_description %}
+
+{%- assign thumbnail_width = '320' -%}
+{% unless section.settings.thumbnail_width == blank %}
+	{%- assign thumbnail_width = section.settings.thumbnail_width -%}
+{% endunless %}
+{%- assign thumbnail_height = '320' -%}
+{% unless section.settings.thumbnail_height == blank %}
+	{%- assign thumbnail_height = section.settings.thumbnail_height -%}
+{% endunless %}
+{%- assign short_description_length = '150' -%}
+{% unless section.settings.short_description_length == blank %}
+	{%- assign short_description_length = section.settings.short_description_length -%}
+{% endunless %}
+
+
+{%- assign items_slider = '3' -%}
+{% unless section.settings.items_slider == blank %}
+	{%- assign items_slider = section.settings.items_slider -%}
+{% endunless %}
+{%- assign items_1900 = '3' -%}
+{% unless section.settings.items_1900 == blank %}
+	{%- assign items_1900 = section.settings.items_1900 -%}
+{% endunless %}
+{%- assign items_1600 = '3' -%}
+{% unless section.settings.items_1600 == blank %}
+	{%- assign items_1600 = section.settings.items_1600 -%}
+{% endunless %}
+{%- assign items_1440 = '3' -%}
+{% unless section.settings.items_1440 == blank %}
+	{%- assign items_1440 = section.settings.items_1440 -%}
+{% endunless %}
+{%- assign items_1280 = '3' -%}
+{% unless section.settings.items_1280 == blank %}
+	{%- assign items_1280 = section.settings.items_1280 -%}
+{% endunless %}
+{%- assign items_980 = '3' -%}
+{% unless section.settings.items_980 == blank %}
+	{%- assign items_980 = section.settings.items_980 -%}
+{% endunless %}
+{%- assign items_768 = '2' -%}
+{% unless section.settings.items_768 == blank %}
+	{%- assign items_768 = section.settings.items_768 -%}
+{% endunless %}
+{%- assign items_480 = '1' -%}
+{% unless section.settings.items_480 == blank %}
+	{%- assign items_480 = section.settings.items_480 -%}
+{% endunless %}
+{%- assign items_320 = '1' -%}
+{% unless section.settings.items_320 == blank %}
+	{%- assign items_320 = section.settings.items_320 -%}
+{% endunless %}
+{%- assign items_0 = '1' -%}
+{% unless section.settings.items_0 == blank %}
+	{%- assign items_0 = section.settings.items_0 -%}
+{% endunless %}
+{%- assign items_margin = '20' -%}
+{% unless section.settings.items_margin == blank %}
+	{%- assign items_margin = section.settings.items_margin -%}
+{% endunless %}
+
+
+<div class="blog-template">
+<div class="page-title-wrapper">
+	<h1 class="page-title"><span>{{ blog.title }}</span></h1>
+</div>
+<div class="row">
+	{% if blog_sidebar == 'left' %}
+	<div class="sidebar col-sm-3">
+		{% include 'blog-sidebar' %}
+	</div>
+	{% endif %}
+	<div class="column-main {% if blog_sidebar == 'disabled' %}col-sm-12 {% else %} col-sm-9 {% endif %}">
+		<div class="post-list-wrapper">
+			{% include 'grid_style' with id: section.id, show_slider: '0' %}
+			<ul class="post-list style-{{section.id}} flex-grid" data-sameheight=".post-holder, .post-header">
+				{% paginate blog.articles by {{paginate_article}} %}
+				{% for article in blog.articles %}
+				{%- comment %}<locksmith:f66a>{% endcomment -%}
+				  {%- capture var %}{% render 'locksmith-variables', scope: 'subject', subject: article, subject_parent: blog, variable: 'transparent' %}{% endcapture %}{% if var == "true" %}{% else %}{% continue %}{% endif -%}
+				{%- comment %}</locksmith:f66a>{% endcomment -%}
+				<li class="post-item item">
+					<div class="post-inner">
+						<div class="post-top">
+							{% assign img_size = thumbnail_width | append: 'x' | append: thumbnail_height %}
+							{% assign img_ratio = thumbnail_width | times: 1.0 | divided_by: thumbnail_height %}
+							<a class="post-img abs-img" href="{{article.url}}" style="padding-bottom:{{ 1 | divided_by: img_ratio | times: 100}}%;">
+							<img id="" class="article__image lazyload"
+								 src="{% comment ls-rpl %}{{ article.image | img_url: img_size }}{% endcomment %}{%- capture LS_IMG_URL -%}{%- render "ls-img-url", image: article.image, img_url: img_size -%}{%- endcapture -%}{{ LS_IMG_URL }}{% comment /ls-rpl %}{% endcomment %}"
+								 alt="{{ image_alt }}"></a>
+						</div>
+						<div class="post-bottom">
+							<div class="post-title">
+								<a href="{{article.url}}" class="post-item-link" title="{{article.title}}">{{ article.title }}</a>
+							</div>
+							<div class="post-info">
+									{% if blog_author %}
+								<div class="post-author">
+									{{ article.author }}
+								</div>
+								{% endif %}
+								{% if blog_tags %}
+								<div class="post-tags">
+									{% if article.tags.size > 0 %}
+									  {% for tag in article.tags %}
+										<a class="post-category" href="{{ blog.url }}/tagged/{{ tag | handle }}">{% comment ls-rpl %}{{ tag }}{% endcomment %}{%- capture LS_TAG -%}{%- render "ls-tag", tag: tag, resource: article -%}{%- endcapture -%}{{ LS_TAG }}{% comment /ls-rpl %}{% endcomment %}</a>
+									  {% endfor %}
+									{% endif %}
+								</div>
+								{% endif %}
+							</div>
+							{% if enable_short_description %}
+								{% if article.excerpt.size > 0 %}
+									<div class="clearfix post-desc">
+									  <p>{{ article.excerpt | strip_html | truncate: short_description_length }}</p>
+									</div>
+									{% else %}
+									  <p>{{ article.content | strip_html | truncate: short_description_length }}</p>
+								{% endif %}
+							{% endif %}
+							<div class="post-footer">
+								{% if blog_readmore %}
+								<a class="more-link" href="{{article.url}}"><ls-static-690056>Read more</ls-static-690056></a>
+								{% endif %}
+								{% if blog_date %}
+								<div class="post-date">
+									<time datetime="{{ article.published_at | date: blog_date_format }}">{{ article.published_at | date: blog_date_format }}</time>
+								</div>
+								{% endif %}
+							</div>
+						</div>
+					</div>
+				</li>
+				{% endfor %}
+			</ul>
+		{% if paginate.pages > 1 %}
+			<div class="toolbar-blog-posts">
+				<div class="blog-pages">
+					  {{ paginate | default_pagination }}
+					</div>
+			</div>
+		{% endif %}
+		{% endpaginate %}
+		</div>
+	</div>
+	{% if blog_sidebar == 'right' %}
+	<div class="sidebar col-sm-3">
+		{% include 'blog-sidebar' %}
+	</div>
+	{% endif %}
+</div>
+</div>
+{% schema %}
+{
+  "name": "Blog Style 04",
+  "settings": [
+	{
+		"type" : "select",
+		"id" : "blog_sidebar",
+		"options": [
+		  { "value": "right", "label": "Show To Right"},
+		  { "value": "left", "label": "Show To Left"},
+		  { "value": "disabled", "label": "Disable"}
+	   ],
+		"label": "Blog Sidebar",
+		"default" : "disabled"	
+	},
+	{
+	  "type": "checkbox",
+	  "id": "enable_sidebarblog_cate",
+	  "label": "Enable Sidebar Blog Category",
+	  "default" : true
+	},
+	{
+	  "type": "link_list",
+	  "id": "sidebarblog_cate",
+	  "label": "Select Blog Category"
+	},
+	{
+	  "type": "checkbox",
+	  "id": "enable_sidebarblog_tags",
+	  "label": "Enable Sidebar Blog Tags",
+	  "default" : true
+	},
+	{
+	  "type": "checkbox",
+	  "id": "enable_sidebarblog_recent",
+	  "label": "Enable Sidebar Blog Recent Article",
+	  "default" : true
+	},
+    {
+      "type": "header",
+      "content": "Article on Page"
+    },
+	{
+	  "type": "text",
+	  "id": "paginate_article",
+	  "label": "Total Article on Page",
+	  "default" : "10"
+	},
+	{
+	  "type": "text",
+	  "id": "thumbnail_width",
+	  "label": "Thumbnail Width",
+	  "default" : "300"
+	},
+	{
+	  "type": "text",
+	  "id": "thumbnail_height",
+	  "label": "Thumbnail Height",
+	  "default" : "200"
+	},
+	{
+	  "type": "text",
+	  "id": "blog_date_format",
+	  "label": "Date Format",
+	  "default" : "%b %e, %Y",
+	  "info": "Ex: %b %e, %Y. date accepts the same parameters as Ruby's strftime method. [see here](http:\/\/strfti.me\/)"
+	},
+	{
+      "type": "checkbox",
+      "id": "blog_author",
+      "label": "Show blog post author",
+       "default":   false
+    },
+	{
+      "type": "checkbox",
+      "id": "blog_tags",
+      "label": "Show blog post tags",
+       "default":   false
+    },
+	{
+	   "type":      "checkbox",
+	   "id":        "blog_readmore",
+	   "label":     "Show blog post read more link",
+	   "default":   true
+	},
+	{
+	   "type":      "checkbox",
+	   "id":        "blog_social_sharing",
+	   "label":     "Show blog post social sharing",
+	   "default":   true
+	},
+	{
+	   "type":      "checkbox",
+	   "id":        "blog_date",
+	   "label":     "Show blog post date time",
+	   "default":   true
+	},
+	{
+	  "type": "checkbox",
+	  "id": "enable_short_description",
+	  "label": "Show blog post short description",
+	  "default" : false
+	},
+	{
+	  "type": "text",
+	  "id": "short_description_length",
+	  "label": "Blog post description length",
+	  "default" : "150"
+	},
+	{
+		"type" : "header",
+		"content" : "-- Setting Items --"
+	},
+	{
+	   "type":      "text",
+	   "id":        "items_1900",
+	   "label":     "Desktop 1900 view",
+	   "default": 	"3"
+	},
+	{
+	   "type":      "text",
+	   "id":        "items_1600",
+	   "label":     "Desktop 1600 view",
+	   "default": 	"3"
+	},
+	{
+	   "type":      "text",
+	   "id":        "items_1440",
+	   "label":     "Desktop 1440 view",
+	   "default": 	"3"
+	},
+	{
+	   "type":      "text",
+	   "id":        "items_1280",
+	   "label":     "Desktop 1280 view",
+	   "default": 	"3"
+	},
+	{
+	   "type":      "text",
+	   "id":        "items_980",
+	   "label":     "Desktop Small View",
+	   "default": 	"3"
+	},
+	{
+	   "type":      "text",
+	   "id":        "items_768",
+	   "label":     "Tablet Lanscape View",
+	   "default": 	"2"
+	},
+	{
+	   "type":      "text",
+	   "id":        "items_480",
+	   "label":     "Tablet Portrait View",
+	   "default": 	"2"
+	},
+	{
+	   "type":      "text",
+	   "id":        "items_320",
+	   "label":     "Mobile Lanscape View",
+	   "default": 	"1"
+	},
+	{
+	   "type":      "text",
+	   "id":        "items_0",
+	   "label":     "Mobile Portrait View",
+	   "default": 	"1"
+	},
+	{
+	   "type":      "text",
+	   "id":        "items_margin",
+	   "label":     "Items Margin",
+	   "default": "20"
+	}
+  ]
+}
+{% endschema %}

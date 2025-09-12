@@ -1,0 +1,20 @@
+{% paginate collection.products by 2 %}
+  <h1>{{ collection.title }}</h1>
+  {% for product in collection.products %}
+    {%- comment %}<locksmith:d04d>{% endcomment -%}
+      {%- capture var %}{% render 'locksmith-variables', scope: 'subject', subject: product, subject_parent: collection, variable: 'transparent' %}{% endcapture %}{% if var == "true" %}{% assign locksmith_1e9a_product__available = false %}{% assign locksmith_1e9a_product__price = nil %}{% for variant in product.variants %}{% capture var %}{% render 'locksmith-variables', scope: 'subject', subject: variant, subject_parent: product, variable: 'transparent' %}{% endcapture %}{% if var == "true" %}{% else %}{% continue %}{% endif %}{% if locksmith_1e9a_product__available == false and variant.available %}{% assign locksmith_1e9a_product__available = true %}{% endif %}{% if locksmith_1e9a_product__price == nil %}{% assign locksmith_1e9a_product__price = variant.price %}{% endif %}{% endfor %}{% else %}{% continue %}{% endif -%}
+    {%- comment %}</locksmith:d04d>{% endcomment -%}
+    <div>
+      <a href="{{ product.url | within: collection }}">{{ product.title }}</a>
+      {{ locksmith_1e9a_product__price | money }}
+      {% unless locksmith_1e9a_product__available %}<br><strong><ls-static-837857>sold out</ls-static-837857></strong>{% endunless %}
+      <a href="{{ product.url | within: collection }}">
+        <img src="{% comment ls-rpl %}{{ product.featured_image.src | img_url: 'large' }}{% endcomment %}{%- capture LS_IMG_URL -%}{%- render "ls-img-url", image: product.featured_image.src, img_url: 'large' -%}{%- endcapture -%}{{ LS_IMG_URL }}{% comment /ls-rpl %}{% endcomment %}" alt="{% comment ls-rpl %}{{ product.featured_image.alt | escape }}{% endcomment %}{%- capture LS_ALT -%}{%- render "ls-alt", image: product.featured_image -%}{%- endcapture -%}{{ LS_ALT | escape }}{% comment /ls-rpl %}{% endcomment %}">
+      </a>
+	
+    </div>
+  {% else %}
+    <p><ls-static-248089>no matches</ls-static-248089></p>
+  {% endfor %}
+  {% if paginate.pages > 1 %}{{ paginate | default_pagination }}{% endif %}
+{% endpaginate %}

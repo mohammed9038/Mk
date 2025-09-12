@@ -1,0 +1,317 @@
+{% assign banner_heading = section.settings.banner_heading %}
+{% assign heading_align = section.settings.heading_align %}
+{% assign item_line = section.settings.item_line %}
+{% assign effect_style = section.settings.effect_style %}
+
+
+{% capture item_col %}
+	{%- case item_line -%}
+	  {%- when '1' -%} col-sm-12
+	  {%- when '2' -%} col-sm-6
+	  {%- when '3' -%} col-sm-4
+	  {%- when '4' -%} col-sm-3
+	{%- endcase -%}	
+{% endcapture %}
+{% capture headText_align %}
+	{%- case heading_align -%}
+	  {%- when 'left' -%} text-left
+	  {%- when 'right' -%} text-right
+	  {%- when 'center' -%} text-center
+	{%- endcase -%}	
+{% endcapture %}
+{% capture effect %}
+	{%- case effect_style -%}
+	  {%- when '01' -%} shine-effect
+	  {%- when '02' -%} effect_style06
+	  {%- when '03' -%} effect_style04
+	  {%- when '04' -%} effect_style02
+	  {%- when '05' -%} effect_style03
+	  {%- when '06' -%} effect_style05
+	{%- endcase -%}	
+{% endcapture %}
+
+
+
+<div class="cdz-banner-wrapper space-lg" data-section-id="{{ section.id }}">
+	<div class="container">
+	  {% if section.settings.banner_heading != blank %}
+	  <div class="row">
+		  <div class="col-12">
+			<div class="cdz-block-title {{ headText_align }}">
+				<p class="b-title h2"><span>{{ section.settings.banner_heading | escape }}</span></p>
+			</div>
+		  </div>
+	  </div>
+	  {% endif %}
+	</div>
+	<div class="container">
+		<div class="row">
+		{%- for block in section.blocks -%}
+			{% assign text_block_align = block.settings.text_block_align %}
+			{% assign text_block_position = block.settings.text_block_position %}
+			{% capture block_text_align %}
+				{%- case text_block_align -%}
+				  {%- when 'left' -%} text-left
+				  {%- when 'right' -%} text-right
+				  {%- when 'center' -%} text-center
+				{%- endcase -%}	
+			{% endcapture %}
+			{% capture block_text_position %}
+				{%- case text_block_position -%}
+				  {%- when 'top' -%} align-items-start
+				  {%- when 'middle' -%} align-items-center
+				  {%- when 'bottom' -%} align-items-end
+				{%- endcase -%}	
+			{% endcapture %}
+			<div class="{{ item_col }}">
+				<div class="cdz-banner banner-style02 cdz-text-inside-wrap {{ effect }} {{ block_text_align }} {{ block_text_position }}">
+					<div class="cdz-banner-img">
+						{% comment ls-rpl %}{%- assign img_url = block.settings.image | img_url: '1x1' | replace: '_1x1.', '_{width}x.' -%}{% endcomment %}{%- capture LS_IMG_URL -%}{%- render "ls-img-url", image: block.settings.image, img_url: '1x1' -%}{%- endcapture -%}{%- assign img_url = LS_IMG_URL | replace: '_1x1.', '_{width}x.' -%}{% comment /ls-rpl %}{% endcomment %}
+						{% assign banner_link = block.settings.banner_link %}
+						{%- if block.settings.image != blank -%}
+						<a class="" href="{{ banner_link }}">
+						  <img class="img-responsive lazyload lz-img {% unless forloop.first == true %} lazypreload{% endunless %}"
+								data-src="{{ img_url }}"
+								data-widths="[180, 360, 470, 600, 770, 970, 1060, 1280, 1512, 1728, 2048]"
+								data-aspectratio="{{ block.settings.image.aspect_ratio }}"
+								data-sizes="auto"
+								alt="{% comment ls-rpl %}{{ block.settings.image.alt | escape }}{% endcomment %}{%- capture LS_ALT -%}{%- render "ls-alt", image: block.settings.image -%}{%- endcapture -%}{{ LS_ALT | escape }}{% comment /ls-rpl %}{% endcomment %}">
+						</a>
+						{%- else -%}
+						 <a class="" href="{{ banner_link }}">
+						  <span>
+							{{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
+						  </span>
+						 </a>
+						{%- endif -%}
+					</div>
+					<div class="cdz-banner-text cdz-text-inside">
+						{% assign text_desc01 = block.settings.text_desc01 %}
+						{% assign text_desc02 = block.settings.text_desc02 %}
+						{% assign button_text = block.settings.button_text %}
+						{% assign color_text01 = block.settings.color_text01 %}
+						{% assign color_text02 = block.settings.color_text02 %}
+						{% assign color_btn = block.settings.color_btn %}
+						<div class="desc01" style="color: {{ color_text01 }}">{{ text_desc01 | escape }}</div>
+						<div class="desc02" style="color: {{ color_text02 }}">{{ text_desc02 | escape }}</div>
+						{%- if button_text != blank -%}
+							<div class="desc-btn" style="margin-bottom: 10px"><a href="{{ banner_link }}" style="background-color: transparent; color: {{ color_btn }}; border-color: {{ color_btn }}">{{ button_text | escape }}</a></div>
+						{%- endif -%}
+					</div>
+				</div>
+			</div>
+		 {%- endfor -%}
+		</div>
+	</div>
+</div>
+
+
+
+{% schema %}
+{
+  "name": "Banner Style 02",
+  "class": "index-section banner-section",
+  "max_blocks": 4,
+  "settings": [
+    {
+      "type": "text",
+      "id": "banner_heading",
+      "label": "Heading Text"
+    },
+	{
+	  "type": "select",
+	  "id": "heading_align",
+	  "label": "Heading Alignment",
+	  "options": [
+	    {
+	  	  "value": "left",
+		  "label": "Text Left"
+	    },
+	    {
+		  "value": "right",
+		  "label": "Text Right"
+	    },
+	    {
+		  "value": "center",
+		  "label": "Text Center"
+	    }
+	  ]
+	},
+	{
+	  "type": "select",
+	  "id": "item_line",
+	  "label": "Item In Line",
+	  "default": "1",
+	  "options": [
+	    {
+	  	  "value": "1",
+		  "label": "1"
+	    },
+	    {
+		  "value": "2",
+		  "label": "2"
+	    },
+	    {
+		  "value": "3",
+		  "label": "3"
+	    },
+	    {
+		  "value": "4",
+		  "label": "4"
+	    }
+	  ]
+	},
+	{
+	  "type": "select",
+	  "id": "effect_style",
+	  "label": "Effect Style",
+	  "default": "01",
+	  "options": [
+		{
+		  "label": "Style 01",
+		  "value": "01"
+		},
+		{
+		  "label": "Style 02",
+		  "value": "02"
+		},
+		{
+		  "label": "Style 03",
+		  "value": "03"
+		},
+		{
+		  "label": "Style 04",
+		  "value": "04"
+		},
+		{
+		  "label": "Style 05",
+		  "value": "05"
+		},
+		{
+		  "label": "Style 06",
+		  "value": "06"
+		}
+	  ]
+	}
+  ],
+  "blocks": [
+    {
+      "type": "image",
+      "name": "Banner",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        },
+		{
+          "type": "url",
+          "id": "banner_link",
+          "label": "Collection"
+        },
+		{
+          "type": "text",
+          "id": "text_desc01",
+          "label": "Big Text"
+        },
+		{
+          "type": "color",
+          "id": "color_text01",
+          "label": "Text color",
+          "default": "#ffffff"
+        },
+		{
+          "type": "text",
+          "id": "text_desc02",
+          "label": "Small Text"
+        },
+		{
+          "type": "color",
+          "id": "color_text02",
+          "label": "Text color",
+          "default": "#ffffff"
+        },
+		{
+          "type": "text",
+          "id": "button_text",
+          "label": "Button Text"
+        },
+		{
+          "type": "color",
+          "id": "color_btn",
+          "label": "Text color",
+          "default": "#ffffff"
+        },
+		{
+		  "type": "select",
+		  "id": "text_block_align",
+		  "label": "Text Alignment",
+		  "options": [
+			{
+			  "value": "left",
+			  "label": "Text Left"
+			},
+			{
+			  "value": "right",
+			  "label": "Text Right"
+			},
+			{
+			  "value": "center",
+			  "label": "Text Center"
+			}
+		  ]
+		},
+		{
+		  "type": "select",
+		  "id": "text_block_position",
+		  "label": "Text Position",
+		  "options": [
+			{
+			  "value": "top",
+			  "label": "Top"
+			},
+			{
+			  "value": "middle",
+			  "label": "Middle"
+			},
+			{
+			  "value": "bottom",
+			  "label": "Bottom"
+			}
+		  ]
+		}
+	  ]
+	}
+  ],
+  "presets": [
+    {
+      "name": "Banner Section Style 02",
+      "category": "Image",
+	  "settings": {
+			"item_line": "2",
+			"effect_style": "04"
+		},
+		"blocks": [
+			{
+			  "type": "image",
+			  "settings": {
+				  "text_desc01": "GIFT CARDS",
+				  "button_text": "shop now",
+				  "text_block_align": "center",
+				  "text_block_position": "middle"
+				}
+			},
+			{
+			  "type": "image",
+			  "settings": {
+				  "text_desc01": "MENS ACCESSORIES",
+				  "button_text": "shop now",
+				  "text_block_align": "center",
+				  "text_block_position": "middle"
+				}
+			}
+		]
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,21 @@
+{% if settings.show_multiple_currencies %}
+
+{% assign codes = 'USD,EUR,GBP,CAD,ARS,AUD,BBD,BDT,BSD,BHD,BRL,BOB,BND,BGN,ILS,MMK,KYD,CLP,CNY,COP,CRC,HRK,CZK,DKK,DOP,XCD,EGP,XPF,FJD,GHS,GTQ,GYD,GEL,HKD,HUF,ISK,INR,IDR,NIS,JMD,JPY,JOD,KZT,KES,KWD,LVL,LTL,MXN,MYR,MUR,MDL,MAD,MNT,MZN,ANG,NZD,NGN,NOK,OMR,PKR,PYG,PEN,PHP,PLN,QAR,RON,RUB,SAR,RSD,SCR,SGD,SYP,ZAR,KRW,LKR,SEK,CHF,TWD,THB,TZS,TTD,TRY,UAH,AED,UYU,VEB,VND,ZMK' | split: ',' %}
+{% assign supported_codes = settings.supported_currencies | split: ' ' %}
+
+<div class="parent cdz-currency" data-curencies='cdz-curencies' data-role="cdz-dropdown" data-cdzwidget='{"codazon.cdzDdCurrencies" : {"curCurrency" : "{{ shop.currency }}"},"codazon.cdzToogleCate" : {}}'>
+	<a class="currency-active" data-role="cdz-dd-trigger">
+		<span>{{ 'general.header.title_top_currency' | t }}: </span>
+		<span class="currency-active-text" data-role="cdz-currency-active">{{shop.currency}}</span>
+	</a>
+	<span class="dropdown-toggle"></span>
+	<ul class="cdz-dd-list groupmenu-drop" data-role="cdz-dd-content">
+		{% for code in supported_codes %}
+		{% if codes contains code %}
+		<li class="item {%if code == shop.currency %} active {% endif %}" data-curency-code="{{ code }}"><a href="javascript:void(0)">{{ code }}</a></li>
+		{% endif %}
+	  {% endfor %}
+	  </ul>
+</div>
+
+{% endif %}

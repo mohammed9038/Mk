@@ -1,0 +1,28 @@
+<div class="block block-vendor">
+  <div class="block-title">
+      <strong>
+        <span>
+          {%- assign filter_vendor_title = section.settings.filter_vendor_title | downcase -%}
+          {{ filter_vendor_title }}
+        </span>
+      </strong>
+  </div>
+  <div class="block-content sidebar-content">
+    <div class="filter-options" id="narrow-by-list" data-role="content">
+      <div class="filter-block filter-options-item" id="coll-filter-{{ forloop.index }}">
+        <div class="filter-options-content {{ collection.current_vendor }}" id="filter-content-{{ forloop.index }}">
+          <ul>
+            {% for vendor in shop.vendors %}
+            	{%- assign vendor = ven | strip | downcase -%}
+            	{% if  vendor contains collection.current_vendor %}
+            		<li class="item-vendor active"><a href="/collections/all"><span class="fa fa-check-square-o"></span>{{ collection.current_vendor }}</a></li>
+            	{% else %}
+            		<li class="item-vendor"><a href="{{ vendor | url_for_vendor }}"><span class="fa fa-square-o"></span>{{ vendor }}</a></li>
+            	{% endif %}
+            {% endfor %}
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>  
+</div>

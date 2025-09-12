@@ -1,0 +1,15 @@
+{%- assign html_title = block.settings.html_title -%}
+{%- assign html_title_font_size = block.settings.html_title_font_size -%}
+{%- assign html_richtext = block.settings.html_richtext -%}
+{%- assign html_content = block.settings.html_content -%}
+{%- assign html_button_text = block.settings.html_button_text -%}
+{%- assign html_button_url = block.settings.html_button_url -%}
+{%- assign html_alignment = block.settings.html_alignment -%}
+<div class="block-html {{block_custom_class}}{% unless html_alignment == blank %} text-{{html_alignment}}{% endunless %}">
+		<div class="block-html-wrapper">
+		<div class="label">{{html_richtext}}</div>
+		<p class="h2" style="font-size: {{html_title_font_size}}px;">{{html_title}}</p>
+		<div class="desc">{{html_content}}</div>
+		<p class="actions"><a class="action btn primary" href="{{html_button_url}}">{{html_button_text}}</a></p>
+	</div>
+</div>

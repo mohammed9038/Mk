@@ -1,0 +1,221 @@
+<script data-id="latest-update-itemCart" type="text/tmpl-script">
+<li class="item product product-item">
+  <div class="row">
+	<div class="product-item-left col-3">
+		<div class="product-image">
+		  <a href="<%- itemLaUpdate.href %>">
+			<% if (itemLaUpdate.featured_image == null) { %>
+				<img class="product-image-photo" src="//cdn.shopify.com/s/assets/no-image-50-3d8cc48bd078edcd544c8d60f929ed2d8800a3fc52e0f602e84b1767e392bfcd_50x.gif"/> 
+			<% } else { %>
+				<img class="product-image-photo" src="<%- itemLaUpdate.featured_image %>"/>
+			<% } %>
+		  </a>
+		</div>
+	</div>
+	<div class="product-item-details col-9">
+	  <div class="product-info">
+		  <div class="product-name">
+		  <a href="<%- itemLaUpdate.href %>" class="product-item-link"><%- itemLaUpdate.title %></a>
+		  </div>
+		  <% if ( !(itemLaUpdate.options[0].name == "Title") ) { %>
+			  <div class="cart__meta-text">
+				<% _.each(itemLaUpdate.options, function(h, index) { %>
+				  <%- h.name %> : <%- itemLaUpdate.currentVariant.options[index] %><br/>
+				<% }) %>
+			  </div>
+		  <% } %>
+	   </div>
+	</div>
+  </div>
+</li>
+</script>
+
+<!-- Setting crosssell Product -->
+
+{%- assign crosssell_thumbnail_width = '320' -%}
+{%- unless settings.crosssell_thumbnail_width == blank -%}
+	{%- assign crosssell_thumbnail_width = settings.crosssell_thumbnail_width -%}
+{%- endunless -%}
+{%- assign crosssell_thumbnail_height = '320' -%}
+{%- unless settings.crosssell_thumbnail_height == blank -%}
+	{%- assign crosssell_thumbnail_height = settings.crosssell_thumbnail_height -%}
+{%- endunless -%}
+{%- assign crosssell_products_count = '8' -%}
+{%- unless settings.crosssell_products_count == blank -%}
+	{%- assign crosssell_products_count = settings.crosssell_products_count -%}
+{%- endunless -%}
+{%- assign crosssell_items_slider = '4' -%}
+{%- unless settings.crosssell_items_slider == blank -%}
+	{%- assign crosssell_items_slider = settings.crosssell_items_slider -%}
+{%- endunless -%}
+{%- assign crosssell_items_1900 = '4' -%}
+{%- unless settings.crosssell_items_1900 == blank -%}
+	{%- assign crosssell_items_1900 = settings.crosssell_items_1900 -%}
+{%- endunless -%}
+{%- assign crosssell_items_1600 = '4' -%}
+{%- unless settings.crosssell_items_1600 == blank -%}
+	{%- assign crosssell_items_1600 = settings.crosssell_items_1600 -%}
+{%- endunless -%}
+{%- assign crosssell_items_1440 = '4' -%}
+{%- unless settings.crosssell_items_1440 == blank -%}
+	{%- assign crosssell_items_1440 = settings.crosssell_items_1440 -%}
+{%- endunless -%}
+{%- assign crosssell_items_1280 = '4' -%}
+{%- unless settings.crosssell_items_1280 == blank -%}
+	{%- assign crosssell_items_1280 = settings.crosssell_items_1280 -%}
+{%- endunless -%}
+{%- assign crosssell_items_980 = '3' -%}
+{%- unless settings.crosssell_items_980 == blank -%}
+	{%- assign crosssell_items_980 = settings.crosssell_items_980 -%}
+{%- endunless -%}
+{%- assign crosssell_items_768 = '2' -%}
+{%- unless settings.crosssell_items_768 == blank -%}
+	{%- assign crosssell_items_768 = settings.crosssell_items_768 -%}
+{%- endunless -%}
+{%- assign crosssell_items_480 = '2' -%}
+{%- unless settings.crosssell_items_480 == blank -%}
+	{%- assign crosssell_items_480 = settings.crosssell_items_480 -%}
+{%- endunless -%}
+{%- assign crosssell_items_320 = '2' -%}
+{%- unless settings.crosssell_items_320 == blank -%}
+	{%- assign crosssell_items_320 = settings.crosssell_items_320 -%}
+{%- endunless -%}
+{%- assign crosssell_items_0 = '2' -%}
+{%- unless settings.crosssell_items_0 == blank -%}
+	{%- assign crosssell_items_0 = settings.crosssell_items_0 -%}
+{%- endunless -%}
+{%- assign crosssell_items_margin = '20' -%}
+{%- unless settings.crosssell_items_margin == blank -%}
+	{%- assign crosssell_items_margin = settings.crosssell_items_margin -%}
+{%- endunless -%}
+{%- assign crosssell_product_text_align = settings.crosssell_text_align -%}
+{%- assign crosssell_show_prostyle = settings.crosssell_show_prostyle -%}
+{%- assign crosssell_show_slider = settings.crosssell_show_slider -%}
+{%- assign crosssell_slider_dots = settings.crosssell_slider_dots -%}
+{%- assign crosssell_slider_nav = settings.crosssell_slider_nav -%}
+{%- assign crosssell_total_rows = settings.crosssell_total_rows -%}
+
+{%- capture data-crosssell-products -%}
+{ "items": {{crosssell_items_slider}}, "items_1900": {{crosssell_items_1900}}, "items_1600": {{crosssell_items_1600}}, "items_1440": {{crosssell_items_1440}}, "items_1280": {{crosssell_items_1280}}, "items_980": {{crosssell_items_980}}, "items_768": {{crosssell_items_768}}, "items_480": {{crosssell_items_480}}, "items_320": {{crosssell_items_320}}, "items_0": {{crosssell_items_0}}, "margin": {{crosssell_items_margin}}, "nav": {{crosssell_slider_nav}}, "dots": {{crosssell_slider_dots}}, "rtl": {{settings.enable_rtl_layout}}}
+{%- endcapture -%}
+<div class="block block-minicart">
+	<div class="minicart-content-wrapper">
+    {%- if cart.item_count > 0 -%}
+		<div class="section section-top">
+			<div class="section-top-inner row flex-grid">
+				<div class="col-sm-3 newst-added-item">
+					<strong class="subtitle">{{ 'cart.general.latest_update' | t }}</strong>
+					<div class="latest-added-item section-content minicart-items" id="latest-update-itemCart">						
+					</div>
+				</div>
+				<div class="col-sm-5 cart-items">
+					<div class="block-title">
+						{%- assign totalItem = 0 -%}
+						{%- for item in cart.items -%}
+						  {%- assign newTotal = newTotal | plus: 1 -%}
+						{%- endfor -%}
+						<span class="items-total">{{ newTotal }} {{ 'cart.general.mess_cart' | t }}</span>
+						<a class="action viewcart" href="/cart" title="{{ 'cart.general.view_edit' | t }}"><span>{{ 'cart.general.view_edit' | t }}</span></a>
+					</div>
+					<div class="block-content">
+						<div class="minicart-items-wrapper scrollbar">
+							<ol class="mini-products-list minicart-items product-items">
+							  {%- for item in cart.items -%}
+							  <li class="item product product-item" data-cdzwidget='{"codazon.cdzItemMiniCart" : {"line" : "{{ forloop.index }}"}}'>
+							  <div class="row">
+								<div class="product-item-left col-3">
+								<a href="{{ item.url }}" class="product-image" alt="{{ item.title | escape }}">
+								  {% comment ls-rpl %}{%- assign img_url = item.image | img_url: '1x1' | replace: '_1x1.', '_{width}x.' -%}{% endcomment %}{%- capture LS_IMG_URL -%}{%- render "ls-img-url", image: item.image, img_url: '1x1' -%}{%- endcapture -%}{%- assign img_url = LS_IMG_URL | replace: '_1x1.', '_{width}x.' -%}{% comment /ls-rpl %}{% endcomment %}
+											<img class="product-image lazyload{% unless forloop.first == true %} lazypreload{% endunless %}"
+											src="{% comment ls-rpl %}{{ item.image | img_url: '50x50' }}{% endcomment %}{%- capture LS_IMG_URL -%}{%- render "ls-img-url", image: item.image, img_url: '50x50' -%}{%- endcapture -%}{{ LS_IMG_URL }}{% comment /ls-rpl %}{% endcomment %}"
+											data-src="{{ img_url }}"
+											data-widths="[180, 360, 470, 600, 770, 970, 1060, 1280, 1512, 1728, 2048]"
+											data-aspectratio="{{ item.image.aspect_ratio }}"
+											data-sizes="auto">
+								</a>
+								<a class="action cart-close btn-remove update-cart-btn" data-action="remove-item-minicart" href="javascript:void(0);" title="{{ 'cart.general.remove'|t|escape }}">{{ 'cart.general.remove'| t }}</a>
+								<a href="{{ item.url }}" class="action edit" title="{{ 'cart.general.edit_item'|t|escape }}">{{ 'cart.general.edit_item'| t }}</a>
+								</div>
+								<div class="product-item-details col-9">
+								  <div class="row">		
+									<div class="col-7 product-info">
+									  <div class="product-item-name">
+										  <a href="{{ item.url }}" title="{{ item.title | escape }}">{{ item.product.title }}</a>
+										  {%- unless item.variant.title contains 'Default' or item.product.options[0] contains 'Title' -%}
+											  <div class="cart__meta-text">
+												{%- for option in item.product.options -%}
+												  {{ option }}: {{ item.variant.options[forloop.index0] }}<br/>
+												{%- endfor -%}
+											  </div>
+											{%- endunless -%}
+										
+									  </div>
+									</div>
+									<div class="col-5 product-item-actions">
+									  <span class="price">{{ item.price | money  }}</span>
+									  <div class="qty-update-wrapper" data-role="qty-update">
+										<form method="post" enctype="multipart/form-data">
+										  <label class="label-qty text-uppercase">{{ 'cart.label.qty'| t }}</label><input class="item-qty cart-item-qty" data-role="item-quantity" type="number" name="quantity" line="{{forloop.index}}" value="{{ item.quantity }}" min="0">
+										  <button class="btn-update-qty" data-action="update-item-minicart">{{ 'cart.general.update'| t }}</button>
+										</form>
+									  </div>
+										
+									</div>
+								  </div>
+								</div>
+							  </div>
+							  </li>
+							  {%- endfor -%}
+							</ol>
+						</div>
+					</div>
+				</div>
+				<div class="col-sm-4 minicartpro-summary-wrapper">
+					<div class="minicartpro-summary">
+						<strong class="subtitle">{{ 'cart.general.cart_summary' | t }}</strong>
+						<div class="cart-total">
+							<div class="total-qty">
+								<span class="label">{{ 'cart.general.total_qty' | t }}</span>
+								<span class="amount">{{ cart.item_count }}</span>
+							</div>
+							<div class="subtotal">
+								<span class="label">{{ 'cart.general.subtotal' | t }}</span>
+								<span class="amount price-container">{{ cart.total_price | money  }}</span>
+							</div>
+							<div class="actions">
+								<button type="button" class="button btn-shopping"  data-role="cdz-close-cdzpopup" data-item=""><span>{{ 'cart.general.continue' | t }}</span></button>
+								<button type="button" title="{{ 'cart.general.checkout'|t }}" class="button checkout-btn trigger-checkout" onclick="window.location.href = '/checkout';"><span>{{ 'cart.general.checkout' | t }}</span></button>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		{%- assign cross_values = "" -%}
+		{%- assign value = "" -%}
+		{%- for item in cart.items -%}
+			{%- assign values = item.product.metafields.codazon.cdz_crosssell_product -%}
+			{%- if values != blank -%}
+				{%- assign values = values | split: ',' -%}
+				{%- assign cross_values = cross_values | append: "," | append:  item.product.metafields.codazon.cdz_crosssell_product | append: "," -%}
+				{%- assign cross_values = cross_values | split: ',' | uniq | join: ',' -%}
+			{%- endif -%}
+		{%- endfor -%}
+		{%- assign crosssellTitle = 'cart.general.crosssell_title' | t  -%}
+		{%- assign crosssell_product = cross_values  | replace_first: ',', ''  | split: ',' | uniq | join: ',' -%}
+		{%- if settings.displayCrossSellInPopUpCart == true and crosssell_product != blank -%}
+		<div class="section-bottom">
+			{% include 'crosssell-products' with crosssell_product, crosssell_title: crosssellTitle, crosssell_thumbnail_width, crosssell_thumbnail_height, crosssell_products_count, crosssell_items_slider, crosssell_show_prostyle, crosssell_product_text_align, crosssell_show_slider, crosssell_total_rows, data-crosssell-products %}
+		</div>
+		{%- endif -%} 
+		<div class="ajaxcart-loader">
+			<div class="double-bounce-spinner">
+				<div class="double-bounce1"></div>
+				<div class="double-bounce2"></div>
+			</div>
+        </div>
+	{%- else -%}
+		<p class="empty">{{ 'cart.general.empty' | t }}</p>
+    {%- endif -%}
+  </div>
+</div>

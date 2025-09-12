@@ -1,0 +1,47 @@
+{% paginate collection.products by product_item_per_page %}
+
+<div id="CollectionSection" data-section-id="{{ section.id }}" data-section-type="collection-template">
+  <div class="container">
+   <div class="row">
+     <div class="col-12">
+      	<div class="section-header section-header--breadcrumb mt-4 mb-4">
+        {% include 'breadcrumb' %}
+       </div>
+	 </div>
+     {% if collection.description != blank %}
+      <div class="rte rte--header col-12">
+        {{ collection.description }}
+      </div>
+  	{% endif %}
+	
+	<div class="col-12">
+		<div class="main clearfix" id="collection-filter">
+        {% include 'amp-collection-toobar' %}
+		{% if current_tags %}
+			<div class="filter-current mb-3">
+				<span class="block-subtitle d-block h4 mb-1 second_color">{{ "collections.filters.current_shopby" | t }}</span>
+				<div class="filter-current-content mb-4">
+					{% for tag in collection.all_tags %}
+						{% for curtag in current_tags %}						
+						   {% if curtag == tag %}
+								{%- assign tagNameCur = tag | append: '<svg aria-hidden="true" focusable="false" role="presentation" class="icon icon-close" viewBox="0 0 40 40"><path d="M23.868 20.015L39.117 4.78c1.11-1.108 1.11-2.77 0-3.877-1.109-1.108-2.773-1.108-3.882 0L19.986 16.137 4.737.904C3.628-.204 1.965-.204.856.904c-1.11 1.108-1.11 2.77 0 3.877l15.249 15.234L.855 35.248c-1.108 1.108-1.108 2.77 0 3.877.555.554 1.248.831 1.942.831s1.386-.277 1.94-.83l15.25-15.234 15.248 15.233c.555.554 1.248.831 1.941.831s1.387-.277 1.941-.83c1.11-1.109 1.11-2.77 0-3.878L23.868 20.015z" class="layer"/></svg>' -%}
+							   <div class="filter-current-item py-1 pl-2 pr-1 mx-1 mb-1 d-inline-block">{{ tagNameCur | link_to_remove_tag: tag }}</div>
+						   {% endif %}
+						{% endfor %}
+					{% endfor %}
+					<a class="py-1 px-2 mx-1 mb-1 d-inline-block filter-clear" href="{% if collection.handle == 'all' %}/collections/all?view=amp-collection{% elsif  collection.current_vendor %}{{ collection.current_vendor | url_for_vendor | append: '?view=amp-collection' }}{% else%}{{ collection.url | append: '?view=amp-collection' }}{% endif %}">{{ 'collections.general.clear_all' | t }}</a>
+				</div>
+			</div>          
+		{% endif %}
+        {% include 'amp-collection-content' %}
+		{% if paginate.pages > 1 %}
+          {% include 'amp-pagination' %}
+        {% endif %}
+		
+		</div>
+
+	 </div>
+  </div>
+  </div>
+  </div>
+{% endpaginate %}

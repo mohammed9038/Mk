@@ -19,9 +19,9 @@
     <link rel="stylesheet" href="{{ 'navigation-professional.css' | asset_url }}" media="print" onload="this.media='all'">
     <script src="{{ 'navigation-controller.js' | asset_url }}" defer></script>
     
-    <!-- Header Professional CSS -->
-    <link rel="stylesheet" href="{{ 'header-clean.css' | asset_url }}" media="print" onload="this.media='all'">
-    <noscript>{{ 'header-clean.css' | asset_url | stylesheet_tag }}</noscript>
+    <!-- Top Navigation Dropdown Fix -->
+    <link rel="stylesheet" href="{{ 'top-nav-dropdown-final.css' | asset_url }}" media="all">
+    <script src="{{ 'top-nav-dropdown-fix.js' | asset_url }}" defer></script>
     
     <!-- GTranslate Professional Styling -->
     <link rel="stylesheet" href="{{ 'gtranslate-professional.css' | asset_url }}" media="print" onload="this.media='all'">
@@ -55,6 +55,7 @@
     
     {%- comment -%} Professional Navigation System - Load early {%- endcomment -%}
     <script src="{{ 'navigation-controller.js' | asset_url }}" defer="defer"></script>
+    <script src="{{ 'navigation-dropdown-fix.js' | asset_url }}" defer="defer"></script>
     <script src="{{ 'slideshow-enhancer.js' | asset_url }}" defer="defer"></script>
     {%- if settings.animations_reveal_on_scroll -%}
       <script src="{{ 'animations.js' | asset_url }}" defer="defer"></script>
@@ -75,7 +76,6 @@
       {{ body_font_bold_italic | font_face: font_display: 'swap' }}
       {{ settings.type_header_font | font_face: font_display: 'swap' }}
 
-      {%- assign scheme_classes = '' -%}
       {% for scheme in settings.color_schemes -%}
         {% assign scheme_classes = scheme_classes | append: ', .color-' | append: scheme.id %}
         {% if forloop.index == 1 -%}
@@ -284,7 +284,12 @@
     
   {%- comment -%} Navigation Controller will be loaded via head {%- endcomment -%}
 
-    {%- comment -%} Font Preloading Disabled - Causing Liquid errors {%- endcomment -%}
+    {%- unless settings.type_body_font.system? -%}
+      <link rel="preload" as="font" href="{{ settings.type_body_font | font_url }}" type="font/woff2" crossorigin>
+    {%- endunless -%}
+    {%- unless settings.type_header_font.system? -%}
+      <link rel="preload" as="font" href="{{ settings.type_header_font | font_url }}" type="font/woff2" crossorigin>
+    {%- endunless -%}
 
     {%- if localization.available_countries.size > 1 or localization.available_languages.size > 1 -%}
       {{ 'component-localization-form.css' | asset_url | stylesheet_tag: preload: true }}
@@ -322,24 +327,26 @@
     }); 
 </script>
 
-{%- comment -%} Mobile Bottom Navigation CSS {%- endcomment -%}
-<link rel="stylesheet" href="{{ 'mobile-bottom-navigation.css' | asset_url }}" media="print" onload="this.media='all'">
-<noscript>{{ 'mobile-bottom-navigation.css' | asset_url | stylesheet_tag }}</noscript>
-
-<style>
-  :root {
-    --mobile-nav-bg: #ffffff;
-    --mobile-nav-text: #666666;
-    --mobile-nav-active: #1a365d;
-    --mobile-nav-badge: #ef4444;
-  }
-</style>
-
-<script>
-  document.addEventListener('DOMContentLoaded', function() {
-    document.body.classList.add('has-mobile-bottom-nav');
-  });
-</script>
+{%- comment -%} Mobile Bottom Navigation CSS and Scripts {%- endcomment -%}
+{%- if sections['mobile-bottom-navigation'].settings.enable_bottom_nav -%}
+  <link rel="stylesheet" href="{{ 'mobile-bottom-navigation.css' | asset_url }}" media="print" onload="this.media='all'">
+  <noscript>{{ 'mobile-bottom-navigation.css' | asset_url | stylesheet_tag }}</noscript>
+  
+  <style>
+    :root {
+      --mobile-nav-bg: {{ sections['mobile-bottom-navigation'].settings.background_color | default: '#ffffff' }};
+      --mobile-nav-text: {{ sections['mobile-bottom-navigation'].settings.text_color | default: '#666666' }};
+      --mobile-nav-active: {{ sections['mobile-bottom-navigation'].settings.active_color | default: '#1a365d' }};
+      --mobile-nav-badge: {{ sections['mobile-bottom-navigation'].settings.badge_color | default: '#ef4444' }};
+    }
+  </style>
+  
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      document.body.classList.add('has-mobile-bottom-nav');
+    });
+  </script>
+{%- endif -%}
   </head>
 
   <body class="gradient{% if settings.animations_hover_elements != 'none' %} animate--hover-{{ settings.animations_hover_elements }}{% endif %}">

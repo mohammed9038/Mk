@@ -1,0 +1,315 @@
+
+{% assign blog_sidebar = section.settings.blog_sidebar %}
+{% assign blog_author = section.settings.blog_author %}
+{% assign blog_tags = section.settings.blog_tags %}
+{% assign blog_social_sharing = section.settings.blog_social_sharing %}
+{% assign blog_date = section.settings.blog_date %}
+{%- assign blog_date_format = '%b %e, %Y' -%}
+{% unless section.settings.blog_date_format == blank %}
+	{% assign blog_date_format = section.settings.blog_date_format %}
+{% endunless %}
+{% assign enable_sidebarblog_cate = section.settings.enable_sidebarblog_cate %}
+{% assign sidebarblog_cate = section.settings.sidebarblog_cate %}
+{% assign enable_sidebarblog_tags = section.settings.enable_sidebarblog_tags %}
+{% assign enable_sidebarblog_recent = section.settings.enable_sidebarblog_recent %}
+{% if blog_social_sharing %}
+  <script type="text/javascript" async src="//s7.addthis.com/js/250/addthis_widget.js#pubid=ra-4def63cd3cf37569"></script>
+{% endif %}
+
+{% assign number_of_comments = article.comments_count %}
+
+{% if comment and comment.created_at %}
+  {% assign number_of_comments = article.comments_count | plus: 1 %}
+{% endif %}
+
+{% paginate article.comments by 5 %}
+
+{% include 'breadcrumb' %}
+
+<div class="grid" data-section-id="{{ section.id }}" data-section-type="article-template">
+	<div class="row">
+		{% if blog_sidebar == 'left' %}
+		<div class="sidebar col-sm-3">
+			{% include 'blog-sidebar' %}
+		</div>
+		{% endif %}
+		<div class="column-main {% if blog_sidebar == 'disabled' %}col-sm-12 {% else %} col-sm-9 {% endif %}">
+			<div class="post-list-wrapper">
+				<div class="post-view">
+					<div class="post-holder">
+						<div class="page-title-wrapper" itemscope itemtype="http://schema.org/Article">
+							<h1 class="page-title"><span>{{ article.title }}</span></h1>
+						</div>
+						<div class="post-top">
+							<div class="post-image">
+								{% assign img_url = 'master' %}
+								<a class="post-img" href="{{article.url}}"><img id=""
+									 class="article__image lazyload img-responsive"
+									 src="{% comment ls-rpl %}{{ article.image | img_url: img_url }}{% endcomment %}{%- capture LS_IMG_URL -%}{%- render "ls-img-url", image: article.image, img_url: img_url -%}{%- endcapture -%}{{ LS_IMG_URL }}{% comment /ls-rpl %}{% endcomment %}"
+									 alt="{{ image_alt }}">
+								</a>
+							</div>
+						</div>
+						<div class="post-header">
+							<div class="post-info">
+								{% if blog_date %}
+									<div class="post-date">
+										<time datetime="{{ article.published_at | date: blog_date_format }}">{{ article.published_at | date: blog_date_format }}</time>
+									</div>
+								{% endif %}
+								{% if blog_author %}
+									<div class="post-author">
+										{{ article.author }}
+									</div>
+									{% endif %}
+									{% if blog_tags %}
+									<div class="post-tags">
+										{% if article.tags.size > 0 %}
+										  {% for tag in article.tags %}
+											<a class="post-category" href="{{ blog.url }}/tagged/{{ tag | handle }}">{% comment ls-rpl %}{{ tag }}{% endcomment %}{%- capture LS_TAG -%}{%- render "ls-tag", tag: tag, resource: article -%}{%- endcapture -%}{{ LS_TAG }}{% comment /ls-rpl %}{% endcomment %}</a>
+										  {% endfor %}
+										{% endif %}
+									</div>
+								{% endif %}
+							</div>
+							{% if blog_social_sharing %}
+								<div class="addthis">
+									<div class="addthis_toolbox addthis_default_style" addthis:url="{{shop.url | append : article.url}}">
+										<a class="addthis_button_facebook"></a>
+										<a class="addthis_button_twitter"></a>
+										<a class="addthis_button_email"></a>
+										<a class="addthis_button_compact"></a>
+									</div>
+								</div>
+							{% endif %}
+						</div>
+						<div class="post-content">
+							<div class="post-description" itemprop="articleBody">
+								{{ article.content }}
+							</div>
+						</div>
+						<div class="post-bottom">
+							<div class="post-nextprev">
+								{% comment %}
+								  Create links to the next and previous articles, if available.
+								{% endcomment %}
+								{% if blog.next_article or blog.previous_article %}
+								  <div class="clearfix">
+									{% if blog.previous_article %}
+									<div class="link-wrap prev">
+										<a class="nextprev-link prev-link" href="{{ blog.previous_article }}">
+											<span class="icon-wrap">&larr; {{ 'blogs.article.older_post' | t }}</span>
+										</a>
+										<div class="post-thumb">
+											<a class="arrow-post-title" href="{{ blog.previous_article }}">
+												{{blog.previous_article.title}}
+											</a>
+											<a class="nextprev-img abs-img" href="{{ blog.previous_article }}" style="width: 100px">
+												<img
+												 class="img-responsive"
+												 src="{% comment ls-rpl %}{{ blog.previous_article.image | img_url: '100x100' }}{% endcomment %}{%- capture LS_IMG_URL -%}{%- render "ls-img-url", image: blog.previous_article.image, img_url: '100x100' -%}{%- endcapture -%}{{ LS_IMG_URL }}{% comment /ls-rpl %}{% endcomment %}">
+											</a>
+										</div>
+									</div>
+									{% endif %}
+									{% if blog.next_article %}
+									  <div class="link-wrap next">
+										<a class="nextprev-link next-link" href="{{ blog.next_article }}">
+											<span class="icon-wrap">&larr; {{ 'blogs.article.older_post' | t }}</span>
+										</a>
+										<div class="post-thumb">
+											<a class="arrow-post-title" href="{{ blog.next_article }}">
+												{{blog.next_article.title}}
+											</a>
+											<a class="nextprev-img abs-img" href="{{ blog.next_article }}" style="width: 100px">
+												<img
+												 class="img-responsive"
+												 src="{% comment ls-rpl %}{{ blog.next_article.image | img_url: '100x100' }}{% endcomment %}{%- capture LS_IMG_URL -%}{%- render "ls-img-url", image: blog.next_article.image, img_url: '100x100' -%}{%- endcapture -%}{{ LS_IMG_URL }}{% comment /ls-rpl %}{% endcomment %}">
+											</a>
+										</div>
+									</div>
+									{% endif %}
+								  </div>
+								{% endif %}
+							</div>
+							{% if blog.comments_enabled? %}
+							  
+
+							  {% comment %}
+								Just like blog.liquid page, define how many comments should be on each page.
+							  {% endcomment %}
+
+								{% comment %}
+								  #comments is required, it is used as an anchor link by Shopify.
+								{% endcomment %}
+								<div id="comments" class="article-comments">
+
+								  {% if comment and comment.created_at %}
+					                <p class="note form-success">
+					                  {% if blog.moderated? %}
+					                    {{ 'blogs.comments.success_moderated' | t }}
+					                  {% else %}
+					                    {{ 'blogs.comments.success' | t }}
+					                  {% endif %}
+					                </p>
+					              {% endif %}
+
+					              {% if number_of_comments > 0 %}
+					                <ul>
+					                  {% comment %}
+					                    If a comment was just submitted with no blank field, show it.
+					                  {% endcomment %}
+					                  {% if comment and comment.created_at %}
+					                    <li id="{{ comment.id }}" class="comment first{% if article.comments_count == 0 %} last{% endif %}">
+					                      {% include 'comment' %}
+					                    </li>
+					                  {% endif %}
+
+					                  {% comment %}
+					                    Showing the rest of the comments.
+					                  {% endcomment %}
+					                  {% for comment in article.comments %}
+					                    <li id="{{ comment.id }}" class="comment{% unless number_of_comments > article.comments_count %}{% if forloop.first %} first{% endif %}{% endunless %}{% if forloop.last %} last {% endif %}">
+					                      {% include 'comment' %}
+					                    </li>
+					                  {% endfor %}
+					                </ul>
+
+					                {% if paginate.pages > 1 %}
+									  <hr class="--clear hr--small">
+									  <div class="text-center">
+										{% include 'pagination-custom' %}
+									  </div>
+									{% endif %}
+
+									<hr class="hr--clear hr--small">
+
+								  {% endif %}
+
+								  {% comment %}
+									Comment submission form
+								  {% endcomment %}
+								  {% form 'new_comment', article %}
+
+									<h4 class="title-comment">{{ 'blogs.comments.title' | t }}</h4>
+
+									{{ form.errors | default_errors }}
+
+									<div class="grid">
+
+									  <div class="grid__item post-large--one-half">
+										<label for="CommentAuthor" class="label--hidden">{{ 'blogs.comments.name' | t }}</label>
+										<input {% if form.errors contains "author" %} class="error"{% endif %} type="text" name="comment[author]" placeholder="{{ 'blogs.comments.name' | t }}" id="CommentAuthor" value="{{ form.author }}" autocapitalize="words">
+
+										<label for="CommentEmail" class="label--hidden">{{ 'blogs.comments.email' | t }}</label>
+										<input {% if form.errors contains "email" %} class="error"{% endif %} type="email" name="comment[email]" placeholder="{{ 'blogs.comments.email' | t }}" id="CommentEmail" value="{{ form.email }}" autocorrect="off" autocapitalize="off">
+									  </div>
+
+									  <div class="grid__item">
+										<label for="CommentBody" class="label--hidden">{{ 'blogs.comments.message' | t }}</label>
+										<textarea {% if form.errors contains "body" %} class="error"{% endif %} name="comment[body]" id="CommentBody" placeholder="{{ 'blogs.comments.message' | t }}">{{ form.body }}</textarea>
+									  </div>
+
+									</div>
+
+									{% if blog.moderated? %}
+									  <p><small>{{ 'blogs.comments.moderated' | t }}</small></p>
+									{% endif %}
+
+									<input type="submit" class="btn" value="{{ 'blogs.comments.post' | t }}">
+
+								  {% endform %}
+
+								</div>
+
+							{% endif %}
+							
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		{% if blog_sidebar == 'right' %}
+		<div class="sidebar col-sm-3">
+			{% include 'blog-sidebar' %}
+		</div>
+		{% endif %}
+	</div>	
+</div>
+
+{% endpaginate %}
+
+
+
+{% schema %}
+{
+  "name": "Article",
+  "settings": [
+	{
+		"type" : "select",
+		"id" : "blog_sidebar",
+		"options": [
+		  { "value": "right", "label": "Show To Right"},
+		  { "value": "left", "label": "Show To Left"},
+		  { "value": "disabled", "label": "Disable"}
+	   ],
+		"label": "Blog Sidebar",
+		"default" : "right"	
+	},
+	{
+	  "type": "checkbox",
+	  "id": "enable_sidebarblog_cate",
+	  "label": "Enable Sidebar Blog Category",
+	  "default" : true
+	},
+	{
+	  "type": "link_list",
+	  "id": "sidebarblog_cate",
+	  "label": "Select Blog Category"
+	},
+	{
+	  "type": "checkbox",
+	  "id": "enable_sidebarblog_tags",
+	  "label": "Enable Sidebar Blog Tags",
+	  "default" : true
+	},
+	{
+	  "type": "checkbox",
+	  "id": "enable_sidebarblog_recent",
+	  "label": "Enable Sidebar Blog Recent Article",
+	  "default" : true
+	},
+	{
+	  "type": "text",
+	  "id": "blog_date_format",
+	  "label": "Date Format",
+	  "default" : "%b %e, %Y",
+	  "info": "Ex: %b %e, %Y. date accepts the same parameters as Ruby's strftime method. [see here](http:\/\/strfti.me\/)"
+	},
+	{
+      "type": "checkbox",
+      "id": "blog_author",
+      "label": "Show blog post author",
+       "default":   true
+    },
+	{
+      "type": "checkbox",
+      "id": "blog_tags",
+      "label": "Show blog post tags",
+       "default":   true
+    },
+	{
+	   "type":      "checkbox",
+	   "id":        "blog_social_sharing",
+	   "label":     "Show blog post social sharing",
+	   "default":   true
+	},
+	{
+	   "type":      "checkbox",
+	   "id":        "blog_date",
+	   "label":     "Show blog post date time",
+	   "default":   true
+	}
+  ]
+}
+{% endschema %}

@@ -1,0 +1,105 @@
+{% layout none %}
+{% comment %}
+{% capture results %}
+  {%- comment %}<locksmith:934a>{% endcomment -%}
+    {%- assign locksmith_a291_forloop__size = 0 %}{% for item in search.results %}{% capture var %}{% render 'locksmith-variables', scope: 'subject', subject: item, subject_parent: search, variable: 'transparent' %}{% endcapture %}{% if var == 'true' %}{% assign locksmith_a291_forloop__size = locksmith_a291_forloop__size | plus: 1 %}{% endif %}{% endfor %}{% assign locksmith_a291_forloop__index = nil -%}
+  {%- comment %}</locksmith:934a>{% endcomment -%}
+  {% for item in search.results %}
+    {%- comment %}<locksmith:9fe4>{% endcomment -%}
+      {%- capture var %}{% render 'locksmith-variables', scope: 'subject', subject: item, subject_parent: search, variable: 'transparent' %}{% endcapture %}{% if var == "true" %}{% if locksmith_a291_forloop__index == nil %}{% assign locksmith_a291_forloop__index = 1 %}{% assign locksmith_a291_forloop__index0 = 0 %}{% else %}{% assign locksmith_a291_forloop__index = locksmith_a291_forloop__index | plus: 1 %}{% assign locksmith_a291_forloop__index0 = locksmith_a291_forloop__index0 | plus: 1 %}{% endif %}{% if locksmith_a291_forloop__index == 1 %}{% assign locksmith_a291_forloop__first = true %}{% else %}{% assign locksmith_a291_forloop__first = false %}{% endif %}{% if locksmith_a291_forloop__index == locksmith_a291_forloop__size %}{% assign locksmith_a291_forloop__last = true %}{% else %}{% assign locksmith_a291_forloop__last = false %}{% endif %}{% assign locksmith_a291_forloop__rindex = locksmith_a291_forloop__size | minus: locksmith_a291_forloop__index | minus: 1 %}{% assign locksmith_a291_forloop__rindex0 = locksmith_a291_forloop__size | minus: locksmith_a291_forloop__index0 | minus: 1 %}{% else %}{% continue %}{% endif -%}
+    {%- comment %}</locksmith:9fe4>{% endcomment -%}
+    {% assign product = item %}
+    { 
+      "title"    : {{ product.title | json }},
+      "url"      : {{ product.url | within: product.collections.last | json }},
+      "thumbnail": {% comment ls-rpl %}{{ product.featured_image.src | product_img_url: 'thumb' | json }}{% endcomment %}{%- capture LS_IMG_URL -%}{%- render "ls-img-url", image: product.featured_image.src, img_url: 'thumb' -%}{%- endcapture -%}{{ LS_IMG_URL | json }}{% comment /ls-rpl %}{% endcomment %}
+    }
+    {% unless locksmith_a291_forloop__last %},{% endunless %}
+  {% endfor %}
+{% endcapture %}
+{
+  "results_count": {{ search.results_count }},
+  "results": [{{ results }}]
+}
+{% endcomment %}
+
+{% capture results %}
+	{% assign count_blog = 0 %}
+	{% assign count_product = 0 %}
+	{% assign data_blog = "" %}
+	{% assign data_product = "" %}
+  {%- comment %}<locksmith:2dd6>{% endcomment -%}
+    {%- assign locksmith_5840_forloop__size = 0 %}{% for item in search.results %}{% capture var %}{% render 'locksmith-variables', scope: 'subject', subject: item, subject_parent: search, variable: 'transparent' %}{% endcapture %}{% if var == 'true' %}{% assign locksmith_5840_forloop__size = locksmith_5840_forloop__size | plus: 1 %}{% endif %}{% endfor %}{% assign locksmith_5840_forloop__index = nil -%}
+  {%- comment %}</locksmith:2dd6>{% endcomment -%}
+  {% for item in search.results %}
+	{%- comment %}<locksmith:6a4e>{% endcomment -%}
+	  {%- capture var %}{% render 'locksmith-variables', scope: 'subject', subject: item, subject_parent: search, variable: 'transparent' %}{% endcapture %}{% if var == "true" %}{% assign locksmith_b6b1_item__price = nil %}{% for variant in item.variants %}{% capture var %}{% render 'locksmith-variables', scope: 'subject', subject: variant, subject_parent: item, variable: 'transparent' %}{% endcapture %}{% if var == "true" %}{% else %}{% continue %}{% endif %}{% if locksmith_b6b1_item__price == nil %}{% assign locksmith_b6b1_item__price = variant.price %}{% endif %}{% endfor %}{% if locksmith_5840_forloop__index == nil %}{% assign locksmith_5840_forloop__index = 1 %}{% assign locksmith_5840_forloop__index0 = 0 %}{% else %}{% assign locksmith_5840_forloop__index = locksmith_5840_forloop__index | plus: 1 %}{% assign locksmith_5840_forloop__index0 = locksmith_5840_forloop__index0 | plus: 1 %}{% endif %}{% if locksmith_5840_forloop__index == 1 %}{% assign locksmith_5840_forloop__first = true %}{% else %}{% assign locksmith_5840_forloop__first = false %}{% endif %}{% if locksmith_5840_forloop__index == locksmith_5840_forloop__size %}{% assign locksmith_5840_forloop__last = true %}{% else %}{% assign locksmith_5840_forloop__last = false %}{% endif %}{% assign locksmith_5840_forloop__rindex = locksmith_5840_forloop__size | minus: locksmith_5840_forloop__index | minus: 1 %}{% assign locksmith_5840_forloop__rindex0 = locksmith_5840_forloop__size | minus: locksmith_5840_forloop__index0 | minus: 1 %}{% else %}{% continue %}{% endif -%}
+	{%- comment %}</locksmith:6a4e>{% endcomment -%}
+	{% if item.object_type == 'article' %}
+		{% assign count_blog = count_blog | plus: 1 %} 
+		{% assign data_blog = data_blog %}
+		{% assign data_blog = data_blog | append:  '{ "title": ' %}
+		{% assign data_blog_tile = item.title  | json %}
+		{% assign data_blog = data_blog | append:  data_blog_tile %}
+		{% assign data_blog = data_blog | append:  "," %}
+		{% assign data_blog = data_blog | append:  '"thumbnail": ' %}
+		{% comment ls-rpl %}{% assign data_blog_thumb = item.image.src | img_url: 'small'  | json %}{% endcomment %}{%- capture LS_IMG_URL -%}{%- render "ls-img-url", image: item.image.src, img_url: 'small' -%}{%- endcapture -%}{% assign data_blog_thumb = LS_IMG_URL | json %}{% comment /ls-rpl %}{% endcomment %}
+		{% assign data_blog = data_blog | append:  data_blog_thumb %}
+		{% assign data_blog = data_blog | append:  "," %}
+		{% assign data_blog = data_blog | append:  '"url": ' %}
+		{% assign data_blog_url = item.url | within: product.collections.last  | json %}
+		{% assign data_blog = data_blog | append:  data_blog_url %}
+		{% assign data_blog = data_blog | append:  "}" %}
+		{% unless locksmith_5840_forloop__last %}{% assign data_blog = data_blog | append: ";" %}{% endunless %}
+	{% elsif item.object_type == 'page' %}
+		{% comment %}
+		  'item' is a page.
+		  All page object properties can be accessed.
+		{% endcomment %}
+	{% else %}
+		{% assign count_product = count_product | plus: 1 %}
+		{% assign data_product = data_product %}
+		{% assign data_product = data_product | append:  '{ "title": ' %}
+		{% assign data_product_title = item.title  | json %}
+		{% assign data_product = data_product | append:  data_product_title %}
+		{% assign data_product = data_product | append:  "," %}
+		{% assign data_product = data_product | append:  '"url": ' %}
+		{% assign data_product_url = item.url | within: product.collections.last  | json %}
+		{% assign data_product = data_product | append:  data_product_url %}
+		{% assign data_product = data_product | append:  "," %}
+		{% assign data_product = data_product | append:  '"handle": ' %}
+		{% assign data_product_handle = item.handle  | json %}
+		{% assign data_product = data_product | append:  data_product_handle %}
+		{% assign data_product = data_product | append:  "," %}
+		{% assign data_product = data_product | append:  '"thumbnail": ' %}
+		{% assign data_product_thumb = item.featured_image.src  | json %}
+		{% assign data_product = data_product | append:  data_product_thumb %}
+		{% assign data_product = data_product | append:  "," %}
+		{% assign data_product = data_product | append:  '"price": ' %}
+		{% assign data_product_price = locksmith_b6b1_item__price | json %}
+		{% assign data_product = data_product | append:  data_product_price %}
+		{% assign data_product = data_product | append:  "}" %}
+		{% unless locksmith_5840_forloop__last %}{% assign data_product = data_product | append: ";" %}{% endunless %}
+	{% endif %}
+    
+  {% endfor %}
+  {% assign data_blog = data_blog | split: ';' | uniq | join: ',' %}
+  {% assign data_blog = data_blog %}
+  {% assign data_product = data_product | split: ';' | uniq | join: ',' %}
+  {% assign data_product = data_product  %}
+  {
+    "blog": {
+		"data": [{{ data_blog  }}],
+		"size": {{ count_blog }}
+	},
+	"product": {
+		"data": [{{ data_product }}],
+		"size": {{ count_product }}
+	}
+  }
+
+{% endcapture %}
+{
+  "results_count": {{ search.results_count }},
+  "results": {{ results }}
+}

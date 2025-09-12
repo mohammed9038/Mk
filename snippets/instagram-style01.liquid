@@ -1,0 +1,32 @@
+<div class="container">
+	<div class="instagram-style01">
+		<div class="row">
+			<div class="col-sm-3">
+				<div class="instagram-wrapper">
+					<div class="cdz-block-title">
+						{% unless ins_title == blank %}
+							<p class="b-title h2"><span>{{ins_title}}</span></p>
+						{% endunless %}
+						{% unless ins_title_desc == blank %}
+							<p class="b-title-desc"><span>{{ins_title_desc}}</span></p>
+						{% endunless %}
+					</div>
+					<div class="cdz-block-content">
+						<div class="owl-nav remote-nav">
+							<div class="owl-prev" data-targetslider="instagram-slider"><ls-static-917754>prev</ls-static-917754></div>
+							<div class="owl-next" data-targetslider="instagram-slider"><ls-static-864206>next</ls-static-864206></div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-sm-9">
+				<div class="instagram-wrapper cdz-block">
+					<div class="cdz-block-content">
+						<div class="instagram-slider instagram-photos {% if show_slider ==  '0' %} no_slider flex-grid{% elsif show_slider ==  '1' %} owl-carousel owl-theme{% endif %}" {% if show_slider ==  '1' %} data-cdzwidget = '{"codazon.cdzInstagram": {{data-instagramphotos}}}' {% else %} data-cdzwidget = '{"codazon.cdzInstagram": {"ins_accesstoken": "{{ins_access_token}}", "ins_count" : {{ins_count}}, "show_slider" : {{show_slider}}}}' {% endif %}>
+						</div>
+					</div>							
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

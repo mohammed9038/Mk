@@ -1,0 +1,132 @@
+{%- assign block_custom_class = block.settings.block_custom_class -%}
+{%- assign thumbnail_width = '320' -%}
+{%- unless block.settings.thumbnail_width == blank -%}
+	{%- assign thumbnail_width = block.settings.thumbnail_width -%}
+{%- endunless -%}
+{%- assign thumbnail_height = '320' -%}
+{%- unless block.settings.thumbnail_height == blank -%}
+	{%- assign thumbnail_height = block.settings.thumbnail_height -%}
+{%- endunless -%}
+{%- assign products_count = '8' -%}
+{%- unless block.settings.products_count == blank -%}
+	{%- assign products_count = block.settings.products_count -%}
+{%- endunless -%}
+{%- assign items_slider = '4' -%}
+{%- unless block.settings.items_slider == blank -%}
+	{%- assign items_slider = block.settings.items_slider -%}
+{%- endunless -%}
+{%- assign items_1900 = '4' -%}
+{%- unless block.settings.items_1900 == blank -%}
+	{%- assign items_1900 = block.settings.items_1900 -%}
+{%- endunless -%}
+{%- assign items_1600 = '4' -%}
+{%- unless block.settings.items_1600 == blank -%}
+	{%- assign items_1600 = block.settings.items_1600 -%}
+{%- endunless -%}
+{%- assign items_1440 = '4' -%}
+{%- unless block.settings.items_1440 == blank -%}
+	{%- assign items_1440 = block.settings.items_1440 -%}
+{%- endunless -%}
+{%- assign items_1280 = '4' -%}
+{%- unless block.settings.items_1280 == blank -%}
+	{%- assign items_1280 = block.settings.items_1280 -%}
+{%- endunless -%}
+{%- assign items_980 = '3' -%}
+{%- unless block.settings.items_980 == blank -%}
+	{%- assign items_980 = block.settings.items_980 -%}
+{%- endunless -%}
+{%- assign items_768 = '2' -%}
+{%- unless block.settings.items_768 == blank -%}
+	{%- assign items_768 = block.settings.items_768 -%}
+{%- endunless -%}
+{%- assign items_480 = '2' -%}
+{%- unless block.settings.items_480 == blank -%}
+	{%- assign items_480 = block.settings.items_480 -%}
+{%- endunless -%}
+{%- assign items_320 = '2' -%}
+{%- unless block.settings.items_320 == blank -%}
+	{%- assign items_320 = block.settings.items_320 -%}
+{%- endunless -%}
+{%- assign items_0 = '2' -%}
+{%- unless block.settings.items_0 == blank -%}
+	{%- assign items_0 = block.settings.items_0 -%}
+{%- endunless -%}
+{%- assign items_margin = '20' -%}
+{%- unless block.settings.items_margin == blank -%}
+	{%- assign items_margin = block.settings.items_margin -%}
+{%- endunless -%}
+{%- assign show_slider = block.settings.show_slider -%}
+{%- assign slider_dots = block.settings.slider_dots -%}
+{%- assign slider_nav = block.settings.slider_nav -%}
+{%- assign total_rows = block.settings.total_rows -%}
+{%- assign ins_access_token = block.settings.ins_access_token -%}
+{%- assign ins_list_photo = block.settings.ins_list_photo -%}
+{%- assign enable_list_photo = block.settings.enable_list_photo -%}
+{%- assign listPhoto = ins_list_photo | split: ';' -%}
+{%- if enable_list_photo -%}
+	{%- assign ins_access_token = '' -%}
+{%- endif -%}
+{%- capture data-instagramphotos -%}
+	{"ins_accesstoken": "{{ins_access_token}}", "ins_count" : {{products_count}}, "show_slider" : {{show_slider}}, "total_rows": {{total_rows}}, "items": {{items_slider}}, "items_1900": {{items_1900}}, "items_1600": {{items_1600}}, "items_1440": {{items_1440}}, "items_1280": {{items_1280}}, "items_980": {{items_980}}, "items_768": {{items_768}}, "items_480": {{items_480}}, "items_320": {{items_320}}, "items_0": {{items_0}}, "margin": {{items_margin}}, "nav": {{slider_nav}}, "dots": {{slider_dots}}, "rtl": {{settings.enable_rtl_layout}}, "id": "{{block.id}}"}
+{%- endcapture -%}
+{%- capture data-owlslider -%}
+	{ "items": {{items_slider}}, "items_1900": {{items_1900}}, "items_1600": {{items_1600}}, "items_1440": {{items_1440}}, "items_1280": {{items_1280}}, "items_980": {{items_980}}, "items_768": {{items_768}}, "items_480": {{items_480}}, "items_320": {{items_320}}, "items_0": {{items_0}}, "margin": {{items_margin}}, "nav": {{slider_nav}}, "dots": {{slider_dots}}, "rtl": {{settings.enable_rtl_layout}}}
+{%- endcapture -%}
+
+<div id="style-{{block.id}}" class="cdz-instagram {{ins_style}} {{block_custom_class}} block-title-{{title_text_align}}" {% if show_slider ==  '1' %} data-cdzwidget = '{"codazon.cdzInstagram": {{data-instagramphotos}}}' {% else %} data-cdzwidget = '{"codazon.cdzInstagram": {"ins_accesstoken": "{{ins_access_token}}", "ins_count" : {{products_count}}, "show_slider" : {{show_slider}}, "id": "{{block.id}}"}}' {% endif %} data-role='cdz-instagram'>
+	<div class="cdz-block-title">
+		{%- unless block.settings.block_title == blank -%}
+			<p class="b-title h2"><span>{{ block.settings.block_title | escape }}</span></p>
+		{%- endunless -%}
+		{%- unless block.settings.block_sub_title == blank -%}
+			<p class="title-desc"><span>{{ block.settings.block_sub_title | escape }}</span></p>
+		{%- endunless -%}
+	</div>
+	<div class="instagram-wrapper style-{{block.id}}">
+		<div class="cdz-block-content">
+			{% include 'grid_style' with id: block.id, show_slider, items_1900, items_1600, items_1440, items_1280, items_980, items_768, items_480, items_320, items_0, items_margin %}
+			{%- if enable_list_photo -%}
+			<div class="instagram-slider instagram-static-photos {% if show_slider ==  '0' %} no_slider flex-grid{% elsif show_slider ==  '1' %} owl-carousel{% endif %}" >
+				{%- for item_ins in listPhoto limit:products_count -%}
+				{%- assign ins_img = item_ins | split: ':#' -%}
+					{%- assign modulo = forloop.index | modulo: total_rows -%}
+					{%- if total_rows >  1 and show_slider ==  '1' -%}
+						{%- if modulo == 1 -%}
+							<div class="items">
+						{%- endif -%}
+					{%- endif -%}
+						<div class="photo-item item"><a class="photo-item-link" href="{{ins_img[1]}}" target="_blank">
+							<img class="img-responsive lazyload" 
+								    data-src="{{ins_img[0]}}"
+								    data-sizes="auto">
+						</a></div>
+					{%- if total_rows >  1 and show_slider ==  '1' -%}
+						{%- if modulo == 0 or forloop.last -%}
+						  </div>
+						  {%- endif -%}
+					{%- endif -%}
+				
+				{%- endfor -%}
+			</div>
+			{%- else -%}
+				<div class="instagram-slider instagram-photos {% if show_slider ==  '0' %} no_slider flex-grid{% elsif 	show_slider ==  '1' %} owl-carousel{% endif %}" >
+				</div>
+			{%- endif -%}
+		</div>							
+	</div>
+	<script id="instagram-tmpl-{{block.id}}" type="text/tmpl-script">
+		<% _.each(instagram, function(element, index) { %>
+			<% if (total_rows > 1 && show_slider == 1) { %>
+				<% if ((index + 1) % total_rows == 1) { %>
+					<div class="group__item items">
+				<% } %>
+			<% } %>
+			<div class="photo-item item"><a class="photo-item-link" href="<%- element.link %>" target="_blank"><img class="img-responsive lazyload" data-src="<%- element.images.low_resolution.url%>"></a></div>
+			<% if (total_rows > 1 && show_slider == 1) { %>
+				<% if ((index + 1) % total_rows == 0 || index == instagram.length) { %>
+					</div>
+				<% } %>
+			<% } %>
+		<% }); %>
+	</script>
+</div>

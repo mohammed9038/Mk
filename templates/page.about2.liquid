@@ -1,0 +1,15 @@
+{% comment %}
+  The contents of the product.liquid template can be found in /sections/about2.liquid
+{% endcomment %}
+{% section 'about2' %}
+{%- if page.content != blank -%}
+    <div class="container col-main-containter">
+	  <div class="row">
+		<div class="col-main col-12">
+		  <div class="col-wrapper-main cdzbox">
+			  {{ page.content }}
+		  </div>
+		</div>
+	  </div>
+	</div>          
+{%- endif -%}

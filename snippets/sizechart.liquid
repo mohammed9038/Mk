@@ -1,0 +1,13 @@
+<div data-role="cdz-popup-section" class="cdz-popup popup-sizechart" id="popup-sizechart"  data-cdzwidget='{"codazon.cdzPopUp" : {"overrideOthers" : "false", "section" : "sizechart"}}'>
+	<div class="sizechart">
+		<div class="sizechart-content">
+		{% unless html_sizechart == blank %}{{html_sizechart}}{% endunless %}
+		{% unless image_sizechart == blank %}
+		<div class="sizechart-image">
+			<img class="img-responsive" src="{% comment ls-rpl %}{{image_sizechart | img_url : 'master'}}{% endcomment %}{%- capture LS_IMG_URL -%}{%- render "ls-img-url", image: image_sizechart, img_url : 'master' -%}{%- endcapture -%}{{LS_IMG_URL}}{% comment /ls-rpl %}{% endcomment %}" alt="{{sizechart_label}}" />
+		</div>
+		{% endunless %}
+		
+		</div>
+	</div>
+</div>

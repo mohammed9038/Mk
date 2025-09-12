@@ -1,0 +1,548 @@
+{%- comment %}<locksmith:f423>{% endcomment -%}
+  {%- assign locksmith_be6e_product__available = false %}{% assign locksmith_be6e_product__first_available_variant = nil %}{% assign locksmith_be6e_product__selected_variant = nil %}{% assign locksmith_be6e_product__selected_or_first_available_variant = nil %}{% assign locksmith_be6e_product__price = nil %}{% for variant in product.variants %}{% capture var %}{% render 'locksmith-variables', scope: 'subject', subject: variant, subject_parent: product, variable: 'transparent' %}{% endcapture %}{% if var == "true" %}{% else %}{% continue %}{% endif %}{% if locksmith_be6e_product__available == false and variant.available %}{% assign locksmith_be6e_product__available = true %}{% endif %}{% if locksmith_be6e_product__first_available_variant == nil and variant.available %}{% assign locksmith_be6e_product__first_available_variant = variant %}{% endif %}{% if locksmith_be6e_product__selected_variant == nil and variant.selected %}{% assign locksmith_be6e_product__selected_variant = variant %}{% endif %}{% if variant == product.selected_or_first_available_variant %}{% assign locksmith_be6e_product__selected_or_first_available_variant = product.selected_or_first_available_variant %}{% endif %}{% if locksmith_be6e_product__price == nil %}{% assign locksmith_be6e_product__price = variant.price %}{% endif %}{% endfor %}{% if locksmith_be6e_product__selected_or_first_available_variant == nil %}{% assign locksmith_be6e_product__selected_or_first_available_variant = locksmith_be6e_product__first_available_variant %}{% endif -%}
+{%- comment %}</locksmith:f423>{% endcomment -%}
+
+{% capture var %}{% render 'locksmith-variables', variable: 'access_granted', scope: 'subject', subject: product %}{% endcapture %}{% if var == 'true' %}{% assign locksmith_access_granted = true %}{% else %}{% assign locksmith_access_granted = false %}{% endif %}
+
+{%- assign list_custom_class = block.settings.list_custom_class -%}
+{%- assign list_alignment = block.settings.list_alignment -%}
+{%- assign enable_hover_thumbnail = block.settings.enable_hover_thumbnail -%}
+{%- assign enable_product_label = block.settings.enable_product_label -%}
+{%- assign enable_product_name = block.settings.enable_product_name -%}
+{%- assign enable_price = block.settings.enable_price -%}
+{%- assign enable_sku = block.settings.enable_sku -%}
+{%- assign enable_vendor = block.settings.enable_vendor -%}
+{%- assign enable_addto_cart = block.settings.enable_addto_cart -%}
+{%- assign enable_quickshop = block.settings.enable_quickshop -%}
+{%- assign enable_addto_compare = block.settings.enable_addto_compare -%}
+{%- assign enable_addto_wishlist = block.settings.enable_addto_wishlist -%}
+{%- assign enable_review = block.settings.enable_review -%}
+{%- assign enable_quantity_product = block.settings.enable_quantity_product -%}
+{%- assign enable_short_description = block.settings.enable_short_description -%}
+{%- assign enable_variant_product = block.settings.enable_variant_product -%}
+{%- assign show_product_text_align = block.settings.text_align -%}
+{%- assign thumbnail_width = '320' -%}
+{%- unless block.settings.thumbnail_width == blank -%}
+	{%- assign thumbnail_width = block.settings.thumbnail_width -%}
+{%- endunless -%}
+{%- assign thumbnail_height = '320' -%}
+{%- unless block.settings.thumbnail_height == blank -%}
+	{%- assign thumbnail_height = block.settings.thumbnail_height -%}
+{%- endunless -%}
+{%- assign short_description_length = '150' -%}
+{%- unless block.settings.short_description_length == blank -%}
+	{%- assign short_description_length = block.settings.short_description_length -%}
+{%- endunless -%}
+{%- assign show_prostyle = block.settings.show_prostyle -%}
+{%- assign slider_collection = block.settings.slider_collection -%}
+{%- assign special_product = block.settings.special_product -%}
+{%- assign show_special_product = block.settings.show_special_product -%}
+{%- assign products_count = '8' -%}
+{%- unless block.settings.products_count == blank -%}
+	{%- assign products_count = block.settings.products_count -%}
+{%- endunless -%}
+{%- assign items_slider = '4' -%}
+{%- unless block.settings.items_slider == blank -%}
+	{%- assign items_slider = block.settings.items_slider -%}
+{%- endunless -%}
+{%- assign items_1900 = '4' -%}
+{%- unless block.settings.items_1900 == blank -%}
+	{%- assign items_1900 = block.settings.items_1900 -%}
+{%- endunless -%}
+{%- assign items_1600 = '4' -%}
+{%- unless block.settings.items_1600 == blank -%}
+	{%- assign items_1600 = block.settings.items_1600 -%}
+{%- endunless -%}
+{%- assign items_1440 = '4' -%}
+{%- unless block.settings.items_1440 == blank -%}
+	{%- assign items_1440 = block.settings.items_1440 -%}
+{%- endunless -%}
+{%- assign items_1280 = '4' -%}
+{%- unless block.settings.items_1280 == blank -%}
+	{%- assign items_1280 = block.settings.items_1280 -%}
+{%- endunless -%}
+{%- assign items_980 = '3' -%}
+{%- unless block.settings.items_980 == blank -%}
+	{%- assign items_980 = block.settings.items_980 -%}
+{%- endunless -%}
+{%- assign items_768 = '2' -%}
+{%- unless block.settings.items_768 == blank -%}
+	{%- assign items_768 = block.settings.items_768 -%}
+{%- endunless -%}
+{%- assign items_480 = '2' -%}
+{%- unless block.settings.items_480 == blank -%}
+	{%- assign items_480 = block.settings.items_480 -%}
+{%- endunless -%}
+{%- assign items_320 = '2' -%}
+{%- unless block.settings.items_320 == blank -%}
+	{%- assign items_320 = block.settings.items_320 -%}
+{%- endunless -%}
+{%- assign items_0 = '2' -%}
+{%- unless block.settings.items_0 == blank -%}
+	{%- assign items_0 = block.settings.items_0 -%}
+{%- endunless -%}
+{%- assign items_margin = '20' -%}
+{%- unless block.settings.items_margin == blank -%}
+	{%- assign items_margin = block.settings.items_margin -%}
+{%- endunless -%}
+{%- assign show_slider = block.settings.show_slider -%}
+{%- assign slider_dots = block.settings.slider_dots -%}
+{%- assign slider_nav = block.settings.slider_nav -%}
+{%- assign total_rows = block.settings.total_rows -%}
+{%- capture data-owlslider -%}
+	{ "items": {{items_slider}}, "items_1900": {{items_1900}}, "items_1600": {{items_1600}}, "items_1440": {{items_1440}}, "items_1280": {{items_1280}}, "items_980": {{items_980}}, "items_768": {{items_768}}, "items_480": {{items_480}}, "items_320": {{items_320}}, "items_0": {{items_0}}, "margin": {{items_margin}}, "nav": {{slider_nav}}, "dots": {{slider_dots}}, "rtl": {{settings.enable_rtl_layout}}}
+{%- endcapture -%}
+<div class="block-products-list">
+<div class="products-list-wrapper">
+	{%- if show_special_product == true -%}
+		<div class="products items product-items clearfix product-list-style-02">
+		{%- assign product = all_products[special_product] -%}
+			<div class="item" {{ block.shopify_attributes }}>
+				<div class="product-miniature" {% unless product.variants.size == 1 or enable_variant_product == false %} data-cdzprewidget='{"codazon.cdzCartOption" : {"handle" : "{{ product.handle }}","wrap" : "#product-item-{{ forloop.index }}"}}' {% endunless %}>
+			<div class="product-item row {% if show_product_text_align == 'center' %} text-center {% elsif show_product_text_align == 'left' %} text-left {% else %} text-right {% endif %}">
+			  <div class="product-item-top col-5">
+				<div class="photo product-item-photo">
+					{% if enable_product_label %}
+						{% include 'product-label' with product %}
+					{% endif %}
+					{% assign img_size = thumbnail_width | append: 'x' | append: thumbnail_height %}
+					{% assign img_ratio = thumbnail_width | times: 1.0 | divided_by: thumbnail_height %}
+				    {% assign featured_image = locksmith_be6e_product__selected_or_first_available_variant.featured_image | default: product.featured_image %}
+					{%- unless product.featured_image == blank -%}
+					    <a href="{{ product.url | within: collection }}" class="product-image-container">
+					    	<span class="product-image-wrapper" style="padding-bottom:{{ 1 | divided_by: img_ratio | times: 100}}%;">
+					    		{%- if enable_variant_product -%}
+							    	{%- for image in product.images -%}
+									    {%- comment %}<locksmith:945f>{% endcomment -%}
+									      {%- capture var %}{% render 'locksmith-variables', scope: 'subject', subject: image, subject_parent: product, variable: 'transparent' %}{% endcapture %}{% if var == "true" %}{% else %}{% continue %}{% endif -%}
+									    {%- comment %}</locksmith:945f>{% endcomment -%}
+									    <img class="product-image-photo responsive-image__image lazyload {% if enable_hover_thumbnail == true%}main-img{% endif %} {% if featured_image != image %} hide {% else %} js-showImg {% endif %}"
+									    src="{{ 'loading-image.gif' | asset_url }}"
+									    data-src="{% comment ls-rpl %}{{ image | img_url: img_size }}{% endcomment %}{%- capture LS_IMG_URL -%}{%- render "ls-img-url", image: image, img_url: img_size -%}{%- endcapture -%}{{ LS_IMG_URL }}{% comment /ls-rpl %}{% endcomment %}"
+									    data-aspectratio="{{ image.aspect_ratio }}"
+									    data-sizes="{{img_size}}"
+									    tabindex="-1"
+									    alt="{% comment ls-rpl %}{{ image.alt | escape }}{% endcomment %}{%- capture LS_ALT -%}{%- render "ls-alt", image: image -%}{%- endcapture -%}{{ LS_ALT | escape }}{% comment /ls-rpl %}{% endcomment %}" data-image-id="{{ image.id }}">
+								    {%- endfor -%}
+								{%- else -%}
+								    <img class="product-image-photo responsive-image__image lazyload {% if enable_hover_thumbnail == true%}main-img{% endif %}"
+								    src="{{ 'loading-image.gif' | asset_url }}"
+								    data-src="{% comment ls-rpl %}{{ product.featured_image | img_url: img_size }}{% endcomment %}{%- capture LS_IMG_URL -%}{%- render "ls-img-url", image: product.featured_image, img_url: img_size -%}{%- endcapture -%}{{ LS_IMG_URL }}{% comment /ls-rpl %}{% endcomment %}"
+								    data-aspectratio="{{ product.featured_image.aspect_ratio }}"
+								    data-sizes="{{img_size}}"
+								    tabindex="-1"
+								    alt="{% comment ls-rpl %}{{ product.featured_image.alt | escape }}{% endcomment %}{%- capture LS_ALT -%}{%- render "ls-alt", image: product.featured_image -%}{%- endcapture -%}{{ LS_ALT | escape }}{% comment /ls-rpl %}{% endcomment %}">
+								{%- endif -%}
+								{%- if enable_hover_thumbnail == true -%}
+									{% if  product.images.size > 1 %}
+										<img class="product-image-photo responsive-image__image lazyload hovered-img"
+									    src="{{ 'loading-image.gif' | asset_url }}"
+									    data-src="{% comment ls-rpl %}{{ product.images[1] | img_url: img_size }}{% endcomment %}{%- capture LS_IMG_URL -%}{%- render "ls-img-url", image: product.images[1], img_url: img_size -%}{%- endcapture -%}{{ LS_IMG_URL }}{% comment /ls-rpl %}{% endcomment %}"
+									    data-aspectratio="{{ product.images[1].aspect_ratio }}"
+									    data-sizes="{{img_size}}"
+									    tabindex="-1"
+									    alt="{% comment ls-rpl %}{{ product.images[1].alt | escape }}{% endcomment %}{%- capture LS_ALT -%}{%- render "ls-alt", image: product.images[1] -%}{%- endcapture -%}{{ LS_ALT | escape }}{% comment /ls-rpl %}{% endcomment %}">
+									{%- else -%}
+										<img class="product-image-photo responsive-image__image lazyload hovered-img"
+									    src="{{ 'loading-image.gif' | asset_url }}"
+									    data-src="{% comment ls-rpl %}{{ product.images.last | img_url: img_size }}{% endcomment %}{%- capture LS_IMG_URL -%}{%- render "ls-img-url", image: product.images.last, img_url: img_size -%}{%- endcapture -%}{{ LS_IMG_URL }}{% comment /ls-rpl %}{% endcomment %}"
+									    data-aspectratio="{{ product.images.last.aspect_ratio }}"
+									    data-sizes="{{img_size}}"
+									    tabindex="-1"
+									    alt="{% comment ls-rpl %}{{ product.images.last.alt | escape }}{% endcomment %}{%- capture LS_ALT -%}{%- render "ls-alt", image: product.images.last -%}{%- endcapture -%}{{ LS_ALT | escape }}{% comment /ls-rpl %}{% endcomment %}">
+									{%- endif -%}
+								{%- endif -%}
+							</span>
+						</a>
+					{%- endunless -%}
+					{%- if product.featured_image == blank -%}
+						<a href="{{ product.url | within: collection }}" class="product-image-container">
+							<span class="product-image-wrapper" style="padding-bottom:{{ 1 | divided_by: img_ratio | times: 100}}%;">
+								<img id="Image-{{ featured_image.id }}-{{ responsive_image_counter }}"
+							    class="product-image-photo responsive-image__image lazyload"
+							    src="{{ 'loading-image.gif' | asset_url }}"
+							    data-src="{% comment ls-rpl %}{{ featured_image | img_url: img_size }}{% endcomment %}{%- capture LS_IMG_URL -%}{%- render "ls-img-url", image: featured_image, img_url: img_size -%}{%- endcapture -%}{{ LS_IMG_URL }}{% comment /ls-rpl %}{% endcomment %}"
+							    data-aspectratio="{{ featured_image.aspect_ratio }}"
+							    data-sizes="{{img_size}}"
+							    tabindex="-1"
+							    alt="{% comment ls-rpl %}{{ pfeatured_image.alt | escape }}{% endcomment %}{%- capture LS_ALT -%}{%- render "ls-alt", image: pfeatured_image -%}{%- endcapture -%}{{ LS_ALT | escape }}{% comment /ls-rpl %}{% endcomment %}">
+								
+							</span>
+						</a>
+					{%- endif -%} 
+				 	 <noscript>
+						<img class="product-image-photo responsive-image__image lazyload" src="{% comment ls-rpl %}{{ featured_image | img_url: img_size, scale: 2 }}{% endcomment %}{%- capture LS_IMG_URL -%}{%- render "ls-img-url", image: featured_image, img_url: img_size, scale: 2 -%}{%- endcapture -%}{{ LS_IMG_URL }}{% comment /ls-rpl %}{% endcomment %}" alt="{% comment ls-rpl %}{{ featured_image.alt | escape }}{% endcomment %}{%- capture LS_ALT -%}{%- render "ls-alt", image: featured_image -%}{%- endcapture -%}{{ LS_ALT | escape }}{% comment /ls-rpl %}{% endcomment %}">
+				  	</noscript>
+				{% if enable_quickshop %}
+				<a class="qs-button " href="javascript:void(0)" title="{{ 'products.general.quickshop' | t }}" data-role="cdz-popup-trigger" data-popup="popup-quickshop" data-qsurl='{{product.url}}'><span><span>{{ 'products.general.quickshop' | t }}</span></span></a>
+				{% endif %}
+				</div>	
+			  </div>
+			  <div class="product-item-bottom col-7">
+			    <div class="product name product-item-name">
+					<a class="product-item-link" href="{{ product.url | within: collection }}">{{ product.title }}</a>
+				</div>
+				{% if enable_sku %}
+					<div class="product-sku">{{product.variants[0].sku}}</div>
+				{% endif %}
+				{% if enable_vendor %}
+					<div class="product-vendor">{{ product.vendor }}</div>
+				{% endif %}
+				{% include 'product-reviews' %}
+				{% if enable_short_description %}
+					<div class="product description product-item-description">
+						<div class="product-description rte" itemprop="description">
+							
+						  {{ product.description | strip_html | truncate: short_description_length }}
+						</div>
+					</div>
+				{% endif %}
+			    {%- if enable_price -%}
+                {% if locksmith_access_granted %}
+			    <div class="product-price">
+					<div class="price">
+						{% assign variant = locksmith_be6e_product__selected_or_first_available_variant %}
+						<div class="product-single__prices{% if shop.taxes_included or shop.shipping_policy.body != blank %} product-single__prices--policy-enabled{% endif %}">
+			            <span class="visually-hidden">{{ 'products.product.regular_price' | t }}</span>
+			            <span class="product-single__price price-box" itemprop="price" content="{{ locksmith_be6e_product__price | divided_by: 100.00 }}">
+			              {{ variant.price | money }}
+			            </span>
+						  <span class="visually-hidden" aria-hidden="false">{{ 'products.product.sale_price' | t }}</span>
+						  <s class="product-single__sale-price {% if variant.compare_at_price < variant.price %}hide{% endif %}">
+							{{ variant.compare_at_price | money }}
+						  </s>			
+						{% include 'product-unit-price', variant: variant, wrapper_class: 'h5 d-block' %}
+			          </div>
+			        </div>
+			    </div>
+                {% endif %}
+				{%- endif -%}
+
+			    <form method="post" enctype="multipart/form-data"  data-form="cdz-mini-cart">
+			      	{% if enable_variant_product %}
+			          <div class="product-options">
+			              <input type="hidden" name="id" value="{{ locksmith_be6e_product__selected_or_first_available_variant.id }}">
+						  {%- unless product.variants.size == 1 -%}
+							  {%- for option in product.options_with_values -%}
+								  {% include 'swatch-option' with option.name, option_index : forloop.index0 %}
+							  {%- endfor -%}
+							  {% assign data_stock = "" %}
+								{% for variant in product.variants %}
+									{%- comment %}<locksmith:ce06>{% endcomment -%}
+									  {%- capture var %}{% render 'locksmith-variables', scope: 'subject', subject: variant, subject_parent: product, variable: 'transparent' %}{% endcapture %}{% if var == "true" %}{% else %}{% continue %}{% endif -%}
+									{%- comment %}</locksmith:ce06>{% endcomment -%}
+									{% assign data_stock = data_stock | append: "," | append:  variant.id | append: ":" | append: variant.inventory_quantity %}
+								{% endfor %}
+							  {% assign data_stock = data_stock  | replace_first: ',', '' %}
+								 <label class="cdz-stock-qty d-none" data-stock-product="{{ data_stock }}">
+								  </label>
+						  {%- endunless -%}
+			          </div>
+			      	{% else %}
+			      		<div class="hide clearfix"> 
+			              <select name="id">
+			              {% for variant in product.variants %}
+			                {%- comment %}<locksmith:bf16>{% endcomment -%}
+			                  {%- capture var %}{% render 'locksmith-variables', scope: 'subject', subject: variant, subject_parent: product, variable: 'transparent' %}{% endcapture %}{% if var == "true" %}{% else %}{% continue %}{% endif -%}
+			                {%- comment %}</locksmith:bf16>{% endcomment -%}
+			                {% if variant.available %}
+			                  <option value="{{ variant.id }}">
+			                    {{ variant.title }} - {{ variant.price | money_with_currency }}
+			                  </option>
+			                {% else %}
+			                  <option disabled="disabled">
+			                    {{ variant.title }} <ls-static-74886>- sold out</ls-static-74886>
+			                  </option>
+			                {% endif %}
+			              {% endfor %}
+			              </select>
+			          </div>
+			      	{% endif %}
+			      	<div class="qty-box {% if enable_quantity_product == false %}hide{% endif %}">
+						<label class="">{{ 'cart.label.qty' | t }}</label>
+						<input class="{% if enable_quantity_product == false %}hide{% endif %}" type="number" name="quantity" min="1" max="500" value="1">
+			      	</div>
+			      	{% if enable_addto_cart or enable_addto_wishlist or enable_addto_compare %}
+			          <div class="product-item-inner">
+						  <div class="product actions product-item-actions flex-grid">
+							  {% if enable_addto_cart %}
+							  <div class="actions-primary">
+								{%- if locksmith_be6e_product__available -%}
+									{%- if locksmith_be6e_product__selected_or_first_available_variant.inventory_quantity > 0 -%}
+										<button class="btn-cart {% if enable_variant_product == false and product.variants.size > 1 %}select-option{% endif %}" title="{{ 'cart.general.btn_addcart' | t }}" href="javascript:void(0)"  type="button" data-addCart data-cartHandle="{{ product.handle }}" {% if enable_variant_product == false and product.variants.size > 1 %} data-url="{{ product.url }}"{% endif %}>
+										  <span>{{ 'cart.general.btn_addcart' | t }}</span>
+										</button>
+									{%- else -%}
+										<button class="btn-cart {% if enable_variant_product == false and product.variants.size > 1 %}select-option{% endif %}" title="{{ 'cart.general.btn_preorder' | t }}" href="javascript:void(0)"  type="button" data-addCart data-cartHandle="{{ product.handle }}" {% if enable_variant_product == false and product.variants.size > 1 %}data-url="{{ product.url }}"{% endif %}>
+											<span>{{ 'cart.general.btn_preorder' | t }}</span>
+										</button>
+									{%- endif -%}
+								{%- else -%}
+									<button class="btn-cart disabled" disabled="disabled" type="button">
+										  {{ 'cart.general.btn_sold_out' | t }}
+									</button>
+								{%- endif -%}
+							  </div>
+							  {% endif %}
+							  <div class="actions-secondary">
+									{% if enable_addto_wishlist %}
+								    <a class="action towishlist " href="javascript:void(0);" data-title="{{ product.title }}"  data-post="{{ product.handle }}" data-action="add-to-wishlist" title="{{ 'wishlist.general.add_wishlist' | t }}">
+									  <span>{{ 'wishlist.general.add_wishlist' | t }}</span>
+									</a>
+									{% endif %}
+									{% if enable_addto_compare %}
+									<a class="action tocompare" href="javascript:void(0);" data-title="{{ product.title }}"  data-post="{{ product.handle }}" data-action="add-to-compare" title="{{ 'compare.general.add_compare' | t }}">
+									  <span>{{ 'compare.general.add_compare' | t }}</span>
+									</a>
+									{% endif %}
+							  </div>
+						  </div>
+			      	  </div>     	   
+			      	{% endif %}
+			    </form>
+			  </div>
+			</div>
+		  </div> 
+			</div>
+		</div>
+	{%- else -%}
+	{% include 'grid_style' with id: block.id %}
+	<div class="style-{{block.id}} products items product-items clearfix product-list-style-02 {% if show_slider ==  '0'%} no_slider{% elsif show_slider ==  '1' %} cdzowlslider owl-carousel {% elsif show_slider ==  '2' %} cdz-loadmore-products{% endif %}" {% if show_slider ==  '1' %} data-cdzwidget = '{"codazon.owlSlider": {{data-owlslider}}}' {% endif %}>
+	  {%- assign order_by = block.settings.order_by -%}
+	  {%- assign order = block.settings.order -%}
+	  {%- if order == 'asc' -%}
+	  {%- assign products = collections[slider_collection].products | sort: order_by -%}
+	  {%- else -%}
+	  {%- assign products = collections[slider_collection].products | sort: order_by | reverse -%}
+	  {%- endif -%}
+      {%- comment %}<locksmith:a404>{% endcomment -%}
+        {%- assign locksmith_36d4_forloop__size = 0 %}{%- for product in products limit: products_count -%}{% capture var %}{% render 'locksmith-variables', scope: 'subject', subject: product, variable: 'transparent' %}{% endcapture %}{% if var == 'true' %}{% assign locksmith_36d4_forloop__size = locksmith_36d4_forloop__size | plus: 1 %}{% endif %}{% endfor %}{% assign locksmith_36d4_forloop__index = nil -%}
+      {%- comment %}</locksmith:a404>{% endcomment -%}
+      {%- for product in products limit: products_count -%}
+	  {%- comment %}<locksmith:f11f>{% endcomment -%}
+	    {%- capture var %}{% render 'locksmith-variables', scope: 'subject', subject: product, variable: 'transparent' %}{% endcapture %}{% if var == "true" %}{% if locksmith_36d4_forloop__index == nil %}{% assign locksmith_36d4_forloop__index = 1 %}{% assign locksmith_36d4_forloop__index0 = 0 %}{% else %}{% assign locksmith_36d4_forloop__index = locksmith_36d4_forloop__index | plus: 1 %}{% assign locksmith_36d4_forloop__index0 = locksmith_36d4_forloop__index0 | plus: 1 %}{% endif %}{% if locksmith_36d4_forloop__index == 1 %}{% assign locksmith_36d4_forloop__first = true %}{% else %}{% assign locksmith_36d4_forloop__first = false %}{% endif %}{% if locksmith_36d4_forloop__index == locksmith_36d4_forloop__size %}{% assign locksmith_36d4_forloop__last = true %}{% else %}{% assign locksmith_36d4_forloop__last = false %}{% endif %}{% assign locksmith_36d4_forloop__rindex = locksmith_36d4_forloop__size | minus: locksmith_36d4_forloop__index | minus: 1 %}{% assign locksmith_36d4_forloop__rindex0 = locksmith_36d4_forloop__size | minus: locksmith_36d4_forloop__index0 | minus: 1 %}{% else %}{% continue %}{% endif -%}
+	  {%- comment %}</locksmith:f11f>{% endcomment -%}
+	  {%- assign featured = product -%}
+	  {%- assign modulo = locksmith_36d4_forloop__index | modulo: total_rows -%}
+	  {%- if total_rows >  1 and show_slider ==  '1' -%}
+		{%- if modulo == 1 -%}
+			<div class="items">
+		{%- endif -%}
+	  {%- endif -%}
+	  <div class="item">
+		  <div class="product-miniature" {% unless product.variants.size == 1 or enable_variant_product == false %} data-cdzprewidget='{"codazon.cdzCartOption" : {"handle" : "{{ product.handle }}","wrap" : "#product-item-{{ locksmith_36d4_forloop__index }}"}}' {% endunless %}>
+			<div class="product-item row {% if show_product_text_align == 'center' %} text-center {% elsif show_product_text_align == 'left' %} text-left {% else %} text-right {% endif %}">
+			  <div class="product-item-top col-5">
+				<div class="photo product-item-photo">
+					{% if enable_product_label %}
+						{% include 'product-label' with product %}
+					{% endif %}
+					{% assign img_size = thumbnail_width | append: 'x' | append: thumbnail_height %}
+					{% assign img_ratio = thumbnail_width | times: 1.0 | divided_by: thumbnail_height %}
+				    {% assign featured_image = locksmith_be6e_product__selected_or_first_available_variant.featured_image | default: product.featured_image %}
+					{%- unless product.featured_image == blank -%}
+					    <a href="{{ product.url | within: collection }}" class="product-image-container">
+					    	<span class="product-image-wrapper" style="padding-bottom:{{ 1 | divided_by: img_ratio | times: 100}}%;">
+					    		{%- if enable_variant_product -%}
+							    	{%- for image in product.images -%}
+									    {%- comment %}<locksmith:eb57>{% endcomment -%}
+									      {%- capture var %}{% render 'locksmith-variables', scope: 'subject', subject: image, subject_parent: product, variable: 'transparent' %}{% endcapture %}{% if var == "true" %}{% else %}{% continue %}{% endif -%}
+									    {%- comment %}</locksmith:eb57>{% endcomment -%}
+									    <img class="product-image-photo responsive-image__image lazyload {% if enable_hover_thumbnail == true%}main-img{% endif %} {% if featured_image != image %} hide {% else %} js-showImg {% endif %}"
+									    src="{{ 'loading-image.gif' | asset_url }}"
+									    data-src="{% comment ls-rpl %}{{ image | img_url: img_size }}{% endcomment %}{%- capture LS_IMG_URL -%}{%- render "ls-img-url", image: image, img_url: img_size -%}{%- endcapture -%}{{ LS_IMG_URL }}{% comment /ls-rpl %}{% endcomment %}"
+									    data-aspectratio="{{ image.aspect_ratio }}"
+									    data-sizes="{{img_size}}"
+									    tabindex="-1"
+									    alt="{% comment ls-rpl %}{{ image.alt | escape }}{% endcomment %}{%- capture LS_ALT -%}{%- render "ls-alt", image: image -%}{%- endcapture -%}{{ LS_ALT | escape }}{% comment /ls-rpl %}{% endcomment %}" data-image-id="{{ image.id }}">
+								    {%- endfor -%}
+								{%- else -%}
+								    <img class="product-image-photo responsive-image__image lazyload {% if enable_hover_thumbnail == true%}main-img{% endif %}"
+								    src="{{ 'loading-image.gif' | asset_url }}"
+								    data-src="{% comment ls-rpl %}{{ product.featured_image | img_url: img_size }}{% endcomment %}{%- capture LS_IMG_URL -%}{%- render "ls-img-url", image: product.featured_image, img_url: img_size -%}{%- endcapture -%}{{ LS_IMG_URL }}{% comment /ls-rpl %}{% endcomment %}"
+								    data-aspectratio="{{ product.featured_image.aspect_ratio }}"
+								    data-sizes="{{img_size}}"
+								    tabindex="-1"
+								    alt="{% comment ls-rpl %}{{ product.featured_image.alt | escape }}{% endcomment %}{%- capture LS_ALT -%}{%- render "ls-alt", image: product.featured_image -%}{%- endcapture -%}{{ LS_ALT | escape }}{% comment /ls-rpl %}{% endcomment %}">
+								{%- endif -%}
+								{%- if enable_hover_thumbnail == true -%}
+									{% if  product.images.size > 1 %}
+										<img class="product-image-photo responsive-image__image lazyload hovered-img"
+									    src="{{ 'loading-image.gif' | asset_url }}"
+									    data-src="{% comment ls-rpl %}{{ product.images[1] | img_url: img_size }}{% endcomment %}{%- capture LS_IMG_URL -%}{%- render "ls-img-url", image: product.images[1], img_url: img_size -%}{%- endcapture -%}{{ LS_IMG_URL }}{% comment /ls-rpl %}{% endcomment %}"
+									    data-aspectratio="{{ product.images[1].aspect_ratio }}"
+									    data-sizes="{{img_size}}"
+									    tabindex="-1"
+									    alt="{% comment ls-rpl %}{{ product.images[1].alt | escape }}{% endcomment %}{%- capture LS_ALT -%}{%- render "ls-alt", image: product.images[1] -%}{%- endcapture -%}{{ LS_ALT | escape }}{% comment /ls-rpl %}{% endcomment %}">
+									{%- else -%}
+										<img class="product-image-photo responsive-image__image lazyload hovered-img"
+									    src="{{ 'loading-image.gif' | asset_url }}"
+									    data-src="{% comment ls-rpl %}{{ product.images.last | img_url: img_size }}{% endcomment %}{%- capture LS_IMG_URL -%}{%- render "ls-img-url", image: product.images.last, img_url: img_size -%}{%- endcapture -%}{{ LS_IMG_URL }}{% comment /ls-rpl %}{% endcomment %}"
+									    data-aspectratio="{{ product.images.last.aspect_ratio }}"
+									    data-sizes="{{img_size}}"
+									    tabindex="-1"
+									    alt="{% comment ls-rpl %}{{ product.images.last.alt | escape }}{% endcomment %}{%- capture LS_ALT -%}{%- render "ls-alt", image: product.images.last -%}{%- endcapture -%}{{ LS_ALT | escape }}{% comment /ls-rpl %}{% endcomment %}">
+									{%- endif -%}
+								{%- endif -%}
+							</span>
+						</a>
+					{%- endunless -%}
+					{%- if product.featured_image == blank -%}
+						<a href="{{ product.url | within: collection }}" class="product-image-container">
+							<span class="product-image-wrapper" style="padding-bottom:{{ 1 | divided_by: img_ratio | times: 100}}%;">
+								<img id="Image-{{ featured_image.id }}-{{ responsive_image_counter }}"
+							    class="product-image-photo responsive-image__image lazyload"
+							    src="{{ 'loading-image.gif' | asset_url }}"
+							    data-src="{% comment ls-rpl %}{{ featured_image | img_url: img_size }}{% endcomment %}{%- capture LS_IMG_URL -%}{%- render "ls-img-url", image: featured_image, img_url: img_size -%}{%- endcapture -%}{{ LS_IMG_URL }}{% comment /ls-rpl %}{% endcomment %}"
+							    data-aspectratio="{{ featured_image.aspect_ratio }}"
+							    data-sizes="{{img_size}}"
+							    tabindex="-1"
+							    alt="{% comment ls-rpl %}{{ pfeatured_image.alt | escape }}{% endcomment %}{%- capture LS_ALT -%}{%- render "ls-alt", image: pfeatured_image -%}{%- endcapture -%}{{ LS_ALT | escape }}{% comment /ls-rpl %}{% endcomment %}">
+								
+							</span>
+						</a>
+					{%- endif -%} 
+				 	 <noscript>
+						<img class="product-image-photo responsive-image__image lazyload" src="{% comment ls-rpl %}{{ featured_image | img_url: img_size, scale: 2 }}{% endcomment %}{%- capture LS_IMG_URL -%}{%- render "ls-img-url", image: featured_image, img_url: img_size, scale: 2 -%}{%- endcapture -%}{{ LS_IMG_URL }}{% comment /ls-rpl %}{% endcomment %}" alt="{% comment ls-rpl %}{{ featured_image.alt | escape }}{% endcomment %}{%- capture LS_ALT -%}{%- render "ls-alt", image: featured_image -%}{%- endcapture -%}{{ LS_ALT | escape }}{% comment /ls-rpl %}{% endcomment %}">
+				  	</noscript>
+				{% if enable_quickshop %}
+				<a class="qs-button " href="javascript:void(0)" title="{{ 'products.general.quickshop' | t }}" data-role="cdz-popup-trigger" data-popup="popup-quickshop" data-qsurl='{{product.url}}'><span><span>{{ 'products.general.quickshop' | t }}</span></span></a>
+				{% endif %}
+				</div>	
+			  </div>
+			  <div class="product-item-bottom col-7">
+			    <div class="product name product-item-name">
+					<a class="product-item-link" href="{{ product.url | within: collection }}">{{ product.title }}</a>
+				</div>
+				{% if enable_sku %}
+					<div class="product-sku">{{product.variants[0].sku}}</div>
+				{% endif %}
+				{% if enable_vendor %}
+					<div class="product-vendor">{{ product.vendor }}</div>
+				{% endif %}
+				{% include 'product-reviews' %}
+				{% if enable_short_description %}
+					<div class="product description product-item-description">
+						<div class="product-description rte" itemprop="description">
+							
+						  {{ product.description | strip_html | truncate: short_description_length }}
+						</div>
+					</div>
+				{% endif %}
+			    {%- if enable_price -%}
+			    <div class="product-price">
+					<div class="price">
+						{% assign variant = locksmith_be6e_product__selected_or_first_available_variant %}
+						<div class="product-single__prices{% if shop.taxes_included or shop.shipping_policy.body != blank %} product-single__prices--policy-enabled{% endif %}">
+			            <span class="visually-hidden">{{ 'products.product.regular_price' | t }}</span>
+			            <span class="product-single__price price-box" itemprop="price" content="{{ locksmith_be6e_product__price | divided_by: 100.00 }}">
+			              {{ variant.price | money }}
+			            </span>
+						  <span class="visually-hidden" aria-hidden="false">{{ 'products.product.sale_price' | t }}</span>
+						  <s class="product-single__sale-price {% if variant.compare_at_price < variant.price %}hide{% endif %}">
+							{{ variant.compare_at_price | money }}
+						  </s>			
+						{% include 'product-unit-price', variant: variant, wrapper_class: 'h5 d-block' %}
+			          </div>
+			        </div>
+			    </div>
+				{%- endif -%}
+
+			    <form method="post" enctype="multipart/form-data"  data-form="cdz-mini-cart">
+			      	{% if enable_variant_product %}
+			          <div class="product-options">
+			              <input type="hidden" name="id" value="{{ locksmith_be6e_product__selected_or_first_available_variant.id }}">
+						  {%- unless product.variants.size == 1 -%}
+							  {%- for option in product.options_with_values -%}
+								  {% include 'swatch-option' with option.name, option_index : forloop.index0 %}
+							  {%- endfor -%}
+							  {% assign data_stock = "" %}
+								{% for variant in product.variants %}
+									{%- comment %}<locksmith:f35c>{% endcomment -%}
+									  {%- capture var %}{% render 'locksmith-variables', scope: 'subject', subject: variant, subject_parent: product, variable: 'transparent' %}{% endcapture %}{% if var == "true" %}{% else %}{% continue %}{% endif -%}
+									{%- comment %}</locksmith:f35c>{% endcomment -%}
+									{% assign data_stock = data_stock | append: "," | append:  variant.id | append: ":" | append: variant.inventory_quantity %}
+								{% endfor %}
+							  {% assign data_stock = data_stock  | replace_first: ',', '' %}
+								 <label class="cdz-stock-qty d-none" data-stock-product="{{ data_stock }}">
+								  </label>
+						  {%- endunless -%}
+			          </div>
+			      	{% else %}
+			      		<div class="hide clearfix"> 
+			              <select name="id">
+			              {% for variant in product.variants %}
+			                {%- comment %}<locksmith:764e>{% endcomment -%}
+			                  {%- capture var %}{% render 'locksmith-variables', scope: 'subject', subject: variant, subject_parent: product, variable: 'transparent' %}{% endcapture %}{% if var == "true" %}{% else %}{% continue %}{% endif -%}
+			                {%- comment %}</locksmith:764e>{% endcomment -%}
+			                {% if variant.available %}
+			                  <option value="{{ variant.id }}">
+			                    {{ variant.title }} - {{ variant.price | money_with_currency }}
+			                  </option>
+			                {% else %}
+			                  <option disabled="disabled">
+			                    {{ variant.title }} <ls-static-940314>- sold out</ls-static-940314>
+			                  </option>
+			                {% endif %}
+			              {% endfor %}
+			              </select>
+			          </div>
+			      	{% endif %}
+			      	<div class="qty-box {% if enable_quantity_product == false %}hide{% endif %}">
+						<label class="">{{ 'cart.label.qty' | t }}</label>
+						<input class="{% if enable_quantity_product == false %}hide{% endif %}" type="number" name="quantity" min="1" max="500" value="1">
+			      	</div>
+					
+					
+			      	{% if enable_addto_cart or enable_addto_wishlist or enable_addto_compare %}
+			          <div class="product-item-inner">
+						  <div class="product actions product-item-actions flex-grid">
+							  {% if enable_addto_cart %}
+							  <div class="actions-primary">
+								{%- if locksmith_be6e_product__available -%}
+									{%- if locksmith_be6e_product__selected_or_first_available_variant.inventory_quantity > 0 -%}
+										<button class="btn-cart {% if enable_variant_product == false and product.variants.size > 1 %}select-option{% endif %}" title="{{ 'cart.general.btn_addcart' | t }}" href="javascript:void(0)"  type="button" data-addCart data-cartHandle="{{ product.handle }}" {% if enable_variant_product == false and product.variants.size > 1 %} data-url="{{ product.url }}"{% endif %}>
+										  <span>{{ 'cart.general.btn_addcart' | t }}</span>
+										</button>
+									{%- else -%}
+										<button class="btn-cart {% if enable_variant_product == false and product.variants.size > 1 %}select-option{% endif %}" title="{{ 'cart.general.btn_preorder' | t }}" href="javascript:void(0)"  type="button" data-addCart data-cartHandle="{{ product.handle }}" {% if enable_variant_product == false and product.variants.size > 1 %}data-url="{{ product.url }}"{% endif %}>
+											<span>{{ 'cart.general.btn_preorder' | t }}</span>
+										</button>
+									{%- endif -%}
+								{%- else -%}
+									<button class="btn-cart disabled" disabled="disabled" type="button">
+										  {{ 'cart.general.btn_sold_out' | t }}
+									</button>
+								{%- endif -%}
+							  </div>
+							  {% endif %}
+							  <div class="actions-secondary">
+									{% if enable_addto_wishlist %}
+								    <a class="action towishlist " href="javascript:void(0);" data-title="{{ product.title }}"  data-post="{{ product.handle }}" data-action="add-to-wishlist" title="{{ 'wishlist.general.add_wishlist' | t }}">
+									  <span>{{ 'wishlist.general.add_wishlist' | t }}</span>
+									</a>
+									{% endif %}
+									{% if enable_addto_compare %}
+									<a class="action tocompare" href="javascript:void(0);" data-title="{{ product.title }}"  data-post="{{ product.handle }}" data-action="add-to-compare" title="{{ 'compare.general.add_compare' | t }}">
+									  <span>{{ 'compare.general.add_compare' | t }}</span>
+									</a>
+									{% endif %}
+							  </div>
+						  </div>
+			      	  </div>     	   
+			      	{% endif %}
+			    </form>
+			  </div>
+			</div>
+		  </div>
+  		 </div>
+	  {%- if total_rows >  1 and show_slider ==  '1' -%}
+		{%- if modulo == 0 or locksmith_36d4_forloop__last -%}
+		  </div>
+		  {%- endif -%}
+	  {%- endif -%}
+	  {%- endfor -%}
+	</div>
+	{%- endif -%}
+</div>
+</div>

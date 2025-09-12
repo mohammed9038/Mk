@@ -1,0 +1,31 @@
+<div class="main-container col1-layout cms-page">
+  <div class="main">
+    <div class="content-breadcrums">
+      <div class="container">
+        <div class="row">
+          <div class="col-sm-12">
+            {% include 'breadcrumb' %}
+          </div>
+        </div>
+      </div>    
+    </div>
+    <div class="container col-main-containter">
+      <div class="row">
+        <div class="col-main col-12">
+          <div class="col-wrapper-main">
+            <div class="section-header text-center">
+              <h1 class="text-uppercase">{{ page.title }}</h1>
+            </div>
+            <div class="rte std">
+              {{ page.content }}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{%- style -%}
+    .section-header{margin-bottom: 1rem;}
+	.col-wrapper-main {max-width: 1000px; margin:0 auto 2rem;}
+{%- endstyle -%}

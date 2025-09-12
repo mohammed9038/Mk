@@ -1,0 +1,77 @@
+{%- assign originalLanguage = shop.metafields.ls-settings.originalLanguage -%}
+{%- if originalLanguage.type == "json" -%}
+    {%- assign originalLanguage = originalLanguage.value -%}
+{%- endif -%}
+{%- assign originalLanguageCode = originalLanguage.code -%}
+{%- assign targetLanguages = shop.metafields.ls-settings.targetLanguages -%}
+{%- if targetLanguages.type == "json" -%}
+    {%- assign targetLanguages = targetLanguages.value -%}
+{%- endif -%}
+{%- assign languagesCodes = targetLanguages | map: 'code' -%}
+{%- assign languagesCodes = originalLanguageCode | split: "," | concat: languagesCodes -%}
+{%- assign targetCurrencies = shop.metafields.ls-settings.targetCurrencies -%}
+{%- if targetCurrencies.type == "json" -%}
+    {%- assign targetCurrencies = targetCurrencies.value -%}
+{%- endif -%}
+{%- assign defaultCurrency = shop.metafields.ls-settings.defaultCurrency -%}
+{%- if defaultCurrency.type == "json" -%}
+    {%- assign defaultCurrency = defaultCurrency.value -%}
+{%- endif -%}
+{%- assign currenciesCodes = targetCurrencies | map: 'code' -%}
+{%- assign currenciesCodes = defaultCurrency.code | split: "," | concat: currenciesCodes -%}
+
+{
+    {%- for languageCode in languagesCodes -%}
+        {%- if languageCode == originalLanguageCode -%}
+            {%- assign localizationRecommendationAlertNamespace = "recommendation-alert" | md5 | slice: 0, 14 | prepend: "ls-ln-" -%}
+            {%- assign localizationSwitchersNamespace = "switchers" | md5 | slice: 0, 14 | prepend: "ls-ln-" -%}
+            {%- assign localizationLanguagesNamespace = "languages" | md5 | slice: 0, 14 | prepend: "ls-ln-" -%}
+            {%- assign localizationCurrenciesNamespace = "currencies" | md5 | slice: 0, 14 | prepend: "ls-ln-" -%}
+        {%- else -%}
+            {%- assign localizationRecommendationAlertNamespace = "recommendation-alert-" | append: languageCode | md5 | slice: 0, 14 | prepend: "ls-ln-" -%}
+            {%- assign localizationSwitchersNamespace = "switchers-" | append: languageCode | md5 | slice: 0, 14 | prepend: "ls-ln-" -%}
+            {%- assign localizationLanguagesNamespace = "languages-" | append: languageCode | md5 | slice: 0, 14 | prepend: "ls-ln-" -%}
+            {%- assign localizationCurrenciesNamespace = "currencies-" | append: languageCode | md5 | slice: 0, 14 | prepend: "ls-ln-" -%}
+        {%- endif -%}
+        {{ languageCode | json }}: {
+            "recommendation_alert": {
+                "currency_language_suggestion": {{ shop.metafields[localizationRecommendationAlertNamespace]['currency_language_suggestion'] | json }},
+                "language_suggestion": {{ shop.metafields[localizationRecommendationAlertNamespace]['language_suggestion'] | json }},
+                "currency_suggestion": {{ shop.metafields[localizationRecommendationAlertNamespace]['currency_suggestion'] | json }},
+                "change": {{ shop.metafields[localizationRecommendationAlertNamespace]['change'] | json }}
+            },
+            "switchers": {
+                "ios_switcher": {
+                    "done": {{ shop.metafields[localizationSwitchersNamespace]['ios_switcher.done'] | json }},
+                    "close": {{ shop.metafields[localizationSwitchersNamespace]['ios_switcher.close'] | json }}
+                }
+            },
+            "languages": {
+                {%- capture loop -%}
+                    {%- for code in languagesCodes -%}
+                        {%- if code != languageCode and languageCode != originalLanguageCode -%}
+                            {%- continue -%}
+                        {%- endif -%}
+                        {%- assign metafieldKey = 'code-' | append: code -%}
+                        {%- assign languageValue = shop.metafields[localizationLanguagesNamespace][metafieldKey] -%}
+                        {%- if languageValue.type == "multi_line_text_field" -%}
+                            {%- assign languageValue = languageValue.value -%}
+                        {%- endif -%}
+                        ,{{ code | json }}: {{ languageValue | json }}
+                    {%- endfor -%}
+                {%- endcapture -%}
+                {{ loop | remove_first: "," }}
+            },
+            "currencies": {
+                {%- for code in currenciesCodes -%}
+                    {%- assign metafieldKey = 'code-' | append: code -%}
+                    {%- assign currencyValue = shop.metafields[localizationCurrenciesNamespace][metafieldKey] -%}
+                    {%- if currencyValue.type == "multi_line_text_field" -%}
+                        {%- assign currencyValue = currencyValue.value -%}
+                    {%- endif -%}
+                    {{ code | json }}: {{ currencyValue | json }}{%- if forloop.last == false -%},{%- endif -%}
+                {%- endfor -%}
+            }
+        }{%- if forloop.last == false -%},{%- endif -%}
+    {%- endfor -%}
+}

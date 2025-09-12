@@ -1,0 +1,113 @@
+{%- if article == blank -%}
+	<div class="post-top">
+			{%- assign img_size = thumbnail_width | append: 'x' | append: thumbnail_height -%}
+			{%- assign img_ratio = thumbnail_width | times: 1.0 | divided_by: thumbnail_height -%}
+			<a class="post-img abs-img" href="#" style="padding-bottom:{{ 1 | divided_by: img_ratio | times: 100}}%;">
+			<img class="article__image responsive-image__image lazyload" 
+				    data-src="{% comment ls-rpl %}{{ article.image | img_url: img_size }}{% endcomment %}{%- capture LS_IMG_URL -%}{%- render "ls-img-url", image: article.image, img_url: img_size -%}{%- endcapture -%}{{ LS_IMG_URL }}{% comment /ls-rpl %}{% endcomment %}"
+				    data-aspectratio="{{ article.image.aspect_ratio }}"
+				    data-sizes="{{img_size}}"
+				    tabindex="-1"
+				    alt="{% comment ls-rpl %}{{ article.image.alt | escape }}{% endcomment %}{%- capture LS_ALT -%}{%- render "ls-alt", image: article.image -%}{%- endcapture -%}{{ LS_ALT | escape }}{% comment /ls-rpl %}{% endcomment %}" data-image-id="{{ article.image.id }}"></a>
+		</div>
+		<div class="post-bottom">
+			<div class="post-bottom-inner">
+				<div class="post-head">
+					 {%- if blog_cate -%}
+						<a class="post-category" href="#">{{ 'blogs.article.article_cate' | t }}</a>
+					{%- endif -%}
+					{%- if blog_date -%}
+					<div class="post-date">
+						<time datetime="{{ 'now' | date: blog_date_format }}">{{ 'now' | date: blog_date_format }}</time>
+					</div>
+					{%- endif -%}
+				</div>
+				<div class="post-title">
+					<a href="#" class="post-item-link" title="{{ 'blogs.article.article_title' | t }}">{{ 'blogs.article.article_title' | t }}</a>
+				</div>
+				{%- if enable_short_description -%}
+					<div class="clearfix post-desc">
+						{{ 'blogs.article.article_desc' | t }}
+					</div>
+				{%- endif -%}
+				{%- if blog_author -%}
+					<div class="post-author">
+						<ls-static-51813>Codazon</ls-static-51813>
+					</div>
+				{%- endif -%}
+			</div>
+			<div class="post-footer">
+				{%- if blog_readmore -%}
+					<a class="more-link" href="#">{{ 'blogs.article.read_more' | t }}</a>
+				{%- endif -%}
+				<div class="addthis">
+					<div class="addthis_toolbox addthis_default_style" addthis:url="{{shop.url | append : article.url}}">
+						<a class="addthis_button_facebook"></a>
+						<a class="addthis_button_twitter"></a>
+						<a class="addthis_button_email"></a>
+						<a class="addthis_button_compact"></a>
+					</div>
+				</div>
+			</div>
+		</div>
+{%- else -%}
+		<div class="post-top">
+			{%- assign img_size = thumbnail_width | append: 'x' | append: thumbnail_height -%}
+			{%- assign img_ratio = thumbnail_width | times: 1.0 | divided_by: thumbnail_height -%}
+			<a class="post-img abs-img" href="{{article.url}}" style="padding-bottom:{{ 1 | divided_by: img_ratio | times: 100}}%;">
+			<img class="article__image responsive-image__image lazyload" 
+				    data-src="{% comment ls-rpl %}{{ article.image | img_url: img_size }}{% endcomment %}{%- capture LS_IMG_URL -%}{%- render "ls-img-url", image: article.image, img_url: img_size -%}{%- endcapture -%}{{ LS_IMG_URL }}{% comment /ls-rpl %}{% endcomment %}"
+				    data-aspectratio="{{ article.image.aspect_ratio }}"
+				    data-sizes="{{img_size}}"
+				    tabindex="-1"
+				    alt="{% comment ls-rpl %}{{ article.image.alt | escape }}{% endcomment %}{%- capture LS_ALT -%}{%- render "ls-alt", image: article.image -%}{%- endcapture -%}{{ LS_ALT | escape }}{% comment /ls-rpl %}{% endcomment %}" data-image-id="{{ article.image.id }}"></a>
+		   
+		</div>
+		<div class="post-bottom">
+			<div class="post-bottom-inner">
+				<div class="post-head">
+					 {%- if blog_cate -%}
+						<a class="post-category" href="{{blogs[cate_blogs].url}}">{{cate_blogs}}</a>
+					{%- endif -%}
+					{%- if blog_date -%}
+					<div class="post-date">
+						<time datetime="{{ article.published_at | date: blog_date_format }}">{{ article.published_at | date: blog_date_format }}</time>
+					</div>
+					{%- endif -%}
+				</div>
+				<div class="post-title">
+					<a href="{{article.url}}" class="post-item-link" title="{{article.title}}">{{ article.title }}</a>
+				</div>
+				{%- if enable_short_description -%}
+					{%- if article.excerpt.size > 0 -%}
+						<div class="clearfix post-desc">
+						  {{ article.excerpt | strip_html | truncate: short_description_length }}
+						</div>
+						{%- else -%}
+						<div class="clearfix post-desc">
+						  {{ article.content | strip_html | truncate: short_description_length }}
+						</div>
+					{%- endif -%}
+				{%- endif -%}
+				{%- if blog_author -%}
+					<div class="post-author">
+						{{ article.author }}
+					</div>
+				{%- endif -%}
+			</div>
+			<div class="post-footer">
+				{%- if blog_readmore -%}
+					<a class="more-link" href="{{article.url}}">{{ 'blogs.article.read_more' | t }}</a>
+				{%- endif -%}
+				<div class="addthis">
+					<div class="addthis_toolbox addthis_default_style" addthis:url="{{shop.url | append : article.url}}">
+						<a class="addthis_button_facebook"></a>
+						<a class="addthis_button_twitter"></a>
+						<a class="addthis_button_email"></a>
+						<a class="addthis_button_compact"></a>
+					</div>
+				</div>
+				
+			</div>
+		</div>
+{%- endif -%}

@@ -1,0 +1,427 @@
+{%- assign title_text_align = section.settings.title_text_align -%}
+{%- assign enable_full_container = section.settings.enable_full_container -%}
+{%- assign custom_class = section.settings.custom_class -%}
+{%- assign custom_css_inline = section.settings.custom_css_inline -%}
+{%- assign block_background_color = section.settings.block_background_color -%}
+{%- assign block_background_image = section.settings.block_background_image -%}
+{%- assign block_background_image_option = section.settings.block_background_image_option -%}
+{%- assign enable_background_image_fullwidth = section.settings.enable_background_image_fullwidth -%}
+{%- assign items_count = '8' -%}
+{%- unless section.settings.items_count == blank -%}
+	{%- assign items_count = section.settings.items_count -%}
+{%- endunless -%}
+{%- assign items_slider = '4' -%}
+{%- unless section.settings.items_slider == blank -%}
+	{%- assign items_slider = section.settings.items_slider -%}
+{%- endunless -%}
+{%- assign items_1900 = '4' -%}
+{%- unless section.settings.items_1900 == blank -%}
+	{%- assign items_1900 = section.settings.items_1900 -%}
+{%- endunless -%}
+{%- assign items_1600 = '4' -%}
+{%- unless section.settings.items_1600 == blank -%}
+	{%- assign items_1600 = section.settings.items_1600 -%}
+{%- endunless -%}
+{%- assign items_1440 = '4' -%}
+{%- unless section.settings.items_1440 == blank -%}
+	{%- assign items_1440 = section.settings.items_1440 -%}
+{%- endunless -%}
+{%- assign items_1280 = '4' -%}
+{%- unless section.settings.items_1280 == blank -%}
+	{%- assign items_1280 = section.settings.items_1280 -%}
+{%- endunless -%}
+{%- assign items_980 = '3' -%}
+{%- unless section.settings.items_980 == blank -%}
+	{%- assign items_980 = section.settings.items_980 -%}
+{%- endunless -%}
+{%- assign items_768 = '2' -%}
+{%- unless section.settings.items_768 == blank -%}
+	{%- assign items_768 = section.settings.items_768 -%}
+{%- endunless -%}
+{%- assign items_480 = '2' -%}
+{%- unless section.settings.items_480 == blank -%}
+	{%- assign items_480 = section.settings.items_480 -%}
+{%- endunless -%}
+{%- assign items_320 = '2' -%}
+{%- unless section.settings.items_320 == blank -%}
+	{%- assign items_320 = section.settings.items_320 -%}
+{%- endunless -%}
+{%- assign items_0 = '2' -%}
+{%- unless section.settings.items_0 == blank -%}
+	{%- assign items_0 = section.settings.items_0 -%}
+{%- endunless -%}
+{%- assign items_margin = '20' -%}
+{%- unless section.settings.items_margin == blank -%}
+	{%- assign items_margin = section.settings.items_margin -%}
+{%- endunless -%}
+{%- assign show_slider = section.settings.show_slider -%}
+{%- assign slider_dots = section.settings.slider_dots -%}
+{%- assign slider_nav = section.settings.slider_nav -%}
+{%- assign total_rows = section.settings.total_rows -%}
+{%- capture data-owlslider -%}
+	{ "items": {{items_slider}}, "items_1900": {{items_1900}}, "items_1600": {{items_1600}}, "items_1440": {{items_1440}}, "items_1280": {{items_1280}}, "items_980": {{items_980}}, "items_768": {{items_768}}, "items_480": {{items_480}}, "items_320": {{items_320}}, "items_0": {{items_0}}, "margin": {{items_margin}}, "nav": {{slider_nav}}, "dots": {{slider_dots}}, "rtl": {{settings.enable_rtl_layout}}}
+{%- endcapture -%}
+<div data-section-id="{{ section.id }}" data-section-type="home-advertising-section" id="{{ section.id }}"> 
+	<div class="cdz-home-block wrapper-adv-style-08 {% unless custom_class == blank %}{{custom_class}}{% endunless %}" style="{% if enable_background_image_fullwidth %}{% unless block_background_color == blank %}background-color: {{block_background_color}};{% endunless %}{% unless block_background_image == blank %}background: {{block_background_color}} url({% comment ls-rpl %}{{block_background_image | img_url: 'master' }}{% endcomment %}{%- capture LS_IMG_URL -%}{%- render "ls-img-url", image: block_background_image, img_url: 'master' -%}{%- endcapture -%}{{LS_IMG_URL }}{% comment /ls-rpl %}{% endcomment %}) {{block_background_image_option}};{% endunless%}{{custom_css_inline}}{% endif %}">
+		<div class="container{% if enable_full_container %}-fluid{% endif %}">
+			<div class="home-block" style="{% if enable_background_image_fullwidth == false %}{% unless block_background_color == blank %}background-color: {{block_background_color}};{% endunless %}{% unless block_background_image == blank %}background: {{block_background_color}} url({% comment ls-rpl %}{{block_background_image | img_url: 'master' }}{% endcomment %}{%- capture LS_IMG_URL -%}{%- render "ls-img-url", image: block_background_image, img_url: 'master' -%}{%- endcapture -%}{{LS_IMG_URL }}{% comment /ls-rpl %}{% endcomment %}) {{block_background_image_option}};{% endunless%}{{custom_css_inline}}{% endif %}">
+				<div class="block-wrapper">
+					<div class="row">
+						<div class="col-12 col-sm-3 col-lg-2">
+							{%- assign btn_text = section.settings.btn_text -%}
+							{%- assign btn_link = section.settings.btn_link -%}
+							{%- unless section.settings.title_block == blank and section.settings.sub_title == blank and btn_text == blank -%}
+							<div class="cdz-block-title block-title-{{title_text_align}}">
+								<p class="b-title h2"><span>{{ section.settings.title_block | escape }}</span></p>
+								<p class="title-desc"><span>{{ section.settings.sub_title | escape }}</span></p>
+								<p class="title-button"><a href="{% if btn_link == blank %}#{% else %}{{btn_link}}{% endif %}" class="ads-btn-link">{{btn_text}}</a></p>
+							</div>
+							{%- endunless -%}
+						</div>
+						<div class="col-12  col-sm-9 col-lg-10">
+							<div class="cdz-categories-slider">
+							{% include 'grid_style' with id: section.id %}
+							<div class="{%- if show_slider ==  '1' -%}no-loaded{% endif %}">
+								{%- if show_slider ==  '1' -%}
+								<div class='brand-loader double-bounce-spinner'>
+									<div class='double-bounce1'></div>
+									<div class='double-bounce2'></div>
+								</div>
+								{% endif %}
+								<div class="style-{{section.id }}{% if show_slider ==  '0' %} no_slider flex-grid{% elsif show_slider ==  '1' %} cdzowlslider owl-carousel {% endif %}" {% if show_slider ==  '1' %} data-cdzwidget = '{"codazon.owlSlider": {{data-owlslider}}}' {% endif %}>
+								{%- for block in section.blocks -%}
+									{%- assign title = block.settings.title -%}
+									{%- assign title_link = block.settings.title_link -%}
+									{%- assign image = block.settings.image -%}
+									{%- assign image_link = block.settings.image_link -%}
+									{%- assign image_size = block.settings.image_size -%}
+									{%- assign modulo = forloop.index | modulo: total_rows -%}
+									  {%- if total_rows >  1 and show_slider ==  '1' -%}
+										{%- if modulo == 1 -%}
+											<div class="items">
+										{%- endif -%}
+									  {%- endif -%}
+										<div class="item">
+										<div class="item-image">
+											<a href="{% if image_link == blank %}#{% else %}{{image_link}}{% endif %}" class="img-wrap"><img class="img-responsive lazyload" data-src="{% comment ls-rpl %}{{ image | img_url : image_size }}{% endcomment %}{%- capture LS_IMG_URL -%}{%- render "ls-img-url", image: image, img_url : image_size -%}{%- endcapture -%}{{ LS_IMG_URL }}{% comment /ls-rpl %}{% endcomment %}" data-sizes="{{image_size}}" /></a>
+										</div>
+										<div class="item-wrapper">
+											{%- unless title == blank -%}
+											<div class="item-title">
+												<a class="title-link" href="{% if title_link == blank %}#{% else %}{{title_link}}{% endif %}"><span>{{title}}</span></a>
+											</div>
+											{%- endunless -%}
+										</div>
+									</div>
+									  {%- if total_rows >  1 and show_slider ==  '1' -%}
+										{%- if modulo == 0 or forloop.last -%}
+										  </div>
+										  {%- endif -%}
+									  {%- endif -%}	
+								{%- endfor -%}
+								</div>
+							</div>
+						</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+{% schema %}
+{
+  "name": "Home Advertising Style 08",
+  "class": "index-section home-advertising-style08",
+  "max_blocks": 20,
+  "settings": [
+	{
+	  "type": "text",
+	  "id": "title",
+	  "label": "Heading Section",
+	  "default": "Home Advertising Style 08"
+	},
+	{
+	  "type": "text",
+	  "id": "title_block",
+	  "label": "Heading Advertising",
+	  "default": "Go oganic in the new year"
+	},
+	{
+	  "type": "textarea",
+	  "id": "sub_title",
+	  "label": "Describe Heading"
+	},
+    {
+	  "type": "text",
+	  "id": "btn_text",
+	  "label": "Button Text",
+	  "default" : "View all"
+	},
+    {
+      "type": "url",
+      "id": "btn_link",
+      "label": "Button Link"
+    },
+	{
+		"type": "select",
+		"id": "title_text_align",
+		"label": "Hedding Alignment",
+		"options": [
+			{ "value": "left", "label": "Left"},
+			{ "value": "right", "label": "Right"},
+			{ "value": "center", "label": "Center"}
+		],
+		"default" : "right"
+	},
+	{
+	  "type": "checkbox",
+	  "id": "enable_full_container",
+	  "label": "Enable Full Container Block",
+	  "default" : false
+	},
+	{
+	  "type": "text",
+	  "id": "custom_class",
+	  "label": "Custom Class",
+	  "default": "space-lg nav_style01"
+	},
+	{
+	  "type": "text",
+	  "id": "custom_css_inline",
+	  "label": "Custom CSS Inline Style",
+	  "info": "padding: 20px; margin: 30px;"
+	},
+	{
+	  "type": "color",
+	  "id": "block_background_color",
+	  "label": "Block Background Color"
+	},
+	{
+	  "type": "image_picker",
+	  "id": "block_background_image",
+	  "label": "Block Background Image"
+	},
+	{
+	  "type": "text",
+	  "id": "block_background_image_option",
+	  "label": "Block Background Image Option",
+	  "info": "Default: [0 0 no-repeat fixed]"
+	},
+	{
+	  "type": "checkbox",
+	  "id": "enable_background_image_fullwidth",
+	  "label": "Display Background Full Width",
+	  "default" : false
+	},
+	{
+		"type" : "header",
+		"content" : "-- Setting Slider Item --"
+	},
+	{
+	   "type": "select",
+	   "id": "show_slider",
+	   "options": [
+		  { "value": "0", "label": "No"},
+		  { "value": "1", "label": "Yes"}
+	   ],
+	   "label": "Show As Slider",
+	   "default" : "1"
+	},
+	{
+	   "type":      "text",
+	   "id":        "items_slider",
+	   "label":     "Items",
+	   "default": 	"9"
+	},
+	{
+	   "type":      "text",
+	   "id":        "items_1900",
+	   "label":     "Desktop 1900 view",
+	   "default": 	"9"
+	},
+	{
+	   "type":      "text",
+	   "id":        "items_1600",
+	   "label":     "Desktop 1600 view",
+	   "default": 	"9"
+	},
+	{
+	   "type":      "text",
+	   "id":        "items_1440",
+	   "label":     "Desktop 1440 view",
+	   "default": 	"9"
+	},
+	{
+	   "type":      "text",
+	   "id":        "items_1280",
+	   "label":     "Desktop 1280 view",
+	   "default": 	"9"
+	},
+	{
+	   "type":      "text",
+	   "id":        "items_980",
+	   "label":     "Desktop Small View",
+	   "default": 	"7"
+	},
+	{
+	   "type":      "text",
+	   "id":        "items_768",
+	   "label":     "Tablet Lanscape View",
+	   "default": 	"6"
+	},
+	{
+	   "type":      "text",
+	   "id":        "items_480",
+	   "label":     "Tablet Portrait View",
+	   "default": 	"4"
+	},
+	{
+	   "type":      "text",
+	   "id":        "items_320",
+	   "label":     "Mobile Lanscape View",
+	   "default": 	"3"
+	},
+	{
+	   "type":      "text",
+	   "id":        "items_0",
+	   "label":     "Mobile Portrait View",
+	   "default": 	"3"
+	},
+	{
+      "type": "range",
+      "id": "total_rows",
+      "label": "Total Rows",
+      "min": 1,
+      "max": 6,
+      "step": 1,
+      "default": 1
+    },
+	{
+	   "type":      "text",
+	   "id":        "items_margin",
+	   "label":     "Items Margin",
+	   "default" : "20"
+	},
+	{
+	   "type":      "select",
+	   "id":        "slider_dots",
+	   "options": [
+		  { "value": "0", "label": "No"},
+		  { "value": "1", "label": "Yes"}
+	   ],
+	   "label":     "Show Slider Dots",
+	   "default" : "0"
+	},
+	{
+	   "type":      "select",
+	   "id":        "slider_nav",
+	   "options": [
+		  { "value": "0", "label": "No"},
+		  { "value": "1", "label": "Yes"}
+	   ],
+	   "label":     "Show Slider Arrows",
+	   "default" : "1"
+	}
+  ],
+  "blocks": [
+    {
+      "type": "advertising",
+      "name": "Advertising",
+      "settings": [
+        {
+		  "type": "text",
+		  "id": "title",
+		  "label": "Heading",
+		  "default" : "Advertising"
+		},
+		{
+          "type": "url",
+          "id": "title_link",
+          "label": "Title Link"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        },
+		{
+			"type" : "text",
+			"id" : "image_size",
+			"label" : "Size Image",
+			"default": "100x100",
+			"info": "Default: [100x100]"
+		},
+        {
+          "type": "url",
+          "id": "image_link",
+          "label": "Image link"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Home Advertising Style 08",
+      "category": "Codazon Advertising",
+      "blocks": [
+        {
+          "type": "advertising",
+          	"settings": {
+          		"title": "Meat & Poultry"
+      		}	
+        },
+		{
+          "type": "advertising",
+          	"settings": {
+          		"title": "Vegetable"
+      		}	
+        },
+		{
+          "type": "advertising",
+          	"settings": {
+          		"title": "Fruit"
+      		}	
+        },
+		{
+          "type": "advertising",
+          	"settings": {
+          		"title": "Meals"
+      		}	
+        },
+        {
+          "type": "advertising",
+          	"settings": {
+          		"title": "Seafood"
+      		}	
+        },
+		{
+          "type": "advertising",
+          	"settings": {
+          		"title": "Bakery & Pastry"
+      		}	
+        },
+		{
+          "type": "advertising",
+          	"settings": {
+          		"title": "Beer"
+      		}	
+        },
+		{
+          "type": "advertising",
+          	"settings": {
+          		"title": "Wine"
+      		}	
+        },
+		{
+          "type": "advertising",
+          	"settings": {
+          		"title": "Grocery"
+      		}	
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

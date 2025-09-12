@@ -1,0 +1,513 @@
+{% comment %}
+
+  This is your /cart template.
+
+{% endcomment %}
+<!-- Setting crosssell Product -->
+{%- assign crosssell_product_text_align = section.settings.text_align -%}
+{% assign crosssell_thumbnail_width = '320' %}
+{% unless section.settings.crosssell_thumbnail_width == blank %}
+	{% assign crosssell_thumbnail_width = section.settings.crosssell_thumbnail_width %}
+{% endunless %}
+{% assign crosssell_thumbnail_height = '320' %}
+{% unless section.settings.crosssell_thumbnail_height == blank %}
+	{% assign crosssell_thumbnail_height = section.settings.crosssell_thumbnail_height %}
+{% endunless %}
+{% assign crosssell_products_count = '8' %}
+{% unless section.settings.crosssell_products_count == blank %}
+	{% assign crosssell_products_count = section.settings.crosssell_products_count %}
+{% endunless %}
+{% assign crosssell_items_slider = '4' %}
+{% unless section.settings.crosssell_items_slider == blank %}
+	{% assign crosssell_items_slider = section.settings.crosssell_items_slider %}
+{% endunless %}
+{% assign crosssell_items_1900 = '4' %}
+{% unless section.settings.crosssell_items_1900 == blank %}
+	{% assign crosssell_items_1900 = section.settings.crosssell_items_1900 %}
+{% endunless %}
+{% assign crosssell_items_1600 = '4' %}
+{% unless section.settings.crosssell_items_1600 == blank %}
+	{% assign crosssell_items_1600 = section.settings.crosssell_items_1600 %}
+{% endunless %}
+{% assign crosssell_items_1440 = '4' %}
+{% unless section.settings.crosssell_items_1440 == blank %}
+	{% assign crosssell_items_1440 = section.settings.crosssell_items_1440 %}
+{% endunless %}
+{% assign crosssell_items_1280 = '4' %}
+{% unless section.settings.crosssell_items_1280 == blank %}
+	{% assign crosssell_items_1280 = section.settings.crosssell_items_1280 %}
+{% endunless %}
+{% assign crosssell_items_980 = '3' %}
+{% unless section.settings.crosssell_items_980 == blank %}
+	{% assign crosssell_items_980 = section.settings.crosssell_items_980 %}
+{% endunless %}
+{% assign crosssell_items_768 = '2' %}
+{% unless section.settings.crosssell_items_768 == blank %}
+	{% assign crosssell_items_768 = section.settings.crosssell_items_768 %}
+{% endunless %}
+{% assign crosssell_items_480 = '2' %}
+{% unless section.settings.crosssell_items_480 == blank %}
+	{% assign crosssell_items_480 = section.settings.crosssell_items_480 %}
+{% endunless %}
+{% assign crosssell_items_320 = '2' %}
+{% unless section.settings.crosssell_items_320 == blank %}
+	{% assign crosssell_items_320 = section.settings.crosssell_items_320 %}
+{% endunless %}
+{% assign crosssell_items_0 = '2' %}
+{% unless section.settings.crosssell_items_0 == blank %}
+	{% assign crosssell_items_0 = section.settings.crosssell_items_0 %}
+{% endunless %}
+{% assign crosssell_items_margin = '20' %}
+{% unless section.settings.crosssell_items_margin == blank %}
+	{% assign crosssell_items_margin = section.settings.crosssell_items_margin %}
+{% endunless %}
+{% assign crosssell_show_prostyle = section.settings.crosssell_show_prostyle %}
+{% assign crosssell_show_slider = section.settings.crosssell_show_slider %}
+{% assign crosssell_slider_dots = section.settings.crosssell_slider_dots %}
+{% assign crosssell_slider_nav = section.settings.crosssell_slider_nav %}
+{% assign crosssell_total_rows = section.settings.crosssell_total_rows %}
+
+{% capture data-crosssell-products %}
+{ "items": {{crosssell_items_slider}}, "items_1900": {{crosssell_items_1900}}, "items_1600": {{crosssell_items_1600}}, "items_1440": {{crosssell_items_1440}}, "items_1280": {{crosssell_items_1280}}, "items_980": {{crosssell_items_980}}, "items_768": {{crosssell_items_768}}, "items_480": {{crosssell_items_480}}, "items_320": {{crosssell_items_320}}, "items_0": {{crosssell_items_0}}, "margin": {{crosssell_items_margin}}, "nav": {{crosssell_slider_nav}}, "dots": {{crosssell_slider_dots}}, "rtl": {{settings.enable_rtl_layout}}}
+{% endcapture %}
+<!-- End Setting crosssell Product -->
+<div id="CartSection" data-section-id="{{ section.id }}" data-section-type="cart-template" data-notes-enable="{{ section.settings.cart_notes_enable }}">
+  {% if cart.item_count > 0 %}
+	<div class="page-title-wrapper">
+        <h1 class="page-title">{{ 'cart.general.title' | t }}</h1>
+    </div>
+	<div class="cart-container clearfix" id="cart-container">
+		<form action="/cart" method="post" novalidate class="cart  clearfix">
+			<div class="cart-summary">
+				<strong class="summary title"><ls-static-898944>Summary</ls-static-898944></strong>
+				{% unless settings.shipping_calculator == 'Disabled' %}
+				<div id="block-shipping" class="cart-option block shipping">
+					<div class="title" data-toggle="collapse" data-target="#collapseCartShipping" aria-expanded="false" aria-controls="collapseCartShipping">
+						{{ 'cart.label.shipping' | t }}
+					</div>
+					<div id="collapseCartShipping" class="collapse block-content" aria-labelledby="block-shipping" data-parent="#cart-container">
+						{% include 'shipping-calculator' %}
+					</div>
+				</div>
+				{% endunless %}
+				<div id="cart-totals" class="cart-option block cart-totals">
+					<div class="cart-totals-wrapper">
+						<p class="cart__subtotal clearfix">
+						  <span class="cart__subtotal-title float-left">{{ 'cart.general.subtotal' | t }}</span>
+						  <span class="h5 cart__subtotal-price float-right">{{ cart.total_price | money }}</span>
+						  {% if cart.total_discounts > 0 %}
+							{% assign savings = cart.total_discounts | money %}
+							<small class="cart-subtotal__savings">{{ 'cart.general.savings_html' | t: price: savings }}</small>
+						  {% endif %}
+						</p>
+
+						{%- capture taxes_shipping_checkout -%}
+						  {%- if shop.taxes_included and shop.shipping_policy.body != blank -%}
+							{{ 'cart.general.taxes_included_and_shipping_policy_html' | t: link: shop.shipping_policy.url }}
+						  {%- elsif shop.taxes_included -%}
+							{{ 'cart.general.taxes_included_but_shipping_at_checkout' | t }}
+						  {%- elsif shop.shipping_policy.body != blank -%}
+							{{ 'cart.general.taxes_and_shipping_policy_at_checkout_html' | t: link: shop.shipping_policy.url }}
+						  {%- else -%}
+							{{ 'cart.general.taxes_and_shipping_at_checkout' | t }}
+						  {%- endif -%}
+						{%- endcapture -%}
+
+						<p class="cart__policies"><em>{{ taxes_shipping_checkout }}</em></p>
+						
+					</div>
+				</div>				
+				{% if section.settings.cart_notes_enable %}
+					<div id="block-note" class="cart-option block cart-note">
+					{% comment %}
+						Optional, add a textarea for special notes
+						  - Your theme settings can turn this on or off. Default is on.
+						  - Make sure you have name="note" for the message to be submitted properly
+					{% endcomment %}
+						{% assign noteSize = cart.note | size %}
+						<div class="title" data-toggle="collapse" data-target="#collapseCartNote" aria-expanded="false" aria-controls="collapseCartNote">
+							{{ 'cart.label.add_note' | t }}
+						</div>
+						<div id="collapseCartNote" class="collapse block-content" aria-labelledby="block-note" data-parent="#cart-container">
+							<div class="cart__note field{% if noteSize > 0 %} is-active{% endif %}">
+								<label for="CartSpecialInstructions">{{ 'cart.general.note' | t }}</label>
+								<textarea name="note" class="input-full" id="CartSpecialInstructions">{{ cart.note }}</textarea>
+							</div>
+						</div>
+					</div>
+				{% endif %}
+				<button type="submit" name="checkout" class="btn btn-checkout">{{ 'cart.general.checkout' | t }}</button>
+				{% if additional_checkout_buttons %}
+				  <div class="cart__additional_checkout">{{ content_for_additional_checkout_buttons }}</div>
+				{% endif %}
+			</div>
+		
+			<div class=" cart-table-wrapper">
+				<div class="cart-items">
+					{% comment %}
+						Cart header
+					{% endcomment %}
+					<div class="cart-line-item cart-item-header clearfix">
+						<div class="col cart-image"><span>{{ 'cart.label.item' | t }}</span></div>
+						<div class="col cart-item"><span>&nbsp;</span></div>
+						<div class="col cart-price text-right"><span>{{ 'cart.label.price' | t }}</span></div>
+						<div class="col cart-qty text-right"><span>{{ 'cart.label.quantity' | t }}</span></div>
+						<div class="col cart-total text-right"><span>{{ 'cart.label.total' | t }}</span></div>
+					</div>
+					{% comment %}
+						Loop through products in the cart
+						Cart item
+					{% endcomment %}
+					{% assign cross_values = "" %}
+					{% assign value = "" %}
+					{% for item in cart.items %}
+						{% assign values = item.product.metafields.codazon.cdz_crosssell_product %}
+						{% if values != blank %}
+							{% assign values = values | split: ',' %}
+							{% assign cross_values = cross_values | append: "," | append:  item.product.metafields.codazon.cdz_crosssell_product | append: "," %}
+							{% assign cross_values = cross_values | split: ',' | uniq | join: ',' %}
+						{% endif %}
+						<div class="cart-line-item cart-item-row cart-item-body clearfix">
+							<div class="item-info clearfix">
+								<div class="col cart-image">
+									<a href="{{ item.url | within: collections.all }}">
+									{% unless item.image == blank %}
+									  {% capture img_id %}ProductImage-{{ item.id }}{% endcapture %}
+									  {% capture wrapper_id %}ProductImageWrapper-{{ item.id }}{% endcapture %}
+									  {% comment ls-rpl %}{%- assign img_url = item.image | img_url: '1x1' | replace: '_1x1.', '_{width}x.' -%}{% endcomment %}{%- capture LS_IMG_URL -%}{%- render "ls-img-url", image: item.image, img_url: '1x1' -%}{%- endcapture -%}{%- assign img_url = LS_IMG_URL | replace: '_1x1.', '_{width}x.' -%}{% comment /ls-rpl %}{% endcomment %}
+									  {% include 'image-style' with image: item.image, width: 210, height: 245, wrapper_id: wrapper_id, img_id: img_id %}
+									  <div id="{{ wrapper_id }}" class="cart__image-wrapper supports-js">
+										<div style="padding-top:{{ 1 | divided_by: item.image.aspect_ratio | times: 100}}%;">
+										  <img id="{{ img_id }}"
+											   class="cart__image lazyload"
+											   data-src="{{ img_url }}"
+											   data-widths="[40, 65, 90, 120, 150, 180, 360, 480, 600]"
+											   data-aspectratio="{{ item.image.aspect_ratio }}"
+											   data-sizes="auto"
+											   alt="{{ item.title | escape }}">
+										</div>
+									  </div>
+									{% else %}
+									  <p><img src="{% comment ls-rpl %}{{ item | img_url: 'medium' }}{% endcomment %}{%- capture LS_IMG_URL -%}{%- render "ls-img-url", image: item, img_url: 'medium' -%}{%- endcapture -%}{{ LS_IMG_URL }}{% comment /ls-rpl %}{% endcomment %}" alt="{{ item.title | escape }}"></p>
+									{% endunless %}
+
+									<noscript>
+									  <p><img src="{% comment ls-rpl %}{{ item | img_url: 'medium' }}{% endcomment %}{%- capture LS_IMG_URL -%}{%- render "ls-img-url", image: item, img_url: 'medium' -%}{%- endcapture -%}{{ LS_IMG_URL }}{% comment /ls-rpl %}{% endcomment %}" alt="{{ item.title | escape }}"></p>
+									</noscript>
+								  </a>
+								</div>
+								<div class="col cart-item product-item-details">
+									<a href="{{ item.url }}" class="h5">
+										{{ item.product.title }}
+									</a>
+									{% unless item.variant.title contains 'Default' %}
+										<br>
+										<small>{{ item.variant.title }}</small>
+									{% endunless %}
+								</div>
+								<div class="col cart-price text-right" data-th="{{ 'cart.label.price' | t }}">
+									<span class="price-item">{{ item.price | money }}</span>
+									{%- if item.variant.available and item.variant.unit_price_measurement -%}
+										{% include 'product-unit-price', variant: item, available: item.variant.available, wrapper_class: 'd-block' %}
+									{%- endif -%}									
+								</div>
+								<div class="col cart-qty text-right" data-th="{{ 'cart.label.quantity' | t }}">
+									<div class="qty-box">
+										<div class="cart-qty">
+											<div class="qty-ctl">
+												<button title="Decrease" type="button" data-role="change_cart_qty" class="decrease" data-qty="-1"></button>
+											</div>
+											<input id="updates_{{ item.key }}" class="qty input-text" type="text" name="updates[]" value="{{ item.quantity }}">
+											<div class="qty-ctl">
+												<button title="Increase" type="button" data-role="change_cart_qty" data-qty="1" class="increase"></button>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="col cart-total text-right" data-th="{{ 'cart.label.total' | t }}">
+									<span class="price-item subtotal">
+										{% if item.original_line_price != item.line_price %}
+										<small class="cart-item__original-price"><s>{{ item.original_line_price | money }}</s></small>
+										{% endif %}
+										{{ item.line_price | money }}
+									</span>
+									{% if item.original_line_price != item.line_price %}
+										{% for discount in item.discounts %}
+										  <small class="cart-item__discount">
+											{{ discount.title }}
+										  </small>
+										{% endfor %}
+									{% endif %}
+								</div>
+							</div>
+							<div class="item-actions clearfix">
+								<div class="actions-toolbar">
+									<a href="/cart/change?line={{ forloop.index }}&amp;quantity=0" class="action action-delete cart__remove">
+										{{ 'cart.general.remove' | t }}
+									</a>
+								</div>
+							</div>
+						</div>
+					{% endfor %}
+				</div>
+				<div class="cart main actions clearfix">
+					<a class="btn btn--secondary continue" href="/collections/all">{{ 'cart.general.continue_shopping' | t }}</a>
+					<button type="submit" name="update" class="btn btn--secondary update-cart">{{ 'cart.general.update' | t }}</button>
+					<a class="btn btn--secondary clear" href="/cart/clear">{{ 'cart.general.clear_cart' | t }}</a>
+				</div>
+			</div>
+		</form>
+	</div>
+	
+	<!-- crosssell Product -->
+	{% assign crosssellTitle = 'cart.general.crosssell_title' | t  %}
+	{% assign crosssell_product = cross_values  | replace_first: ',', ''  | split: ',' | uniq | join: ',' %}
+	{% if section.settings.product_crosssell_enable == true and crosssell_product != blank %}
+		{% include 'crosssell-products' with crosssell_product, crosssell_title: crosssellTitle, crosssell_thumbnail_width, crosssell_thumbnail_height, crosssell_products_count, crosssell_items_slider, crosssell_show_prostyle, crosssell_product_text_align, crosssell_show_slider, crosssell_total_rows, data-crosssell-products %}
+	{% endif %} 
+	
+  {% else %}
+    {% comment %}
+      The cart is empty
+    {% endcomment %}
+    <h2>{{ 'cart.general.title' | t }}</h2>
+    <p class="cart--empty-message">{{ 'cart.general.empty' | t }}</p>
+    <div class="cart--cookie-message">
+      <p>{{ 'cart.general.cookies_required' | t }}</p>
+    </div>
+    <p class="cart__continue-btn">{{ 'cart.general.continue_browsing_html' | t }}</p>
+	<div class="hide">
+		{% include 'shipping-calculator' %}
+	</div>
+  {% endif %}
+</div>
+
+
+
+{% schema %}
+{
+  "name": "Cart page",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "cart_notes_enable",
+      "label": "Enable order notes"
+    },
+    {
+      "type": "header",
+      "content": "crosssell products"
+    },
+    {
+      "type": "checkbox",
+      "id": "product_crosssell_enable",
+      "label": "Enable crosssell products",
+	  "default" : true
+    },
+	{
+	  "type": "text",
+	  "id": "crosssell_thumbnail_width",
+	  "label": "Thumbnail Width",
+	  "default" : "320"
+	},
+	{
+	  "type": "text",
+	  "id": "crosssell_thumbnail_height",
+	  "label": "Thumbnail Height",
+	  "default" : "320"
+	},
+	{
+		"type": "select",
+		"id": "text_align",
+		"label": "Text alignment",
+		"default": "center",
+		"options": [
+		  {
+			"label": "Center",
+			"value": "center"
+		  },
+		  {
+			"label": "Left",
+			"value": "left"
+		  },
+		  {
+			"label": "Right",
+			"value": "right"
+		  }
+		]
+	},
+	{
+	   "type": "select",
+	   "id": "crosssell_show_prostyle",
+	   "options": [
+		  { "value": "0", "label": "Style 01"},
+		  { "value": "1", "label": "Style 02"},
+		  { "value": "2", "label": "Style 03"},
+		  { "value": "3", "label": "Style 04"},
+		  { "value": "4", "label": "Style 05"},
+		  { "value": "5", "label": "Style 06"},
+		  { "value": "6", "label": "Style 07"},
+		  { "value": "7", "label": "Style 08"},
+		  { "value": "8", "label": "Style 09"},
+		  { "value": "9", "label": "Style 10"},
+		  { "value": "10", "label": "Style 11"},
+		  { "value": "11", "label": "Style 12"},
+		  { "value": "12", "label": "Style 13"},
+		  { "value": "13", "label": "Style 14"}
+	   ],
+	   "label": "Show Product Style",
+	   "default" : "11"
+	},
+	{
+	   "type": "select",
+	   "id": "crosssell_show_slider",
+	   "options": [
+		  { "value": "0", "label": "No"},
+		  { "value": "1", "label": "Yes"}
+	   ],
+	   "label": "Show As Slider",
+	   "default" : "1"
+	},
+	{
+	   "type":      "text",
+	   "id":        "crosssell_products_count",
+	   "label":     "Number of Products to Display",
+	   "default" : "10"
+	},
+	{
+	   "type":      "text",
+	   "id":        "crosssell_items_slider",
+	   "label":     "Product Items",
+	   "default": 	"4"
+	},
+	{
+	   "type":      "text",
+	   "id":        "crosssell_items_1900",
+	   "label":     "Desktop 1900 view",
+	   "default": 	"5"
+	},
+	{
+	   "type":      "text",
+	   "id":        "crosssell_items_1600",
+	   "label":     "Desktop 1600 view",
+	   "default": 	"5"
+	},
+	{
+	   "type":      "text",
+	   "id":        "crosssell_items_1440",
+	   "label":     "Desktop 1440 view",
+	   "default": 	"5"
+	},
+	{
+	   "type":      "text",
+	   "id":        "crosssell_items_1280",
+	   "label":     "Desktop 1280 view",
+	   "default": 	"4"
+	},
+	{
+	   "type":      "text",
+	   "id":        "crosssell_items_980",
+	   "label":     "Desktop Small View",
+	   "default": 	"3"
+	},
+	{
+	   "type":      "text",
+	   "id":        "crosssell_items_768",
+	   "label":     "Tablet Lanscape View",
+	   "default": 	"3"
+	},
+	{
+	   "type":      "text",
+	   "id":        "crosssell_items_480",
+	   "label":     "Tablet Portrait View",
+	   "default": 	"2"
+	},
+	{
+	   "type":      "text",
+	   "id":        "crosssell_items_320",
+	   "label":     "Mobile Lanscape View",
+	   "default": 	"2"
+	},
+	{
+	   "type":      "text",
+	   "id":        "crosssell_items_0",
+	   "label":     "Mobile Portrait View",
+	   "default": 	"1"
+	},
+	{
+      "type": "range",
+      "id": "crosssell_total_rows",
+      "label": {
+        "de": "Reihen",
+        "en": "Total Rows",
+        "es": "Filas",
+        "fr": "Rangées",
+        "it": "Righe",
+        "ja": "行",
+        "pt-BR": "Linhas"
+      },
+      "min": 1,
+      "max": 6,
+      "step": 1,
+      "default": 1
+    },
+	{
+	   "type":      "text",
+	   "id":        "crosssell_items_margin",
+	   "label":     "Items Margin",
+	   "default" : "20"
+	},
+	{
+	   "type":      "select",
+	   "id":        "crosssell_slider_dots",
+	   "options": [
+		  { "value": "0", "label": "No"},
+		  { "value": "1", "label": "Yes"}
+	   ],
+	   "label":     "Show Slider Dots",
+	   "default" : "1"
+	},
+	{
+	   "type":      "select",
+	   "id":        "crosssell_slider_nav",
+	   "options": [
+		  { "value": "0", "label": "No"},
+		  { "value": "1", "label": "Yes"}
+	   ],
+	   "label":     "Show Slider Arrows",
+	   "default" : "1"
+	}
+  ]
+}
+{% endschema %}
+
+<script>
+  theme.strings = {
+      shippingCalcSubmitButton: {{ settings.shipping_calculator_submit_button_label | default: 'Calculate shipping' | json }},
+      shippingCalcSubmitButtonDisabled: {{ settings.shipping_calculator_submit_button_label_disabled | default: 'Calculating...' | json }},
+      {% if customer %}shippingCalcCustomerIsLoggedIn: true,{% endif %}
+      shippingCalcMoneyFormat: {{ shop.money_with_currency_format | json }},
+	  addToCartBtn: {{ 'cart.general.btn_addcart' | t | json }},
+        remove: {{ 'wishlist.general.remove' | t | json }},
+        addToCart: {{ 'wishlist.general.add_cart' | t | json }},
+        wishlist_title: {{ 'wishlist.general.title' | t | json }},
+        wishlist_mess_error: {{ 'wishlist.general.mess_error' | t | json }},
+        wishlist_mess_remove: {{ 'wishlist.general.mess_remove' | t | json }},
+        wishlist_goAll: {{ 'wishlist.general.go_wishlist' | t | json }},
+        addAllToCart: {{ 'wishlist.general.add_all_cart' | t | json }},
+        compare_mess_error: {{ 'compare.general.mess_error' | t | json }},
+        compare_mess_remove: {{ 'compare.general.mess_remove' | t | json }},
+        compare_goAll: {{ 'compare.general.go_compare' | t | json }},
+        searchBlog: {{ 'general.header.search_blog' | t | json }},
+        searchProduct: {{ 'general.header.search_product' | t | json }},
+        relatedSelectAll: {{ 'products.general.related_select' | t | json }},
+        relatedUnSelectAll: {{ 'products.general.related_unselect' | t | json }},
+        searchSeeAll: {{ 'general.header.search_all' | t | json }},
+        menuGoTo: {{ 'general.header.menu_goto' | t | json }},
+        moreView: {{ 'products.general.more_view' | t | json }},
+        lessView: {{ 'products.general.less_view' | t | json }}
+  }
+</script>
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.10/handlebars.min.js"></script>
+<script src="/services/javascripts/countries.js"></script>
+<script src="{{ 'shopify_common.js' | shopify_asset_url }}" defer="defer"></script>

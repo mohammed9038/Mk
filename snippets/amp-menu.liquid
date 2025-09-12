@@ -1,0 +1,44 @@
+<div class="header-menu d-md-block d-none">
+  <div on="tap:AMP.setState({ navSite: { opened: false }})" class="site-nav-overlay" [class]="navSite.opened ? 'site-nav-overlay opened' : 'site-nav-overlay'" role="button" tabindex="0"></div>
+  <ul class="mb-0 px-0 list-unstyled">
+          	<amp-state id="navSite">
+            <script type="application/json">
+              {
+                "opened": false
+              }
+            </script>
+        </amp-state>
+      {% for link in linklists[linklist].links %}
+    	{%- if link.links != blank -%}
+      	<li [class]="navSite.opened == '{{ link.title }}'
+                     ? 'item level0 site-nav--active-dropdown site-nav--has-dropdown' 
+                     : 'item level0 site-nav--has-dropdown'" class="item level0 site-nav--has-dropdown">
+				<button on="tap:AMP.setState({ navSite: { opened: '{{ link.title }}' }})" class="menu-link"> 
+                  <span class="site-nav__label">{{ link.title }}</span>
+				  <i class="d-inline-block ml-1" aria-hidden="true">{% include 'icon-down' %}</i>
+          		</button>
+				<div class="cat-tree groupmenu-drop" role="dialog">
+					<div class="d-inline-block">
+					  <ul class="list-unstyled d-flex">
+						{% for child_link in link.links %}  
+						<li class="level1 item nav-{{forloop.index}} {% if child_link.links != blank %} parent {% endif %}">
+						<a class="menu-link" href= "{{ child_link.url }}"><span>{{ child_link.title }}</span></a>
+						{% if child_link.links != blank %}
+						  <ul class="list-unstyled cat-tree child">
+						  {% for grandchild_link in child_link.links %}  
+						  <li class="level2 item nav-{{forloop.index}} {% if grandchild_link.active %} active {% if grandchild_link.child_active %}child-active{% endif %}{% endif %}"
+						  ><a class="menu-link" href= "{{ grandchild_link.url }}"><span>{{ grandchild_link.title }}</span></a></li>
+						  {% endfor %}
+						  </ul>
+						{% endif %}   
+						</li>
+						{% endfor %}
+						</ul>
+					</div>
+				</div>
+        {%- else -%}
+    		<li class="item level0"><a class="menu-link" href="{{ link.url }}"><span>{{ link.title }}</span></a></li>
+    	{%- endif -%} 
+      {%- endfor -%}
+    </ul>
+</div>

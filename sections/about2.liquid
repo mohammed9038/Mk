@@ -1,0 +1,279 @@
+<div class="page-template about-us-2 container">
+<div class=" cdzbox">
+	<div class="page-title-wrapper">
+		<div class="row">
+			<div class="col-12">
+				<div class="page-title text-center">
+					<h1>{{ section.settings.heading | escape }}</h1>
+				</div>
+				<div class="subtext text-center">
+					{{ section.settings.sub_title }}
+				</div>
+			</div>
+		</div>
+	</div>
+	{% if section.settings.enable_image %}
+	<div class="wrapper-banner">
+		<div class="row">
+		<div class="col-12">
+			{%- if section.settings.image != blank -%}
+				{% comment ls-rpl %}{%- assign img_url = section.settings.image | img_url: '1x1' | replace: '_1x1.', '_{width}x.' -%}{% endcomment %}{%- capture LS_IMG_URL -%}{%- render "ls-img-url", image: section.settings.image, img_url: '1x1' -%}{%- endcapture -%}{%- assign img_url = LS_IMG_URL | replace: '_1x1.', '_{width}x.' -%}{% comment /ls-rpl %}{% endcomment %}
+				<img class="img-responsive lazyload{% unless forloop.first == true %} lazypreload{% endunless %}"
+					src="{% comment ls-rpl %}{{ section.settings.image | img_url: '300x300' }}{% endcomment %}{%- capture LS_IMG_URL -%}{%- render "ls-img-url", image: section.settings.image, img_url: '300x300' -%}{%- endcapture -%}{{ LS_IMG_URL }}{% comment /ls-rpl %}{% endcomment %}"
+					data-src="{{ img_url }}"
+					data-widths="[180, 360, 470, 600, 770, 970, 1060, 1280, 1512, 1728, 2048]"
+					data-aspectratio="{{ section.settings.image.aspect_ratio }}"
+					data-sizes="auto"
+					alt="{% comment ls-rpl %}{{ section.settings.image.alt | escape }}{% endcomment %}{%- capture LS_ALT -%}{%- render "ls-alt", image: section.settings.image -%}{%- endcapture -%}{{ LS_ALT | escape }}{% comment /ls-rpl %}{% endcomment %}">
+			{% else %}
+				<span>
+					{{ 'lifestyle-1' | placeholder_svg_tag: 'placeholder-svg' }}
+				</span>
+			{% endif %}
+		
+		</div>
+		</div>
+	</div>
+	{% endif %}
+	<div class="shopify-section about-us-02-content-wrapper">
+		<div class="about-content-inner">
+				{%- for block in section.blocks -%}
+				<div class="row">
+					{% assign contact_title = block.settings.contact_title %}
+					{% assign contact_content = block.settings.contact_content %}
+					<div class="block-title col-md-2">
+						<p class="b-title h3"><span>{{ block.settings.contact_title | escape }}</span></p>
+					</div>
+					<div class="block-content col-md-10">
+						{{ block.settings.contact_content }}
+					</div>
+				</div>
+				{% endfor %}
+		</div>
+	</div>
+</div>
+</div>
+{%- style -%}
+    .wrapper-banner img,
+    .wrapper-banner  span svg {
+	  height: {{ section.settings.slider_desktop_height | default: 250 }}px;
+	  width: 100%;
+	  object-fit: cover;
+	  object-position: {{ section.settings.slider_position }}
+    }
+	.wrapper-banner {padding: 0px 0px 50px}
+    @media screen and (max-width: 768px) {
+		.wrapper-banner image,
+		.wrapper-banner  .span svg {
+			max-height: 150px;
+      }
+    }
+	.about-content-inner .block-title p {margin-bottom: 1rem;}
+	.about-content-inner .block-content {margin-bottom: 1rem;}
+	.about-content-inner .block-content p {margin-bottom: 5px;}
+	.page-title-wrapper {margin-bottom: 1rem;}
+	.cdzbox{}
+{%- endstyle -%}
+{% schema %}
+{
+  "name": "About Us 02",
+  "settings": [
+	{
+	  "type": "text",
+	  "id": "heading",
+	  "default": "About Us",
+	  "label": "Heading"
+	},
+	{
+	  "type": "richtext",
+	  "id": "sub_title",
+	  "label": "SubText",
+	  "default": "<p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Ssed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt neque. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit</p>"
+	},
+	{
+	  "type": "text",
+	  "id": "slider_desktop_height",
+	  "default": "250",
+	  "label": "Image Max Height"
+	},
+	{
+	  "type": "checkbox",
+	  "id": "enable_image",
+	  "label": "Enable Top Image",
+	  "default" : false
+	},
+	{
+	  "type": "image_picker",
+	  "id": "image",
+	  "label": "Image"
+	},
+	{
+	  "type": "select",
+	  "id": "slider_position",
+	  "label": "Image position",
+	  "default": "center center",
+	  "options": [
+		{
+		  "label": {
+			"de": "Oben links",
+			"en": "Top left",
+			"es": "Superior izquierda",
+			"fr": "En haut à gauche",
+			"it": "In alto a sinistra",
+			"ja": "左上",
+			"nl": "Linksboven",
+			"pt-BR": "Superior esquerdo",
+			"zh-CN": "左上方",
+			"zh-TW": "左上角"
+		  },
+		  "value": "left top"
+		},
+		{
+		  "label": {
+			"de": "Oben Mitte",
+			"en": "Top center",
+			"es": "Superior al centro",
+			"fr": "En haut au centre",
+			"it": "In alto al centro",
+			"ja": "中央上",
+			"nl": "Midden boven",
+			"pt-BR": "Superior centro",
+			"zh-CN": "顶部居中",
+			"zh-TW": "中央上方"
+		  },
+		  "value": "center top"
+		},
+		{
+		  "label": {
+			"de": "Oben rechts",
+			"en": "Top right",
+			"es": "Superior derecha",
+			"fr": "En haut à droite",
+			"it": "In alto a destra",
+			"ja": "右上",
+			"nl": "Rechtsboven",
+			"pt-BR": "Superior direito",
+			"zh-CN": "右上方",
+			"zh-TW": "右上角"
+		  },
+		  "value": "right top"
+		},
+		{
+		  "label": {
+			"de": "Mitte links",
+			"en": "Middle left",
+			"es": "Al medio a la izquierda",
+			"fr": "Au milieu à gauche",
+			"it": "Nel mezzo a sinistra",
+			"ja": "中央左",
+			"nl": "Midden links",
+			"pt-BR": "Meio esquerdo",
+			"zh-CN": "中间居左",
+			"zh-TW": "中央左方"
+		  },
+		  "value": "left center"
+		},
+		{
+		  "label": {
+			"de": "Mitte mittig",
+			"en": "Middle center",
+			"es": "Al medio al centro",
+			"fr": "Centrée au milieu",
+			"it": "In mezzo",
+			"ja": "中央中",
+			"nl": "Midden centrum",
+			"pt-BR": "Meio centro",
+			"zh-CN": "中间居中",
+			"zh-TW": "正中央"
+		  },
+		  "value": "center center"
+		},
+		{
+		  "label": {
+			"de": "Mitte rechts",
+			"en": "Middle right",
+			"es": "Al medio a la derecha",
+			"fr": "Au milieu à droite",
+			"it": "Nel mezzo a destra",
+			"ja": "中央右",
+			"nl": "Midden rechts",
+			"pt-BR": "Meio direito",
+			"zh-CN": "中间居右",
+			"zh-TW": "中央右方"
+		  },
+		  "value": "right center"
+		},
+		{
+		  "label": {
+			"de": "Unten links",
+			"en": "Bottom left",
+			"es": "Inferior izquierda",
+			"fr": "En bas à gauche",
+			"it": "In basso a sinistra",
+			"ja": "左下",
+			"nl": "Linksonder",
+			"pt-BR": "Inferior esquerdo",
+			"zh-CN": "左下方",
+			"zh-TW": "左下角"
+		  },
+		  "value": "left bottom"
+		},
+		{
+		  "label": {
+			"de": "Unten mittig",
+			"en": "Bottom center",
+			"es": "Inferior al centro",
+			"fr": "En bas au centre",
+			"it": "In basso al centro",
+			"ja": "中央下",
+			"nl": "Midden onder",
+			"pt-BR": "Inferior centro",
+			"zh-CN": "底部居中",
+			"zh-TW": "中央下方"
+		  },
+		  "value": "center bottom"
+		},
+		{
+		  "label": {
+			"de": "Unten rechts",
+			"en": "Bottom right",
+			"es": "Inferior derecha",
+			"fr": "En bas à droite",
+			"it": "In basso a destra",
+			"ja": "右下",
+			"nl": "Rechtsonder",
+			"pt-BR": "Inferior direito",
+			"zh-CN": "右下方",
+			"zh-TW": "右下角"
+		  },
+		  "value": "right bottom"
+		}
+	  ]
+	}
+	],
+  "blocks": [
+	{
+      "name": "Information",
+	  "type": "text",
+      "settings": [
+        {
+          "type": "text",
+          "id": "contact_title",
+          "label": "Title"
+        },
+		{
+          "type": "richtext",
+          "id": "contact_content",
+          "label": "Content"
+        }
+      ]
+    }
+	],
+	"presets": [
+    {
+      "name": "About Us 02",
+      "category": "About Us"
+    }
+  ]
+}
+{% endschema %}

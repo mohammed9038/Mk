@@ -1,0 +1,85 @@
+{%- assign amp_header_logo = settings.amp_logo_header -%}
+{%- assign header_search_type = settings.header_search_type -%}
+<header id="header" class="page-header">
+	<div class="container">
+		<div class="page-header-wrapper py-3 position-relative">
+			<div role="button" on="tap:header-sidebar.toggle" tabindex="0" class="nav-toggle d-md-none">
+				<i aria-hidden="true">{% include 'icon-hamburger' %}</i>
+			</div>
+			<div class="logo-wrapper">
+				{% if template.name == 'index' %}
+				  <h1 class="logo" itemscope itemtype="http://schema.org/Organization">
+				{% else %}
+				  <div class="h1 logo" itemscope itemtype="http://schema.org/Organization">
+				{% endif %}
+				{% if amp_header_logo != blank %}
+					<div class="logo__image-wrapper">
+					  <a href="{{shop.url | append: '/pages/amp-home-page'}}" itemprop="url">
+						{% comment ls-rpl %}{% assign img_url = amp_header_logo | img_url: '300x' %}{% endcomment %}{%- capture LS_IMG_URL -%}{%- render "ls-img-url", image: amp_header_logo, img_url: '300x' -%}{%- endcapture -%}{% assign img_url = LS_IMG_URL %}{% comment /ls-rpl %}{% endcomment %}
+						<amp-img class="logo__image" 
+								  width="231" height="32"
+								 src="{{ img_url }}" 
+								 alt="{{ shop.name | escape }}"
+								 layout="responsive">
+						  <noscript>
+							<img src="{{ img_url }}" alt="{{ shop.name | escape }}">
+						  </noscript>
+						</amp-img>
+					  </a>
+					</div>
+				  {% else %}
+					<a href="{{shop.url | append: '/pages/amp-home-page'}}" itemprop="url">{{ shop.name }}</a>
+				  {% endif %}
+				{% if template.name == 'index' %}
+				  </h1>
+				{% else %}
+				  </div>
+				{% endif %}
+			</div>
+			<div class="account-cart-wrapper">
+				<ul class="mb-0 features-links items d-flex flex-row-reverse"> 
+					<li class="header-wrapper-minicart text-uppercase d-inline-block ml-3">
+						<a class="action showcart cdz-top-link d-flex align-items-center" href="/cart">
+							<span class="item-count" [text]='totalItems.item_count'>{{ cart.item_count | json }}</span>
+						    <amp-state id="totalItems">
+						        <script type="application/json">
+						         {"item_count": {{ cart.item_count | json }}}
+						        </script>
+						    </amp-state>
+						  <i class="d-inline-block mr-md-2" aria-hidden="true">{% include 'icon-cart02' %}</i>
+						</a>
+					</li>
+					{% if shop.customer_accounts_enabled %}   
+					  <li class="authorization-link text-uppercase d-inline-block ml-3">
+						  <a class="account-trigger cdz-top-link d-flex align-items-center" href="/account">
+							<i class="d-inline-block mr-md-2" aria-hidden="true">{% include 'icon-user' %}</i>
+						  </a>
+					  </li>
+					{% endif %}
+				</ul>
+			</div>
+			{% if settings.amp_search_enabled %}
+			<div class="header-search position-relative mt-3">
+				<form action="/search" method="get" class="search-form clearfix" role="search" target="_top">
+				  <input type="hidden" name="type" value="{{ header_search_type }}">
+				  <input type="hidden" name="options[unavailable_products]" value="hide">
+				  <input type="hidden" name="options[prefix]" value="last">						  
+				  <input type="search" name="q" value="{{ search.terms | escape }}" class="input-text header-bar__search-input" placeholder="{{ 'general.header.search_placeholder' | t }}">
+				  <button type="submit" class="search-button">
+					<i class="d-inline-block" aria-hidden="true">{% include 'icon-search' %}</i>
+					<span hidden class="fallback-text">{{ 'general.header.search_submit' | t }}</span>
+				  </button>
+				</form>
+			</div>
+			{% endif %}
+			{% include 'amp-mobilemenu', linklist: settings.amp_nav_menu %}
+		</div>
+	</div>
+</header>
+{% schema %}
+  {
+    "name": "Header Section",
+    "settings": [
+	]
+  }
+{% endschema %}

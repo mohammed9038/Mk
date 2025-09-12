@@ -1,0 +1,57 @@
+{%- comment %}<locksmith:4d0a>{% endcomment -%}
+  {%- assign locksmith_e20e_product__available = false %}{% for variant in product.variants %}{% capture var %}{% render 'locksmith-variables', scope: 'subject', subject: variant, subject_parent: product, variable: 'transparent' %}{% endcapture %}{% if var == "true" %}{% else %}{% continue %}{% endif %}{% if locksmith_e20e_product__available == false and variant.available %}{% assign locksmith_e20e_product__available = true %}{% endif %}{% endfor -%}
+{%- comment %}</locksmith:4d0a>{% endcomment -%}
+
+<div data-role="cdz-popup-section" class="cdz-popup popup-optionAddCart" id="popup-optionAddCart" data-cdzwidget='{"codazon.cdzPopUp" : {"overrideOthers" : "false", "section" : "optionAddCart"}}'>
+<div class="option-addcart cdz-quickshop">
+<div class="product-main row">
+  <div class="col-sm-6">
+	  <div class="product-main-image">
+		<a class="photo product-item-photo" href="{{ product.url | within: collection }}">
+			<img class="img-fluid product-image-photo" src="{% comment ls-rpl %}{{ featured_image | img_url: 'large' }}{% endcomment %}{%- capture LS_IMG_URL -%}{%- render "ls-img-url", image: featured_image, img_url: 'large' -%}{%- endcapture -%}{{ LS_IMG_URL }}{% comment /ls-rpl %}{% endcomment %}" alt="{% comment ls-rpl %}{{ featured_image.alt | escape }}{% endcomment %}{%- capture LS_ALT -%}{%- render "ls-alt", image: featured_image -%}{%- endcapture -%}{{ LS_ALT | escape }}{% comment /ls-rpl %}{% endcomment %}" id="ProductPhotoImg">
+		</a>
+	  </div>
+  </div>
+  <div class="col-sm-6">
+	  <div class="product-info-main">
+		<h1 class="page-title">{{ product.title }}</h1>
+		<form method="post" enctype="multipart/form-data">
+			<div class="option clearfix"> 
+				<select name="id" id="productSelect">
+				{% for variant in product.variants %}
+				  {%- comment %}<locksmith:cea2>{% endcomment -%}
+				    {%- capture var %}{% render 'locksmith-variables', scope: 'subject', subject: variant, subject_parent: product, variable: 'transparent' %}{% endcapture %}{% if var == "true" %}{% else %}{% continue %}{% endif -%}
+				  {%- comment %}</locksmith:cea2>{% endcomment -%}
+				  {% if variant.available %}
+					<option value="{{ variant.id }}">
+					  {{ variant.title }} - {{ variant.price | money_with_currency }}
+					</option>
+				  {% else %}
+					<option disabled="disabled">
+					  {{ variant.title }} <ls-static-577354>- sold out</ls-static-577354>
+					</option>
+				  {% endif %}
+				{% endfor %}
+				</select>
+			</div>
+			<input type="number" name="quantity" id="quantity" min="1" max="500" value="1">
+			<div class="status-cart">
+			  <a class="link-right cart-link" data-role="cdz-close-cdzpopup" data-item="">
+				<ls-static-878888>Close all PopUp</ls-static-878888>
+			</a>
+				{% if locksmith_e20e_product__available %}
+				  <button class="btn-cart" type="submit" data-cdzwidget='{"codazon.cdzMiniCart" : {}}'>
+					<ls-static-435028>add to cart</ls-static-435028>
+				  </button>
+			  {% else %}
+				  <button class="btn-cart disabled" disabled="disabled" type="button">
+						<ls-static-768472>add to cart</ls-static-768472>
+				  </button>
+			  {% endif %}
+		  </div>
+		</form>
+	  </div>
+  </div>
+</div>
+</div>
+</div>

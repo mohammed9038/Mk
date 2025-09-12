@@ -1,0 +1,37 @@
+{%- comment %}<locksmith:009c>{% endcomment -%}
+  {%- assign _0626_safe_variants = '' %}{% for _variant in product.variants %}{% capture var %}{% render 'locksmith-variables', scope: 'subject', subject: _variant, subject_parent: product, variable: 'transparent' %}{% endcapture %}{% if var == "true" %}{% else %}{% continue %}{% endif %}{% capture _0626_safe_variants %}{% if _0626_safe_variants != blank %}{{ _0626_safe_variants }},{% endif %}{{ _variant | json }}{% endcapture %}{% endfor %}{% capture _0626_safe_variants %}[{{ _0626_safe_variants }}]{% endcapture %}{% assign _0626_unsafe_variants = product.variants | json %}{% assign _0626_safe_options = product.options | json %}{% assign _0626_unsafe_options = product.options | json %}{% for _option in product.options %}{% assign _safe_values = '' %}{% for _value in _option.values %}{% capture var %}{% render 'locksmith-variables', scope: 'subject', subject: _value, subject_parent: _option, variable: 'transparent' %}{% endcapture %}{% if var == "true" %}{% else %}{% continue %}{% endif %}{% capture _safe_values %}{% if _safe_values != blank %}{{ _safe_values }},{% endif %}{{ _value | json }}{% endcapture %}{% endfor %}{% capture _safe_values %}[{{ _safe_values }}]{% endcapture %}{% assign _unsafe_values = _option.values | json %}{% assign _unsafe_option = _option | json %}{% assign _safe_option = _unsafe_option | replace: _unsafe_values, _safe_values %}{% assign _0626_safe_options = _0626_safe_options | replace: _unsafe_option, _safe_option %}{% endfor %}{% assign _0626_unsafe_options = product.options | json -%}
+{%- comment %}</locksmith:009c>{% endcomment -%}
+
+{% layout none %}
+{% capture results %}
+
+{% paginate search.results by 6 %}  
+  {%- comment %}<locksmith:0f4c>{% endcomment -%}
+    {%- assign locksmith_13b6_forloop__size = 0 %}{% for item in search.results %}{% capture var %}{% render 'locksmith-variables', scope: 'subject', subject: item, subject_parent: search, variable: 'transparent' %}{% endcapture %}{% if var == 'true' %}{% assign locksmith_13b6_forloop__size = locksmith_13b6_forloop__size | plus: 1 %}{% endif %}{% endfor %}{% assign locksmith_13b6_forloop__index = nil -%}
+  {%- comment %}</locksmith:0f4c>{% endcomment -%}
+  {% for item in search.results %}
+    {%- comment %}<locksmith:478b>{% endcomment -%}
+      {%- capture var %}{% render 'locksmith-variables', scope: 'subject', subject: item, subject_parent: search, variable: 'transparent' %}{% endcapture %}{% if var == "true" %}{% assign __product = product %}{% assign product = item %}{% assign locksmith_03c8_product__price = nil %}{% assign locksmith_03c8_product__compare_at_price = nil %}{% for variant in product.variants %}{% capture var %}{% render 'locksmith-variables', scope: 'subject', subject: variant, subject_parent: product, variable: 'transparent' %}{% endcapture %}{% if var == "true" %}{% else %}{% continue %}{% endif %}{% if locksmith_03c8_product__price == nil %}{% assign locksmith_03c8_product__price = variant.price %}{% endif %}{% if locksmith_03c8_product__compare_at_price == nil %}{% assign locksmith_03c8_product__compare_at_price = variant.compare_at_price %}{% endif %}{% endfor %}{% assign _03c8_safe_variants = '' %}{% for _variant in product.variants %}{% capture _03c8_safe_variants %}{% if _03c8_safe_variants != blank %}{{ _03c8_safe_variants }},{% endif %}{{ _variant | json }}{% endcapture %}{% endfor %}{% capture _03c8_safe_variants %}[{{ _03c8_safe_variants }}]{% endcapture %}{% assign _03c8_unsafe_variants = product.variants | json %}{% assign _03c8_safe_options = product.options | json %}{% assign _03c8_unsafe_options = product.options | json %}{% for _option in product.options %}{% assign _safe_values = '' %}{% for _value in _option.values %}{% capture _safe_values %}{% if _safe_values != blank %}{{ _safe_values }},{% endif %}{{ _value | json }}{% endcapture %}{% endfor %}{% capture _safe_values %}[{{ _safe_values }}]{% endcapture %}{% assign _unsafe_values = _option.values | json %}{% assign _unsafe_option = _option | json %}{% assign _safe_option = _unsafe_option | replace: _unsafe_values, _safe_values %}{% assign _03c8_safe_options = _03c8_safe_options | replace: _unsafe_option, _safe_option %}{% endfor %}{% assign _03c8_unsafe_options = product.options | json %}{% assign product = __product %}{% if locksmith_13b6_forloop__index == nil %}{% assign locksmith_13b6_forloop__index = 1 %}{% assign locksmith_13b6_forloop__index0 = 0 %}{% else %}{% assign locksmith_13b6_forloop__index = locksmith_13b6_forloop__index | plus: 1 %}{% assign locksmith_13b6_forloop__index0 = locksmith_13b6_forloop__index0 | plus: 1 %}{% endif %}{% if locksmith_13b6_forloop__index == 1 %}{% assign locksmith_13b6_forloop__first = true %}{% else %}{% assign locksmith_13b6_forloop__first = false %}{% endif %}{% if locksmith_13b6_forloop__index == locksmith_13b6_forloop__size %}{% assign locksmith_13b6_forloop__last = true %}{% else %}{% assign locksmith_13b6_forloop__last = false %}{% endif %}{% assign locksmith_13b6_forloop__rindex = locksmith_13b6_forloop__size | minus: locksmith_13b6_forloop__index | minus: 1 %}{% assign locksmith_13b6_forloop__rindex0 = locksmith_13b6_forloop__size | minus: locksmith_13b6_forloop__index0 | minus: 1 %}{% else %}{% continue %}{% endif -%}
+    {%- comment %}</locksmith:478b>{% endcomment -%}
+    {% assign product = item %}
+    { 
+"product" : {%- comment %}<locksmith:bbb7>{% endcomment -%}{{- product | json | replace: _03c8_unsafe_variants, _03c8_safe_variants | replace: _03c8_unsafe_options, _03c8_safe_options -}}{%- comment %}original: {{ product | json }}{%- endcomment %}{%- comment %}</locksmith:bbb7>{% endcomment -%},
+"id":{{ product.id | json }},
+"price":{%if locksmith_03c8_product__compare_at_price %} {{locksmith_03c8_product__compare_at_price | json }} {% else %} {{locksmith_03c8_product__price | json }} {% endif %} ,
+"title":{{ product.title | json }},
+"product_type":{{ product.product_type | json }},
+"vendor":{{ product.vendor | json }},
+"handle":{{ product.handle | json }},
+"variants":{%- comment %}<locksmith:bbb7>{% endcomment -%}{{- product.variants | json | replace: _03c8_unsafe_variants, _03c8_safe_variants | replace: _03c8_unsafe_options, _03c8_safe_options -}}{%- comment %}original: {{ product.variants | json }}{%- endcomment %}{%- comment %}</locksmith:bbb7>{% endcomment -%},
+"url":{{ product.url | within: product.collections.last | json }},
+"thumbnail":{% comment ls-rpl %}{{ product.featured_image.src | product_img_url: 'thumb' | json }}{% endcomment %}{%- capture LS_IMG_URL -%}{%- render "ls-img-url", image: product.featured_image.src, img_url: 'thumb' -%}{%- endcapture -%}{{ LS_IMG_URL | json }}{% comment /ls-rpl %}{% endcomment %}
+    }
+    {% unless locksmith_13b6_forloop__last %},{% endunless %}
+  {% endfor %}
+{% endpaginate %}
+
+{% endcapture %}
+searchCallback({
+"results_count":{{ search.results_count }},
+"results":[{{ results }}]
+});

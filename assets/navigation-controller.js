@@ -490,14 +490,6 @@ class NavigationController {
   enhanceGTranslate() {
     const wrappers = document.querySelectorAll(this.selectors.languageSelector);
     const gtWidgets = document.querySelectorAll('.gt-widget-dropdown, .gtranslate_wrapper');
-    const gtranslateFound = gtWidgets.length > 0;
-    
-    // Check for GTranslate timeout and show native fallback
-    if (!gtranslateFound) {
-      setTimeout(() => {
-        this.checkGTranslateFallback();
-      }, 3000); // Wait 3 seconds for GTranslate to load
-    }
     
     // Process both our selectors and actual GTranslate widgets
     const allLanguageElements = [...wrappers, ...gtWidgets];
@@ -528,56 +520,6 @@ class NavigationController {
     });
 
     console.log(`[NavigationController] Enhanced ${allLanguageElements.length} language selector elements`);
-  }
-
-  /**
-   * Check if GTranslate loaded, show native fallback if not
-   */
-  checkGTranslateFallback() {
-    const gtWidgets = document.querySelectorAll('.gt-widget-dropdown, .gtranslate_wrapper');
-    const nativeFallbacks = document.querySelectorAll('[data-gtranslate-fallback]');
-    
-    // If no GTranslate widgets are found and we have native fallbacks
-    if (gtWidgets.length === 0 && nativeFallbacks.length > 0) {
-      console.log('[NavigationController] GTranslate not detected, showing native Shopify localization fallback');
-      
-      nativeFallbacks.forEach(fallback => {
-        fallback.style.display = 'block';
-        fallback.style.opacity = '0';
-        fallback.style.transition = 'opacity 0.3s ease';
-        
-        // Smooth fade-in
-        requestAnimationFrame(() => {
-          fallback.style.opacity = '1';
-        });
-        
-        // Enhance native Shopify localization with our dropdown behavior
-        this.enhanceNativeLocalization(fallback);
-      });
-    } else if (gtWidgets.length > 0) {
-      console.log('[NavigationController] GTranslate detected, hiding native fallbacks');
-      // Hide native fallbacks if GTranslate is working
-      nativeFallbacks.forEach(fallback => {
-        fallback.style.display = 'none';
-      });
-    }
-  }
-
-  /**
-   * Enhance native Shopify localization
-   */
-  enhanceNativeLocalization(element) {
-    if (!element || element.dataset.nativeEnhanced) return;
-    element.dataset.nativeEnhanced = 'true';
-    
-    // Add same styling as GTranslate
-    element.style.position = 'relative';
-    element.style.zIndex = '1000';
-    
-    // Ensure it closes when clicking outside
-    element.addEventListener('click', (e) => e.stopPropagation());
-    
-    console.log('[NavigationController] Enhanced native Shopify localization fallback');
   }
 
   /**

@@ -1,0 +1,519 @@
+{% assign enable_hover_thumbnail = section.settings.enable_hover_thumbnail %}
+{% assign enable_product_label = section.settings.enable_product_label %}
+{% assign enable_product_name = section.settings.enable_product_name %}
+{% assign enable_price = section.settings.enable_price %}
+{% assign enable_sku = section.settings.enable_sku %}
+{% assign enable_vendor = section.settings.enable_vendor %}
+{% assign enable_addto_cart = section.settings.enable_addto_cart %}
+{% assign enable_quickshop = section.settings.enable_quickshop %}
+{% assign enable_addto_compare = section.settings.enable_addto_compare %}
+{% assign enable_addto_wishlist = section.settings.enable_addto_wishlist %}
+{% assign enable_review = section.settings.enable_review %}
+{% assign enable_quantity_product = section.settings.enable_quantity_product %}
+{% assign enable_short_description = section.settings.enable_short_description %}
+{% assign enable_variant_product = section.settings.enable_variant_product %}
+{%- assign show_product_text_align = section.settings.text_align -%}
+
+{% assign thumbnail_width = '320' %}
+{% unless section.settings.thumbnail_width == blank %}
+	{% assign thumbnail_width = section.settings.thumbnail_width %}
+{% endunless %}
+{% assign thumbnail_height = '320' %}
+{% unless section.settings.thumbnail_height == blank %}
+	{% assign thumbnail_height = section.settings.thumbnail_height %}
+{% endunless %}
+{% assign short_description_length = '150' %}
+{% unless section.settings.short_description_length == blank %}
+	{% assign short_description_length = section.settings.short_description_length %}
+{% endunless %}
+
+{%- assign product_item_per_page = section.settings.product_item_per_page -%}
+{%- assign enable_ajax_loading = section.settings.enable_ajax_loading -%}
+{%- assign type_ajaxloading = section.settings.type_ajaxloading -%}
+
+{%- assign styles_product_grid = section.settings.styles_product_grid -%}
+{%- assign enable_collection_sorting = section.settings.enable_collection_sorting -%}
+{%- assign column_layout = section.settings.column_layout -%}
+{%- assign column_layout_tablet = section.settings.column_layout_tablet -%}
+{%- assign column_layout_mb = section.settings.column_layout_mb -%}
+{%- assign enable_tagsfilter = section.settings.enable_tagsfilter -%}
+{%- assign enable_filter_category = section.settings.enable_filter_category -%}
+{%- assign display_category = linklists[section.settings.display_category] -%}
+{%- assign enable_filter_vendor = section.settings.enable_filter_vendor -%}
+{%- assign filter_category_title = section.settings.filter_category_title -%}
+{%- assign filter_title = section.settings.filter_title -%}
+{%- assign filter_display = section.settings.filter_display -%}
+{%- assign filter_group_title = section.blocks.filter_group_title -%}
+{%- assign filter_group_tag = section.blocks.filter_group_tag -%}
+{%- assign filter_display_type = section.blocks.filter_display_type -%}
+
+{% if template == 'collection.amp-collection' %}
+	{% include 'amp-collection-style' %}
+{% else %}
+	{% include 'collection-style-normal' %}
+{% endif %}
+
+
+{% schema %}
+{
+  "name": {
+    "de": "Kategorie-Seiten",
+    "en": "Collection pages",
+    "es": "Páginas de colección",
+    "fr": "Pages de collections",
+    "it": "Pagine delle collezioni",
+    "ja": "コレクションページ",
+    "nl": "Collectiepagina's",
+    "pt-BR": "Páginas de coleções",
+    "zh-CN": "产品系列页面",
+    "zh-TW": "商品系列頁面"
+  },
+  "settings": [
+	{
+      "type": "header",
+      "content": "Collection page"
+    },
+	{
+      "type": "checkbox",
+      "id": "enable_collection_sorting",
+      "label": "Enable collection sorting",
+      "default": true
+    },
+	{
+      "type": "checkbox",
+      "id": "enable_column_layout",
+      "label": "Enable Column Layout",
+      "default": true
+    },
+	{
+      "type": "checkbox",
+      "id": "enable_ajax_loading",
+      "label": "Enable Infinite Scroll",
+      "default": true
+    },
+	{
+      "type": "select",
+      "id": "type_ajaxloading",
+      "label": "Display Infinite Scroll Type",
+      "options": [
+          {
+            "value": "click",
+            "label": "Click Button"
+          },
+          {
+            "value": "scroll",
+            "label": "Scroll Down"
+          }
+        ],
+        "default": "click"
+    },
+	{
+      "type": "text",
+      "id": "product_item_per_page",
+      "label": "Show Products Per Page",
+      "default": "8"
+    },
+	{
+      "type": "select",
+      "id": "column_layout",
+      "label": "Show Items Per Row",
+      "options": [
+          {
+            "value": "list",
+            "label": "1"
+          },
+          {
+            "value": "grid-2",
+            "label": "2"
+          },
+          {
+            "value": "grid-3",
+            "label": "3"
+          },
+          {
+            "value": "grid-4",
+            "label": "4"
+          },
+          {
+            "value": "grid-5",
+            "label": "5"
+          },
+          {
+            "value": "grid-6",
+            "label": "6"
+          }
+        ],
+        "default": "grid-4"
+    },
+	{
+      "type": "select",
+      "id": "column_layout_tablet",
+      "label": "Show Items Per Row on Tablet view",
+      "options": [
+          {
+            "value": "list",
+            "label": "1"
+          },
+          {
+            "value": "grid-2",
+            "label": "2"
+          },
+          {
+            "value": "grid-3",
+            "label": "3"
+          },
+          {
+            "value": "grid-4",
+            "label": "4"
+          }
+        ],
+        "default": "grid-3"
+    },
+	{
+      "type": "select",
+      "id": "column_layout_mb",
+      "label": "Show Items Per Row on Mobile View",
+      "options": [
+          {
+            "value": "list",
+            "label": "1"
+          },
+          {
+            "value": "grid-2",
+            "label": "2"
+          },
+          {
+            "value": "grid-3",
+            "label": "3"
+          },
+          {
+            "value": "grid-4",
+            "label": "4"
+          }
+        ],
+        "default": "grid-2"
+    },
+	{
+      "type": "header",
+      "content": "Product Listing"
+    },
+	{
+      "type": "select",
+      "id": "styles_product_grid",
+      "label": "Product Listing Style",
+      "options": [
+          {
+            "value": "01",
+            "label": "Style 01"
+          },
+          {
+            "value": "02",
+            "label": "Style 02"
+          },
+          {
+            "value": "03",
+            "label": "Style 03"
+          },
+          {
+            "value": "04",
+            "label": "Style 04"
+          },
+          {
+            "value": "05",
+            "label": "Style 05"
+          },
+          {
+            "value": "06",
+            "label": "Style 06"
+          },
+          {
+            "value": "07",
+            "label": "Style 07"
+          },
+          {
+            "value": "08",
+            "label": "Style 08"
+          },
+          {
+            "value": "09",
+            "label": "Style 09"
+          },
+          {
+            "value": "10",
+            "label": "Style 10"
+          },
+          {
+            "value": "11",
+            "label": "Style 11"
+          },
+          {
+            "value": "12",
+            "label": "Style 12"
+          },
+          {
+            "value": "13",
+            "label": "Style 13"
+          },
+          {
+            "value": "14",
+            "label": "Style 14"
+          },
+          {
+            "value": "15",
+            "label": "Style 15"
+          },
+          {
+            "value": "16",
+            "label": "Style 16"
+          },
+          {
+            "value": "17",
+            "label": "Style 17"
+          }
+        ],
+        "default": "12"
+    },
+	{
+		"type": "select",
+		"id": "text_align",
+		"label": "Text alignment",
+		"default": "center",
+		"options": [
+		  {
+			"label": "Center",
+			"value": "center"
+		  },
+		  {
+			"label": "Left",
+			"value": "left"
+		  },
+		  {
+			"label": "Right",
+			"value": "right"
+		  }
+		]
+	  },
+	{
+	  "type": "text",
+	  "id": "thumbnail_width",
+	  "label": "Thumbnail Width",
+	  "default" : "280"
+	},
+	{
+	  "type": "text",
+	  "id": "thumbnail_height",
+	  "label": "Thumbnail Height",
+	  "default" : "280"
+	},
+	{
+	  "type": "checkbox",
+	  "id": "enable_product_name",
+	  "label": "Enable Product Name",
+	  "default" : true
+	},
+	{
+	  "type": "checkbox",
+	  "id": "enable_price",
+	  "label": "Enable Price",
+	  "default" : true
+	},
+	{
+	  "type": "checkbox",
+	  "id": "enable_hover_thumbnail",
+	  "label": "Enable Hover Thumbnail",
+	  "default" : true
+	},
+	{
+	  "type": "checkbox",
+	  "id": "enable_product_label",
+	  "label": "Enable Product Label",
+	  "default" : true
+	},
+	{
+	  "type": "checkbox",
+	  "id": "enable_sku",
+	  "label": "Show SKU",
+	  "default" : false
+	},
+	{
+	  "type": "checkbox",
+	  "id": "enable_vendor",
+	  "label": "Show Vendor",
+	  "default" : false
+	},
+	{
+	  "type": "checkbox",
+	  "id": "enable_addto_cart",
+	  "label": "Show Add to cart",
+	  "default" : true
+	},
+	{
+	  "type": "checkbox",
+	  "id": "enable_quickshop",
+	  "label": "Show Quickshop",
+	  "default" : true
+	},
+	{
+	  "type": "checkbox",
+	  "id": "enable_addto_compare",
+	  "label": "Show Add to Compare",
+	  "default" : true
+	},
+	{
+	  "type": "checkbox",
+	  "id": "enable_addto_wishlist",
+	  "label": "Show Add to Wishlist",
+	  "default" : true
+	},
+	{
+	  "type": "checkbox",
+	  "id": "enable_review",
+	  "label": "Show Review Product",
+	  "default" : true
+	},
+	{
+	  "type": "checkbox",
+	  "id": "enable_quantity_product",
+	  "label": "Show Quantity Product",
+	  "default" : false
+	},
+	{
+	  "type": "checkbox",
+	  "id": "enable_variant_product",
+	  "label": "Show Variant Product",
+	  "default" : false
+	},
+	{
+	  "type": "checkbox",
+	  "id": "enable_short_description",
+	  "label": "Show Short Description",
+	  "default" : false
+	},
+	{
+	  "type": "text",
+	  "id": "short_description_length",
+	  "label": "Description Length",
+	  "default" : "150"
+	},
+	{
+      "type": "header",
+      "content": "Filter"
+    },
+	{
+        "type": "select",
+        "id": "filter_display",
+        "label": "Display Filters Area",
+        "options": [
+          {
+            "value": "filter_left",
+            "label": "Sidebar Left"
+          },
+          {
+            "value": "filter_right",
+            "label": "Sidebar Right"
+          },
+          {
+            "value": "filter_top",
+            "label": "No Sidebar/Fixed Filter"
+          }
+        ],
+        "default": "filter_left"
+    },
+      {
+        "type": "checkbox",
+        "id": "enable_filter_category",
+        "label": "Enable Filter Category",
+        "default": true
+      },
+      {
+        "type": "link_list",
+        "id": "display_category",
+        "label": "Choose category",
+        "default": "main-menu"
+      }, 
+	  {
+        "type": "text",
+        "id": "filter_category_title",
+        "label": "Filter Category Title",
+        "default": "Filter by category"
+      },
+	  {
+        "type": "checkbox",
+        "id": "enable_filter_vendor",
+        "label": "Enable Filter By Vendor",
+        "default": true
+      }, 
+	  {
+        "type": "text",
+        "id": "filter_vendor_title",
+        "label": "Filter By Vendor Title",
+        "default": "Filter by vendor"
+      },
+      {
+        "type": "checkbox",
+        "id": "enable_tagsfilter",
+        "label": "Enable Custom Filter Group",
+        "default": true
+      },
+      {
+        "type": "text",
+        "id": "filter_title",
+        "label": "Custom Filter Title:",
+        "default": "Filter"
+      }
+  ],
+"blocks": [
+  {
+    "name": "Custom Filter Group",
+    "type": "filter_item",
+    "settings": [
+    {
+      "type": "text",
+      "id": "filter_group_title",
+      "label": "Title"
+    },
+    {
+      "type": "textarea",
+      "id": "filter_group_tag",
+      "label": "Unique tags list",
+      "info": "Separate tags with comma. Example: blue,green. This value must identical value of Tags section on the Products Page. Having distinction between downcase and capitalize. Ex: Red # red"
+    },
+    {
+      "type": "checkbox",
+      "id": "filter_multi_select",
+      "label": "Enable multi select",
+      "default": true
+    },
+    {
+      "type": "select",
+      "id": "filter_display_type",
+      "label": "Design",
+	  "options": [
+          {
+            "value": "links",
+            "label": "Links"
+          },
+          {
+            "value": "text",
+            "label": "Button"
+          },
+          {
+            "value": "select",
+            "label": "Dropdown Select"
+          },
+          {
+            "value": "checkbox",
+            "label": "Check Box"
+          },
+          {
+            "value": "color",
+            "label": "Color"
+          }
+        ],
+       "default": "links"
+    }
+    ]
+  }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,893 @@
+<div class="container main pt-4 mb-5">
+	{%- for block in section.blocks -%}
+		{%- case block.type -%}
+			{%- when 'slideshow' -%}
+				 {% assign slideshow_thumbnail_width = block.settings.slideshow_thumbnail_width %}
+				 {% assign slideshow_thumbnail_height = block.settings.slideshow_thumbnail_height %}
+				 {%- assign img_slideshow_size = slideshow_thumbnail_width | append: 'x' | append: slideshow_thumbnail_height -%}
+				<div class="slideshow-section cdz-amp-section cdz-slideshow mb-4">
+					<amp-carousel width="{{ slideshow_thumbnail_width }}"
+					  height="{{ slideshow_thumbnail_height }}"
+					  layout="responsive"
+					  type="slides">	
+						{%- if block.settings.amp_slideshow_01 == blank and block.settings.amp_slideshow_02 == blank and block.settings.amp_slideshow_03 == blank-%}
+							<div class="slide-item">
+								<span>
+								{% capture current %}{% cycle 1, 2 %}{% endcapture %}
+								{{ 'lifestyle-' | append: current | placeholder_svg_tag: 'placeholder-svg' }}
+								</span>
+							</div>
+						{%- else -%}
+							{%- if block.settings.amp_slideshow_01 != blank -%}
+							<div class="slide-item">
+								<a href="{{ block.settings.amp_slideshow_link_01 }}"><amp-img src="{% comment ls-rpl %}{{ block.settings.amp_slideshow_01 | img_url: img_slideshow_size }}{% endcomment %}{%- capture LS_IMG_URL -%}{%- render "ls-img-url", image: block.settings.amp_slideshow_01, img_url: img_slideshow_size -%}{%- endcapture -%}{{ LS_IMG_URL }}{% comment /ls-rpl %}{% endcomment %}" 
+								width="{{ slideshow_thumbnail_width }}"
+								height="{{ slideshow_thumbnail_height }}"
+								layout="responsive"></amp-img></a>
+							</div>
+							{%- endif -%}
+							{%- if block.settings.amp_slideshow_02 != blank -%}
+							<div class="slide-item">
+								<a href="{{ block.settings.amp_slideshow_link_02 }}"><amp-img src="{% comment ls-rpl %}{{ block.settings.amp_slideshow_02 | img_url: img_slideshow_size }}{% endcomment %}{%- capture LS_IMG_URL -%}{%- render "ls-img-url", image: block.settings.amp_slideshow_02, img_url: img_slideshow_size -%}{%- endcapture -%}{{ LS_IMG_URL }}{% comment /ls-rpl %}{% endcomment %}" 
+								width="{{ slideshow_thumbnail_width }}"
+								height="{{ slideshow_thumbnail_height }}"
+								layout="responsive"></amp-img></a>
+							</div>
+							{%- endif -%}
+							{%- if block.settings.amp_slideshow_03 != blank -%}
+							<div class="slide-item">
+								<a href="{{ block.settings.amp_slideshow_link_03 }}"><amp-img src="{% comment ls-rpl %}{{ block.settings.amp_slideshow_03 | img_url: img_slideshow_size }}{% endcomment %}{%- capture LS_IMG_URL -%}{%- render "ls-img-url", image: block.settings.amp_slideshow_03, img_url: img_slideshow_size -%}{%- endcapture -%}{{ LS_IMG_URL }}{% comment /ls-rpl %}{% endcomment %}" 
+								width="{{ slideshow_thumbnail_width }}"
+								height="{{ slideshow_thumbnail_height }}"
+								layout="responsive"></amp-img></a>
+							</div>
+							{%- endif -%}						
+						{%- endif -%}						
+					</amp-carousel>
+				</div>
+			{%- when 'slider_product' -%}
+				<div class="ampcdz-slider-product ampcdz-grid-product cdz-amp-section mb-4">
+					{% assign amp_slider_wrap_height = block.settings.amp_slider_wrap_height %}
+					{% assign amp_slider_wrap_height_px = amp_slider_wrap_height | minus: 2 | append: 'px' %}
+					{% assign amp_slider_thumbnail_width = block.settings.amp_slider_thumbnail_width %}
+					{% assign amp_slider_thumbnail_height = block.settings.amp_slider_thumbnail_height %}
+					{%- assign amp_slider_thumbnail_size = amp_slider_thumbnail_width | append: 'x' | append: amp_slider_thumbnail_height -%}
+					{%- assign amp_slider_collection = block.settings.amp_slider_collection -%}
+					{%- assign amp_slider_products_count = '7' -%}
+					{%- unless block.settings.amp_slider_products_count == blank -%}
+						{%- assign amp_slider_products_count = block.settings.amp_slider_products_count -%}
+					{%- endunless -%}
+					{%- assign amp_slider_order_by = block.settings.amp_slider_order_by -%}
+					{%- assign amp_slider_order = block.settings.amp_slider_order -%}
+					{%- if amp_slider_order == 'asc' -%}
+						{%- assign amp_slider_products = collections[amp_slider_collection].products | sort: amp_slider_order_by -%}
+					{%- else -%}
+						{%- assign amp_slider_products = collections[amp_slider_collection].products | sort: amp_slider_order_by | reverse -%}
+					{%- endif -%}
+					{%- unless block.settings.amp_slider_title == blank and block.settings.amp_slider_sub_title == blank -%}
+						<div class="cdz-block-title {{ block.settings.amp_slider_title_align | escape }}">
+							{%- unless block.settings.amp_slider_title == blank -%}
+								<h2 class="b-title second_color">{{ block.settings.amp_slider_title | escape }}</h2>
+							{%- endunless -%}
+							{%- unless block.settings.amp_slider_sub_title == blank -%}
+								<p class="title-desc"><span>{{ block.settings.amp_slider_sub_title | escape }}</span></p>
+							{%- endunless -%}
+						</div>
+					{%- endunless -%}
+					<amp-carousel class="scrollbar"
+					  height="{{ amp_slider_wrap_height }}"
+					  layout="fixed-height"
+					  width="auto"
+					  type="carousel">
+						{%- if collections[amp_slider_collection].products == blank -%}
+							{%- for i in (1..amp_slider_products_count) -%}	
+								<div class="product-item text-center cdz-box">
+									<div class="product-item-top">
+										<a href="{{ product.url | within: collection }}" class="product-image-container">
+											<span class="product-image-wrapper">
+												{% capture current %}{% cycle 1, 2, 3, 4, 5, 6 %}{% endcapture %}
+												{{ 'product-' | append: current | placeholder_svg_tag: 'placeholder-svg' }}
+											</span>
+										</a>
+									</div>
+									<div class="product-item-bottom">
+										<div class="product name product-item-name mb-1" style="width:100%;">
+											<a class="product-item-link" href="#"><ls-static-324458>Product Name</ls-static-324458></a>
+										</div>
+										<div class="product-price">
+											<div class="price">
+												<span class="product-single__price price-box money">
+													23.99$
+												</span>
+											</div>
+										</div>
+									</div>
+								</div>
+							{%- endfor -%}
+						{%- else -%}
+							{%- for product in amp_slider_products limit: amp_slider_products_count -%}
+								{%- comment %}<locksmith:5431>{% endcomment -%}
+								  {%- capture var %}{% render 'locksmith-variables', scope: 'subject', subject: product, variable: 'transparent' %}{% endcapture %}{% if var == "true" %}{% else %}{% continue %}{% endif -%}
+								{%- comment %}</locksmith:5431>{% endcomment -%}
+								<div class="cdz-item">								
+								{% include 'amp-gridItem' with classGrid: 'cdz-box mb-1', thumbnail_width:  amp_slider_thumbnail_width, thumbnail_height: amp_slider_thumbnail_height, thumbnail_size: amp_slider_thumbnail_size, heightItem: amp_slider_wrap_height_px  %}
+								</div>
+							{%- endfor -%}
+						{%- endif -%}
+					</amp-carousel>
+				</div>
+			{%- when 'no_slider_product' -%}
+				<div class="ampcdz-slider-no-product ampcdz-grid-product cdz-amp-section mb-4">
+					{% assign amp_no_slider_thumbnail_width = block.settings.amp_no_slider_thumbnail_width %}
+					{% assign amp_no_slider_thumbnail_height = block.settings.amp_no_slider_thumbnail_height %}
+					{%- assign amp_no_slider_thumbnail_size = amp_no_slider_thumbnail_width | append: 'x' | append: amp_no_slider_thumbnail_height -%}
+					{%- assign amp_no_slider_collection = block.settings.amp_no_slider_collection -%}
+					{%- assign amp_no_slider_products_count = '8' -%}
+					{%- unless block.settings.amp_no_slider_products_count == blank -%}
+						{%- assign amp_no_slider_products_count = block.settings.amp_no_slider_products_count -%}
+					{%- endunless -%}					
+					{%- assign amp_no_slider_order_by = block.settings.amp_no_slider_order_by -%}
+					{%- assign amp_no_slider_order = block.settings.amp_no_slider_order -%}
+					{%- if amp_no_slider_order == 'asc' -%}
+						{%- assign amp_no_slider_products = collections[amp_no_slider_collection].products | sort: amp_no_slider_order_by -%}
+					{%- else -%}
+						{%- assign amp_no_slider_products = collections[amp_no_slider_collection].products | sort: amp_no_slider_order_by | reverse -%}
+					{%- endif -%}
+					{%- unless block.settings.amp_no_slider_title == blank and block.settings.amp_no_slider_sub_title == blank -%}
+						<div class="cdz-block-title {{ block.settings.amp_no_slider_title_align | escape }}">
+							{%- unless block.settings.amp_no_slider_title == blank -%}
+								<h2 class="b-title second_color">{{ block.settings.amp_no_slider_title | escape }}</h2>
+							{%- endunless -%}
+							{%- unless block.settings.amp_no_slider_sub_title == blank -%}
+								<p class="title-desc"><span>{{ block.settings.amp_no_slider_sub_title | escape }}</span></p>
+							{%- endunless -%}
+						</div>
+					{%- endunless -%}
+						<ul class="flex-grid d-flex justify-content-center">
+						{%- if collections[amp_no_slider_collection].products == blank -%}
+							{%- for i in (1..amp_no_slider_products_count) -%}
+								<div class="cdz-item d-inline-block mb-2">
+								<div class="product-item cdz-box text-center">
+									<div class="product-item-top">
+										<a href="{{ product.url | within: collection }}" class="product-image-container">
+											<span class="product-image-wrapper">
+												{% capture current %}{% cycle 1, 2, 3, 4, 5, 6 %}{% endcapture %}
+												{{ 'product-' | append: current | placeholder_svg_tag: 'placeholder-svg' }}
+											</span>
+										</a>
+									</div>
+									<div class="product-item-bottom">
+										<div class="product name product-item-name" style="width:100%;">
+											<a class="product-item-link" href="#"><ls-static-97335>Product Name</ls-static-97335></a>
+										</div>
+										<div class="product-price">
+											<div class="price">
+												<span class="product-single__price price-box money">
+													23.99$
+												</span>
+											</div>
+										</div>
+									</div>
+								</div>
+								</div>
+							{%- endfor -%}
+							<div class="col-12 viewall text-center d-flex align-items-center justify-content-center mt-3"><a class="btn btn-primary" href="{{ block.settings.amp_no_slider_view_all_url }}">{{ block.settings.amp_no_slider_view_all | escape }}</a></div>
+						{%- else -%}							
+							{%- for product in amp_no_slider_products limit: amp_no_slider_products_count -%}
+								{%- comment %}<locksmith:2732>{% endcomment -%}
+								  {%- capture var %}{% render 'locksmith-variables', scope: 'subject', subject: product, variable: 'transparent' %}{% endcapture %}{% if var == "true" %}{% else %}{% continue %}{% endif -%}
+								{%- comment %}</locksmith:2732>{% endcomment -%}
+								<div class="cdz-item d-inline-block mb-2">
+									{% include 'amp-gridItem' with classGrid: 'cdz-box',thumbnail_width: amp_no_slider_thumbnail_width, thumbnail_height: amp_no_slider_thumbnail_height, thumbnail_size: amp_no_slider_thumbnail_size %}
+								</div>
+							{%- endfor -%}							
+							<div class="col-12 viewall text-center d-flex align-items-center justify-content-center mt-3"><a class="btn btn-primary" href="{{ block.settings.amp_no_slider_view_all_url }}">{{ block.settings.amp_no_slider_view_all | escape }}</a></div>
+						{%- endif -%}
+						</ul>
+				</div>
+			{%- when 'product_list' -%}
+				<div class="ampcdz-product-list cdz-amp-section mb-4">
+					{% assign amp_product_list_thumbnail_width = block.settings.amp_product_list_thumbnail_width %}
+					{% assign amp_product_list_thumbnail_height = block.settings.amp_product_list_thumbnail_height %}
+					{%- assign amp_product_list_thumbnail_size = amp_product_list_thumbnail_width | append: 'x' | append: amp_product_list_thumbnail_height -%}
+					{%- assign amp_product_list_collection = block.settings.amp_product_list_collection -%}
+					{%- assign amp_product_list_products_count = '4' -%}
+					{%- unless block.settings.amp_product_list_products_count == blank -%}
+						{%- assign amp_product_list_products_count = block.settings.amp_product_list_products_count -%}
+					{%- endunless -%}					
+					{%- assign amp_product_list_order_by = block.settings.amp_product_list_order_by -%}
+					{%- assign amp_product_list_order = block.settings.amp_product_list_order -%}
+					{%- if amp_product_list_order == 'asc' -%}
+						{%- assign amp_product_list_products = collections[amp_product_list_collection].products | sort: amp_product_list_order_by -%}
+					{%- else -%}
+						{%- assign amp_product_list_products = collections[amp_product_list_collection].products | sort: amp_product_list_order_by | reverse -%}
+					{%- endif -%}
+					{%- unless block.settings.amp_product_list_title == blank and block.settings.amp_product_list_sub_title == blank -%}
+						<div class="cdz-block-title {{ block.settings.amp_product_list_title_align | escape }}">
+							{%- unless block.settings.amp_product_list_title == blank -%}
+								<h2 class="b-title second_color">{{ block.settings.amp_product_list_title | escape }}</h2>
+							{%- endunless -%}
+							{%- unless block.settings.amp_product_list_sub_title == blank -%}
+								<p class="title-desc"><span>{{ block.settings.amp_product_list_sub_title | escape }}</span></p>
+							{%- endunless -%}
+						</div>
+					{%- endunless -%}
+						<ul class="cdz-list-product row list-unstyled">
+						{%- if collections[amp_product_list_collection].products  == blank -%}
+							{%- for i in (1..amp_product_list_products_count) -%}
+								<li class="col-12 item">
+								<div class="product-item cdz-box mb-3">
+									<div class="product-item-top">
+										<a href="{{ product.url | within: collection }}" class="product-image-container">
+											<span class="product-image-wrapper">
+												{% capture current %}{% cycle 1, 2, 3, 4, 5, 6 %}{% endcapture %}
+												{{ 'product-' | append: current | placeholder_svg_tag: 'placeholder-svg' }}
+											</span>
+										</a>
+									</div>
+									<div class="product-item-bottom">
+										<div class="product name product-item-name">
+											<a class="product-item-link" href="#"><ls-static-348202>Product Name</ls-static-348202></a>
+										</div>
+										<div class="product-price">
+											<div class="price">
+												<span class="product-single__price price-box money">
+													23.99$
+												</span>
+											</div>
+										</div>
+									</div>
+								</div>
+								</li>
+							{%- endfor -%}
+						{%- else -%}							
+							{%- for product in amp_product_list_products limit: amp_product_list_products_count -%}
+								{%- comment %}<locksmith:9d5a>{% endcomment -%}
+								  {%- capture var %}{% render 'locksmith-variables', scope: 'subject', subject: product, variable: 'transparent' %}{% endcapture %}{% if var == "true" %}{% else %}{% continue %}{% endif -%}
+								{%- comment %}</locksmith:9d5a>{% endcomment -%}
+								<li class="col-12 item">
+									{% include 'amp-gridItem' with classGrid: 'cdz-box mb-3',thumbnail_width: amp_product_list_thumbnail_width, thumbnail_height: amp_product_list_thumbnail_height, thumbnail_size: amp_product_list_thumbnail_size %}
+								</li>
+							{%- endfor -%}
+						{%- endif -%}
+						</ul>
+				</div>
+			{%- when 'banner' -%}
+				<div class="ampcdz-banner cdz-amp-section mb-4" style="position:relative;">
+					{% assign banner_thumbnail_width = block.settings.banner_thumbnail_width %}
+					{% assign banner_thumbnail_height = block.settings.banner_thumbnail_height %}
+					{% assign amp_banner_overlay = block.settings.amp_banner_overlay %}
+					{%- assign banner_size = banner_thumbnail_width | append: 'x' | append: banner_thumbnail_height -%}
+					{% assign banner_link = block.settings.amp_banner_link %}
+					{%- if block.settings.amp_banner_image != blank -%}
+						<a class="" href="{{ banner_link }}">
+							<amp-img src="{% comment ls-rpl %}{{ block.settings.amp_banner_image | img_url: banner_size }}{% endcomment %}{%- capture LS_IMG_URL -%}{%- render "ls-img-url", image: block.settings.amp_banner_image, img_url: banner_size -%}{%- endcapture -%}{{ LS_IMG_URL }}{% comment /ls-rpl %}{% endcomment %}" 
+									width="{{ banner_thumbnail_width }}"
+									height="{{ banner_thumbnail_height }}"
+									layout="responsive">
+							<noscript>
+							  <img src="{% comment ls-rpl %}{{ block.settings.amp_banner_image | img_url: banner_size }}{% endcomment %}{%- capture LS_IMG_URL -%}{%- render "ls-img-url", image: block.settings.amp_banner_image, img_url: banner_size -%}{%- endcapture -%}{{ LS_IMG_URL }}{% comment /ls-rpl %}{% endcomment %}" alt="{{ shop.name | escape }}">
+							</noscript>		
+							</amp-img>
+							<div class="mask" style="position: absolute;left: 0; right: 0; bottom: 0;top: 0;background: #000; opacity: {{ amp_banner_overlay | divided_by: 100.00 }}"></div>					
+							{%- if block.settings.amp_banner_text != blank or  block.settings.amp_banner_btn != blank -%}
+							<div class="d-flex align-items-center justify-content-center text-center" style="position: absolute;left: 0; right: 0; bottom: 0;top: 0;">
+								<div class="col-10 desc" style="color:#fff; font-size: {{block.settings.amp_banner_font_size}}px;">
+									{%- if block.settings.amp_banner_text != blank -%}
+										<span style="display: block;">{{ block.settings.amp_banner_text | escape }}</span>
+									{%- endif -%}
+									{%- if block.settings.amp_banner_btn != blank -%}								
+										<span class="btn mt-3" style="color:#fff;">{{ block.settings.amp_banner_btn | escape }}</span>
+									{%- endif -%}								
+								</div>
+							</div>
+							{%- endif -%}
+						</a>
+					{%- else -%}
+					<a class="" href="{{ banner_link }}">
+					  <span>
+						{{ 'lifestyle-1' | placeholder_svg_tag: 'placeholder-svg' }}
+					  </span>
+					</a>
+					{%- endif -%}
+				</div>
+			{%- when 'home_blog' -%}
+				<div class="ampcdz-home-blog cdz-amp-section mb-4">
+					{%- assign amp_blog_wrap_height = block.settings.amp_blog_wrap_height -%}
+					{%- assign amp_blog_cate_blogs = block.settings.amp_blog_collection -%}
+					{%- assign amp_blog_order_by = block.settings.amp_blog_order_by -%}
+					{%- assign amp_blog_order = block.settings.amp_blog_order -%}
+					{%- assign amp_blog_date_format = block.settings.amp_blog_date_format -%}
+					{%- assign amp_blog_date = block.settings.amp_blog_date -%}
+					{%- assign amp_blog_viewall = block.settings.amp_blog_viewall -%}
+					{%- assign amp_blog_cate = block.settings.amp_blog_cate -%}
+					{%- assign amp_blog_author = block.settings.amp_blog_author -%}
+					{%- assign amp_blog_desc = block.settings.amp_blog_desc -%}
+					{%- assign amp_blog_readmore = block.settings.amp_blog_readmore -%}
+					{%- assign amp_blog_enable_short_description = block.settings.amp_blog_enable_short_description -%}
+					{%- assign amp_blog_thumbnail_width = '320' -%}
+					{%- unless block.settings.amp_blog_thumbnail_width == blank -%}
+						{%- assign amp_blog_thumbnail_width = block.settings.amp_blog_thumbnail_width -%}
+					{%- endunless -%}
+					{%- assign amp_blog_thumbnail_height = '320' -%}
+					{%- unless block.settings.amp_blog_thumbnail_height == blank -%}
+						{%- assign amp_blog_thumbnail_height = block.settings.amp_blog_thumbnail_height -%}
+					{%- endunless -%}
+					{%- assign amp_blog_thumbnail_size = amp_blog_thumbnail_width | append: 'x' | append: amp_blog_thumbnail_height -%}
+					{%- assign amp_blog_short_description_length = '90' -%}
+					{%- unless block.settings.amp_blog_short_description_length == blank -%}
+						{%- assign amp_blog_short_description_length = block.settings.amp_blog_short_description_length -%}
+					{%- endunless -%}
+					{%- assign amp_blog_products_count = '4' -%}
+					{%- unless block.settings.amp_blog_products_count == blank -%}
+						{%- assign products_count = block.settings.amp_blog_products_count -%}
+					{%- endunless -%}
+					{%- unless block.settings.amp_blog_title == blank and block.settings.amp_blog_sub_title == blank -%}
+					<div class="cdz-block-title {{ block.settings.amp_blog_title_align | escape }}">
+						{%- unless block.settings.amp_blog_title == blank -%}
+							<h2 class="b-title second_color">{{ block.settings.amp_blog_title | escape }}</h2>
+						{%- endunless -%}
+						{%- unless block.settings.amp_blog_sub_title == blank -%}
+							<p class="title-desc"><span>{{ block.settings.amp_blog_sub_title | escape }}</span></p>
+						{%- endunless -%}
+					</div>
+					{%- endunless -%}
+					<div class="blog-post-grid">
+					<amp-carousel 
+					  class="scrollbar"
+					  height="{{ amp_blog_wrap_height }}"
+					  layout="fixed-height"
+					  width="auto"
+					  type="carousel">
+						{%- if blogs[amp_blog_cate_blogs].articles == blank -%}
+							{%- for i in (1..amp_blog_products_count) -%}
+								<div class="item post-item mb-1">
+									<div class="post-top mb-2">
+										<span>
+										{% capture current %}{% cycle 1, 2 %}{% endcapture %}
+										{{ 'lifestyle-' | append: current | placeholder_svg_tag: 'placeholder-svg' }}
+										</span>
+									</div>
+									<div class="post-bottom">
+										<div class="post-title mb-2">
+											<a class="post-item-link h4" href="#"><ls-static-72368>The Title Article</ls-static-72368></a>
+										</div>
+										<div class="clearfix post-desc mb-2">
+											<ls-static-940009>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</ls-static-940009>
+										</div>
+										<div class="post-footer d-flex justify-content-between">
+											<a class="more-link" href="#"><ls-static-923178>Read more</ls-static-923178></a>
+											<div class="post-date">
+												<time datetime="{{ 'now' | date: amp_blog_date_format }}">{{ 'now' | date: amp_blog_date_format }}</time>
+											</div>
+										</div>
+									</div>
+								</div>
+							{%- endfor -%}
+						{%- else -%}
+							{%- if amp_blog_order == 'asc' -%}
+								{%- assign articles = blogs[amp_blog_cate_blogs].articles | sort: amp_blog_order_by -%}
+							{%- else -%}
+								{%- assign articles = blogs[amp_blog_cate_blogs].articles | sort: amp_blog_order_by | reverse -%}
+							{%- endif -%}
+							{%- for article in articles limit: amp_blog_products_count -%}
+								{%- include 'amp-blogItem' with amp_blog_viewall, amp_blog_cate, amp_blog_author, amp_blog_desc, amp_blog_readmore, amp_blog_date, amp_blog_date_format, amp_blog_short_description_length, amp_blog_enable_short_description  %}
+							{%- endfor -%}
+						{%- endif -%}
+					</amp-carousel>
+					</div>
+				</div>
+			{%- when 'html' -%}
+				<div class="ampcdz-slider-product cdz-amp-section mb-4">
+						<div class="cdz-block-title {{ block.settings.amp_html_block_align | escape }}">
+							{%- unless block.settings.amp_html_block_title == blank -%}
+								<h2 class="b-title second_color">{{ block.settings.amp_html_block_title | escape }}</h2>
+							{%- endunless -%}
+						</div>
+						<div class="cdz-block-content {{ block.settings.amp_html_block_align | escape }}">
+							{{ block.settings.amp_html_block_content }}
+						</div>
+				</div>
+		{%- endcase -%}
+	{%- endfor -%}
+</div>
+{% schema %}
+  {
+    "name": "Home Page Section",
+    "settings": [],
+	"blocks": [
+		{
+			"type": "slideshow",
+			"name": "Slideshow",
+			"settings": [
+				{
+					"type": "image_picker",
+					"id": "amp_slideshow_01",
+					"label": "Image 1"
+				},
+				{
+				  "type": "url",
+				  "id": "amp_slideshow_link_01",
+				  "label": "Link 01"
+				},
+				{
+					"type": "image_picker",
+					"id": "amp_slideshow_02",
+					"label": "Image 2"
+				},
+				{
+				  "type": "url",
+				  "id": "amp_slideshow_link_02",
+				  "label": "Link 02"
+				},
+				{
+					"type": "image_picker",
+					"id": "amp_slideshow_03",
+					"label": "Image 3"
+				},
+				{
+				  "type": "url",
+				  "id": "amp_slideshow_link_03",
+				  "label": "Link 03"
+				},
+				{
+				  "type": "text",
+				  "id": "slideshow_thumbnail_width",
+				  "label": "Slideshow Width",
+				  "default" : "800"
+				},
+				{
+				  "type": "text",
+				  "id": "slideshow_thumbnail_height",
+				  "label": "Slideshow Height",
+				  "default" : "250"
+				}
+			]
+		},
+		{
+			"type": "slider_product",
+			"name": "Products Grid Slider ",
+			"settings": [
+				{
+				  "type": "text",
+				  "id": "amp_slider_title",
+				  "label": "Heading Block",
+				  "default" : "Products Grid Slider"
+				},
+				{
+				  "type": "textarea",
+				  "id": "amp_slider_sub_title",
+				  "label": "Describe Heading"
+				},
+				{
+					"type": "select",
+					"id": "amp_slider_title_align",
+					"label": "Heading Alignment",
+					"options": [
+						{ "value": "text-left", "label": "Left"},
+						{ "value": "text-right", "label": "Right"},
+						{ "value": "text-center", "label": "Center"}
+					],
+					"default" : "text-left"
+				},
+				{
+				  "type": "collection",
+				  "id": "amp_slider_collection",
+				  "label": "Collection"
+				},
+				{
+				  "type": "select",
+				  "id": "amp_slider_order_by",
+				  "label": "Order by",
+				  "options": [
+						{ "value": "title", "label": "Name"},
+						{ "value": "price", "label": "Price"},
+						{ "value": "published_at", "label": "Publish time"},
+						{ "value": "id", "label": "Product's ID"}
+					  ],
+				  "default" : "id"
+				},
+				{
+				  "type": "select",
+				  "id": "amp_slider_order",
+				  "label": "Order",
+				  "options": [
+						{ "value": "asc", "label": "ASC"},
+						{ "value": "desc", "label": "DESC"}
+					  ],
+				  "default" : "asc"
+				},
+				{
+				  "type": "text",
+				  "id": "amp_slider_thumbnail_width",
+				  "label": "Thumbnail Width",
+				  "default" : "160"
+				},
+				{
+				  "type": "text",
+				  "id": "amp_slider_thumbnail_height",
+				  "label": "Thumbnail Height",
+				  "default" : "160"
+				},
+				{
+				   "type":      "text",
+				   "id":        "amp_slider_products_count",
+				   "label":     "Number of Products to Display",
+				   "default" : "6"
+				},
+				{
+				   "type":      "text",
+				   "id":        "amp_slider_wrap_height",
+				   "label":     "Wrapper Element height",
+				   "default" : "280"
+				}
+			]
+		},
+		{
+			"type": "no_slider_product",
+			"name": "Products Grid No Slider ",
+			"settings": [
+				{
+				  "type": "text",
+				  "id": "amp_no_slider_title",
+				  "label": "Heading Block",
+				  "default" : "Products Grid No Slider"
+				},
+				{
+				  "type": "textarea",
+				  "id": "amp_no_slider_sub_title",
+				  "label": "Describe Heading"
+				},
+				{
+					"type": "select",
+					"id": "amp_no_slider_title_align",
+					"label": "Heading Alignment",
+					"options": [
+						{ "value": "text-left", "label": "Left"},
+						{ "value": "text-right", "label": "Right"},
+						{ "value": "text-center", "label": "Center"}
+					],
+					"default" : "text-left"
+				},
+				{
+				  "type": "collection",
+				  "id": "amp_no_slider_collection",
+				  "label": "Collection"
+				},
+				{
+				  "type": "select",
+				  "id": "amp_no_slider_order_by",
+				  "label": "Order by",
+				  "options": [
+						{ "value": "title", "label": "Name"},
+						{ "value": "price", "label": "Price"},
+						{ "value": "published_at", "label": "Publish time"},
+						{ "value": "id", "label": "Product's ID"}
+					  ],
+				  "default" : "id"
+				},
+				{
+				  "type": "select",
+				  "id": "amp_no_slider_order",
+				  "label": "Order",
+				  "options": [
+						{ "value": "asc", "label": "ASC"},
+						{ "value": "desc", "label": "DESC"}
+					  ],
+				  "default" : "asc"
+				},
+				{
+				  "type": "text",
+				  "id": "amp_no_slider_thumbnail_width",
+				  "label": "Thumbnail Width",
+				  "default" : "280"
+				},
+				{
+				  "type": "text",
+				  "id": "amp_no_slider_thumbnail_height",
+				  "label": "Thumbnail Height",
+				  "default" : "280"
+				},
+				{
+				   "type":      "text",
+				   "id":        "amp_no_slider_products_count",
+				   "label":     "Number of Products to Display",
+				   "default" : "8"
+				},
+				{
+				   "type":      "text",
+				   "id":        "amp_no_slider_view_all",
+				   "label":     "Button View All",
+				   "default" : "View All"
+				},
+				{
+				  "type": "url",
+				  "id": "amp_no_slider_view_all_url",
+				  "label": "Link Button"
+				}
+			]
+		},
+		{
+			"type": "product_list",
+			"name": "Products List",
+			"settings": [
+				{
+				  "type": "text",
+				  "id": "amp_product_list_title",
+				  "label": "Heading Block",
+				  "default" : "Products List"
+				},
+				{
+				  "type": "textarea",
+				  "id": "amp_product_list_sub_title",
+				  "label": "Describe Heading"
+				},
+				{
+					"type": "select",
+					"id": "amp_product_list_title_align",
+					"label": "Heading Alignment",
+					"options": [
+						{ "value": "text-left", "label": "Left"},
+						{ "value": "text-right", "label": "Right"},
+						{ "value": "text-center", "label": "Center"}
+					],
+					"default" : "text-left"
+				},
+				{
+				  "type": "collection",
+				  "id": "amp_product_list_collection",
+				  "label": "Collection"
+				},
+				{
+				  "type": "select",
+				  "id": "amp_product_list_order_by",
+				  "label": "Order by",
+				  "options": [
+						{ "value": "title", "label": "Name"},
+						{ "value": "price", "label": "Price"},
+						{ "value": "published_at", "label": "Publish time"},
+						{ "value": "id", "label": "Product's ID"}
+					  ],
+				  "default" : "id"
+				},
+				{
+				  "type": "select",
+				  "id": "amp_product_list_order",
+				  "label": "Order",
+				  "options": [
+						{ "value": "asc", "label": "ASC"},
+						{ "value": "desc", "label": "DESC"}
+					  ],
+				  "default" : "asc"
+				},
+				{
+				  "type": "text",
+				  "id": "amp_product_list_thumbnail_width",
+				  "label": "Thumbnail Width",
+				  "default" : "280"
+				},
+				{
+				  "type": "text",
+				  "id": "amp_product_list_thumbnail_height",
+				  "label": "Thumbnail Height",
+				  "default" : "280"
+				},
+				{
+				   "type":      "text",
+				   "id":        "amp_product_list_products_count",
+				   "label":     "Number of Products to Display",
+				   "default" : "4"
+				}
+			]
+		},
+		{
+			"type": "home_blog",
+			"name": "Blog Posts",
+			"settings": [
+				{
+				  "type": "text",
+				  "id": "amp_blog_title",
+				  "label": "Heading Block"
+				},
+				{
+				  "type": "textarea",
+				  "id": "amp_blog_sub_title",
+				  "label": "Describe Heading"
+				},
+				{
+					"type": "select",
+					"id": "amp_blog_title_align",
+					"label": "Heading Alignment",
+					"options": [
+						{ "value": "text-left", "label": "Left"},
+						{ "value": "text-right", "label": "Right"},
+						{ "value": "text-center", "label": "Center"}
+					],
+					"default" : "text-left"
+				},
+				{
+					"type": "blog",
+					"id": "amp_blog_collection",
+					"label" : "Blogs Collection"
+				},
+				{
+				  "type": "select",
+				  "id": "amp_blog_order_by",
+				  "label": "Order by",
+				  "options": [
+						{ "value": "title", "label": "Name"},
+						{ "value": "published_at", "label": "Publish time"},
+						{ "value": "id", "label": "Product's ID"}
+					  ],
+				  "default" : "published_at"
+				},
+				{
+				  "type": "select",
+				  "id": "amp_blog_order",
+				  "label": "Order",
+				  "options": [
+						{ "value": "asc", "label": "ASC"},
+						{ "value": "desc", "label": "DESC"}
+					  ],
+				  "default" : "asc"
+				},
+				{
+				  "type": "text",
+				  "id": "amp_blog_thumbnail_width",
+				  "label": "Thumbnail Width",
+				  "default" : "300"
+				},
+				{
+				  "type": "text",
+				  "id": "amp_blog_thumbnail_height",
+				  "label": "Thumbnail Height",
+				  "default" : "200"
+				},
+				{
+				  "type": "text",
+				  "id": "amp_blog_date_format",
+				  "label": "Date Format",
+				  "default" : "%b %e, %Y",
+				  "info": "Ex: %b %e, %Y. date accepts the same parameters as Ruby's strftime method. [see here](http:\/\/strfti.me\/)"
+				},
+				{
+				   "type":      "checkbox",
+				   "id":        "amp_blog_cate",
+				   "label":     "Enable Post Category",
+				   "default":   true
+				},
+				{
+				   "type":      "checkbox",
+				   "id":        "amp_blog_author",
+				   "label":     "Enable Post Author",
+				   "default":   true
+				},
+				{
+				   "type":      "checkbox",
+				   "id":        "amp_blog_readmore",
+				   "label":     "Enable Read More Link",
+				   "default":   true
+				},
+				{
+				   "type":      "checkbox",
+				   "id":        "amp_blog_date",
+				   "label":     "Enable Date Time",
+				   "default":   true
+				},
+				{
+				  "type": "checkbox",
+				  "id": "amp_blog_enable_short_description",
+				  "label": "Enable Short Description",
+				  "default" : true
+				},
+				{
+				  "type": "text",
+				  "id": "amp_blog_short_description_length",
+				  "label": "Description Length",
+				  "default" : "90"
+				},
+				{
+				   "type":      "text",
+				   "id":        "amp_blog_products_count",
+				   "label":     "Number of Products to Display",
+				   "default" : "3"
+				},
+				{
+				   "type":      "text",
+				   "id":        "amp_blog_wrap_height",
+				   "label":     "Wrapper Element height",
+				   "default" : "380"
+				}
+			]
+		},
+		{
+			"type": "html",
+			"name": "HTML Block",
+			"settings": [
+				{
+				  "type": "text",
+				  "id": "amp_html_block_title",
+				  "label": "Heading",
+				  "default": "Title HTML Block"
+				},
+				{
+				  "type": "richtext",
+				  "id": "amp_html_block_content",
+				  "label": "Content",
+				  "default": "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>"
+				},
+				{
+					"type": "select",
+					"id": "amp_html_block_align",
+					"label": "Text Alignment",
+					"options": [
+						{ "value": "text-left", "label": "Left"},
+						{ "value": "text-right", "label": "Right"},
+						{ "value": "text-center", "label": "Center"}
+					],
+					"default" : "text-center"
+				}
+			]
+		},
+		{
+			"type": "banner",
+			"name": "Banner",
+			"settings": [
+				{
+					"type": "image_picker",
+					"id": "amp_banner_image",
+					"label": "Banner Image"
+				},
+				{
+				  "type": "url",
+				  "id": "amp_banner_link",
+				  "label": "Link"
+				},
+				{
+				  "type": "text",
+				  "id": "banner_thumbnail_width",
+				  "label": "Banner Width",
+				  "default" : "800"
+				},
+				{
+				  "type": "text",
+				  "id": "banner_thumbnail_height",
+				  "label": "Banner Height",
+				  "default" : "300"
+				},
+				{
+				  "type": "range",
+				  "id": "amp_banner_overlay",
+				  "label": "Overlay opacity",
+				  "min": 0,
+				  "max": 100,
+				  "step": 1,
+				  "unit": "%",
+				  "default": 40
+				},
+				{
+				  "type": "text",
+				  "id": "amp_banner_text",
+				  "label": "Describe",
+				  "default" : "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+				},
+				{
+				  "type": "text",
+				  "id": "amp_banner_btn",
+				  "label": "Button",
+				  "default" : "See All."
+				},
+				{
+				  "type": "range",
+				  "id": "amp_banner_font_size",
+				  "label": "Font Size Describe",
+				  "min": 12,
+				  "max": 40,
+				  "step": 1,
+				  "default": 30
+				}
+			]
+		}
+	]
+  }
+{% endschema %}

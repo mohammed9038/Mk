@@ -1,0 +1,154 @@
+{% assign cate_blogs = block.settings.blogs %}
+{% assign order_by = block.settings.order_by %}
+{% assign order = block.settings.order %}
+{% assign blog_date_format = block.settings.blog_date_format %}
+{% assign block_title_alignment = block.settings.block_title_alignment %}
+
+{% assign blog_viewall = block.settings.blog_viewall %}
+{% assign blog_cate = block.settings.blog_cate %}
+{% assign blog_author = block.settings.blog_author %}
+{% assign blog_desc = block.settings.blog_desc %}
+{% assign blog_readmore = block.settings.blog_readmore %}
+{% assign blog_date = block.settings.blog_date %}
+{% assign enable_short_description = block.settings.enable_short_description %}
+
+{%- assign thumbnail_width = '320' -%}
+{% unless block.settings.thumbnail_width == blank %}
+	{%- assign thumbnail_width = block.settings.thumbnail_width -%}
+{% endunless %}
+{%- assign thumbnail_height = '320' -%}
+{% unless block.settings.thumbnail_height == blank %}
+	{%- assign thumbnail_height = block.settings.thumbnail_height -%}
+{% endunless %}
+{%- assign short_description_length = '150' -%}
+{% unless block.settings.short_description_length == blank %}
+	{%- assign short_description_length = block.settings.short_description_length -%}
+{% endunless %}
+
+{%- assign slider_collection = block.settings.slider_collection -%}
+{%- assign special_product = block.settings.special_product -%}
+{%- assign show_special_product = block.settings.show_special_product -%}
+
+{%- assign products_count = '8' -%}
+{% unless block.settings.products_count == blank %}
+	{%- assign products_count = block.settings.products_count -%}
+{% endunless %}
+{%- assign items_slider = '4' -%}
+{% unless block.settings.items_slider == blank %}
+	{%- assign items_slider = block.settings.items_slider -%}
+{% endunless %}
+{%- assign items_1900 = '4' -%}
+{% unless block.settings.items_1900 == blank %}
+	{%- assign items_1900 = block.settings.items_1900 -%}
+{% endunless %}
+{%- assign items_1600 = '4' -%}
+{% unless block.settings.items_1600 == blank %}
+	{%- assign items_1600 = block.settings.items_1600 -%}
+{% endunless %}
+{%- assign items_1440 = '4' -%}
+{% unless block.settings.items_1440 == blank %}
+	{%- assign items_1440 = block.settings.items_1440 -%}
+{% endunless %}
+{%- assign items_1280 = '4' -%}
+{% unless block.settings.items_1280 == blank %}
+	{%- assign items_1280 = block.settings.items_1280 -%}
+{% endunless %}
+{%- assign items_980 = '3' -%}
+{% unless block.settings.items_980 == blank %}
+	{%- assign items_980 = block.settings.items_980 -%}
+{% endunless %}
+{%- assign items_768 = '2' -%}
+{% unless block.settings.items_768 == blank %}
+	{%- assign items_768 = block.settings.items_768 -%}
+{% endunless %}
+{%- assign items_480 = '2' -%}
+{% unless block.settings.items_480 == blank %}
+	{%- assign items_480 = block.settings.items_480 -%}
+{% endunless %}
+{%- assign items_320 = '2' -%}
+{% unless block.settings.items_320 == blank %}
+	{%- assign items_320 = block.settings.items_320 -%}
+{% endunless %}
+{%- assign items_0 = '2' -%}
+{% unless block.settings.items_0 == blank %}
+	{%- assign items_0 = block.settings.items_0 -%}
+{% endunless %}
+{%- assign items_margin = '20' -%}
+{% unless block.settings.items_margin == blank %}
+	{%- assign items_margin = block.settings.items_margin -%}
+{% endunless %}
+{%- assign show_slider = block.settings.show_slider -%}
+{%- assign slider_dots = block.settings.slider_dots -%}
+{%- assign slider_nav = block.settings.slider_nav -%}
+{%- assign total_rows = block.settings.total_rows -%}
+{% capture data-owlslider %}
+	{ "items": {{items_slider}}, "items_1900": {{items_1900}}, "items_1600": {{items_1600}}, "items_1440": {{items_1440}}, "items_1280": {{items_1280}}, "items_980": {{items_980}}, "items_768": {{items_768}}, "items_480": {{items_480}}, "items_320": {{items_320}}, "items_0": {{items_0}}, "margin": {{items_margin}}, "nav": {{slider_nav}}, "dots": {{slider_dots}}}
+{% endcapture %}
+
+{%- assign show_prostyle = block.settings.show_prostyle -%}
+{%- case show_prostyle -%}
+  {%- when '01' -%}
+	{% assign blogstyle = 'blogs-style-01' %}
+	{% assign blog_list = 'blog-list01' %}
+  {%- when '02' -%}
+	{% assign blogstyle = 'blogs-style-02' %}
+	{% assign blog_list = 'blog-list02' %}
+  {%- when '03' -%}
+	{% assign blogstyle = 'blogs-style-03' %}
+	{% assign blog_list = 'blog-list03' %}
+  {%- when '04' -%}
+	{% assign blogstyle = 'blogs-style-04' %}
+	{% assign blog_list = 'blog-list04' %}
+  {%- when '05' -%}
+	{% assign blogstyle = 'blogs-style-05' %}
+	{% assign blog_list = 'blog-list05' %}
+  {%- when '06' -%}
+	{% assign blogstyle = 'blogs-style-06' %}
+	{% assign blog_list = 'blog-list06' %}
+  {%- when '07' -%}
+	{% assign blogstyle = 'blogs-style-07' %}
+	{% assign blog_list = 'blog-list07' %}
+{%- endcase -%}
+
+<div class="cdz-blogs {{block_custom_class}} {{blogstyle}}">
+	{% unless block.settings.block_title == blank and block.settings.block_sub_title == blank %}
+		<div class="cdz-block-title block-title-{{block_title_alignment}}">
+			{% unless block.settings.block_title == blank %}
+				<p class="b-title h2"><span>{{ block.settings.block_title | escape }}</span></p>
+			{% endunless %}
+			{% unless block.settings.block_sub_title == blank %}
+				<p class="title-desc"><span>{{ block.settings.block_sub_title | escape }}</span></p>
+			{% endunless %}
+		</div>
+	{% endunless %}
+	<div class="cdz-blogs-content"> 
+		<div class="wrapper grid blog-post-grid" >
+			<div data-sameheight=".post-title" class="{% if show_slider ==  '0' %} no_slider flex-grid{% elsif show_slider ==  '1' %} cdzowlslider owl-carousel{% endif %}" {% if show_slider ==  '1' %} data-cdzwidget = '{"codazon.owlSlider": {{data-owlslider}}}' {% endif %}>
+			{% if order == 'asc' %}
+				{% assign articles = blogs[cate_blogs].articles | sort: order_by %}
+			{% else %}
+				{% assign articles = blogs[cate_blogs].articles | sort: order_by | reverse %}
+			{% endif %}
+			{% for article in articles limit: products_count %}
+				  {% assign modulo = forloop.index | modulo: total_rows %}
+				  {% if total_rows >  1 and show_slider ==  '1'%}
+					{% if modulo == 1 %}
+						<div class="item-group">
+					{% endif %}
+				  {% endif %}
+
+				  <div class="item post-item">
+					{% include blog_list with blog_viewall, blog_cate, blog_author, blog_desc, blog_readmore, blog_date, blog_date_format, short_description_length, enable_short_description  %}
+					
+				  </div>
+				  {% if total_rows >  1 and show_slider ==  '1'%}
+					{% if modulo == 0 or forloop.last %}
+					  </div>
+					  {% endif %}
+				  {% endif %}
+				
+			{% endfor %}
+			</div>
+		</div>
+	</div>
+</div>

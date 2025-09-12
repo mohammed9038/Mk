@@ -1,0 +1,110 @@
+{%- comment %}<locksmith:5f50>{% endcomment -%}
+  {%- assign locksmith_bb8c_product__available = false %}{% assign locksmith_bb8c_product__first_available_variant = nil %}{% assign locksmith_bb8c_product__selected_variant = nil %}{% assign locksmith_bb8c_product__selected_or_first_available_variant = nil %}{% assign locksmith_bb8c_product__price = nil %}{% for variant in product.variants %}{% capture var %}{% render 'locksmith-variables', scope: 'subject', subject: variant, subject_parent: product, variable: 'transparent' %}{% endcapture %}{% if var == "true" %}{% else %}{% continue %}{% endif %}{% if locksmith_bb8c_product__available == false and variant.available %}{% assign locksmith_bb8c_product__available = true %}{% endif %}{% if locksmith_bb8c_product__first_available_variant == nil and variant.available %}{% assign locksmith_bb8c_product__first_available_variant = variant %}{% endif %}{% if locksmith_bb8c_product__selected_variant == nil and variant.selected %}{% assign locksmith_bb8c_product__selected_variant = variant %}{% endif %}{% if variant == product.selected_or_first_available_variant %}{% assign locksmith_bb8c_product__selected_or_first_available_variant = product.selected_or_first_available_variant %}{% endif %}{% if locksmith_bb8c_product__price == nil %}{% assign locksmith_bb8c_product__price = variant.price %}{% endif %}{% endfor %}{% if locksmith_bb8c_product__selected_or_first_available_variant == nil %}{% assign locksmith_bb8c_product__selected_or_first_available_variant = locksmith_bb8c_product__first_available_variant %}{% endif -%}
+{%- comment %}</locksmith:5f50>{% endcomment -%}
+
+{%- layout none -%}
+{% comment %}
+{% endcomment %}
+
+<div class="option-addcart cdz-quickshop product-item" id="option-addcart">
+<div class="row product-main">
+  <div class="col-sm-6">
+      <div class="product-main-image">
+		<div class="photo product-item-photo">
+			{% include 'product-label' with product %}	
+			{% assign featured_image = locksmith_bb8c_product__selected_or_first_available_variant.featured_image | default: product.featured_image %}
+			{% unless product.featured_image == blank %}
+				<a href="{{ product.url | within: collection }}" class="product-image-container">
+					<span class="product-image-wrapper" style="padding-bottom:{{ 1 | divided_by: img_ratio | times: 100}}%;">
+						{% for image in product.images %}
+							{%- comment %}<locksmith:20a3>{% endcomment -%}
+							  {%- capture var %}{% render 'locksmith-variables', scope: 'subject', subject: image, subject_parent: product, variable: 'transparent' %}{% endcapture %}{% if var == "true" %}{% else %}{% continue %}{% endif -%}
+							{%- comment %}</locksmith:20a3>{% endcomment -%}
+							{% comment ls-rpl %}{%- assign img_url = image | img_url: '1x1' | replace: '_1x1.', '_{width}x.' -%}{% endcomment %}{%- capture LS_IMG_URL -%}{%- render "ls-img-url", image: image, img_url: '1x1' -%}{%- endcapture -%}{%- assign img_url = LS_IMG_URL | replace: '_1x1.', '_{width}x.' -%}{% comment /ls-rpl %}{% endcomment %}						
+							<img class="product-image-photo main-img img-responsive{% if featured_image != image %} hide {% else %} js-showImg {% endif %}"
+						   src="{% comment ls-rpl %}{{ image | img_url: '500x' }}{% endcomment %}{%- capture LS_IMG_URL -%}{%- render "ls-img-url", image: image, img_url: '500x' -%}{%- endcapture -%}{{ LS_IMG_URL }}{% comment /ls-rpl %}{% endcomment %}" data-image-id="{{ image.id }}">
+						{% endfor %}
+					</span>
+				</a>
+			{% endunless %}
+		  <noscript>
+			<img src="{% comment ls-rpl %}{{ featured_image | img_url: '400' }}{% endcomment %}{%- capture LS_IMG_URL -%}{%- render "ls-img-url", image: featured_image, img_url: '400' -%}{%- endcapture -%}{{ LS_IMG_URL }}{% comment /ls-rpl %}{% endcomment %}" alt="{% comment ls-rpl %}{{ featured_image.alt | escape }}{% endcomment %}{%- capture LS_ALT -%}{%- render "ls-alt", image: featured_image -%}{%- endcapture -%}{{ LS_ALT | escape }}{% comment /ls-rpl %}{% endcomment %}">
+		  </noscript>
+	
+		</div>
+	</div>
+  </div>
+  <div class="col-sm-6">
+  <div class="product-info-main" data-cdzwidget='{"codazon.cdzCartOption" : {"handle" : "{{ product.handle }}","wrap" : "#option-addcart"}}'>
+    <h1 class="page-title mb-4">{{ product.title }}</h1>
+	<div class="product-main-price product-single__prices{% if shop.taxes_included or shop.shipping_policy.body != blank %} product-single__prices--policy-enabled{% endif %}">
+		{% assign variant = locksmith_bb8c_product__selected_or_first_available_variant %}
+		<span class="visually-hidden">{{ 'products.product.regular_price' | t }}</span>
+		<span class="product-single__price product-price price-box" itemprop="price" content="{{ locksmith_bb8c_product__price | divided_by: 100.00 }}">
+		  {{ variant.price | money }}
+		</span>
+
+		<span class="visually-hidden" aria-hidden="false">{{ 'products.product.sale_price' | t }}</span>
+			  <s class="product-single__sale-price {% if variant.compare_at_price < variant.price %}hide{% endif %}">
+				{{ variant.compare_at_price | money }}
+			  </s>
+		{% include 'product-unit-price', variant: variant, wrapper_class: 'h5 mt-2 d-block' %}
+	  </div>
+   
+    <form method="post" enctype="multipart/form-data" data-form="cdz-mini-cart">
+        <div class="product-main-options product-options">
+          	<input type="hidden" name="id" value="{{ locksmith_bb8c_product__selected_or_first_available_variant.id }}">
+			{%- unless product.variants.size == 1 -%}
+			{% for option in product.options_with_values %}
+      			{% include 'swatch-option' with option.name, option_index : forloop.index0 %}
+          	{% endfor %}
+			{% assign data_stock = "" %}
+				{% for variant in product.variants %}
+					{%- comment %}<locksmith:713e>{% endcomment -%}
+					  {%- capture var %}{% render 'locksmith-variables', scope: 'subject', subject: variant, subject_parent: product, variable: 'transparent' %}{% endcapture %}{% if var == "true" %}{% else %}{% continue %}{% endif -%}
+					{%- comment %}</locksmith:713e>{% endcomment -%}
+					{% assign data_stock = data_stock | append: "," | append:  variant.id | append: ":" | append: variant.inventory_quantity %}
+				{% endfor %}
+			  {% assign data_stock = data_stock  | replace_first: ',', '' %}
+				 <label class="cdz-stock-qty d-none" data-stock-product="{{ data_stock }}">
+				  </label>
+			{% endunless %}
+		</div>
+        <div class="product-main-qty-sizechart">
+			<div class="qty-box">
+				<label class="">{{ 'cart.label.qty' | t }}</label>
+				<div class="cart-qty">
+					<div class="qty-ctl">
+						<button title="Decrease" type="button" data-role="change_cart_qty" class="decrease" data-qty="-1"></button>
+					</div>
+					<input class="qty input-text" type="text" name="quantity" value="1">
+					<div class="qty-ctl">
+						<button title="Increase" type="button" data-role="change_cart_qty" data-qty="1" class="increase"></button>
+					</div>
+				</div>
+			</div>
+		</div>
+        <div class="groups-button">
+			<div class="actions-primary">
+			{% if locksmith_bb8c_product__available %}
+				{% if locksmith_bb8c_product__selected_or_first_available_variant.inventory_quantity > 0 %}
+					<a class="btn btn-cart" title="{{ 'cart.general.btn_addcart' | t }}" href="javascript:void(0)"  type="button" data-addCart data-cartHandle="{{ product.handle }}">
+						<span>{{ 'cart.general.btn_addcart' | t }}</span>
+					</a>
+				{% else %}
+					<a class="btn btn-cart" title="{{ 'cart.general.btn_preorder' | t }}" href="javascript:void(0)"  type="button" data-addCart data-cartHandle="{{ product.handle }}">
+						<span>{{ 'cart.general.btn_preorder' | t }}</span>
+					</a>
+				{% endif %}
+			{% else %}
+				<button class="btn-cart disabled" disabled="disabled" type="button">
+					<span>{{ 'cart.general.btn_sold_out' | t }}</span>
+				</button>
+			{% endif %}
+			</div>
+		</div>
+    </form>
+  </div>
+  </div>
+</div>
+</div>

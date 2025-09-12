@@ -1,0 +1,19 @@
+<script id="mess-compare" type="text/tmpl-script">
+<div class="row">
+	<div class="all-cp col-12">
+		<a class="show-cp" href="/?view=compare">Go all compare</a>
+		<a class="close-mess fa fa-window-close" data-action="close-mess-cp"></a>
+	</div>
+	<div class="wl-left col-3">
+		<img class="product-image-photo img-responsive" src="<%- item.featured_image %>"/>
+	</div>
+	<div class="wl-left col-9">
+		<div class="product-name">
+		<a href="<%- item.href %>" class="product-item-link"><%- item.title %></a>
+		</div>
+		<div class="product-price"><span class="money"><%= Shopify.formatMoney(item.currentVariant.price) %></span></div>
+	</div>
+</div>
+</script>
+<div id="messages-compare" class="success clearfix mess-cp"></div>
+

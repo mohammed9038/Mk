@@ -1,0 +1,13 @@
+{%- assign block_custom_class = block.settings.block_custom_class -%}
+{%- assign twitter_account_link = block.settings.twitter_account_link -%}
+{%- assign twitter_width = block.settings.twitter_width -%}
+{%- assign twitter_height = block.settings.twitter_height -%}
+<div class="cdz-twitter {{block_custom_class}}">
+	<div class="cdz-block-title {% unless list_alignment == blank %} text-{{list_alignment}}{% endunless %} block-title-{{title_text_align}}">
+		<p class="b-title h2"><span>{{ block.settings.block_title | escape }}</span></p>
+		<p class="title-desc"><span>{{ block.settings.block_sub_title | escape }}</span></p>
+	</div>
+	<div class="twitter-wrapper" data-role="codazon-twitter">
+		<a class="twitter-timeline" data-width="{{twitter_width}}" data-height="{{twitter_height}}" href="{{twitter_account_link}}"></a>
+	</div>
+</div>

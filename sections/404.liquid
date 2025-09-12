@@ -1,0 +1,111 @@
+{% assign heading = section.settings.heading %}
+{% comment ls-rpl %}{%- assign img_url = section.settings.image | img_url: '1x1' | replace: '_1x1.', '_{width}x.' -%}{% endcomment %}{%- capture LS_IMG_URL -%}{%- render "ls-img-url", image: section.settings.image, img_url: '1x1' -%}{%- endcapture -%}{%- assign img_url = LS_IMG_URL | replace: '_1x1.', '_{width}x.' -%}{% comment /ls-rpl %}{% endcomment %}
+{% assign subtext = section.settings.subtext %}
+{% assign subtext2 = section.settings.subtext2 %}
+{% assign enable_search = section.settings.enable_search %}
+{% assign search_text = section.settings.search_text %}
+<div class="container">
+  <div class="empty-page-content text-center cdzbox">
+	{%- if section.settings.image != blank -%}
+	<div class="image-404 mb-5">
+		<img class="img-responsive lazyload{% unless forloop.first == true %} lazypreload{% endunless %}"
+				src="{% comment ls-rpl %}{{ section.settings.image | img_url: '300x300' }}{% endcomment %}{%- capture LS_IMG_URL -%}{%- render "ls-img-url", image: section.settings.image, img_url: '300x300' -%}{%- endcapture -%}{{ LS_IMG_URL }}{% comment /ls-rpl %}{% endcomment %}"
+				data-src="{{ img_url }}"
+				data-widths="[180, 360, 470, 600, 770, 970, 1060, 1280, 1512, 1728, 2048]"
+				data-aspectratio="{{ section.settings.image.aspect_ratio }}"
+				data-sizes="auto"
+				alt="{% comment ls-rpl %}{{ section.settings.image.alt | escape }}{% endcomment %}{%- capture LS_ALT -%}{%- render "ls-alt", image: section.settings.image -%}{%- endcapture -%}{{ LS_ALT | escape }}{% comment /ls-rpl %}{% endcomment %}">
+	</div>
+	{%- else -%}
+	<div class="image-404 mb-5">
+		<img class="img-responsive" src="{{ '404.png' | asset_img_url: 'master' }}">	
+	</div>
+	{%- endif -%}
+	{% if heading != blank %}
+		<h1 class="text-uppercase title">{{ heading | escape }}</h1>
+	{% endif %}
+	{% if subtext != blank %}
+		<p class="h2 text-uppercase">{{ subtext | escape }}</p>
+	{% endif %}
+	{% if subtext2 != blank %}
+		<p class="h5">{{ subtext2 | escape }}</p>
+	{% endif %}
+	{% if section.settings.enable_search %}
+	{% if search_text != blank %}<p class="h5 mb-4">{{ search_text | escape }}</p>{% endif %}
+	<div class="search-form-404 clearfix">
+        <div class="search-form-inner">
+          <form action="/search" method="get" role="search" class="search">
+            <div class="input-group">
+              <input type="search"
+                id="SearchInput"
+                class="input-group__field search__input"
+                name="q"
+                value="{{ search.terms | escape }}"
+                placeholder="{{ 'general.404.search_placeholder' | t }}"
+                aria-label="{{ 'general.404.search_placeholder' | t }}"
+                >
+              <span class="input-group__btn">
+                <button id="SearchResultSubmit" class="btn search__submit" type="submit">{{ 'general.404.search' | t }}</button>
+              </span>
+            </div>
+          </form>
+        </div>
+      </div>
+	{% endif %}
+    <p class="mt-4">
+      <a href="/" class="btn">{{ 'general.404.link' | t }}</a>
+    </p>
+  </div>
+</div>
+{% style %}
+	.image-404 { display: block; max-width: 600px; margin: 0 auto; text-align: center;}
+	.image-404 img{ display: inline-block;}
+	h1.title {font-size: 80px;}
+	.search-form-inner{ max-width: 600px; margin: 0 auto;}
+	.search-form-inner button.search__submit{font-size: 14px; padding: 0 20px;height: 40px; line-height: 40px;border-radius: 0px 5px 5px 0}
+	.search-form-inner .input-group__btn{position: absolute; right: 0; top: 0;}
+	
+{% endstyle %}
+
+
+{% schema %}
+{
+  "name": "404 Page",
+  "settings": [
+	{
+      "type": "image_picker",
+      "id": "image",
+      "label": "Image"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading Text"
+    },
+    {
+      "type": "text",
+      "id": "subtext",
+      "label": "Heading Text",
+	  "default": "Oops! Page not found"
+    },
+    {
+      "type": "text",
+      "id": "subtext2",
+      "label": "SubText",
+	  "default": "Sorry, but the page you are looking for is not found."
+    },
+    {
+      "type": "text",
+      "id": "search_text",
+      "label": "Search text",
+	  "default": "You can go to Home Page or Search again what you are looking for."
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_search",
+      "label": "Enable Search Box",
+	  "default": true
+    }
+  ]
+}
+{% endschema %}

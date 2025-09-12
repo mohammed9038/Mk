@@ -1,0 +1,29 @@
+<div class="toolbar-bottom text-center clearfix">
+	<ul class="pagination d-flex align-items-center justify-content-center list-unstyled">
+	  {% if paginate.previous %}
+		<li class="mx-1"><a class="d-flex align-items-center justify-content-center" href="{{ paginate.previous.url }}" title="{{ paginate.previous.title }}">&larr;</a></li>
+	  {% else %}
+		<li class="disabled" hidden><span>&larr;</span></li>
+	  {% endif %}
+
+	  {% for part in paginate.parts %}
+		{% if part.is_link %}
+		  <li class="mx-1">
+			<a class="d-flex align-items-center justify-content-center" href="{{ part.url }}" title="">{{ part.title }}</a>
+		  </li>
+		{% else %}
+		  {% if part.title == paginate.current_page %}
+			<li class="active mx-1"><span class="d-flex align-items-center justify-content-center">{{ part.title }}</span></li>
+		  {% else %}
+			<li class="mx-1"><span class="d-flex align-items-center justify-content-center">{{ part.title }}</span></li>
+		  {% endif %}
+		{% endif %}
+	  {% endfor %}
+
+	  {% if paginate.next %}
+		<li class="pages-item-next mx-1"><a class="d-flex align-items-center justify-content-center next" href="{{ paginate.next.url }}" title="{{ paginate.next.title }}">&rarr;</a></li>
+	  {% else %}
+		<li class="disabled" hidden><span>&rarr;</span></li>
+	  {% endif %}
+	</ul>
+</div>
