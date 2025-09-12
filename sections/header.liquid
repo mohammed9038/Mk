@@ -553,9 +553,9 @@
         
         {%- comment -%} GTranslate Language Selector {%- endcomment -%}
         {%- if section.settings.enable_language_selector -%}
-          <div class="header__localization header__gtranslate">
+          <div class="header__localization header__gtranslate" data-gtranslate-container="true">
             <!-- GTranslate inline instance for header -->
-            <div class="gtranslate_wrapper" data-gt-container="true"></div>
+            <div class="gtranslate_wrapper" id="header-gtranslate-wrapper"></div>
           </div>
         {%- endif -%}
 

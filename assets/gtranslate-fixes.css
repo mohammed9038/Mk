@@ -19,16 +19,24 @@
   position: static;
 }
 
-/* Enhanced GTranslate Fixes - Ensure visibility in both editor and preview */
+/* Enhanced GTranslate Single Instance Fixes */
 
-/* Ensure GTranslate widget is always visible */
-.gtranslate_wrapper {
+/* Ensure only one GTranslate widget is visible */
+#header-gtranslate-wrapper {
     position: relative !important;
     z-index: 9999 !important;
+    display: block !important;
 }
 
-.gtranslate_wrapper select,
-.gt-dropdown {
+/* Hide any duplicate containers */
+.gtranslate_wrapper:not(#header-gtranslate-wrapper) {
+    display: none !important;
+}
+
+/* Ensure widget visibility */
+#header-gtranslate-wrapper select,
+#header-gtranslate-wrapper .gt_selector,
+#header-gtranslate-wrapper .gt-dropdown {
     display: block !important;
     visibility: visible !important;
     opacity: 1 !important;
@@ -38,42 +46,20 @@
 }
 
 /* Prevent navigation styles from affecting GTranslate */
-.header__gtranslate,
-.gtranslate_wrapper {
+.header__gtranslate {
     isolation: isolate;
+    position: relative;
+    z-index: 100;
 }
 
 /* Fix for Shopify editor vs preview rendering */
-.shopify-design-mode .gtranslate_wrapper {
+.shopify-design-mode #header-gtranslate-wrapper {
     display: block !important;
 }
 
-/* Ensure GTranslate elements are not affected by navigation hover states */
-.gtranslate_wrapper *,
-.gt-dropdown *,
-.header__gtranslate * {
-    opacity: 1 !important;
-    visibility: visible !important;
-    transform: none !important;
-    pointer-events: auto !important;
-}
-
-/* Protect GTranslate from details/summary interference */
-.gtranslate_wrapper select {
-    appearance: auto !important;
-    -webkit-appearance: auto !important;
-    -moz-appearance: auto !important;
-}
-
-/* Extra protection for navigation dropdown interference */
-[data-gt-protected] {
-    isolation: isolate !important;
-}
-
-/* Ensure proper stacking context */
-.header__gtranslate {
-    position: relative;
-    z-index: 10000;
+/* Ensure proper spacing */
+.header__gtranslate:not(:empty) {
+    margin: 0 1rem;
 }
 
 /* Force display for any hidden GTranslate elements */
@@ -87,6 +73,44 @@
 
 .gtranslate_wrapper[style*="opacity: 0"] {
     opacity: 1 !important;
+}
+
+/* Specific styling for the header GTranslate wrapper */
+#header-gtranslate-wrapper {
+    min-width: 120px;
+    position: relative;
+}
+
+#header-gtranslate-wrapper select {
+    background: white;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 8px 12px;
+    font-size: 14px;
+    color: #333;
+    cursor: pointer;
+}
+
+#header-gtranslate-wrapper select:hover {
+    border-color: #999;
+}
+
+#header-gtranslate-wrapper select:focus {
+    outline: none;
+    border-color: #007cba;
+    box-shadow: 0 0 0 1px #007cba;
+}
+
+/* Ensure GTranslate container visibility in all states */
+[data-gtranslate-container="true"] {
+    display: block !important;
+    visibility: visible !important;
+}
+
+/* Remove any conflicting styles from other GTranslate containers */
+.gtranslate_wrapper.footer-gtranslate,
+.gtranslate_wrapper.gtranslate-drawer {
+    display: none !important;
 }
 
 .header__gtranslate .gt_dropdown .gt_options {
