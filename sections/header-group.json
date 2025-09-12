@@ -1,1 +1,83 @@
-{"name":"t:sections.header.name","type":"header","sections":{"header":{"type":"header","blocks":{"g_translate_shop_translator_app_block_dropdown_3DV9Vb":{"type":"shopify:\/\/apps\/g-translate-shop-translator\/blocks\/app-block-dropdown\/408a74ac-f92d-43cf-a1b1-a044341e66bd","disabled":true,"settings":{"horizontal_position":"inline","vertical_position":"bottom","select_language_label":"Select Language","native_language_names":true,"wrapper_selector":"","custom_css":""}}},"block_order":["g_translate_shop_translator_app_block_dropdown_3DV9Vb"],"name":"Header","settings":{"logo_position":"top-left","menu":"new-manu","menu_type_desktop":"dropdown","sticky_header_type":"on-scroll-up","show_line_separator":false,"color_scheme":"scheme-3","menu_color_scheme":"scheme-1","enable_country_selector":false,"enable_language_selector":true,"gtranslate_style":"dropdown","gtranslate_show_flags":false,"gtranslate_text_color":"#333333","gtranslate_bg_color":"#ffffff","drawer_title":"Menu","drawer_width":320,"drawer_title_size":18,"drawer_title_color":"#333333","drawer_header_bg":"#ffffff","show_drawer_utilities":true,"show_language_selector":true,"show_account_link":true,"utilities_bg":"#f8f9fa","drawer_auto_expand":false,"nav_font_size":16,"nav_font_weight":"600","nav_text_color":"#333333","nav_hover_color":"#007acc","nav_active_color":"#007acc","show_drawer_social":true,"social_heading":"Follow Us","show_search_bar":true,"show_search_icon":false,"search_placeholder":"Search products...","search_position":"center","search_background":"#fcfcfc","search_border":"#e0e0e0","search_text":"#333333","search_width":600,"show_top_menu":true,"mobile_logo_position":"center","margin_bottom":0,"padding_top":0,"padding_bottom":0}}},"order":["header"]}
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "name": "t:sections.header.name",
+  "type": "header",
+  "sections": {
+    "header": {
+      "type": "header",
+      "blocks": {
+        "g_translate_shop_translator_app_block_dropdown_3DV9Vb": {
+          "type": "shopify://apps/g-translate-shop-translator/blocks/app-block-dropdown/408a74ac-f92d-43cf-a1b1-a044341e66bd",
+          "settings": {
+            "horizontal_position": "inline",
+            "vertical_position": "bottom",
+            "select_language_label": "Select Language",
+            "native_language_names": true,
+            "wrapper_selector": "",
+            "custom_css": ""
+          }
+        }
+      },
+      "block_order": [
+        "g_translate_shop_translator_app_block_dropdown_3DV9Vb"
+      ],
+      "name": "Header",
+      "settings": {
+        "logo_position": "top-left",
+        "menu": "new-manu",
+        "menu_type_desktop": "dropdown",
+        "sticky_header_type": "on-scroll-up",
+        "show_line_separator": false,
+        "color_scheme": "scheme-3",
+        "menu_color_scheme": "scheme-1",
+        "enable_country_selector": false,
+        "enable_language_selector": true,
+        "gtranslate_style": "dropdown",
+        "gtranslate_show_flags": false,
+        "gtranslate_text_color": "#333333",
+        "gtranslate_bg_color": "#ffffff",
+        "drawer_title": "Menu",
+        "drawer_width": 320,
+        "drawer_title_size": 18,
+        "drawer_title_color": "#333333",
+        "drawer_header_bg": "#ffffff",
+        "show_drawer_utilities": true,
+        "show_language_selector": true,
+        "show_account_link": true,
+        "utilities_bg": "#f8f9fa",
+        "drawer_auto_expand": false,
+        "nav_font_size": 16,
+        "nav_font_weight": "600",
+        "nav_text_color": "#333333",
+        "nav_hover_color": "#007acc",
+        "nav_active_color": "#007acc",
+        "show_drawer_social": true,
+        "social_heading": "Follow Us",
+        "show_search_bar": true,
+        "show_search_icon": false,
+        "search_placeholder": "Search products...",
+        "search_position": "center",
+        "search_background": "#fcfcfc",
+        "search_border": "#e0e0e0",
+        "search_text": "#333333",
+        "search_width": 600,
+        "show_top_menu": true,
+        "mobile_logo_position": "center",
+        "margin_bottom": 0,
+        "padding_top": 0,
+        "padding_bottom": 0
+      }
+    }
+  },
+  "order": [
+    "header"
+  ]
+}

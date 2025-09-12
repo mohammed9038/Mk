@@ -1,0 +1,68 @@
+{%- comment -%}
+  ==========================================
+  🖼️ HEADER LOGO COMPONENT
+  ==========================================
+  Clean, semantic logo component with performance optimization
+  
+  Parameters:
+  - logo: Main logo image
+  - logo_mobile: Optional mobile logo
+  - logo_width: Desktop logo width
+  - logo_width_mobile: Mobile logo width  
+  - preload: Enable logo preloading for performance
+{%- endcomment -%}
+
+{%- liquid
+  assign logo_main = logo | default: blank
+  assign logo_mob = logo_mobile | default: logo_main
+  assign width_desktop = logo_width | default: 140
+  assign width_mobile = logo_width_mobile | default: 110
+  assign enable_preload = preload | default: true
+  assign logo_alt = logo_main.alt | default: shop.name | escape
+-%}
+
+{%- if request.page_type == 'index' -%}
+  <h1 class="header-logo">
+{%- else -%}
+  <div class="header-logo">
+{%- endif -%}
+    <a href="{{ routes.root_url }}" 
+       class="header-logo__link" 
+       aria-label="Go to {{ shop.name }} homepage">
+      
+      {%- if logo_main != blank -%}
+        {%- comment -%} Main Desktop Logo {%- endcomment -%}
+        {%- assign logo_height = width_desktop | divided_by: logo_main.aspect_ratio -%}
+        
+        <img src="{{ logo_main | image_url: width: width_desktop }}"
+             class="header-logo__image header-logo__image--desktop"
+             width="{{ width_desktop }}"
+             height="{{ logo_height }}"
+             alt="{{ logo_alt }}"
+             loading="{% if enable_preload %}eager{% else %}lazy{% endif %}"
+             sizes="(max-width: 989px) {{ width_mobile }}px, {{ width_desktop }}px"
+             srcset="{{ logo_main | image_url: width: width_mobile }} {{ width_mobile }}w,
+                     {{ logo_main | image_url: width: width_desktop }} {{ width_desktop }}w,
+                     {{ logo_main | image_url: width: width_desktop | times: 2 }} {{ width_desktop | times: 2 }}w">
+        
+        {%- comment -%} Mobile Logo (if different) {%- endcomment -%}
+        {%- if logo_mob != blank and logo_mob != logo_main -%}
+          {%- assign mobile_logo_height = width_mobile | divided_by: logo_mob.aspect_ratio -%}
+          
+          <img src="{{ logo_mob | image_url: width: width_mobile }}"
+               class="header-logo__image header-logo__image--mobile"
+               width="{{ width_mobile }}"
+               height="{{ mobile_logo_height }}"
+               alt="{{ logo_alt }}"
+               loading="lazy">
+        {%- endif -%}
+      {%- else -%}
+        {%- comment -%} Fallback Text Logo {%- endcomment -%}
+        <span class="header-logo__text h2">{{ shop.name }}</span>
+      {%- endif -%}
+    </a>
+{%- if request.page_type == 'index' -%}
+  </h1>
+{%- else -%}
+  </div>
+{%- endif -%}
