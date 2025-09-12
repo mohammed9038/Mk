@@ -376,18 +376,6 @@
 
     {% sections 'header-group' %}
 
-    <!-- GTranslate: language translation widget -->
-    <div class="gtranslate_wrapper" style="position: fixed; top: 100px; right: 20px; z-index: 1000; background: white; padding: 10px; border: 1px solid #ccc; border-radius: 5px;">
-      <!-- Fallback HTML if script doesn't initialize -->
-      <div class="gtranslate-fallback">
-        <select onchange="window.location.href=this.value">
-          <option value="">🌐 Language</option>
-          <option value="?lang=en">🇺🇸 English</option>
-          <option value="?lang=ar">🇸🇦 العربية</option>
-        </select>
-      </div>
-    </div>
-
     {%- comment -%} Mobile Bottom Navigation {%- endcomment -%}
     {% render 'mobile-bottom-nav' %}
 
@@ -501,9 +489,6 @@
                     initialized++;
                     // Make sure the container is visible
                     container.style.display = '';
-                    // Hide fallback HTML
-                    const fallback = container.querySelector('.gtranslate-fallback');
-                    if (fallback) fallback.style.display = 'none';
                   }
                 } catch (error) {
                   // Silent fail to reduce console spam
