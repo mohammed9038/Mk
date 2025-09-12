@@ -286,10 +286,10 @@
   {%- comment -%} Navigation Controller will be loaded via head {%- endcomment -%}
 
     {%- unless settings.type_body_font.system? -%}
-      {{ settings.type_body_font | font_url | preload_tag }}
+      {{ settings.type_body_font | font_url | preload_tag: as: 'font' }}
     {%- endunless -%}
     {%- unless settings.type_header_font.system? -%}
-      {{ settings.type_header_font | font_url | preload_tag }}
+      {{ settings.type_header_font | font_url | preload_tag: as: 'font' }}
     {%- endunless -%}
 
     {%- if localization.available_countries.size > 1 or localization.available_languages.size > 1 -%}
