@@ -41,8 +41,7 @@ class NavigationController {
    */
   init() {
     if (this.initialized) {
-      console.warn('[NavigationController] Already initialized');
-      return;
+      return; // Already initialized
     }
 
     try {
@@ -53,7 +52,6 @@ class NavigationController {
       this.handleResize();
       
       this.initialized = true;
-      console.log('[NavigationController] Initialized successfully');
     } catch (error) {
       console.error('[NavigationController] Initialization failed:', error);
     }
@@ -142,7 +140,7 @@ class NavigationController {
       this.setupDropdown(dropdown, index);
     });
 
-    console.log(`[NavigationController] Initialized ${navigationDropdowns.length} dropdown menus`);
+    // Initialized ${navigationDropdowns.length} dropdown menus
     
     if (navigationDropdowns.length === 0) {
       console.warn('[NavigationController] No dropdown menus found. This might indicate:');
@@ -168,8 +166,7 @@ class NavigationController {
     const submenu = dropdown.querySelector(this.selectors.dropdownMenu);
     
     if (!summary || !submenu) {
-      console.warn('[NavigationController] Invalid dropdown structure:', dropdown);
-      return;
+      return; // Skip invalid dropdown structure
     }
 
     // Mark as setup

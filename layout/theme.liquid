@@ -314,18 +314,33 @@
     </script>
  <script type="text/javascript" src="{{ 'app_install_popup_href_v2.js' | asset_url }}" defer></script> 
 <script> 
-    VJR_BANNER.init({ 
-        "title": "Al Shariqah", // Title of the app 
-        "sub_title": "Shop on the go with our mobile app", // Subtitle and it can be empty 
-        "image_url": "https://lh3.googleusercontent.com/z7NooSYzdwG-gAGtNTpR5zBnScpOm4rbK2hKtvMykBBBVYAJZ3gmS0bJRJjvsBxMRSI", // Image URL 
-        "button_color": "#232323",  // button background color 
-        "text_color": "#FFFFFF",  // Button text color 
-        "button_text": "INSTALL",  // Button text color 
-        "ios_appid": "6479636145",  // iOS Itunes ID (from App Store Connect portal) 
-        "android_packagage_name": "com.es2a.AlShariqah", //Android app package name 
-        "appid": "50714", //vajro App ID 
-        "days": 1 //number of days Cookie should be stored 
-    }); 
+    // Wait for VJR_BANNER to be loaded before initializing
+    function initializeVJRBanner() {
+        if (typeof VJR_BANNER !== 'undefined') {
+            VJR_BANNER.init({ 
+                "title": "Al Shariqah", // Title of the app 
+                "sub_title": "Shop on the go with our mobile app", // Subtitle and it can be empty 
+                "image_url": "https://lh3.googleusercontent.com/z7NooSYzdwG-gAGtNTpR5zBnScpOm4rbK2hKtvMykBBBVYAJZ3gmS0bJRJjvsBxMRSI", // Image URL 
+                "button_color": "#232323",  // button background color 
+                "text_color": "#FFFFFF",  // Button text color 
+                "button_text": "INSTALL",  // Button text color 
+                "ios_appid": "6479636145",  // iOS Itunes ID (from App Store Connect portal) 
+                "android_packagage_name": "com.es2a.AlShariqah", //Android app package name 
+                "appid": "50714", //vajro App ID 
+                "days": 1 //number of days Cookie should be stored 
+            }); 
+        } else {
+            console.warn('[VJR_BANNER] Script not loaded yet, retrying...');
+            setTimeout(initializeVJRBanner, 100);
+        }
+    }
+    
+    // Start initialization when DOM is ready
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initializeVJRBanner);
+    } else {
+        initializeVJRBanner();
+    }
 </script>
 
 {%- comment -%} Mobile Bottom Navigation CSS and Scripts {%- endcomment -%}
@@ -456,10 +471,10 @@
         "match_header_design": true
       };
       
-      // Improved GTranslate initialization with proper error handling
+      // Optimized GTranslate initialization with reduced console spam
       document.addEventListener('DOMContentLoaded', function() {
         let initAttempts = 0;
-        const maxAttempts = 50; // 5 seconds total
+        const maxAttempts = 10; // Reduced attempts from 50 to 10
         
         function initializeGTranslate() {
           initAttempts++;
@@ -478,14 +493,12 @@
                     initialized++;
                   }
                 } catch (error) {
-                  console.warn('[GTranslate] Failed to initialize container:', error);
+                  // Silent fail to reduce console spam
                 }
               });
               
               if (initialized > 0) {
-                console.log(`[GTranslate] Successfully initialized ${initialized} widgets`);
-                
-                // Notify navigation controller
+                // Notify navigation controller without console spam
                 if (window.navigationController && typeof window.navigationController.enhanceGTranslate === 'function') {
                   window.navigationController.enhanceGTranslate();
                 }
@@ -493,13 +506,17 @@
               }
             }
           } catch (error) {
-            console.warn('[GTranslate] Initialization error:', error);
+            // Only log errors on final attempt
+            if (initAttempts === maxAttempts) {
+              console.warn('[GTranslate] Initialization error:', error);
+            }
           }
           
           // Retry if not successful and haven't exceeded max attempts
           if (initAttempts < maxAttempts) {
-            setTimeout(initializeGTranslate, 100);
-          } else {
+            setTimeout(initializeGTranslate, 500); // Slower retry: 500ms instead of 100ms
+          } else if (initAttempts === maxAttempts) {
+            // Only warn on final failure
             console.warn('[GTranslate] Initialization failed after', maxAttempts, 'attempts');
           }
         }
