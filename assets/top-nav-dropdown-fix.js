@@ -141,13 +141,33 @@
   
   // Function to protect GTranslate functionality after navigation changes
   function protectGTranslate() {
-    const gtranslateElements = document.querySelectorAll('.gtranslate_wrapper, .header__gtranslate, [class*="gtranslate"], [id*="gtranslate"]');
+    const gtranslateElements = document.querySelectorAll('.gtranslate_wrapper, .header__gtranslate, [class*="gtranslate"], [id*="gtranslate"], .gt-dropdown, .gt-selector, .gt-current, .gt-option');
     gtranslateElements.forEach(element => {
       // Ensure GTranslate elements are not affected by navigation styling
       element.style.cssText = element.style.cssText.replace(/opacity:\s*[^;]+;?/g, '');
       element.style.cssText = element.style.cssText.replace(/visibility:\s*[^;]+;?/g, '');
       element.style.cssText = element.style.cssText.replace(/transform:\s*[^;]+;?/g, '');
       element.style.cssText = element.style.cssText.replace(/pointer-events:\s*[^;]+;?/g, '');
+      element.style.cssText = element.style.cssText.replace(/display:\s*none[^;]*;?/g, '');
+      
+      // Ensure proper z-index for GTranslate dropdowns
+      if (element.classList.contains('gt-dropdown') || element.closest('.gtranslate_wrapper')) {
+        element.style.zIndex = 'auto';
+      }
+    });
+    
+    // Force re-render of GTranslate if it exists and has content
+    const gtWrappers = document.querySelectorAll('.gtranslate_wrapper');
+    gtWrappers.forEach(wrapper => {
+      if (wrapper.innerHTML && wrapper.innerHTML.trim() !== '') {
+        // Trigger a gentle refresh of the GTranslate widget
+        const select = wrapper.querySelector('select');
+        if (select) {
+          select.style.display = 'block';
+          select.style.visibility = 'visible';
+          select.style.opacity = '1';
+        }
+      }
     });
   }
   
@@ -166,5 +186,33 @@
   // Initial protection for GTranslate
   setTimeout(protectGTranslate, 200);
   
-  console.log('✅ Top Navigation Dropdown Fix Loaded with GTranslate Protection');
+  // Monitor for GTranslate widget changes and protect them
+  if (window.MutationObserver) {
+    const observer = new MutationObserver((mutations) => {
+      mutations.forEach((mutation) => {
+        if (mutation.type === 'childList') {
+          const addedNodes = Array.from(mutation.addedNodes);
+          const hasGTranslateContent = addedNodes.some(node => 
+            node.nodeType === 1 && (
+              node.classList?.contains('gt-dropdown') ||
+              node.classList?.contains('gt-selector') ||
+              node.querySelector?.('.gt-dropdown, .gt-selector, select') ||
+              node.closest?.('.gtranslate_wrapper')
+            )
+          );
+          
+          if (hasGTranslateContent) {
+            setTimeout(protectGTranslate, 50);
+          }
+        }
+      });
+    });
+    
+    // Observe changes in GTranslate containers
+    document.querySelectorAll('.gtranslate_wrapper, .header__gtranslate').forEach(container => {
+      observer.observe(container, { childList: true, subtree: true });
+    });
+  }
+  
+  console.log('✅ Top Navigation Dropdown Fix Loaded with Enhanced GTranslate Protection');
 })();
