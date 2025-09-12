@@ -178,6 +178,8 @@
     --search-button-icon: {{ section.settings.search_button_icon | default: '#333333' }};
     
     /* Professional Navigation Settings */
+    --show-main-navigation: {{ section.settings.show_main_navigation | default: true }};
+    --menu-position: {{ section.settings.menu_position | default: 'center' }};
     --nav-height: {{ section.settings.nav_height | default: 60 }}px;
     --nav-font-size: {{ section.settings.nav_font_size | default: 16 }}px;
     --nav-font-weight: {{ section.settings.nav_font_weight | default: 500 }};
@@ -346,7 +348,7 @@
   endfor
 -%}
 
-<{% if section.settings.sticky_header_type != 'none' %}sticky-header data-sticky-type="{{ section.settings.sticky_header_type }}"{% else %}div{% endif %} class="header-wrapper color-{{ section.settings.color_scheme }} gradient{% if section.settings.show_line_separator %} header-wrapper--border-bottom{% endif %}"
+<{%- if section.settings.sticky_header_type != 'none' -%}sticky-header data-sticky-type="{{ section.settings.sticky_header_type }}"{%- else -%}div{%- endif -%} class="header-wrapper color-{{ section.settings.color_scheme }} gradient{% if section.settings.show_line_separator %} header-wrapper--border-bottom{% endif %}"
 {%- if section.settings.enable_header_blur -%} style="backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);"{% endif %}>
   
   {%- comment -%} Top Navigation Bar with Dropdown Support {%- endcomment -%}
@@ -499,7 +501,7 @@
         {%- endif -%}
 
         {%- comment -%} Left-aligned navigation menu {%- endcomment -%}
-        {%- if section.settings.menu != blank and section.settings.menu_type_desktop != 'drawer' and section.settings.menu_position == 'left' -%}
+        {%- if section.settings.show_main_navigation and section.settings.menu != blank and section.settings.menu_type_desktop != 'drawer' and section.settings.menu_position == 'left' -%}
           <div class="header__navigation header__navigation--left">
             {%- if section.settings.menu_type_desktop == 'mega' -%}
               {% render 'header-mega-menu' %}
@@ -520,7 +522,7 @@
       {%- comment -%} Center Section - Navigation or Search {%- endcomment -%}
       <div class="header__center-section">
         {%- comment -%} Center-aligned navigation menu {%- endcomment -%}
-        {%- if section.settings.menu != blank and section.settings.menu_type_desktop != 'drawer' and section.settings.menu_position == 'center' -%}
+        {%- if section.settings.show_main_navigation and section.settings.menu != blank and section.settings.menu_type_desktop != 'drawer' and section.settings.menu_position == 'center' -%}
           <div class="header__navigation header__navigation--center">
             {%- if section.settings.menu_type_desktop == 'mega' -%}
               {% render 'header-mega-menu' %}
@@ -542,7 +544,7 @@
       <div class="header__right-section">
         
         {%- comment -%} Right-aligned navigation menu {%- endcomment -%}
-        {%- if section.settings.menu != blank and section.settings.menu_type_desktop != 'drawer' and section.settings.menu_position == 'right' -%}
+        {%- if section.settings.show_main_navigation and section.settings.menu != blank and section.settings.menu_type_desktop != 'drawer' and section.settings.menu_position == 'right' -%}
           <div class="header__navigation header__navigation--right">
             {%- if section.settings.menu_type_desktop == 'mega' -%}
               {% render 'header-mega-menu' %}
@@ -939,6 +941,13 @@
       "info": "Show the main navigation menu above the header for better organization"
     },
     {
+      "type": "checkbox",
+      "id": "show_main_navigation",
+      "default": true,
+      "label": "🧭 Show main navigation menu",
+      "info": "Display the main navigation menu in the header (distinct from mobile drawer)"
+    },
+    {
       "type": "select",
       "id": "menu_type_desktop",
       "options": [
@@ -958,6 +967,27 @@
       "default": "dropdown",
       "label": "🎨 Desktop menu style",
       "info": "Professional dropdown recommended for modern e-commerce experience"
+    },
+    {
+      "type": "select",
+      "id": "menu_position",
+      "options": [
+        {
+          "value": "left",
+          "label": "⬅️ Left Aligned"
+        },
+        {
+          "value": "center", 
+          "label": "🎯 Center Aligned"
+        },
+        {
+          "value": "right",
+          "label": "➡️ Right Aligned"
+        }
+      ],
+      "default": "center",
+      "label": "📍 Navigation menu position",
+      "info": "Choose where to display the main navigation menu in the header"
     },
     {
       "type": "select",

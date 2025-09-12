@@ -40,6 +40,19 @@
   align-items: center;
 }
 
+/* Navigation positioning */
+.header__navigation--left {
+  justify-self: start;
+}
+
+.header__navigation--center {
+  justify-self: center;
+}
+
+.header__navigation--right {
+  justify-self: end;
+}
+
 .header__navigation a {
   color: var(--nav-text-color);
   text-decoration: none;
