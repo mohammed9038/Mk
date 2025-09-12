@@ -1,10 +1,105 @@
 /**
- * Professional Navigation Styles
- * Clean, accessible, and performant dropdown navigation
+ * Professional Navigation & Header Styles
+ * Complete header system with clean, accessible, and performant navigation
  * 
- * @version 2.0.0
+ * @version 2.1.0
  * @author Professional Theme Development Team
  */
+
+/* =============================================================================
+   CSS Variables - Header System
+   ============================================================================= */
+
+:root {
+  /* Header Layout */
+  --header-bg: #ffffff;
+  --header-text: #2c3e50;
+  --header-border: #e9ecef;
+  --header-shadow: rgba(0, 0, 0, 0.1);
+  --header-max-width: 1400px;
+  --header-padding-top: 20px;
+  --header-padding-bottom: 20px;
+  --nav-height: 60px;
+  
+  /* Navigation Colors */
+  --nav-text: #2c3e50;
+  --nav-hover: #3498db;
+  --nav-active: #e74c3c;
+  --nav-bg: #ffffff;
+  --nav-border: #e9ecef;
+  
+  /* Logo */
+  --logo-width: 140px;
+  --logo-width-mobile: 110px;
+  
+  /* Responsive */
+  --mobile-breakpoint: 990px;
+  
+  /* Animation */
+  --animation-duration: 300ms;
+  --animation-easing: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* =============================================================================
+   Header Base Styles
+   ============================================================================= */
+
+.header-wrapper {
+  position: relative;
+  background: var(--header-bg);
+  border-bottom: 1px solid var(--header-border);
+  z-index: 100;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--header-padding-top) 0 var(--header-padding-bottom);
+  max-width: var(--header-max-width);
+  margin: 0 auto;
+  width: 100%;
+}
+
+.header__logo {
+  flex-shrink: 0;
+}
+
+.header__logo-image {
+  max-width: var(--logo-width);
+  height: auto;
+}
+
+.header__navigation {
+  flex-grow: 1;
+  display: flex;
+  justify-content: center;
+}
+
+.header__utilities {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+/* =============================================================================
+   Mobile Header Styles
+   ============================================================================= */
+
+@media screen and (max-width: 989px) {
+  .header__logo-image {
+    max-width: var(--logo-width-mobile);
+  }
+  
+  .header__navigation {
+    display: none;
+  }
+  
+  .header__utilities {
+    gap: 0.5rem;
+  }
+}
 
 /* =============================================================================
    Base Navigation Styles

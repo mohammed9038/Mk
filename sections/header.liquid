@@ -9,188 +9,125 @@
   Features: Navigation, Search, Localization, Mobile Drawer, Sticky Header
 {%- endcomment -%}
 
-{%- comment -%} Load Professional Header CSS & JS {%- endcomment -%}
-{{ 'header-professional.css' | asset_url | stylesheet_tag }}
-<script src="{{ 'details-disclosure.js' | asset_url }}" defer></script>
+{%- comment -%} Professional Navigation System - Architecture v2.0 {%- endcomment -%}
+<link rel="stylesheet" href="{{ 'navigation-professional.css' | asset_url }}" media="print" onload="this.media='all'">
+<noscript><link rel="stylesheet" href="{{ 'navigation-professional.css' | asset_url }}"></noscript>
+<script src="{{ 'navigation-controller.js' | asset_url }}" defer></script>
+<link rel="stylesheet" href="{{ 'component-professional-drawer-clean.css' | asset_url }}">
+<script src="{{ 'professional-drawer.js' | asset_url }}" defer></script>
 
-{%- comment -%} CSS Variables - Dynamic from Settings {%- endcomment -%}
-<style>
-  :root {
-    {%- comment -%} Brand & Logo Variables {%- endcomment -%}
-    --logo-width: {{ section.settings.logo_width | default: 140 }}px;
-    --logo-width-mobile: {{ section.settings.logo_width_mobile | default: 110 }}px;
-    
-    {%- comment -%} Layout & Spacing Variables {%- endcomment -%}
-    --header-max-width: {{ section.settings.header_max_width | default: 1400 }}px;
-    --header-padding-top: {{ section.settings.header_padding_top | default: 20 }}px;
-    --header-padding-bottom: {{ section.settings.header_padding_bottom | default: 20 }}px;
-    --nav-height: {{ section.settings.nav_height | default: 60 }}px;
-    
-    {%- comment -%} Color System Variables {%- endcomment -%}
-    --nav-text: {{ section.settings.nav_text_color | default: '#2c3e50' }};
-    --nav-hover: {{ section.settings.nav_hover_color | default: '#3498db' }};
-    --nav-active: {{ section.settings.nav_active_color | default: '#e74c3c' }};
-    --nav-bg: {{ section.settings.nav_background | default: '#ffffff' }};
-    --nav-border: {{ section.settings.nav_border_color | default: '#e9ecef' }};
-    
-    {%- comment -%} Dropdown Variables {%- endcomment -%}
-    --dropdown-width: {{ section.settings.dropdown_width | default: 240 }}px;
-    --dropdown-radius: {{ section.settings.dropdown_radius | default: 8 }}px;
-    --dropdown-shadow-size: {{ section.settings.dropdown_shadow | default: 20 }}px;
-    --dropdown-bg: {{ section.settings.dropdown_bg | default: '#ffffff' }};
-    --dropdown-border: {{ section.settings.dropdown_border | default: '#e9ecef' }};
-    --dropdown-text: {{ section.settings.dropdown_text | default: '#2c3e50' }};
-    --dropdown-hover-bg: {{ section.settings.dropdown_hover_bg | default: '#f8f9fa' }};
-    
-    {%- comment -%} Search Variables {%- endcomment -%}
-    --search-width: {{ section.settings.search_width | default: 400 }}px;
-    --search-bg: {{ section.settings.search_background | default: '#f8f9fa' }};
-    --search-border: {{ section.settings.search_border | default: '#dee2e6' }};
-    
-    {%- comment -%} Typography Variables {%- endcomment -%}
-    --nav-font-size: {{ section.settings.nav_font_size | default: 16 }}px;
-    --nav-font-weight: {{ section.settings.nav_font_weight | default: 500 }};
-    
-    {%- comment -%} Animation Variables {%- endcomment -%}
-    --animation-duration: {{ section.settings.dropdown_delay | default: 300 }}ms;
-    
-    {%- comment -%} Mobile Variables {%- endcomment -%}
-    --drawer-width: {{ section.settings.drawer_width | default: 320 }}px;
-  }
-  
-  {%- comment -%} Logo Position Classes {%- endcomment -%}
-  .header--top-left .header__main-row { justify-content: flex-start; }
-  .header--top-center .header__main-row { justify-content: center; }
-  .header--middle-left .header__main-row { justify-content: space-between; }
-  .header--middle-center .header__main-row { justify-content: center; }
-  
-  {%- comment -%} Mobile Logo Position {%- endcomment -%}
-  .header--mobile-center .header__left-section { justify-content: center; }
-  .header--mobile-left .header__left-section { justify-content: flex-start; }
-  
-  {%- comment -%} Navigation Animations {%- endcomment -%}
-  {%- if section.settings.dropdown_animation == 'fade' -%}
-    .header__submenu { transition: opacity var(--animation-duration) ease; }
-  {%- elsif section.settings.dropdown_animation == 'slide' -%}
-    .header__submenu { transition: all var(--animation-duration) ease; }
-  {%- elsif section.settings.dropdown_animation == 'zoom' -%}
-    .header__submenu { transition: all var(--animation-duration) ease; transform: scale(0.95) translateY(-10px); }
-    .header__submenu.is-open { transform: scale(1) translateY(0); }
-  {%- endif -%}
-  
+{%- comment -%} Debug & Diagnostics (Development Only) {%- endcomment -%}
+{%- if section.settings.enable_debug_mode -%}
+  <script src="{{ 'dropdown-diagnostic.js' | asset_url }}" defer></script>
+{%- endif -%}
+
+{%- comment -%} Professional Navigation Variables - Integrated with NavigationController {%- endcomment -%}
+<script>
   {%- comment -%} Custom CSS from Settings {%- endcomment -%}
   {%- if section.settings.custom_css != blank -%}
-    {{ section.settings.custom_css }}
+    const customStyle = document.createElement('style');
+    customStyle.textContent = `{{ section.settings.custom_css | escape }}`;
+    document.head.appendChild(customStyle);
   {%- endif -%}
-</style>
+</script>
 
 {%- comment -%} Professional Header JavaScript {%- endcomment -%}
 <script>
   document.addEventListener('DOMContentLoaded', function() {
-    // Professional Navigation Controller
-    class ProfessionalHeader {
-      constructor() {
-        this.init();
-      }
-      
-      init() {
-        this.setupDropdowns();
-        this.setupSearch();
-        this.setupMobileMenu();
-        this.setupStickyHeader();
-        {%- if section.settings.enable_debug_mode -%}
-        console.log('🏢 Professional Header: Initialized successfully');
-        {%- endif -%}
-      }
-      
-      setupDropdowns() {
-        {%- if section.settings.enable_hover_dropdowns -%}
-        // Enable hover dropdowns on desktop
-        const menuItems = document.querySelectorAll('.header__navigation .top-nav__item');
-        menuItems.forEach(item => {
-          const submenu = item.querySelector('.header__submenu');
-          if (submenu) {
-            item.addEventListener('mouseenter', () => {
-              if (window.innerWidth >= 990) {
-                submenu.classList.add('is-open');
-              }
-            });
-            item.addEventListener('mouseleave', () => {
-              submenu.classList.remove('is-open');
-            });
-          }
-        });
-        {%- endif -%}
-      }
-      
-      setupSearch() {
-        // Search functionality
-        const searchForms = document.querySelectorAll('.search-form');
-        searchForms.forEach(form => {
-          form.addEventListener('submit', (e) => {
-            const input = form.querySelector('.search-input');
-            if (!input.value.trim()) {
-              e.preventDefault();
-              input.focus();
-            }
-          });
-        });
-      }
-      
-      setupMobileMenu() {
-        // Mobile menu toggle
-        const menuToggle = document.querySelector('.header__menu-toggle');
-        const drawer = document.querySelector('.header__drawer');
-        const drawerClose = document.querySelector('.drawer__close');
-        const drawerOverlay = document.querySelector('.drawer__overlay');
-        
-        // Open drawer
-        if (menuToggle && drawer) {
-          menuToggle.addEventListener('click', () => {
-            drawer.classList.add('is-open');
-            document.body.classList.add('drawer-open');
-            menuToggle.setAttribute('aria-expanded', 'true');
-          });
-        }
-        
-        // Close drawer function
-        const closeDrawer = () => {
-          if (drawer) {
-            drawer.classList.remove('is-open');
-            document.body.classList.remove('drawer-open');
-            if (menuToggle) {
-              menuToggle.setAttribute('aria-expanded', 'false');
-            }
-          }
-        };
-        
-        // Close drawer events
-        if (drawerClose) {
-          drawerClose.addEventListener('click', closeDrawer);
-        }
-        
-        if (drawerOverlay) {
-          drawerOverlay.addEventListener('click', closeDrawer);
-        }
-        
-        // Close drawer with Escape key
-        document.addEventListener('keydown', (e) => {
-          if (e.key === 'Escape' && drawer && drawer.classList.contains('is-open')) {
-            closeDrawer();
-          }
-        });
-      }
-      
-      setupStickyHeader() {
-        // Sticky header behavior handled by existing sticky-header component
-        {%- if section.settings.enable_performance_monitoring -%}
-        console.log('📊 Header Performance: Setup complete');
-        {%- endif -%}
-      }
+    {%- comment -%} NavigationController Configuration {%- endcomment -%}
+    window.headerConfig = {
+      enableHoverDropdowns: {{ section.settings.enable_hover_dropdowns | json }},
+      enableStickyHeader: {{ section.settings.enable_sticky_header | json }},
+      enablePerformanceMonitoring: {{ section.settings.enable_performance_monitoring | json }},
+      enableDebugMode: {{ section.settings.enable_debug_mode | json }},
+      stickyOffset: {{ section.settings.sticky_header_offset | default: 0 }},
+      mobileBreakpoint: 990,
+      gtranslateAutoDetect: true,
+      professionalDrawer: true
+    };
+    
+    // Dynamic CSS Properties
+    if (window.headerConfig.enableStickyHeader) {
+      document.documentElement.style.setProperty('--header-sticky-offset', window.headerConfig.stickyOffset + 'px');
     }
     
-    // Initialize Professional Header
-    new ProfessionalHeader();
+    if (window.headerConfig.enableDebugMode) {
+      document.documentElement.style.setProperty('--debug-mode', '1');
+    }
+    
+    // Set essential CSS variables
+    document.documentElement.style.setProperty('--logo-width', '{{ section.settings.logo_width | default: 140 }}px');
+    document.documentElement.style.setProperty('--logo-width-mobile', '{{ section.settings.logo_width_mobile | default: 110 }}px');
+    document.documentElement.style.setProperty('--nav-height', '{{ section.settings.nav_height | default: 60 }}px');
+    document.documentElement.style.setProperty('--drawer-width', '{{ section.settings.drawer_width | default: 320 }}px');
+    
+    {%- comment -%} Initialize NavigationController with Configuration {%- endcomment -%}
+    if (window.NavigationController) {
+      window.navigationController = new NavigationController(window.headerConfig);
+      {%- if section.settings.enable_debug_mode -%}
+      console.log('🏢 Professional Header: NavigationController initialized', window.navigationController);
+      {%- endif -%}
+    }
+    
+    {%- comment -%} Initialize Professional Drawer System {%- endcomment -%}
+    if (window.ProfessionalDrawer && window.headerConfig.professionalDrawer) {
+      window.professionalDrawer = new ProfessionalDrawer();
+      {%- if section.settings.enable_debug_mode -%}
+      console.log('� Professional Drawer: Initialized', window.professionalDrawer);
+      {%- endif -%}
+    }
+    
+    {%- comment -%} Debug Mode Diagnostics {%- endcomment -%}
+    {%- if section.settings.enable_debug_mode -%}
+    if (window.headerConfig.enableDebugMode) {
+      console.log('🔍 Debug Mode: Enabled - Loading navigation diagnostics...');
+      
+      // Load diagnostic tool when debug mode is enabled
+      fetch('{{ 'dropdown-diagnostic.js' | asset_url }}')
+        .then(response => response.text())
+        .then(diagnosticCode => {
+          // Execute diagnostic tool
+          eval(diagnosticCode);
+          
+          // Add debug helper to global scope
+          window.debugNavigation = {
+            runDiagnostic: () => {
+              fetch('{{ 'dropdown-diagnostic.js' | asset_url }}')
+                .then(r => r.text())
+                .then(eval);
+            },
+            getState: () => ({
+              navigationController: window.navigationController?.state,
+              professionalDrawer: window.professionalDrawer?.state,
+              headerConfig: window.headerConfig
+            }),
+            performance: {
+              monitor: () => {
+                console.log('📊 Performance Monitor: Starting...');
+                const startTime = performance.now();
+                
+                // Monitor navigation interactions
+                document.addEventListener('click', (e) => {
+                  if (e.target.closest('details[id^="Details-HeaderMenu-"], .gtranslate_wrapper, .header__menu-toggle')) {
+                    const interactionTime = performance.now() - startTime;
+                    console.log(`⚡ Navigation interaction: ${interactionTime.toFixed(2)}ms`);
+                  }
+                });
+              }
+            }
+          };
+          
+          console.log('🛠️ Debug helpers available:');
+          console.log('  - window.debugNavigation.runDiagnostic()');
+          console.log('  - window.debugNavigation.getState()');
+          console.log('  - window.debugNavigation.performance.monitor()');
+        })
+        .catch(error => {
+          console.warn('⚠️ Could not load diagnostic tool:', error);
+          console.log('💡 Manual diagnostic available at: {{ 'dropdown-diagnostic.js' | asset_url }}');
+        });
+    }
+    {%- endif -%}
     
     {%- comment -%} Custom JavaScript from Settings {%- endcomment -%}
     {%- if section.settings.custom_js != blank -%}
@@ -605,6 +542,19 @@
         {%- if section.settings.enable_language_selector -%}
           <div class="header__localization header__gtranslate">
             <div class="gtranslate_wrapper header-gtranslate" data-style="{{ section.settings.gtranslate_style }}"></div>
+          </div>
+        {%- endif -%}
+
+        {%- comment -%} Native Shopify Localization Fallback {%- endcomment -%}
+        {%- if localization_forms and section.settings.enable_language_selector -%}
+          <div class="header__localization header__language-selector" style="display: none;" data-gtranslate-fallback>
+            <localization-form>
+              {%- form 'localization', id: 'HeaderLanguageForm', class: 'localization-form' -%}
+                <div class="no-js-hidden">
+                  {% render 'language-localization', localPosition: 'HeaderLanguage' %}
+                </div>
+              {%- endform -%}
+            </localization-form>
           </div>
         {%- endif -%}
 
