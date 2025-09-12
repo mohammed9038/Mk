@@ -31,15 +31,33 @@
     <script>
       window.gtranslateSettings = {
         "default_language": "en",
-        "native_language_names": true,
-        "detect_browser_language": false,
+        "languages": ["en", "ar", "fr", "es", "de", "it", "pt", "ru", "zh-cn", "ja"],
         "wrapper_selector": ".gtranslate_wrapper",
+        "switcher_horizontal_position": "inline",
+        "switcher_vertical_position": "inline",
         "flag_style": "3d",
-        "flag_size": 24,
-        "alt_flags": {"en": "usa"},
-        "languages": ["en", "ar", "fr", "es"],
-        "horizontal_position": "right",
-        "vertical_position": "top"
+        "flags_size": 22,
+        "dropdown_text_color": "#333333",
+        "dropdown_hover_color": "#f8f9fa",
+        "dropdown_background": "#ffffff",
+        "native_select_style": false,
+        "add_new_line": true,
+        "show_in_menu": true,
+        "switcher_text_color": "#333333",
+        "switcher_arrow_color": "#333333",
+        "switcher_border_color": "#e5e5e5",
+        "switcher_background_color": "#ffffff",
+        "switcher_background_shadow": "0 2px 8px rgba(0,0,0,0.15)",
+        "switcher_background_hover_color": "#f8f9fa",
+        "detect_browser_language": false,
+        "display_flags": true,
+        "display_language_names": true,
+        "alt_flags": {
+          "en": "united-kingdom",
+          "ar": "saudi-arabia"
+        },
+        "professional_style": true,
+        "match_header_design": true
       };
     </script>
     <script src="https://cdn.gtranslate.net/widgets/latest/dropdown.js" defer></script>
@@ -453,48 +471,47 @@
     {%- if settings.predictive_search_enabled -%}
       <script src="{{ 'predictive-search.js' | asset_url }}" defer="defer"></script>
     {%- endif -%}
+    
+    {%- comment -%} GTranslate Initialization {%- endcomment -%}
     <script>
-      window.gtranslateSettings = {
-        "default_language": "en",
-        "languages": ["en", "ar"],
-        "wrapper_selector": ".gtranslate_wrapper",
-        "switcher_horizontal_position": "inline",
-        "switcher_vertical_position": "inline",
-        "flag_style": "3d",
-        "flags_size": 22,
-        "dropdown_text_color": "#333333",
-        "dropdown_hover_color": "#f8f9fa",
-        "dropdown_background": "#ffffff",
-        "native_select_style": false,
-        "add_new_line": true,
-        "show_in_menu": true,
-        "switcher_text_color": "#333333",
-        "switcher_arrow_color": "#333333",
-        "switcher_border_color": "#e5e5e5",
-        "switcher_background_color": "#ffffff",
-        "switcher_background_shadow": "0 2px 8px rgba(0,0,0,0.15)",
-        "switcher_background_hover_color": "#f8f9fa",
-        "detect_browser_language": false,
-        "display_flags": true,
-        "display_language_names": true,
-        "alt_flags": {
-          "en": "united-kingdom",
-          "ar": "saudi-arabia"
-        },
-        "professional_style": true,
-        "match_header_design": true
-      };
-      
-      // Simple GTranslate initialization - let the widget auto-initialize
+      // Enhanced GTranslate initialization with debugging
       document.addEventListener('DOMContentLoaded', function() {
-        // GTranslate will auto-initialize based on gtranslateSettings
-        // Just ensure containers are ready
+        console.log('[GTranslate] Initializing...');
+        console.log('[GTranslate] Settings:', window.gtranslateSettings);
+        
+        // Find all GTranslate containers
         const containers = document.querySelectorAll('.gtranslate_wrapper, .header-gtranslate, .mobile-gtranslate, .footer-gtranslate');
-        containers.forEach(function(container) {
+        console.log('[GTranslate] Found', containers.length, 'containers:', containers);
+        
+        containers.forEach(function(container, index) {
           if (container) {
-            container.style.display = '';
+            container.style.display = 'block';
+            container.style.visibility = 'visible';
+            container.style.opacity = '1';
+            
+            // Add a fallback in case GTranslate doesn't load
+            if (!container.innerHTML.trim()) {
+              container.innerHTML = '<div style="padding: 8px 12px; border: 1px solid #ddd; border-radius: 4px; background: white; font-size: 14px;">🌍 Loading translator...</div>';
+            }
+            
+            console.log('[GTranslate] Container ' + (index + 1) + ' prepared:', container);
           }
         });
+        
+        // Check if GTranslate script loaded
+        setTimeout(function() {
+          if (typeof window.doGTranslate === 'function' || typeof window.GTranslateFireEvent === 'function') {
+            console.log('[GTranslate] Script loaded successfully');
+          } else {
+            console.warn('[GTranslate] Script may not have loaded properly');
+            // Add manual fallback
+            containers.forEach(function(container) {
+              if (container && container.innerHTML.includes('Loading translator')) {
+                container.innerHTML = '<select onchange="if(this.value) window.open(\'https://translate.google.com/translate?sl=auto&tl=\'+this.value+\'&u=\'+encodeURIComponent(window.location.href), \'_blank\')"><option value="">🌍 Translate</option><option value="ar">العربية</option><option value="fr">Français</option><option value="es">Español</option></select>';
+              }
+            });
+          }
+        }, 3000);
         
         // Notify navigation controller after a short delay
         setTimeout(function() {
@@ -502,10 +519,6 @@
             window.navigationController.enhanceGTranslate();
           }
         }, 1000);
-      });
-        
-        // Start initialization
-        setTimeout(initializeGTranslate, 100);
       });
     </script>
     <script src="{{ 'gtranslate-dropdown.js' | asset_url }}" defer></script>
